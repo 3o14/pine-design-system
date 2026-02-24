@@ -1,0 +1,48 @@
+# Dialog
+
+모달 다이얼로그입니다. **controlled** 컴포넌트로, `open`과 `onOpenChange`로 열림 상태를 제어합니다.
+
+## Props
+
+| Prop                 | Type       | Default   | 설명 |
+| -------------------- | ---------- | --------- | ---- |
+| open                 | `boolean`  | —         | 열림 여부 |
+| onOpenChange         | `(open: boolean) => void` | — | 열림 상태 변경 시 호출 |
+| onClose              | `() => void` | —       | 닫힐 때 호출 |
+| title                | `string`   | —         | 제목 |
+| description          | `string`   | —         | 설명 텍스트 |
+| size                 | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"` \| `"full"` | `"medium"` | 크기 |
+| rounded              | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 모서리 반경 |
+| showCloseButton      | `boolean`  | `true`    | 닫기 버튼 표시 |
+| closeOnOverlayClick  | `boolean`  | `true`    | 오버레이 클릭 시 닫기 |
+| closeOnEscape        | `boolean`  | `true`    | Escape 키로 닫기 |
+| actions              | `DialogAction[]` | —   | 푸터 액션 버튼 목록 |
+| footer               | `ReactNode`| —         | 푸터 커스텀 |
+
+## 코드
+
+```tsx
+import { useState } from "react";
+import { Dialog, Button } from "pine-design-system";
+
+function Example() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Dialog</Button>
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Title"
+        description="Optional description."
+        actions={[
+          { label: "Cancel", onClick: () => setOpen(false), variant: "outline" },
+          { label: "Confirm", onClick: () => setOpen(false) },
+        ]}
+      >
+        Dialog body content.
+      </Dialog>
+    </>
+  );
+}
+```

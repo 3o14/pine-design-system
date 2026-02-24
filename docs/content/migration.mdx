@@ -1,0 +1,47 @@
+# Migration: pine-ui-kit → pine-design-system
+
+패키지가 **pine-ui-kit**에서 **pine-design-system**으로 이름이 변경되었습니다. 기존 프로젝트를 옮기려면 아래 단계를 따르세요.
+
+## 1. 패키지 교체
+
+**Before:**
+
+```bash
+npm uninstall pine-ui-kit
+npm install pine-design-system
+```
+
+**After (예시):**
+
+```bash
+pnpm remove pine-ui-kit
+pnpm add pine-design-system
+```
+
+## 2. import 경로 변경
+
+패키지 이름만 바꾸면 됩니다. 컴포넌트/Provider 이름과 API는 동일합니다.
+
+**Before:**
+
+```tsx
+import { Button, ThemeProvider } from "pine-ui-kit";
+import "pine-ui-kit/style.css";
+```
+
+**After:**
+
+```tsx
+import { Button, ThemeProvider } from "pine-design-system";
+import "pine-design-system/style.css";
+```
+
+## 3. 요약
+
+| 항목        | pine-ui-kit           | pine-design-system        |
+| ----------- | -------------------- | ------------------------- |
+| 패키지명    | `pine-ui-kit`        | `pine-design-system`      |
+| 스타일 import | `pine-ui-kit/style.css` | `pine-design-system/style.css` |
+| 컴포넌트/API | 동일                 | 동일                      |
+
+`pine-ui-kit`은 deprecated 패키지로 유지되며, 내부적으로 `pine-design-system`을 re-export합니다. 가능하면 `pine-design-system`으로 직접 전환하는 것을 권장합니다.

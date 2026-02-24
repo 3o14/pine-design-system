@@ -1,0 +1,29 @@
+# Typography
+
+타이포그래피 토큰은 **시맨틱 이름**으로 정의되며, 테마별로 실제 폰트/크기 값이 매핑됩니다.
+
+## Font family
+
+| 토큰   | 용도           | basic 예시     | game 예시   | crayon 예시   |
+| ------ | -------------- | ------------- | ----------- | ------------- |
+| sans   | 본문, UI       | Inter         | DungGeunMo  | 온글잎-승훈체 |
+| mono   | 코드          | Roboto Mono   | 동일        | 동일          |
+| crayon | (crayon 전용)  | —             | —           | 온글잎-승훈체 |
+
+## Font size (시맨틱)
+
+- **xsmall**, **small**, **medium**, **large**, **xlarge** — 본문·UI 크기
+- **display-small**, **display-medium**, **display-large** — 큰 제목용
+
+## Font weight
+
+- **regular** (400)
+- **medium** (500)
+- **semibold** (600)
+- **bold** (700)
+
+## Line height
+
+각 font size에 대응하는 line height 토큰이 있으며, 테마에서 함께 지정됩니다.
+
+`Text` 컴포넌트의 `size`, `weight` prop이 이 토큰과 연결됩니다.

@@ -1,0 +1,32 @@
+# Button
+
+주요 액션과 보조 액션에 사용하는 버튼 컴포넌트입니다.
+
+## 예시
+
+<ComponentPreview>
+  <ButtonDemo />
+</ComponentPreview>
+
+## Props
+
+| Prop      | Type                                                                 | Default   | 설명 |
+| --------- | -------------------------------------------------------------------- | --------- | ---- |
+| variant   | `"solid"` \| `"outline"` \| `"ghost"` \| `"weak"`                    | `"solid"` | 스타일 변형 |
+| size      | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"`                   | `"medium"` | 크기 |
+| intent    | `"primary"` \| `"secondary"` \| `"success"` \| `"warning"` \| `"danger"` \| `"neutral"` | `"primary"` | 색상 의도 |
+| rounded   | `"small"` \| `"medium"` \| `"large"`                                  | `"medium"` | 모서리 반경 |
+| fullWidth | `boolean`                                                            | `false`   | 전체 너비 |
+| disabled  | `boolean`                                                            | `false`   | 비활성화 |
+
+`<button>`의 표준 HTML 속성도 지원합니다.
+
+## 코드
+
+```tsx
+import { Button } from "pine-design-system";
+
+<Button variant="solid" intent="primary" size="large">
+  Submit
+</Button>
+```

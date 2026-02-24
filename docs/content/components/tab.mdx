@@ -1,0 +1,33 @@
+# Tab
+
+탭 네비게이션과 패널을 묶어서 보여주는 컴포넌트입니다.
+
+## 예시
+
+<ComponentPreview>
+  <TabDemo />
+</ComponentPreview>
+
+## Props
+
+| Prop         | Type       | Default   | 설명 |
+| ------------ | ---------- | --------- | ---- |
+| tabs         | `TabItem[]`| —         | `{ value, label, content, disabled? }` 목록 |
+| value        | `string`   | —         | 활성 탭 값 (controlled) |
+| defaultValue | `string`   | —         | 초기 활성 탭 값 |
+| onChange     | `(value: string) => void` | — | 탭 변경 시 호출 |
+| intent       | ColorIntent| `"primary"` | 색상 의도 |
+| orientation  | `"horizontal"` \| `"vertical"` | `"horizontal"` | 방향 |
+
+## 코드
+
+```tsx
+import { Tab } from "pine-design-system";
+
+<Tab
+  tabs={[
+    { value: "a", label: "Tab A", content: <div>Panel A</div> },
+    { value: "b", label: "Tab B", content: <div>Panel B</div> },
+  ]}
+/>
+```

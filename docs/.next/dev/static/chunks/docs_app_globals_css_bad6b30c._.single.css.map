@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/docs/app/globals.css"],"sourcesContent":["/* 제목 border 굵게 */\n.nextra-navbar-blur.nextra-border,\nh1.nextra-border,\nh2.nextra-border,\nh3.nextra-border {\n  border-bottom-width: 8px !important;\n}\n"],"names":[],"mappings":"AACA"}}]
+}

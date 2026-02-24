@@ -1,0 +1,41 @@
+# TextField
+
+텍스트 입력 필드입니다. 단일 줄 input과 textarea(multiline)를 지원합니다.
+
+## 예시
+
+<ComponentPreview>
+  <TextFieldDemo />
+</ComponentPreview>
+
+## Props
+
+| Prop        | Type     | Default   | 설명 |
+| ----------- | -------- | --------- | ---- |
+| label       | `string` | —         | 레이블 |
+| helperText  | `string` | —         | 하단 도움말/에러 메시지 |
+| placeholder | `string` | —         | 플레이스홀더 |
+| size        | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"` | `"medium"` | 크기 |
+| rounded     | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 모서리 반경 |
+| variant     | `"outline"` \| `"filled"` | `"outline"` | 스타일 변형 |
+| status      | `"default"` \| `"error"` \| `"success"` | `"default"` | 검증 상태 |
+| fullWidth   | `boolean` | `false`   | 전체 너비 |
+| multiline   | `boolean` | `false`   | textarea 모드 |
+| rows        | `number`  | 3 (multiline 시) | textarea 행 수 |
+| disabled    | `boolean` | `false`   | 비활성화 |
+
+`<input>` / `<textarea>`의 표준 속성(value, onChange, name, required 등)도 지원합니다.
+
+## 코드
+
+```tsx
+import { TextField } from "pine-design-system";
+
+<TextField
+  label="Email"
+  type="email"
+  placeholder="you@example.com"
+  required
+/>
+<TextField label="Bio" multiline rows={4} />
+```

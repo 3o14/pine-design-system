@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/wonju/Developer/pine-ui-kit/docs/app/layout.tsx"],"sourcesContent":["import type { ReactNode } from \"react\";\nimport { Layout, Navbar } from \"nextra-theme-docs\";\nimport { getPageMap } from \"nextra/page-map\";\nimport \"nextra-theme-docs/style.css\";\nimport \"pine-design-system/style.css\";\n\nexport default async function RootLayout({ children }: { children: ReactNode }) {\n  const pageMap = await getPageMap();\n\n  return (\n    <html lang=\"ko\" suppressHydrationWarning>\n      <body>\n        <Layout\n          pageMap={pageMap}\n          docsRepositoryBase=\"https://github.com/3o14/pine-design-system\"\n          navbar={\n            <Navbar\n              logo={<strong>Pine Design System</strong>}\n              projectLink=\"https://github.com/3o14/pine-design-system\"\n            />\n          }\n        >\n          {children}\n        </Layout>\n      </body>\n    </html>\n  );\n}\n"],"names":[],"mappings":";;;;;AACA;AAAA;AACA;;;;;;AAIe,eAAe,WAAW,EAAE,QAAQ,EAA2B;IAC5E,MAAM,UAAU,MAAM,IAAA,oYAAU;IAEhC,qBACE,+YAAC;QAAK,MAAK;QAAK,wBAAwB;kBACtC,cAAA,+YAAC;sBACC,cAAA,+YAAC,qXAAM;gBACL,SAAS;gBACT,oBAAmB;gBACnB,sBACE,+YAAC,4YAAM;oBACL,oBAAM,+YAAC;kCAAO;;;;;;oBACd,aAAY;;;;;;0BAIf;;;;;;;;;;;;;;;;AAKX"}}]
+}

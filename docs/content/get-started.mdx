@@ -1,0 +1,42 @@
+# Get Started
+
+## 설치
+
+```bash
+npm install pine-design-system
+```
+
+React 18 이상이 필요합니다.
+
+## 기본 사용
+
+앱 루트를 `ThemeProvider`로 감싸고, 스타일 시트를 한 번 불러옵니다.
+
+```tsx
+import { ThemeProvider, Button } from "pine-design-system";
+import "pine-design-system/style.css";
+
+export default function App() {
+  return (
+    <ThemeProvider defaultDesign="basic">
+      <Button intent="primary">Click me</Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## design / theme
+
+- **design**: `"basic"` | `"game"` | `"crayon"` — 디자인 컨셉을 선택합니다. 기본값은 `"basic"`입니다.
+- **theme**: `"light"` | `"dark"` — 라이트/다크 모드입니다. 제어하지 않으면 `syncWithSystem`에 따라 시스템 설정을 따릅니다.
+
+```tsx
+<ThemeProvider design="game" defaultTheme="dark">
+  {/* 게임 스타일 + 다크 모드 */}
+</ThemeProvider>
+```
+
+## 다음 단계
+
+- [Foundation](/foundation): 토큰(색상, 타이포, 간격) 구조
+- [Components](/components): 컴포넌트 목록과 사용법

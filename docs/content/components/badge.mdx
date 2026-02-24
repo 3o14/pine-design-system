@@ -1,0 +1,27 @@
+# Badge
+
+라벨, 태그, 상태 표시에 사용하는 뱃지 컴포넌트입니다.
+
+## 예시
+
+<ComponentPreview>
+  <BadgeDemo />
+</ComponentPreview>
+
+## Props
+
+| Prop     | Type                                                                 | Default   | 설명 |
+| -------- | -------------------------------------------------------------------- | --------- | ---- |
+| variant  | `"solid"` \| `"outline"` \| `"subtle"` \| `"weak"`                    | `"solid"` | 스타일 변형 |
+| size     | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"`                   | `"medium"` | 크기 |
+| intent   | `"primary"` \| `"secondary"` \| `"success"` \| `"warning"` \| `"danger"` \| `"neutral"` | `"primary"` | 색상 의도 |
+| rounded  | `"small"` \| `"medium"` \| `"large"`                                  | `"medium"` | 모서리 반경 |
+| showDot  | `boolean`                                                            | `false`   | 앞에 점 표시 |
+
+## 코드
+
+```tsx
+import { Badge } from "pine-design-system";
+
+<Badge intent="success" showDot>Active</Badge>
+```

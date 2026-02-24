@@ -1,0 +1,29 @@
+# Switch
+
+온/오프 토글 스위치입니다.
+
+## 예시
+
+<ComponentPreview>
+  <SwitchDemo />
+</ComponentPreview>
+
+## Props
+
+| Prop             | Type     | Default   | 설명 |
+| ---------------- | -------- | --------- | ---- |
+| size             | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"` | `"medium"` | 크기 |
+| intent           | ColorIntent | `"primary"` | 색상 의도 |
+| label            | `string` | —         | 레이블 텍스트 |
+| checked          | `boolean`| —         | 켜짐 여부 (controlled) |
+| defaultChecked   | `boolean`| —         | 초기 켜짐 여부 |
+| disabled         | `boolean`| `false`   | 비활성화 |
+| onCheckedChange | `(checked: boolean) => void` | — | 상태 변경 시 호출 |
+
+## 코드
+
+```tsx
+import { Switch } from "pine-design-system";
+
+<Switch label="Enable notifications" defaultChecked />
+```

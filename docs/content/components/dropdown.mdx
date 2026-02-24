@@ -1,0 +1,39 @@
+# Dropdown
+
+옵션 선택용 드롭다운(셀렉트) 컴포넌트입니다.
+
+## 예시
+
+<ComponentPreview>
+  <DropdownDemo />
+</ComponentPreview>
+
+## Props
+
+| Prop           | Type                    | Default     | 설명 |
+| -------------- | ----------------------- | ----------- | ---- |
+| options        | `DropdownOption[]`       | —           | `{ value, label, disabled? }` 목록 |
+| value          | `string`                | —           | 선택 값 (controlled) |
+| defaultValue   | `string`                | —           | 초기 선택 값 |
+| onValueChange  | `(value: string \| null) => void` | — | 선택 변경 시 호출 |
+| placeholder    | `string`                | `"Select an option"` | 플레이스홀더 |
+| size           | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 크기 |
+| rounded        | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 모서리 반경 |
+| intent         | ColorIntent             | `"primary"` | 색상 의도 |
+| fullWidth      | `boolean`               | `false`     | 전체 너비 |
+| disabled       | `boolean`               | `false`     | 비활성화 |
+
+## 코드
+
+```tsx
+import { Dropdown } from "pine-design-system";
+
+<Dropdown
+  options={[
+    { value: "1", label: "One" },
+    { value: "2", label: "Two" },
+  ]}
+  onValueChange={(v) => console.log(v)}
+  placeholder="Choose"
+/>
+```
