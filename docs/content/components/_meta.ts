@@ -1,5 +1,4 @@
 export default {
-  index: "Overview",
   button: "Button",
   badge: "Badge",
   checkbox: "Checkbox",

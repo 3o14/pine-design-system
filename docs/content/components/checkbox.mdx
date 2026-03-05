@@ -1,8 +1,13 @@
+---
+title: Checkbox
+---
+
 # Checkbox
 
-선택 입력용 체크박스 컴포넌트입니다. Base UI의 headless Checkbox를 기반으로 합니다.
+사용자가 하나 이상의 옵션을 선택하거나 항목에 동의할 때 사용하는 선택 컨트롤입니다.
+[Base UI Checkbox](https://base-ui.com/components/react-checkbox/)를 기반으로 접근성을 기본으로 지원합니다.
 
-## 예시
+## 미리보기
 
 <ComponentPreview>
   <CheckboxDemo />
@@ -10,12 +15,112 @@
 
 ## Props
 
-`Checkbox`는 Base UI Checkbox의 props와 호환되며, `label`을 주면 레이블이 함께 렌더링됩니다. `disabled`, `checked`, `defaultChecked` 등 표준 체크박스 속성을 지원합니다.
+### `checked`
+
+Checkbox의 체크 상태를 제어합니다. 이 prop을 사용하면 controlled 컴포넌트가 됩니다.
+상태를 직접 관리하지 않을 경우 `defaultChecked`를 사용하세요.
+
+- **타입**: `boolean`
+- **기본값**: `undefined`
+
+### `defaultChecked`
+
+Checkbox의 초기 체크 상태를 설정합니다. uncontrolled 방식으로 사용할 때 씁니다.
+
+- **타입**: `boolean`
+- **기본값**: `undefined`
+
+### `onCheckedChange`
+
+체크 상태가 변경될 때 호출되는 콜백 함수입니다.
+
+- **타입**: `(checked: boolean) => void`
+
+### `intent`
+
+Checkbox의 색상 의도를 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `primary` | ✓ | 일반적인 선택 항목에 사용합니다. |
+| `secondary` | | 보조 선택 항목에 사용합니다. |
+| `success` | | 동의, 완료 등 긍정적 선택에 사용합니다. |
+| `warning` | | 주의가 필요한 선택에 사용합니다. |
+| `danger` | | 위험하거나 삭제를 의미하는 선택에 사용합니다. |
+| `neutral` | | 중립적인 선택에 사용합니다. |
+
+<ComponentPreview>
+  <CheckboxIntentDemo />
+</ComponentPreview>
+
+### `size`
+
+Checkbox의 크기를 결정합니다. 주변 텍스트나 폼 컴포넌트의 크기에 맞게 선택하세요.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 밀도 높은 폼이나 보조 옵션에 사용합니다. |
+| `medium` | ✓ | 일반적인 폼에서 사용합니다. |
+| `large` | | 충분한 클릭 영역이 필요할 때 사용합니다. |
+| `xlarge` | | 모바일 환경처럼 큰 터치 영역이 필요할 때 사용합니다. |
+
+<ComponentPreview>
+  <CheckboxSizeDemo />
+</ComponentPreview>
+
+### `label`
+
+Checkbox 옆에 표시되는 라벨 텍스트입니다. 라벨 클릭 시 Checkbox가 토글됩니다.
+
+- **타입**: `string`
+
+### `disabled`
+
+Checkbox를 비활성화합니다. 비활성화 상태에서는 체크 상태를 변경할 수 없습니다.
+
+- **타입**: `boolean`
+- **기본값**: `false`
+
+### `readOnly`
+
+체크 상태를 읽기 전용으로 만듭니다. `disabled`와 달리 시각적 스타일은 활성화 상태와 동일합니다.
+
+- **타입**: `boolean`
+- **기본값**: `false`
+
+### `required`
+
+폼 유효성 검사 시 필수 입력 항목으로 표시합니다.
+
+- **타입**: `boolean`
+- **기본값**: `false`
+
+## 사용 가이드
+
+### Controlled vs Uncontrolled
+
+상태 관리가 필요 없는 단순한 경우 `defaultChecked`를 사용하는 것이 간단합니다.
+폼 라이브러리나 외부 상태와 연동하거나, 체크 상태에 따라 다른 UI를 렌더링할 경우 `checked` + `onCheckedChange`를 함께 사용하세요.
+
+### 접근성
+
+`label` prop을 사용하거나, 직접 `<label>` 요소와 연결해 스크린리더가 Checkbox의 목적을 인식할 수 있도록 하세요.
 
 ## 코드
 
 ```tsx
 import { Checkbox } from "pine-design-system";
 
-<Checkbox label="Accept terms" defaultChecked />
+// 기본 사용 (uncontrolled)
+<Checkbox label="이용약관에 동의합니다" defaultChecked />
+
+// Controlled
+<Checkbox
+  label="알림 수신"
+  checked={checked}
+  onCheckedChange={setChecked}
+/>
+
+// 비활성화
+<Checkbox label="변경 불가" disabled defaultChecked />
 ```

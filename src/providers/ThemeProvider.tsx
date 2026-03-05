@@ -39,6 +39,12 @@ export interface ThemeProviderProps {
 	primaryColor?: string;
 	className?: string;
 	style?: React.CSSProperties;
+	/**
+	 * `document.documentElement`에 테마 클래스를 적용할지 여부.
+	 * 여러 ThemeProvider를 동시에 렌더링하는 경우(예: 테마 쇼케이스) `false`로 설정합니다.
+	 * @default true
+	 */
+	applyGlobal?: boolean;
 }
 
 const getSystemTheme = (): Theme => {
@@ -62,6 +68,7 @@ export const ThemeProvider = ({
 	primaryColor,
 	className,
 	style,
+	applyGlobal = true,
 }: ThemeProviderProps) => {
 	const getInitialTheme = (): Theme => {
 		if (defaultTheme) {
@@ -157,7 +164,7 @@ export const ThemeProvider = ({
 	}, [primaryColor, theme]);
 
 	useEffect(() => {
-		if (typeof document === "undefined") {
+		if (typeof document === "undefined" || !applyGlobal) {
 			return;
 		}
 
@@ -173,7 +180,7 @@ export const ThemeProvider = ({
 		);
 
 		root.classList.add(themeClass);
-	}, [theme, design, themeClass]);
+	}, [theme, design, themeClass, applyGlobal]);
 
 	const setTheme = useCallback(
 		(newTheme: Theme) => {

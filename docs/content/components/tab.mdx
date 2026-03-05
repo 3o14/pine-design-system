@@ -1,8 +1,13 @@
+---
+title: Tab
+---
+
 # Tab
 
-탭 네비게이션과 패널을 묶어서 보여주는 컴포넌트입니다.
+관련 콘텐츠를 여러 패널로 나누어 탐색할 수 있게 해주는 네비게이션 컴포넌트입니다.
+[Base UI Tabs](https://base-ui.com/components/react-tabs/)를 기반으로 키보드 탐색과 ARIA 패턴을 기본으로 지원합니다.
 
-## 예시
+## 미리보기
 
 <ComponentPreview>
   <TabDemo />
@@ -10,24 +15,104 @@
 
 ## Props
 
-| Prop         | Type       | Default   | 설명 |
-| ------------ | ---------- | --------- | ---- |
-| tabs         | `TabItem[]`| —         | `{ value, label, content, disabled? }` 목록 |
-| value        | `string`   | —         | 활성 탭 값 (controlled) |
-| defaultValue | `string`   | —         | 초기 활성 탭 값 |
-| onChange     | `(value: string) => void` | — | 탭 변경 시 호출 |
-| intent       | ColorIntent| `"primary"` | 색상 의도 |
-| orientation  | `"horizontal"` \| `"vertical"` | `"horizontal"` | 방향 |
+### `tabs`
+
+탭 목록을 정의하는 필수 prop입니다. 각 탭의 값, 라벨, 콘텐츠를 배열로 전달합니다.
+
+- **타입**: `TabItem[]`
+- **필수**: 예
+
+```ts
+type TabItem = {
+  value: string;              // 탭의 고유 식별자
+  label: React.ReactNode;     // 탭 버튼에 표시되는 텍스트 또는 요소
+  content: React.ReactNode;   // 탭이 활성화될 때 표시되는 콘텐츠
+  disabled?: boolean;         // 해당 탭 비활성화 여부
+};
+```
+
+### `value`
+
+현재 활성화된 탭의 값 (controlled). `onChange`와 함께 사용합니다.
+
+- **타입**: `string`
+- **기본값**: `undefined`
+
+### `defaultValue`
+
+초기에 활성화할 탭의 값 (uncontrolled). 지정하지 않으면 첫 번째 탭이 기본 선택됩니다.
+
+- **타입**: `string`
+- **기본값**: 첫 번째 탭의 `value`
+
+### `onChange`
+
+활성 탭이 변경될 때 호출되는 콜백 함수입니다.
+
+- **타입**: `(value: string) => void`
+
+### `intent`
+
+탭 인디케이터의 색상 의도를 결정합니다.
+
+- **타입**: `"primary" | "secondary" | "success" | "warning" | "danger" | "neutral"`
+- **기본값**: `"primary"`
+
+### `orientation`
+
+탭 목록의 배치 방향을 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `horizontal` | ✓ | 탭을 가로로 나열합니다. 일반적인 페이지 내 탭에 사용합니다. |
+| `vertical` | | 탭을 세로로 나열합니다. 사이드바 형태의 네비게이션에 사용합니다. |
+
+<ComponentPreview>
+  <TabVerticalDemo />
+</ComponentPreview>
+
+## 사용 가이드
+
+### 탭 수 제한
+
+탭이 너무 많으면 사용자가 콘텐츠를 파악하기 어렵습니다. 일반적으로 2~6개 이내로 유지하는 것을 권장합니다. 탭이 그보다 많다면 Dropdown이나 사이드 네비게이션 방식을 고려하세요.
+
+### Controlled vs Uncontrolled
+
+URL 파라미터와 탭 상태를 동기화하거나, 탭 전환 시 외부 동작(데이터 fetch 등)이 필요할 때는 `value` + `onChange`를 사용하세요. 단순한 UI 탭 전환은 `defaultValue`만으로 충분합니다.
 
 ## 코드
 
 ```tsx
 import { Tab } from "pine-design-system";
 
+const tabs = [
+  {
+    value: "profile",
+    label: "프로필",
+    content: <ProfilePanel />,
+  },
+  {
+    value: "settings",
+    label: "설정",
+    content: <SettingsPanel />,
+  },
+  {
+    value: "billing",
+    label: "결제",
+    content: <BillingPanel />,
+    disabled: true,
+  },
+];
+
+// 기본 사용
+<Tab tabs={tabs} />
+
+// Controlled + 수직 방향
 <Tab
-  tabs={[
-    { value: "a", label: "Tab A", content: <div>Panel A</div> },
-    { value: "b", label: "Tab B", content: <div>Panel B</div> },
-  ]}
+  tabs={tabs}
+  value={activeTab}
+  onChange={setActiveTab}
+  orientation="vertical"
 />
 ```

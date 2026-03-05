@@ -1,0 +1,54 @@
+---
+description: docs MDX 페이지 규칙
+globs: "docs/content/**/*.mdx"
+alwaysApply: false
+---
+
+# Docs MDX 규칙
+
+## 구조
+
+```mdx
+---
+title: ComponentName
+---
+
+# ComponentName
+
+한 줄 설명.
+
+## 미리보기
+
+<ComponentPreview code={...}>
+  <ComponentDemo />
+</ComponentPreview>
+
+## Props
+
+### `propName`
+
+설명. | 값 | 기본값 | 설명 | 테이블
+
+<ComponentPreview>...</ComponentPreview>
+
+## 사용 가이드
+
+## 코드
+
+```tsx
+import { Component } from "pine-design-system";
+...
+```
+
+<ComponentPropsDoc />
+```
+
+## ComponentPreview
+
+- `code` prop: JSX 문자열 (Preview/Code 탭 전환)
+- `children`: Demo 컴포넌트
+
+## Props 표
+
+- 페이지 하단에 `<ComponentPropsDoc />`
+- generate-props.mjs + PropsTable 사용

@@ -1,0 +1,43 @@
+[
+  {
+    "name": "variant",
+    "type": "\"solid\" | \"outline\" | \"subtle\" | \"weak\"",
+    "description": "Badge의 시각적 강조 수준을 결정합니다.",
+    "default": "\"solid\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Badge의 의미적 색상을 결정합니다.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Badge의 크기를 결정합니다.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Badge 모서리의 곡률을 결정합니다.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "showDot",
+    "type": "boolean",
+    "description": "Badge 앞에 상태 표시 dot을 노출합니다.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "children",
+    "type": "ReactNode",
+    "description": "Badge에 표시할 내용입니다.",
+    "required": true
+  }
+]

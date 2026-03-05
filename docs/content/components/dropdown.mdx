@@ -1,8 +1,15 @@
+---
+title: Dropdown
+---
+
 # Dropdown
 
-옵션 선택용 드롭다운(셀렉트) 컴포넌트입니다.
+여러 옵션 중 하나를 선택하는 드롭다운 선택 컴포넌트입니다.
+[Base UI Select](https://base-ui.com/components/react-select/)를 기반으로 키보드 탐색과 스크린리더 접근성을 기본으로 지원합니다.
 
-## 예시
+선택지가 5개 이하이거나 모든 옵션을 동시에 보여줘야 할 때는 라디오 버튼을 고려하세요.
+
+## 미리보기
 
 <ComponentPreview>
   <DropdownDemo />
@@ -10,30 +17,116 @@
 
 ## Props
 
-| Prop           | Type                    | Default     | 설명 |
-| -------------- | ----------------------- | ----------- | ---- |
-| options        | `DropdownOption[]`       | —           | `{ value, label, disabled? }` 목록 |
-| value          | `string`                | —           | 선택 값 (controlled) |
-| defaultValue   | `string`                | —           | 초기 선택 값 |
-| onValueChange  | `(value: string \| null) => void` | — | 선택 변경 시 호출 |
-| placeholder    | `string`                | `"Select an option"` | 플레이스홀더 |
-| size           | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 크기 |
-| rounded        | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 모서리 반경 |
-| intent         | ColorIntent             | `"primary"` | 색상 의도 |
-| fullWidth      | `boolean`               | `false`     | 전체 너비 |
-| disabled       | `boolean`               | `false`     | 비활성화 |
+### `options`
+
+드롭다운에서 선택할 수 있는 옵션 목록입니다.
+
+- **타입**: `Array<{ value: string; label: string; disabled?: boolean }>`
+
+```ts
+type DropdownOption = {
+  value: string;   // 선택 시 반환되는 값
+  label: string;   // 화면에 표시되는 텍스트
+  disabled?: boolean; // 해당 옵션 비활성화 여부
+};
+```
+
+### `value`
+
+현재 선택된 값 (controlled). 이 prop을 사용하면 `onValueChange`와 함께 써야 합니다.
+
+- **타입**: `string`
+- **기본값**: `undefined`
+
+### `defaultValue`
+
+초기 선택값 (uncontrolled).
+
+- **타입**: `string`
+- **기본값**: `undefined`
+
+### `onValueChange`
+
+선택된 값이 변경될 때 호출되는 콜백 함수입니다.
+
+- **타입**: `(value: string | null) => void`
+
+### `placeholder`
+
+아무 옵션도 선택되지 않은 상태에서 보여줄 플레이스홀더 텍스트입니다.
+
+- **타입**: `string`
+- **기본값**: `"Select an option"`
+
+### `size`
+
+드롭다운의 크기를 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 좁은 공간의 폼에 사용합니다. |
+| `medium` | ✓ | 일반적인 폼에서 사용합니다. |
+| `large` | | 충분한 클릭 영역이 필요할 때 사용합니다. |
+
+<ComponentPreview>
+  <DropdownSizeDemo />
+</ComponentPreview>
+
+### `rounded`
+
+드롭다운 모서리의 곡률을 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 작은 모서리 반경 |
+| `medium` | ✓ | 기본 모서리 반경 |
+| `large` | | 큰 모서리 반경 |
+
+### `intent`
+
+드롭다운의 색상 의도를 결정합니다.
+
+- **타입**: `"primary" | "secondary" | "success" | "warning" | "danger" | "neutral"`
+- **기본값**: `"primary"`
+
+### `fullWidth`
+
+`true`로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
+
+- **타입**: `boolean`
+- **기본값**: `false`
+
+### `disabled`
+
+드롭다운을 비활성화합니다.
+
+- **타입**: `boolean`
+- **기본값**: `false`
 
 ## 코드
 
 ```tsx
 import { Dropdown } from "pine-design-system";
 
+const options = [
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" },
+  { value: "system", label: "System Default" },
+];
+
+// 기본 사용 (uncontrolled)
+<Dropdown options={options} placeholder="테마를 선택하세요" />
+
+// Controlled
 <Dropdown
-  options={[
-    { value: "1", label: "One" },
-    { value: "2", label: "Two" },
-  ]}
-  onValueChange={(v) => console.log(v)}
-  placeholder="Choose"
+  options={options}
+  value={theme}
+  onValueChange={setTheme}
 />
+
+// 비활성화된 옵션 포함
+const options = [
+  { value: "a", label: "Option A" },
+  { value: "b", label: "Option B (사용 불가)", disabled: true },
+];
 ```

@@ -1,27 +1,129 @@
+---
+title: Badge
+---
+
 # Badge
 
-라벨, 태그, 상태 표시에 사용하는 뱃지 컴포넌트입니다.
+상태, 라벨, 카테고리 등을 시각적으로 표시하는 인라인 컴포넌트입니다.
+텍스트 옆에 붙여 부가 정보를 전달하거나, 목록 아이템의 상태를 나타낼 때 사용합니다.
 
-## 예시
+## 미리보기
 
-<ComponentPreview>
+<ComponentPreview code={`<Badge intent="primary">Primary</Badge>
+<Badge intent="success" variant="outline">Success</Badge>
+<Badge intent="warning" showDot>Warning</Badge>
+<Badge intent="danger" variant="subtle">Danger</Badge>`}>
   <BadgeDemo />
 </ComponentPreview>
 
 ## Props
 
-| Prop     | Type                                                                 | Default   | 설명 |
-| -------- | -------------------------------------------------------------------- | --------- | ---- |
-| variant  | `"solid"` \| `"outline"` \| `"subtle"` \| `"weak"`                    | `"solid"` | 스타일 변형 |
-| size     | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"`                   | `"medium"` | 크기 |
-| intent   | `"primary"` \| `"secondary"` \| `"success"` \| `"warning"` \| `"danger"` \| `"neutral"` | `"primary"` | 색상 의도 |
-| rounded  | `"small"` \| `"medium"` \| `"large"`                                  | `"medium"` | 모서리 반경 |
-| showDot  | `boolean`                                                            | `false`   | 앞에 점 표시 |
+### `variant`
+
+Badge의 시각적 강조 수준을 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `solid` | ✓ | 배경색이 채워진 스타일. 가장 강조가 필요한 상태에 사용합니다. |
+| `outline` | | 테두리만 있는 스타일. 중간 강조의 상태에 사용합니다. |
+| `subtle` | | 연한 배경의 스타일. 강조가 약한 부가 정보에 사용합니다. |
+| `weak` | | 가장 연한 배경 스타일. 배경과의 대비가 낮은 태그에 사용합니다. |
+
+<ComponentPreview code={`<Badge variant="solid" intent="primary">Solid</Badge>
+<Badge variant="outline" intent="primary">Outline</Badge>
+<Badge variant="subtle" intent="primary">Subtle</Badge>
+<Badge variant="weak" intent="primary">Weak</Badge>`}>
+  <BadgeVariantDemo />
+</ComponentPreview>
+
+### `intent`
+
+Badge의 의미적 색상을 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `primary` | ✓ | 주요 카테고리, 핵심 정보를 나타냅니다. |
+| `secondary` | | 보조 카테고리, 부가 정보를 나타냅니다. |
+| `success` | | 완료, 정상, 활성 상태를 나타냅니다. |
+| `warning` | | 주의 또는 미완료 상태를 나타냅니다. |
+| `danger` | | 오류, 비활성, 위험 상태를 나타냅니다. |
+| `neutral` | | 중립적인 상태를 나타냅니다. |
+
+<ComponentPreview code={`<Badge intent="primary">Primary</Badge>
+<Badge intent="secondary">Secondary</Badge>
+<Badge intent="success">Success</Badge>
+<Badge intent="warning">Warning</Badge>
+<Badge intent="danger">Danger</Badge>
+<Badge intent="neutral">Neutral</Badge>`}>
+  <BadgeIntentDemo />
+</ComponentPreview>
+
+### `size`
+
+Badge의 크기를 결정합니다. 함께 배치되는 텍스트나 컴포넌트의 크기에 맞게 선택하세요.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 본문 텍스트 옆의 보조 라벨에 사용합니다. |
+| `medium` | ✓ | 가장 범용적인 크기입니다. |
+| `large` | | 크기가 큰 컴포넌트와 함께 사용합니다. |
+| `xlarge` | | 헤딩 수준의 크기가 필요할 때 사용합니다. |
+
+<ComponentPreview code={`<Badge size="small" intent="primary">Small</Badge>
+<Badge size="medium" intent="primary">Medium</Badge>
+<Badge size="large" intent="primary">Large</Badge>
+<Badge size="xlarge" intent="primary">XLarge</Badge>`}>
+  <BadgeSizeDemo />
+</ComponentPreview>
+
+### `rounded`
+
+Badge 모서리의 곡률을 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 작은 모서리 반경 |
+| `medium` | ✓ | 기본 모서리 반경 |
+| `large` | | 큰 모서리 반경 (pill 형태에 가깝습니다) |
+
+### `showDot`
+
+Badge 앞에 상태 표시 dot을 노출합니다. 실시간 상태 변화나 알림이 있음을 나타낼 때 사용합니다.
+
+- **타입**: `boolean`
+- **기본값**: `false`
+
+<ComponentPreview code={`<Badge intent="success" showDot>Active</Badge>
+<Badge intent="danger" showDot>Error</Badge>
+<Badge intent="warning" showDot>Pending</Badge>`}>
+  <BadgeDotDemo />
+</ComponentPreview>
+
+## 사용 가이드
+
+### 적절한 Variant 선택하기
+
+- **solid**: 정보를 분명히 강조해야 할 때 사용합니다. 리스트 내 상태 표시, CTA 주변의 카운트 표시 등에 적합합니다.
+- **outline / subtle / weak**: 텍스트 옆에 가볍게 붙이는 태그나 분류 라벨에 사용합니다. 화면 내 강조가 과해지지 않도록 조절하세요.
+
+### Dot 사용하기
+
+`showDot`은 실시간 상태를 나타내는 데 사용합니다. `success` ↔ 온라인/정상, `danger` ↔ 오류/오프라인, `warning` ↔ 주의 패턴을 권장합니다.
 
 ## 코드
 
 ```tsx
 import { Badge } from "pine-design-system";
 
+// 기본 사용
+<Badge intent="primary">New</Badge>
+
+// 상태 표시
 <Badge intent="success" showDot>Active</Badge>
+<Badge intent="danger" variant="outline">Error</Badge>
+
+// 카테고리 태그
+<Badge variant="subtle" intent="neutral">Design System</Badge>
 ```
+
+<BadgePropsDoc />

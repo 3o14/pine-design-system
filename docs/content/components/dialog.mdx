@@ -1,23 +1,118 @@
+---
+title: Dialog
+---
+
 # Dialog
 
-모달 다이얼로그입니다. **controlled** 컴포넌트로, `open`과 `onOpenChange`로 열림 상태를 제어합니다.
+중요한 정보를 전달하거나 사용자의 확인·입력을 받는 모달 컴포넌트입니다.
+[Base UI Dialog](https://base-ui.com/components/react-dialog/)를 기반으로 포커스 트랩, 스크롤 잠금, Escape 키 닫기를 기본으로 지원합니다.
 
 ## Props
 
-| Prop                 | Type       | Default   | 설명 |
-| -------------------- | ---------- | --------- | ---- |
-| open                 | `boolean`  | —         | 열림 여부 |
-| onOpenChange         | `(open: boolean) => void` | — | 열림 상태 변경 시 호출 |
-| onClose              | `() => void` | —       | 닫힐 때 호출 |
-| title                | `string`   | —         | 제목 |
-| description          | `string`   | —         | 설명 텍스트 |
-| size                 | `"small"` \| `"medium"` \| `"large"` \| `"xlarge"` \| `"full"` | `"medium"` | 크기 |
-| rounded              | `"small"` \| `"medium"` \| `"large"` | `"medium"` | 모서리 반경 |
-| showCloseButton      | `boolean`  | `true`    | 닫기 버튼 표시 |
-| closeOnOverlayClick  | `boolean`  | `true`    | 오버레이 클릭 시 닫기 |
-| closeOnEscape        | `boolean`  | `true`    | Escape 키로 닫기 |
-| actions              | `DialogAction[]` | —   | 푸터 액션 버튼 목록 |
-| footer               | `ReactNode`| —         | 푸터 커스텀 |
+### `open` (필수)
+
+Dialog의 열림/닫힘 상태를 제어합니다.
+
+- **타입**: `boolean`
+
+### `onOpenChange`
+
+열림 상태가 변경될 때 호출되는 콜백입니다. 오버레이 클릭이나 Escape 키로 닫힐 때도 호출됩니다.
+
+- **타입**: `(open: boolean) => void`
+
+### `onClose`
+
+Dialog가 닫힐 때 추가로 호출되는 콜백입니다. `onOpenChange`와 함께 사용하거나, 닫힐 때만 별도 처리가 필요할 때 사용합니다.
+
+- **타입**: `() => void`
+
+### `title`
+
+Dialog 헤더에 표시되는 제목 텍스트입니다. `aria-labelledby` 역할을 하여 스크린리더 접근성을 보장합니다.
+
+- **타입**: `string`
+
+### `description`
+
+제목 아래에 표시되는 설명 텍스트입니다.
+
+- **타입**: `string`
+
+### `size`
+
+Dialog의 최대 너비를 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 확인/취소 등 간단한 확인 Dialog |
+| `medium` | ✓ | 일반적인 폼이나 정보 Dialog |
+| `large` | | 복잡한 폼이나 상세 내용 Dialog |
+| `xlarge` | | 많은 콘텐츠가 필요한 Dialog |
+| `full` | | 전체 화면 Dialog |
+
+### `rounded`
+
+Dialog 모서리의 곡률을 결정합니다.
+
+| 값 | 기본값 | 설명 |
+| --- | :---: | --- |
+| `small` | | 작은 모서리 반경 |
+| `medium` | ✓ | 기본 모서리 반경 |
+| `large` | | 큰 모서리 반경 |
+
+### `actions`
+
+Dialog 하단에 표시되는 액션 버튼 목록입니다. 각 버튼의 스타일을 `variant`와 `intent`로 개별 지정할 수 있습니다.
+
+- **타입**: `DialogAction[]`
+
+```ts
+type DialogAction = {
+  label: string;
+  onClick: () => void;
+  variant?: ButtonVariant;   // "solid" | "outline" | "ghost" | "weak"
+  intent?: ButtonIntent;     // "primary" | "danger" | ...
+  disabled?: boolean;
+};
+```
+
+### `footer`
+
+`actions` 대신 완전히 커스텀된 하단 영역을 렌더링할 때 사용합니다.
+
+- **타입**: `React.ReactNode`
+
+### `showCloseButton`
+
+헤더 우측 상단의 닫기(X) 버튼 표시 여부를 결정합니다.
+
+- **타입**: `boolean`
+- **기본값**: `true`
+
+### `closeOnOverlayClick`
+
+오버레이(배경) 클릭 시 Dialog를 닫을지 결정합니다.
+
+- **타입**: `boolean`
+- **기본값**: `true`
+
+### `closeOnEscape`
+
+Escape 키 입력 시 Dialog를 닫을지 결정합니다.
+
+- **타입**: `boolean`
+- **기본값**: `true`
+
+## 사용 가이드
+
+### 확인 Dialog
+
+되돌릴 수 없는 액션(삭제, 초기화 등)은 반드시 사용자에게 확인을 받으세요. 이 경우 `actions`에 `danger` intent 버튼을 포함하고 `closeOnOverlayClick: false`로 설정하는 것을 권장합니다.
+
+### 폼 Dialog
+
+폼이 포함된 Dialog에서는 `closeOnOverlayClick: false`를 권장합니다. 사용자가 실수로 입력 내용을 잃지 않도록 보호합니다.
 
 ## 코드
 
@@ -25,22 +120,38 @@
 import { useState } from "react";
 import { Dialog, Button } from "pine-design-system";
 
-function Example() {
+function DeleteConfirmDialog() {
   const [open, setOpen] = useState(false);
+
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open Dialog</Button>
+      <Button intent="danger" onClick={() => setOpen(true)}>
+        삭제하기
+      </Button>
+
       <Dialog
         open={open}
         onOpenChange={setOpen}
-        title="Title"
-        description="Optional description."
+        title="정말 삭제하시겠어요?"
+        description="삭제된 데이터는 복구할 수 없습니다."
+        size="small"
+        closeOnOverlayClick={false}
         actions={[
-          { label: "Cancel", onClick: () => setOpen(false), variant: "outline" },
-          { label: "Confirm", onClick: () => setOpen(false) },
+          {
+            label: "취소",
+            variant: "weak",
+            intent: "neutral",
+            onClick: () => setOpen(false),
+          },
+          {
+            label: "삭제",
+            variant: "solid",
+            intent: "danger",
+            onClick: handleDelete,
+          },
         ]}
       >
-        Dialog body content.
+        <p>선택한 항목이 영구적으로 삭제됩니다.</p>
       </Dialog>
     </>
   );
