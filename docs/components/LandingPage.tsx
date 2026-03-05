@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTheme as useDocsTheme } from "nextra-theme-docs";
 import { ThemeProvider, Button } from "pine-design-system";
 
@@ -71,6 +72,7 @@ export function LandingPage() {
   const [copied, setCopied] = useState(false);
   const { resolvedTheme } = useDocsTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -162,11 +164,14 @@ export function LandingPage() {
             gap: "16px",
           }}
         >
-          <Link href="/get-started">
-            <Button variant="solid" intent="primary" size="large">
-              Get Started
-            </Button>
-          </Link>
+          <Button
+            variant="solid"
+            intent="primary"
+            size="large"
+            onClick={() => router.push("/get-started")}
+          >
+            Get Started
+          </Button>
           <div
             style={{
               display: "flex",

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { generateStaticParamsFor, importPage } from "nextra/pages";
-import { useMDXComponents as getMDXComponents } from "../../../mdx-components";
+import { useMDXComponents as getMDXComponents } from "../../mdx-components";
 
 /** Paths that are not MDX (e.g. favicon, assets) — skip importPage and 404. */
 function isNonMdxPath(segments: string[]): boolean {
@@ -9,10 +9,13 @@ function isNonMdxPath(segments: string[]): boolean {
   return last.includes(".") || /\.(ico|png|jpg|jpeg|gif|svg|webp|woff2?)$/i.test(last);
 }
 
-/** Required catch-all: exclude root [] so / is served by (landing)/page.tsx. */
+/** Required catch-all: exclude root [] or [''] so / is served by (landing)/page.tsx. */
 export const generateStaticParams = async () => {
   const params = await generateStaticParamsFor("mdxPath")();
-  return params.filter((p: { mdxPath?: string[] }) => (p.mdxPath?.length ?? 0) > 0);
+  return params.filter((p: { mdxPath?: string[] }) => {
+    const segs = p.mdxPath ?? [];
+    return segs.length > 0 && segs.every((s) => s.length > 0);
+  });
 };
 
 export async function generateMetadata(props: { params: Promise<{ mdxPath: string[] }> }) {
