@@ -3,6 +3,9 @@ import { ComponentPreview } from "./components/ComponentPreview";
 import { BadgePropsDoc, ButtonPropsDoc } from "./components/PropsTables";
 import { ColorPalette } from "./components/ColorPalette";
 import { ColorTokenTable } from "./components/ColorTokenTable";
+import { TypographyScale } from "./components/TypographyScale";
+import { FontWeightPreview } from "./components/FontWeightPreview";
+import { FontFamilyPreview } from "./components/FontFamilyPreview";
 import {
   IntroDemo,
   ButtonDemo,
@@ -46,6 +49,9 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     ButtonPropsDoc,
     ColorPalette,
     ColorTokenTable,
+    TypographyScale,
+    FontWeightPreview,
+    FontFamilyPreview,
     IntroDemo,
     ButtonDemo,
     ButtonVariantDemo,
