@@ -6,6 +6,9 @@ import { ColorTokenTable } from "./components/ColorTokenTable";
 import { TypographyScale } from "./components/TypographyScale";
 import { FontWeightPreview } from "./components/FontWeightPreview";
 import { FontFamilyPreview } from "./components/FontFamilyPreview";
+import { RadiusScale } from "./components/RadiusScale";
+import { ShadowScale } from "./components/ShadowScale";
+import { SpacingScale } from "./components/SpacingScale";
 import {
   IntroDemo,
   ButtonDemo,
@@ -52,6 +55,9 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     TypographyScale,
     FontWeightPreview,
     FontFamilyPreview,
+    RadiusScale,
+    ShadowScale,
+    SpacingScale,
     IntroDemo,
     ButtonDemo,
     ButtonVariantDemo,

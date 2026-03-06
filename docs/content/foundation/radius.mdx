@@ -1,0 +1,16 @@
+# Radius
+
+모서리 둥글기(radius) 토큰은 버튼, 카드, 입력 필드 등 컴포넌트의 모서리 곡률을 일관되게 정의합니다.
+
+## 개요
+
+Pine에서는 `none`부터 `full`까지 10단계의 radius 토큰을 제공합니다. 테마별로 컴포넌트에 다른 radius가 매핑됩니다. basic은 둥근 pill 스타일, game은 각진 스타일(0), crayon은 매우 둥근 스타일을 사용합니다.
+
+## Radius 토큰
+
+<RadiusScale />
+
+## 사용 가이드라인
+
+- **일관성**: 같은 계층의 컴포넌트(예: 버튼, 카드)에는 동일한 radius 토큰을 사용합니다.
+- **테마 반영**: `ThemeProvider`의 `design`에 따라 시맨틱 radius(button.radius, card.radius 등)가 위 foundation 토큰으로 치환됩니다.
