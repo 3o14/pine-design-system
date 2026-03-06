@@ -2,6 +2,7 @@ import { createTheme, globalFontFace } from "@vanilla-extract/css";
 import { semanticTokens } from "../semantic";
 import * as foundation from "../foundation";
 import { getWeakColor } from "../utils/getWeakColor";
+import { toNeon } from "../utils/adaptColor";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
 
 globalFontFace("DungGeunMo", {
@@ -20,32 +21,36 @@ const primaryColorVars = {
 	weak: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.weak})`,
 } as const;
 
+const neonGreen = toNeon(foundation.green);
+const neonBlue = toNeon(foundation.blue);
+const neonOrange = toNeon(foundation.orange);
+
 export const gameLightTheme = createTheme(semanticTokens, {
 	color: {
 		primary: primaryColorVars,
 		secondary: {
-			surface: foundation.gameBlue[500],
-			surfaceHover: foundation.gameBlue[600],
-			surfaceActive: foundation.gameBlue[700],
+			surface: neonBlue[500],
+			surfaceHover: neonBlue[600],
+			surfaceActive: neonBlue[700],
 			text: foundation.neutral.white,
-			border: foundation.gameBlue[600],
-			weak: getWeakColor(foundation.gameBlue[500], 25),
+			border: neonBlue[600],
+			weak: getWeakColor(neonBlue[500], 25),
 		},
 		success: {
-			surface: foundation.gameGreen[500],
-			surfaceHover: foundation.gameGreen[600],
-			surfaceActive: foundation.gameGreen[700],
+			surface: neonGreen[500],
+			surfaceHover: neonGreen[600],
+			surfaceActive: neonGreen[700],
 			text: foundation.neutral.white,
-			border: foundation.gameGreen[600],
-			weak: getWeakColor(foundation.gameGreen[500], 25),
+			border: neonGreen[600],
+			weak: getWeakColor(neonGreen[500], 25),
 		},
 		warning: {
-			surface: foundation.gameOrange[500],
-			surfaceHover: foundation.gameOrange[600],
-			surfaceActive: foundation.gameOrange[700],
+			surface: neonOrange[500],
+			surfaceHover: neonOrange[600],
+			surfaceActive: neonOrange[700],
 			text: foundation.neutral.white,
-			border: foundation.gameOrange[600],
-			weak: getWeakColor(foundation.gameOrange[500], 25),
+			border: neonOrange[600],
+			weak: getWeakColor(neonOrange[500], 25),
 		},
 		danger: {
 			surface: foundation.red[500],
@@ -153,28 +158,28 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 	color: {
 		primary: primaryColorVars,
 		secondary: {
-			surface: foundation.gameBlue[400],
-			surfaceHover: foundation.gameBlue[500],
-			surfaceActive: foundation.gameBlue[600],
+			surface: neonBlue[400],
+			surfaceHover: neonBlue[500],
+			surfaceActive: neonBlue[600],
 			text: foundation.neutral.white,
-			border: foundation.gameBlue[500],
-			weak: getWeakColor(foundation.gameBlue[400], 25),
+			border: neonBlue[500],
+			weak: getWeakColor(neonBlue[400], 25),
 		},
 		success: {
-			surface: foundation.gameGreen[400],
-			surfaceHover: foundation.gameGreen[500],
-			surfaceActive: foundation.gameGreen[600],
+			surface: neonGreen[400],
+			surfaceHover: neonGreen[500],
+			surfaceActive: neonGreen[600],
 			text: foundation.neutral.white,
-			border: foundation.gameGreen[500],
-			weak: getWeakColor(foundation.gameGreen[400], 25),
+			border: neonGreen[500],
+			weak: getWeakColor(neonGreen[400], 25),
 		},
 		warning: {
-			surface: foundation.gameOrange[400],
-			surfaceHover: foundation.gameOrange[500],
-			surfaceActive: foundation.gameOrange[600],
+			surface: neonOrange[400],
+			surfaceHover: neonOrange[500],
+			surfaceActive: neonOrange[600],
 			text: foundation.neutral.white,
-			border: foundation.gameOrange[500],
-			weak: getWeakColor(foundation.gameOrange[400], 25),
+			border: neonOrange[500],
+			weak: getWeakColor(neonOrange[400], 25),
 		},
 		danger: {
 			surface: foundation.red[400],

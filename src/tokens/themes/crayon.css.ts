@@ -2,6 +2,7 @@ import { createTheme, globalFontFace } from "@vanilla-extract/css";
 import { semanticTokens } from "../semantic";
 import * as foundation from "../foundation";
 import { getWeakColor } from "../utils/getWeakColor";
+import { toPastel } from "../utils/adaptColor";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
 
 globalFontFace("온글잎-승훈체", {
@@ -20,32 +21,36 @@ const primaryColorVars = {
 	weak: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.weak})`,
 } as const;
 
+const pastelPink = toPastel(foundation.pink);
+const pastelGreen = toPastel(foundation.green);
+const pastelYellow = toPastel(foundation.yellow);
+
 export const crayonLightTheme = createTheme(semanticTokens, {
 	color: {
 		primary: primaryColorVars,
 		secondary: {
-			surface: foundation.crayonPink[500],
-			surfaceHover: foundation.crayonPink[600],
-			surfaceActive: foundation.crayonPink[700],
+			surface: pastelPink[500],
+			surfaceHover: pastelPink[600],
+			surfaceActive: pastelPink[700],
 			text: foundation.neutral.white,
-			border: foundation.crayonPink[600],
-			weak: getWeakColor(foundation.crayonPink[500], 25),
+			border: pastelPink[600],
+			weak: getWeakColor(pastelPink[500], 25),
 		},
 		success: {
-			surface: foundation.crayonGreen[500],
-			surfaceHover: foundation.crayonGreen[600],
-			surfaceActive: foundation.crayonGreen[700],
+			surface: pastelGreen[500],
+			surfaceHover: pastelGreen[600],
+			surfaceActive: pastelGreen[700],
 			text: foundation.neutral.white,
-			border: foundation.crayonGreen[600],
-			weak: getWeakColor(foundation.crayonGreen[500], 25),
+			border: pastelGreen[600],
+			weak: getWeakColor(pastelGreen[500], 25),
 		},
 		warning: {
-			surface: foundation.crayonYellow[500],
-			surfaceHover: foundation.crayonYellow[600],
-			surfaceActive: foundation.crayonYellow[700],
-			text: foundation.crayonDark[500],
-			border: foundation.crayonYellow[600],
-			weak: getWeakColor(foundation.crayonYellow[500], 25),
+			surface: pastelYellow[500],
+			surfaceHover: pastelYellow[600],
+			surfaceActive: pastelYellow[700],
+			text: foundation.charcoal[500],
+			border: pastelYellow[600],
+			weak: getWeakColor(pastelYellow[500], 25),
 		},
 		danger: {
 			surface: foundation.red[400],
@@ -56,19 +61,19 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 			weak: getWeakColor(foundation.red[400], 25),
 		},
 		neutral: {
-			surface: foundation.crayonCream[500],
-			surfaceHover: foundation.crayonCream[600],
-			surfaceActive: foundation.crayonCream[700],
-			text: foundation.crayonDark[500],
-			border: foundation.crayonCream[600],
-			weak: getWeakColor(foundation.crayonCream[500], 25),
+			surface: foundation.cream[500],
+			surfaceHover: foundation.cream[600],
+			surfaceActive: foundation.cream[700],
+			text: foundation.charcoal[500],
+			border: foundation.cream[600],
+			weak: getWeakColor(foundation.cream[500], 25),
 		},
 		surface: {
-			background: foundation.crayonCream[50],
+			background: foundation.cream[50],
 			backgroundElevated: foundation.neutral.white,
-			outline: foundation.crayonCream[300],
-			text: foundation.crayonDark[500],
-			textMuted: foundation.crayonDark[400],
+			outline: foundation.cream[300],
+			text: foundation.charcoal[500],
+			textMuted: foundation.charcoal[400],
 			divider: "rgba(75, 75, 75, 0.08)",
 		},
 	},
@@ -153,28 +158,28 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 	color: {
 		primary: primaryColorVars,
 		secondary: {
-			surface: foundation.crayonPink[400],
-			surfaceHover: foundation.crayonPink[500],
-			surfaceActive: foundation.crayonPink[600],
+			surface: pastelPink[400],
+			surfaceHover: pastelPink[500],
+			surfaceActive: pastelPink[600],
 			text: foundation.neutral.white,
-			border: foundation.crayonPink[500],
-			weak: getWeakColor(foundation.crayonPink[400], 25),
+			border: pastelPink[500],
+			weak: getWeakColor(pastelPink[400], 25),
 		},
 		success: {
-			surface: foundation.crayonGreen[400],
-			surfaceHover: foundation.crayonGreen[500],
-			surfaceActive: foundation.crayonGreen[600],
+			surface: pastelGreen[400],
+			surfaceHover: pastelGreen[500],
+			surfaceActive: pastelGreen[600],
 			text: foundation.neutral.white,
-			border: foundation.crayonGreen[500],
-			weak: getWeakColor(foundation.crayonGreen[400], 25),
+			border: pastelGreen[500],
+			weak: getWeakColor(pastelGreen[400], 25),
 		},
 		warning: {
-			surface: foundation.crayonYellow[400],
-			surfaceHover: foundation.crayonYellow[500],
-			surfaceActive: foundation.crayonYellow[600],
-			text: foundation.crayonDark[500],
-			border: foundation.crayonYellow[500],
-			weak: getWeakColor(foundation.crayonYellow[400], 25),
+			surface: pastelYellow[400],
+			surfaceHover: pastelYellow[500],
+			surfaceActive: pastelYellow[600],
+			text: foundation.charcoal[500],
+			border: pastelYellow[500],
+			weak: getWeakColor(pastelYellow[400], 25),
 		},
 		danger: {
 			surface: foundation.red[400],
@@ -185,19 +190,19 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 			weak: getWeakColor(foundation.red[400], 25),
 		},
 		neutral: {
-			surface: foundation.crayonDark[500],
-			surfaceHover: foundation.crayonDark[600],
-			surfaceActive: foundation.crayonDark[700],
-			text: foundation.crayonCream[500],
-			border: foundation.crayonDark[600],
-			weak: getWeakColor(foundation.crayonDark[500], 25),
+			surface: foundation.charcoal[500],
+			surfaceHover: foundation.charcoal[600],
+			surfaceActive: foundation.charcoal[700],
+			text: foundation.cream[500],
+			border: foundation.charcoal[600],
+			weak: getWeakColor(foundation.charcoal[500], 25),
 		},
 		surface: {
-			background: foundation.crayonDark[900],
-			backgroundElevated: foundation.crayonDark[800],
-			outline: foundation.crayonDark[700],
-			text: foundation.crayonCream[500],
-			textMuted: foundation.crayonDark[400],
+			background: foundation.charcoal[900],
+			backgroundElevated: foundation.charcoal[800],
+			outline: foundation.charcoal[700],
+			text: foundation.cream[500],
+			textMuted: foundation.charcoal[400],
 			divider: "rgba(250, 243, 236, 0.24)",
 		},
 	},
