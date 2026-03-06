@@ -1,5 +1,5 @@
 export default {
-  index: "Introduction",
+  introduction: "Introduction",
   "get-started": "Get Started",
   foundation: "Foundation",
   components: "Components",

@@ -103,7 +103,7 @@ export function LandingPage() {
       >
         <strong style={{ fontSize: "18px", fontWeight: 600 }}>Pine Design System</strong>
         <nav style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Link href="/get-started" style={{ fontSize: "14px", fontWeight: 500, color: c.textMuted, textDecoration: "none" }}>
+          <Link href="/introduction" style={{ fontSize: "14px", fontWeight: 500, color: c.textMuted, textDecoration: "none" }}>
             Docs
           </Link>
           <a
