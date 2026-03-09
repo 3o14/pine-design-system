@@ -27,80 +27,34 @@ const FAMILIES: { theme: string; name: string; stack: string }[] = [
 
 const SAMPLE = "안녕하세요 Hello 123";
 
-const cardStyle: React.CSSProperties = {
-  padding: "16px 20px",
-  borderRadius: "8px",
-  border: "1px solid var(--x-color-border, #e5e7eb)",
-  background: "var(--x-color-bg-default, #ffffff)",
-};
-
 export function FontFamilyPreview() {
   return (
-    <div style={{ margin: "24px 0" }}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: "16px",
-        }}
-      >
+    <div className="my-6">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
         {FAMILIES.map(({ theme, name, stack }) => (
-          <div key={name} style={cardStyle}>
-            <div
-              style={{
-                fontSize: "11px",
-                fontWeight: 600,
-                color: "var(--x-color-fg-neutral-subtle, #6b7280)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "8px",
-              }}
-            >
+          <div
+            key={name}
+            className="p-4 px-5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950"
+          >
+            <div className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
               {theme}
             </div>
-            <div
-              style={{
-                fontSize: "13px",
-                fontWeight: 600,
-                color: "var(--x-color-fg-neutral, #374151)",
-                marginBottom: "12px",
-              }}
-            >
+            <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
               {name}
             </div>
             <div
-              style={{
-                fontFamily: stack,
-                fontSize: "1.25rem",
-                lineHeight: 1.5,
-                color: "var(--x-color-fg-neutral, #111827)",
-                marginBottom: "12px",
-              }}
+              className="text-xl leading-relaxed text-gray-900 dark:text-gray-100 mb-3"
+              style={{ fontFamily: stack }}
             >
               {SAMPLE}
             </div>
-            <code
-              style={{
-                display: "block",
-                fontSize: "11px",
-                color: "var(--x-color-fg-neutral-subtle, #9ca3af)",
-                fontFamily: "monospace",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-all",
-              }}
-            >
+            <code className="block text-[11px] text-gray-500 dark:text-gray-400 font-mono whitespace-pre-wrap break-all">
               {stack}
             </code>
           </div>
         ))}
       </div>
-      <p
-        style={{
-          marginTop: "12px",
-          fontSize: "12px",
-          color: "var(--x-color-fg-neutral-subtle, #9ca3af)",
-        }}
-      >
+      <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
         game·crayon 테마는 웹폰트(DungGeunMo, 온글잎-승훈체) 로드 시 해당 글꼴로 표시됩니다.
       </p>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode, CSSProperties } from "react";
+import type { ReactNode } from "react";
 import { useState, useCallback } from "react";
 import { Highlight, themes } from "prism-react-renderer";
 
@@ -14,11 +14,6 @@ interface ComponentPreviewProps {
   /** 미리보기 영역 최소 높이 */
   minHeight?: number;
 }
-
-const BORDER_COLOR = "var(--x-color-border, #e5e7eb)";
-const BG = "var(--x-color-bg-default, #ffffff)";
-const FG = "var(--x-color-fg-neutral, #111827)";
-const FG_MUTED = "var(--x-color-fg-neutral-subtle, #6b7280)";
 
 export function ComponentPreview({
   children,
@@ -37,67 +32,19 @@ export function ComponentPreview({
     });
   }, [code]);
 
-  const containerStyle: CSSProperties = {
-    border: `1px solid ${BORDER_COLOR}`,
-    borderRadius: "12px",
-    overflow: "hidden",
-    margin: "20px 0",
-  };
-
-  const headerStyle: CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    borderBottom: `1px solid ${BORDER_COLOR}`,
-    padding: "0 20px",
-    background: BG,
-  };
-
-  const tabStyle = (isActive: boolean): CSSProperties => ({
-    padding: "11px 2px",
-    marginRight: "20px",
-    marginBottom: "-1px",
-    fontSize: "14px",
-    fontWeight: isActive ? 600 : 400,
-    color: isActive ? FG : FG_MUTED,
-    background: "none",
-    border: "none",
-    borderBottom: isActive ? `2px solid ${FG}` : "2px solid transparent",
-    cursor: "pointer",
-    transition: "color 0.15s, border-color 0.15s",
-  });
-
-  const copyButtonStyle: CSSProperties = {
-    marginLeft: "auto",
-    padding: "4px 10px",
-    fontSize: "12px",
-    fontWeight: 500,
-    borderRadius: "6px",
-    border: `1px solid ${BORDER_COLOR}`,
-    background: "transparent",
-    cursor: "pointer",
-    color: FG_MUTED,
-    transition: "color 0.15s",
-  };
-
-  const previewStyle: CSSProperties = {
-    padding: "32px 24px",
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: align === "center" ? "center" : "flex-start",
-    gap: "12px",
-    minHeight,
-    background: BG,
-  };
+  const tabBase =
+    "px-0.5 pb-0.5 mr-5 -mb-px text-sm border-b-2 border-transparent cursor-pointer transition-colors";
+  const tabActive = "font-semibold text-gray-900 dark:text-gray-100 border-gray-900 dark:border-gray-100";
+  const tabInactive = "font-normal text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300";
 
   return (
-    <div className="not-prose" style={containerStyle}>
+    <div className="not-prose my-5 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* Tab header */}
-      <div style={headerStyle}>
+      <div className="flex items-center border-b border-gray-200 dark:border-gray-700 px-5 bg-white dark:bg-gray-950">
         <button
           type="button"
           onClick={() => setActiveTab("preview")}
-          style={tabStyle(activeTab === "preview")}
+          className={`${tabBase} ${activeTab === "preview" ? tabActive : tabInactive}`}
         >
           미리보기
         </button>
@@ -105,13 +52,17 @@ export function ComponentPreview({
           <button
             type="button"
             onClick={() => setActiveTab("code")}
-            style={tabStyle(activeTab === "code")}
+            className={`${tabBase} ${activeTab === "code" ? tabActive : tabInactive}`}
           >
             코드
           </button>
         )}
         {activeTab === "code" && code && (
-          <button type="button" onClick={handleCopy} style={copyButtonStyle}>
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="ml-auto px-2.5 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          >
             {copied ? "복사됨" : "복사"}
           </button>
         )}
@@ -119,30 +70,24 @@ export function ComponentPreview({
 
       {/* Preview panel */}
       {(activeTab === "preview" || !code) && (
-        <div style={previewStyle}>{children}</div>
+        <div
+          className={`flex flex-wrap items-center gap-3 p-8 bg-white dark:bg-gray-950 ${
+            align === "center" ? "justify-center" : "justify-start"
+          }`}
+          style={{ minHeight }}
+        >
+          {children}
+        </div>
       )}
 
-      {/* Code panel - GitHub light theme 배경 (#f6f8fa) */}
+      {/* Code panel */}
       {activeTab === "code" && code && (
-        <div
-          style={{
-            background: themes.github.plain.background ?? "#f6f8fa",
-          }}
-        >
+        <div className="bg-white">
           <Highlight theme={themes.github} code={code.trim()} language="jsx">
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre
-                className={className}
-                style={{
-                  ...style,
-                  overflowX: "auto",
-                  padding: "20px 24px",
-                  margin: 0,
-                  fontSize: "13px",
-                  lineHeight: 1.65,
-                  fontFamily:
-                    "'Roboto Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace",
-                }}
+                className={`${className} overflow-x-auto py-5 px-6 m-0 text-[13px] leading-relaxed font-mono bg-white`}
+                style={style}
               >
                 {tokens.map((line, i) => (
                   <div key={i} {...getLineProps({ line })}>

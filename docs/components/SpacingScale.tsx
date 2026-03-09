@@ -16,90 +16,38 @@ const SPACING_TOKENS: { token: string; value: string; px: number }[] = [
 const MAX_BAR_PX = 200;
 const MAX_TOKEN_PX = 64;
 
-const cellStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-  fontSize: "13px",
-  color: "var(--x-color-fg-neutral, #374151)",
-};
+const cellClass =
+  "py-2.5 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300";
 
 export function SpacingScale() {
   return (
-    <div style={{ margin: "24px 0", overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 400 }}>
+    <div className="my-6 overflow-x-auto">
+      <table className="w-full border-collapse min-w-[400px]">
         <thead>
           <tr>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "left",
-                fontWeight: 600,
-                width: "100px",
-              }}
-            >
-              Token
-            </th>
-            <th style={{ ...cellStyle, textAlign: "left", fontWeight: 600 }}>
-              Preview
-            </th>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "right",
-                fontWeight: 600,
-                width: "80px",
-              }}
-            >
-              Value
-            </th>
+            <th className={`${cellClass} text-left font-semibold w-[100px]`}>Token</th>
+            <th className={`${cellClass} text-left font-semibold`}>Preview</th>
+            <th className={`${cellClass} text-right font-semibold w-20`}>Value</th>
           </tr>
         </thead>
         <tbody>
           {SPACING_TOKENS.map(({ token, value, px }) => {
-            const barWidth =
-              MAX_TOKEN_PX > 0 ? (px / MAX_TOKEN_PX) * MAX_BAR_PX : 0;
+            const barWidth = MAX_TOKEN_PX > 0 ? (px / MAX_TOKEN_PX) * MAX_BAR_PX : 0;
             return (
               <tr key={token}>
-                <td
-                  style={{
-                    ...cellStyle,
-                    fontFamily: "monospace",
-                    fontSize: "12px",
-                  }}
-                >
-                  {token}
-                </td>
-                <td style={cellStyle}>
-                  <div
-                    style={{
-                      width: "100%",
-                      maxWidth: MAX_BAR_PX,
-                      height: "24px",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
+                <td className={`${cellClass} font-mono text-xs`}>{token}</td>
+                <td className={cellClass}>
+                  <div className="w-full max-w-[200px] h-6 flex items-center">
                     <div
+                      className="h-3 rounded bg-violet-500 dark:bg-violet-400"
                       style={{
                         width: barWidth,
-                        height: "12px",
-                        backgroundColor:
-                          "var(--x-color-bg-primary, #8b5cf6)",
-                        borderRadius: "4px",
                         minWidth: px === 0 ? 0 : 4,
                       }}
                     />
                   </div>
                 </td>
-                <td
-                  style={{
-                    ...cellStyle,
-                    textAlign: "right",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  {value}
-                </td>
+                <td className={`${cellClass} text-right font-mono`}>{value}</td>
               </tr>
             );
           })}

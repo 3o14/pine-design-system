@@ -23,103 +23,44 @@ const ROWS: { token: FontSizeToken; rem: string; px: number; lh: number }[] = [
 
 const SAMPLE = "The quick brown fox jumps over the lazy dog.";
 
-const cellStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-  fontSize: "13px",
-  color: "var(--x-color-fg-neutral, #374151)",
-};
+const cellClass =
+  "py-2.5 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300";
 
 export function TypographyScale() {
   return (
-    <div style={{ margin: "24px 0", overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 520 }}>
+    <div className="my-6 overflow-x-auto">
+      <table className="w-full border-collapse min-w-[520px]">
         <thead>
           <tr>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "left",
-                fontWeight: 600,
-                width: "140px",
-              }}
-            >
-              Token
-            </th>
-            <th style={{ ...cellStyle, textAlign: "left", fontWeight: 600 }}>
-              Preview
-            </th>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "right",
-                fontWeight: 600,
-                width: "80px",
-              }}
-            >
-              Size
-            </th>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "right",
-                fontWeight: 600,
-                width: "50px",
-              }}
-            >
-              px
-            </th>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "right",
-                fontWeight: 600,
-                width: "70px",
-              }}
-            >
-              Line height
-            </th>
+            <th className={`${cellClass} text-left font-semibold w-[140px]`}>Token</th>
+            <th className={`${cellClass} text-left font-semibold`}>Preview</th>
+            <th className={`${cellClass} text-right font-semibold w-20`}>Size</th>
+            <th className={`${cellClass} text-right font-semibold w-[50px]`}>px</th>
+            <th className={`${cellClass} text-right font-semibold w-[70px]`}>Line height</th>
           </tr>
         </thead>
         <tbody>
           {ROWS.map(({ token, rem, px, lh }) => (
             <tr key={token}>
-              <td style={{ ...cellStyle, fontFamily: "monospace", fontSize: "12px" }}>
-                {token}
-              </td>
-              <td style={cellStyle}>
+              <td className={`${cellClass} font-mono text-xs`}>{token}</td>
+              <td className={cellClass}>
                 <span
-                  style={{
-                    fontSize: rem,
-                    lineHeight: lh,
-                    color: "var(--x-color-fg-neutral, #111827)",
-                  }}
+                  className="text-gray-900 dark:text-gray-100"
+                  style={{ fontSize: rem, lineHeight: lh }}
                 >
                   {SAMPLE}
                 </span>
               </td>
-              <td style={{ ...cellStyle, textAlign: "right", fontFamily: "monospace" }}>
-                {rem}
-              </td>
-              <td style={{ ...cellStyle, textAlign: "right", color: "#6b7280" }}>
+              <td className={`${cellClass} text-right font-mono`}>{rem}</td>
+              <td className={`${cellClass} text-right text-gray-500 dark:text-gray-400`}>
                 {px}
               </td>
-              <td style={{ ...cellStyle, textAlign: "right" }}>
-                {lh}
-              </td>
+              <td className={`${cellClass} text-right`}>{lh}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <p
-        style={{
-          marginTop: "8px",
-          fontSize: "12px",
-          color: "var(--x-color-fg-neutral-subtle, #9ca3af)",
-        }}
-      >
-        기준 1rem = 16px
-      </p>
+      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">기준 1rem = 16px</p>
     </div>
   );
 }

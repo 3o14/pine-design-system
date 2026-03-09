@@ -13,65 +13,35 @@ const RADIUS_TOKENS = [
   { token: "full", value: "100%" },
 ] as const;
 
-const cellStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-  fontSize: "13px",
-  color: "var(--x-color-fg-neutral, #374151)",
-};
+const cellClass =
+  "py-2.5 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300";
 
 export function RadiusScale() {
   return (
-    <div style={{ margin: "24px 0", overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 360 }}>
+    <div className="my-6 overflow-x-auto">
+      <table className="w-full border-collapse min-w-[360px]">
         <thead>
           <tr>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "left",
-                fontWeight: 600,
-                width: "100px",
-              }}
-            >
-              Token
-            </th>
-            <th style={{ ...cellStyle, textAlign: "left", fontWeight: 600 }}>
-              Preview
-            </th>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "right",
-                fontWeight: 600,
-                width: "80px",
-              }}
-            >
-              Value
-            </th>
+            <th className={`${cellClass} text-left font-semibold w-[100px]`}>Token</th>
+            <th className={`${cellClass} text-left font-semibold`}>Preview</th>
+            <th className={`${cellClass} text-right font-semibold w-20`}>Value</th>
           </tr>
         </thead>
         <tbody>
           {RADIUS_TOKENS.map(({ token, value }) => (
             <tr key={token}>
-              <td style={{ ...cellStyle, fontFamily: "monospace", fontSize: "12px" }}>
-                {token}
-              </td>
-              <td style={cellStyle}>
+              <td className={`${cellClass} font-mono text-xs`}>{token}</td>
+              <td className={cellClass}>
                 <div
-                  style={{
-                    width: "64px",
-                    height: "64px",
-                    backgroundColor: "var(--x-color-bg-neutral, #e5e7eb)",
-                    ...(token === "full"
+                  className="w-16 h-16 bg-gray-200 dark:bg-gray-700"
+                  style={
+                    token === "full"
                       ? { borderRadius: "100%" }
-                      : { borderTopRightRadius: value }),
-                  }}
+                      : { borderTopRightRadius: value }
+                  }
                 />
               </td>
-              <td style={{ ...cellStyle, textAlign: "right", fontFamily: "monospace" }}>
-                {value}
-              </td>
+              <td className={`${cellClass} text-right font-mono`}>{value}</td>
             </tr>
           ))}
         </tbody>

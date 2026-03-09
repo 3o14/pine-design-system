@@ -32,45 +32,18 @@ function Swatch({ hex, label }: { hex: string; label: string }) {
   const isCssMix = hex.startsWith("color-mix");
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "4px",
-        minWidth: "80px",
-      }}
-    >
+    <div className="flex flex-col items-center gap-1 min-w-[80px]">
       <div
+        className="w-9 h-9 rounded-md flex items-center justify-center text-[9px] font-medium border border-black/8"
         style={{
-          width: "36px",
-          height: "36px",
-          borderRadius: "6px",
           background: hex,
-          border: "1px solid rgba(0,0,0,0.08)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "9px",
           color: isCssMix ? "#6b7280" : textColor,
-          fontWeight: 500,
         }}
         title={hex}
       >
         {isCssMix ? "~" : ""}
       </div>
-      <span
-        style={{
-          fontSize: "10px",
-          color: "var(--x-color-fg-neutral-subtle, #9ca3af)",
-          fontFamily: "monospace",
-          textAlign: "center",
-          maxWidth: "80px",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-        }}
-      >
+      <span className="text-[10px] text-gray-500 dark:text-gray-400 font-mono text-center max-w-[80px] overflow-hidden text-ellipsis whitespace-nowrap">
         {label}
       </span>
     </div>
@@ -81,47 +54,20 @@ export function ColorTokenTable() {
   const [mode, setMode] = useState<Mode>("light");
   const palette = mode === "light" ? lightColors.palette : darkColors.palette;
 
-  const buttonBase: React.CSSProperties = {
-    padding: "4px 14px",
-    borderRadius: "6px",
-    border: "none",
-    fontSize: "13px",
-    fontWeight: 500,
-    cursor: "pointer",
-    transition: "background 0.15s",
-  };
-
   return (
-    <div style={{ margin: "24px 0" }}>
+    <div className="my-6">
       {/* Tab switcher */}
-      <div
-        style={{
-          display: "flex",
-          gap: "4px",
-          marginBottom: "16px",
-          background: "var(--x-color-bg-neutral, #f3f4f6)",
-          borderRadius: "8px",
-          padding: "4px",
-          width: "fit-content",
-        }}
-      >
+      <div className="flex gap-1 mb-4 bg-gray-100 dark:bg-gray-800/50 rounded-lg p-1 w-fit">
         {(["light", "dark"] as Mode[]).map((m) => (
           <button
             key={m}
             type="button"
             onClick={() => setMode(m)}
-            style={{
-              ...buttonBase,
-              background:
-                mode === m
-                  ? "var(--x-color-bg-default, #ffffff)"
-                  : "transparent",
-              color:
-                mode === m
-                  ? "var(--x-color-fg-neutral, #111827)"
-                  : "var(--x-color-fg-neutral-subtle, #6b7280)",
-              boxShadow: mode === m ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-            }}
+            className={`px-3.5 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors ${
+              mode === m
+                ? "bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 shadow-sm"
+                : "bg-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+            }`}
           >
             {m}
           </button>
@@ -129,39 +75,17 @@ export function ColorTokenTable() {
       </div>
 
       {/* Table */}
-      <div style={{ overflowX: "auto" }}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: "13px",
-          }}
-        >
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
           <thead>
             <tr>
-              <th
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px",
-                  fontWeight: 600,
-                  color: "var(--x-color-fg-neutral, #374151)",
-                  borderBottom: "1px solid var(--x-color-border, #e5e7eb)",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <th className="text-left py-2 px-3 font-semibold text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700 whitespace-nowrap">
                 Intent
               </th>
               {STATES.map((state) => (
                 <th
                   key={state}
-                  style={{
-                    textAlign: "center",
-                    padding: "8px 12px",
-                    fontWeight: 600,
-                    color: "var(--x-color-fg-neutral, #374151)",
-                    borderBottom: "1px solid var(--x-color-border, #e5e7eb)",
-                    whiteSpace: "nowrap",
-                  }}
+                  className="text-center py-2 px-3 font-semibold text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700 whitespace-nowrap"
                 >
                   {STATE_LABELS[state]}
                 </th>
@@ -172,30 +96,16 @@ export function ColorTokenTable() {
             {INTENTS.map((intent) => (
               <tr
                 key={intent}
-                style={{
-                  borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-                }}
+                className="border-b border-gray-100 dark:border-gray-800"
               >
-                <td
-                  style={{
-                    padding: "12px",
-                    fontWeight: 600,
-                    color: "var(--x-color-fg-neutral, #374151)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <td className="py-3 px-3 font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
                   {intent}
                 </td>
                 {STATES.map((state) => {
                   const hex = palette[intent][state];
                   return (
-                    <td
-                      key={state}
-                      style={{ padding: "12px", textAlign: "center" }}
-                    >
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
+                    <td key={state} className="py-3 px-3 text-center">
+                      <div className="flex justify-center">
                         <Swatch hex={hex} label={hex.startsWith("#") ? hex : "mix"} />
                       </div>
                     </td>
@@ -208,52 +118,26 @@ export function ColorTokenTable() {
       </div>
 
       {/* Surface tokens */}
-      <h4
-        style={{
-          marginTop: "32px",
-          marginBottom: "12px",
-          fontSize: "14px",
-          fontWeight: 600,
-          color: "var(--x-color-fg-neutral, #374151)",
-        }}
-      >
+      <h4 className="mt-8 mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
         Surface
       </h4>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+      <div className="flex flex-wrap gap-4">
         {Object.entries(
           mode === "light" ? lightColors.surface : darkColors.surface
         ).map(([key, hex]) => (
           <div
             key={key}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}
+            className="flex flex-col items-center gap-1.5"
           >
             <div
-              style={{
-                width: "48px",
-                height: "48px",
-                borderRadius: "8px",
-                background: hex,
-                border: "1px solid rgba(0,0,0,0.1)",
-              }}
+              className="w-12 h-12 rounded-lg border border-black/10"
+              style={{ background: hex }}
               title={hex}
             />
-            <span
-              style={{
-                fontSize: "11px",
-                color: "var(--x-color-fg-neutral, #374151)",
-                fontWeight: 500,
-                textAlign: "center",
-              }}
-            >
+            <span className="text-[11px] font-medium text-gray-700 dark:text-gray-300 text-center">
               {key}
             </span>
-            <span
-              style={{
-                fontSize: "10px",
-                color: "var(--x-color-fg-neutral-subtle, #9ca3af)",
-                fontFamily: "monospace",
-              }}
-            >
+            <span className="text-[10px] text-gray-500 dark:text-gray-400 font-mono">
               {typeof hex === "string" && hex.startsWith("#") ? hex : "—"}
             </span>
           </div>

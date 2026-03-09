@@ -28,77 +28,37 @@ const SHADOW_TOKENS: { token: string; value: string }[] = [
   },
 ];
 
-const cellStyle: React.CSSProperties = {
-  padding: "10px 12px",
-  borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-  fontSize: "13px",
-  color: "var(--x-color-fg-neutral, #374151)",
-};
-
 function truncateCss(value: string, maxLen: number) {
   if (value.length <= maxLen) return value;
   return value.slice(0, maxLen - 3) + "...";
 }
 
+const cellClass =
+  "py-2.5 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300";
+
 export function ShadowScale() {
   return (
-    <div style={{ margin: "24px 0", overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 480 }}>
+    <div className="my-6 overflow-x-auto">
+      <table className="w-full border-collapse min-w-[480px]">
         <thead>
           <tr>
-            <th
-              style={{
-                ...cellStyle,
-                textAlign: "left",
-                fontWeight: 600,
-                width: "80px",
-              }}
-            >
-              Token
-            </th>
-            <th style={{ ...cellStyle, textAlign: "left", fontWeight: 600 }}>
-              Preview
-            </th>
-            <th style={{ ...cellStyle, textAlign: "left", fontWeight: 600 }}>
-              Value
-            </th>
+            <th className={`${cellClass} text-left font-semibold w-20`}>Token</th>
+            <th className={`${cellClass} text-left font-semibold`}>Preview</th>
+            <th className={`${cellClass} text-left font-semibold`}>Value</th>
           </tr>
         </thead>
         <tbody>
           {SHADOW_TOKENS.map(({ token, value }) => (
             <tr key={token}>
-              <td
-                style={{
-                  ...cellStyle,
-                  fontFamily: "monospace",
-                  fontSize: "12px",
-                }}
-              >
-                {token}
-              </td>
-              <td style={cellStyle}>
+              <td className={`${cellClass} font-mono text-xs`}>{token}</td>
+              <td className={cellClass}>
                 <div
-                  style={{
-                    width: "80px",
-                    height: "56px",
-                    backgroundColor: "var(--x-color-bg-default, #ffffff)",
-                    border: "1px solid var(--x-color-border-subtle, #e5e7eb)",
-                    borderRadius: "8px",
-                    boxShadow: value,
-                  }}
+                  className="w-20 h-14 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-lg"
+                  style={{ boxShadow: value }}
                 />
               </td>
               <td
-                style={{
-                  ...cellStyle,
-                  fontFamily: "monospace",
-                  fontSize: "11px",
-                  color: "var(--x-color-fg-neutral-subtle, #6b7280)",
-                  maxWidth: "320px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
+                className={`${cellClass} font-mono text-[11px] text-gray-500 dark:text-gray-400 max-w-[320px] overflow-hidden text-ellipsis whitespace-nowrap`}
                 title={value}
               >
                 {truncateCss(value, 56)}

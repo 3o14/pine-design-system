@@ -29,43 +29,24 @@ function ColorSwatch({ hex, step }: { hex: string; step: ColorStep }) {
 
   return (
     <div
-      style={{
-        flex: 1,
-        minWidth: 0,
-        height: "72px",
-        backgroundColor: hex,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "default",
-        transition: "flex 0.15s ease",
-        ...(hovered ? { flex: 1.6 } : {}),
-      }}
+      className={`min-w-0 h-[72px] flex flex-col items-center justify-center cursor-default transition-[flex] duration-150 ease-out ${
+        hovered ? "flex-[1.6]" : "flex-1"
+      }`}
+      style={{ backgroundColor: hex }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       title={`${step}: ${hex}`}
     >
       <span
-        style={{
-          fontSize: "11px",
-          fontWeight: 600,
-          color: textColor,
-          opacity: hovered ? 1 : 0.7,
-          lineHeight: 1.2,
-        }}
+        className="text-[11px] font-semibold leading-tight"
+        style={{ color: textColor, opacity: hovered ? 1 : 0.7 }}
       >
         {step}
       </span>
       {hovered && (
         <span
-          style={{
-            fontSize: "10px",
-            color: textColor,
-            opacity: 0.85,
-            fontFamily: "monospace",
-            marginTop: "2px",
-          }}
+          className="text-[10px] font-mono mt-0.5"
+          style={{ color: textColor, opacity: 0.85 }}
         >
           {hex}
         </span>
@@ -76,41 +57,13 @@ function ColorSwatch({ hex, step }: { hex: string; step: ColorStep }) {
 
 export function ColorPalette({ scales }: ColorPaletteProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "12px",
-        margin: "24px 0",
-      }}
-    >
+    <div className="flex flex-col gap-3 my-6">
       {scales.map(({ name, colors }) => (
-        <div
-          key={name}
-          style={{ display: "flex", alignItems: "stretch", gap: "0" }}
-        >
-          <div
-            style={{
-              width: "80px",
-              flexShrink: 0,
-              display: "flex",
-              alignItems: "center",
-              paddingRight: "12px",
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "var(--x-color-fg-neutral, #374151)",
-            }}
-          >
+        <div key={name} className="flex items-stretch gap-0">
+          <div className="w-20 shrink-0 flex items-center pr-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
             {name}
           </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              borderRadius: "8px",
-              overflow: "hidden",
-            }}
-          >
+          <div className="flex-1 flex rounded-lg overflow-hidden">
             {STEPS.map((step) => (
               <ColorSwatch key={step} hex={colors[step]} step={step} />
             ))}

@@ -11,47 +11,18 @@ const SAMPLE = "The quick brown fox jumps over the lazy dog.";
 
 export function FontWeightPreview() {
   return (
-    <div style={{ margin: "24px 0" }}>
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 400 }}>
+    <div className="my-6">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse min-w-[400px]">
           <thead>
             <tr>
-              <th
-                style={{
-                  padding: "10px 12px",
-                  borderBottom: "1px solid var(--x-color-border, #e5e7eb)",
-                  textAlign: "left",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                  color: "var(--x-color-fg-neutral, #374151)",
-                  width: "100px",
-                }}
-              >
+              <th className="py-2.5 px-3 border-b border-gray-200 dark:border-gray-700 text-left font-semibold text-sm text-gray-700 dark:text-gray-300 w-[100px]">
                 Token
               </th>
-              <th
-                style={{
-                  padding: "10px 12px",
-                  borderBottom: "1px solid var(--x-color-border, #e5e7eb)",
-                  textAlign: "left",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                  color: "var(--x-color-fg-neutral, #374151)",
-                  width: "60px",
-                }}
-              >
+              <th className="py-2.5 px-3 border-b border-gray-200 dark:border-gray-700 text-left font-semibold text-sm text-gray-700 dark:text-gray-300 w-[60px]">
                 Value
               </th>
-              <th
-                style={{
-                  padding: "10px 12px",
-                  borderBottom: "1px solid var(--x-color-border, #e5e7eb)",
-                  textAlign: "left",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                  color: "var(--x-color-fg-neutral, #374151)",
-                }}
-              >
+              <th className="py-2.5 px-3 border-b border-gray-200 dark:border-gray-700 text-left font-semibold text-sm text-gray-700 dark:text-gray-300">
                 Preview
               </th>
             </tr>
@@ -59,40 +30,16 @@ export function FontWeightPreview() {
           <tbody>
             {WEIGHTS.map(({ token, value }) => (
               <tr key={token}>
-                <td
-                  style={{
-                    padding: "12px",
-                    borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-                    fontFamily: "monospace",
-                    fontSize: "13px",
-                    color: "var(--x-color-fg-neutral, #374151)",
-                  }}
-                >
+                <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800 font-mono text-sm text-gray-700 dark:text-gray-300">
                   {token}
                 </td>
-                <td
-                  style={{
-                    padding: "12px",
-                    borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-                    fontSize: "13px",
-                    color: "var(--x-color-fg-neutral-subtle, #6b7280)",
-                  }}
-                >
+                <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
                   {value}
                 </td>
-                <td
-                  style={{
-                    padding: "12px",
-                    borderBottom: "1px solid var(--x-color-border-subtle, #f3f4f6)",
-                  }}
-                >
+                <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800">
                   <span
-                    style={{
-                      fontWeight: value,
-                      fontSize: "1rem",
-                      lineHeight: 1.5,
-                      color: "var(--x-color-fg-neutral, #111827)",
-                    }}
+                    className="text-base leading-relaxed text-gray-900 dark:text-gray-100"
+                    style={{ fontWeight: value }}
                   >
                     {SAMPLE}
                   </span>
