@@ -1,13 +1,17 @@
 import type { ReactNode } from "react";
+import "./globals.css";
 import "nextra-theme-docs/style.css";
 import "pine-design-system/style.css";
 import { ThemeProviderWrapper } from "../components/ThemeProviderWrapper";
+import { DesignThemeProvider } from "../components/DesignThemeProvider";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
-        <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
+        <ThemeProviderWrapper>
+          <DesignThemeProvider>{children}</DesignThemeProvider>
+        </ThemeProviderWrapper>
       </body>
     </html>
   );
