@@ -9,7 +9,12 @@ title: Button
 
 ## 미리보기
 
-<ComponentPreview>
+<ComponentPreview code={`import { Button } from "pine-design-system";
+
+<Button variant="solid" intent="primary">Solid</Button>
+<Button variant="outline" intent="primary">Outline</Button>
+<Button variant="ghost" intent="primary">Ghost</Button>
+<Button variant="weak" intent="primary">Weak</Button>`}>
   <ButtonDemo />
 </ComponentPreview>
 
@@ -26,7 +31,10 @@ title: Button
 | `ghost` | | 배경과 테두리가 없는 스타일. 가장 낮은 강조가 필요할 때 사용합니다. |
 | `weak` | | 반투명 배경 스타일. Solid와 함께 보조 액션으로 조합하기에 적합합니다. |
 
-<ComponentPreview>
+<ComponentPreview code={`<Button variant="solid" intent="primary">Solid</Button>
+<Button variant="outline" intent="primary">Outline</Button>
+<Button variant="ghost" intent="primary">Ghost</Button>
+<Button variant="weak" intent="primary">Weak</Button>`}>
   <ButtonVariantDemo />
 </ComponentPreview>
 
@@ -41,7 +49,10 @@ title: Button
 | `large` | | 주요 CTA 또는 충분한 클릭 영역이 필요할 때 사용합니다. |
 | `xlarge` | | 큰 화면의 주목도 높은 CTA에 사용합니다. |
 
-<ComponentPreview>
+<ComponentPreview code={`<Button size="small">Small</Button>
+<Button size="medium">Medium</Button>
+<Button size="large">Large</Button>
+<Button size="xlarge">XLarge</Button>`}>
   <ButtonSizeDemo />
 </ComponentPreview>
 
@@ -58,7 +69,12 @@ title: Button
 | `danger` | | 삭제, 초기화 등 되돌릴 수 없는 액션에 사용합니다. 사용자에게 위험을 명확히 알려주세요. |
 | `neutral` | | 의미적 강조 없이 중립적인 액션에 사용합니다. |
 
-<ComponentPreview>
+<ComponentPreview code={`<Button intent="primary">Primary</Button>
+<Button intent="secondary">Secondary</Button>
+<Button intent="success">Success</Button>
+<Button intent="warning">Warning</Button>
+<Button intent="danger">Danger</Button>
+<Button intent="neutral">Neutral</Button>`}>
   <ButtonIntentDemo />
 </ComponentPreview>
 
@@ -72,7 +88,9 @@ title: Button
 | `medium` | ✓ | 기본 모서리 반경 |
 | `large` | | 큰 모서리 반경 (pill 형태에 가깝습니다) |
 
-<ComponentPreview>
+<ComponentPreview code={`<Button rounded="small">Small</Button>
+<Button rounded="medium">Medium</Button>
+<Button rounded="large">Large</Button>`}>
   <ButtonRoundedDemo />
 </ComponentPreview>
 
@@ -80,7 +98,8 @@ title: Button
 
 버튼을 비활성화합니다. 비활성화 상태에서는 클릭 이벤트가 발생하지 않고 시각적으로 비활성화 스타일이 적용됩니다.
 
-<ComponentPreview>
+<ComponentPreview code={`<Button intent="primary">Enabled</Button>
+<Button intent="primary" disabled>Disabled</Button>`}>
   <ButtonDisabledDemo />
 </ComponentPreview>
 
@@ -97,21 +116,6 @@ title: Button
 ### Intent 선택하기
 
 버튼의 동작이 가지는 의미적 성격을 `intent`로 표현합니다. 특히 삭제·초기화처럼 되돌릴 수 없는 액션에는 반드시 `danger`를 사용해 사용자에게 명확히 경고하세요.
-
-## 코드
-
-```tsx
-import { Button } from "pine-design-system";
-
-// 기본 사용
-<Button>시작하기</Button>
-
-// 위험한 액션
-<Button intent="danger" variant="outline">삭제하기</Button>
-
-// 전체 너비 CTA
-<Button fullWidth size="large">확인</Button>
-```
 
 ## Props
 
