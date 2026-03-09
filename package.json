@@ -50,7 +50,7 @@
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "pnpm run sync-readme && storybook build",
 		"sync-readme": "node scripts/sync-readme.js",
-		"docs": "cd docs && next dev",
+		"docs": "cd docs && pnpm run dev",
 		"docs:build": "cd docs && next build",
 		"prepublishOnly": "pnpm run build:lib",
 		"changeset": "changeset",
