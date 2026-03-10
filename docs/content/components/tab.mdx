@@ -9,65 +9,32 @@ title: Tab
 
 ## 미리보기
 
-<ComponentPreview>
+<ComponentPreview code={`const tabs = [
+  { value: "one", label: "Overview", content: <p>Overview panel content.</p> },
+  { value: "two", label: "Details", content: <p>Details panel content.</p> },
+  { value: "three", label: "Settings", content: <p>Settings panel content.</p> },
+];
+
+<Tab tabs={tabs} />`}>
   <TabDemo />
 </ComponentPreview>
 
-## Props
+## 예제
 
-### `tabs`
-
-탭 목록을 정의하는 필수 prop입니다. 각 탭의 값, 라벨, 콘텐츠를 배열로 전달합니다.
-
-- **타입**: `TabItem[]`
-- **필수**: 예
-
-```ts
-type TabItem = {
-  value: string;              // 탭의 고유 식별자
-  label: React.ReactNode;     // 탭 버튼에 표시되는 텍스트 또는 요소
-  content: React.ReactNode;   // 탭이 활성화될 때 표시되는 콘텐츠
-  disabled?: boolean;         // 해당 탭 비활성화 여부
-};
-```
-
-### `value`
-
-현재 활성화된 탭의 값 (controlled). `onChange`와 함께 사용합니다.
-
-- **타입**: `string`
-- **기본값**: `undefined`
-
-### `defaultValue`
-
-초기에 활성화할 탭의 값 (uncontrolled). 지정하지 않으면 첫 번째 탭이 기본 선택됩니다.
-
-- **타입**: `string`
-- **기본값**: 첫 번째 탭의 `value`
-
-### `onChange`
-
-활성 탭이 변경될 때 호출되는 콜백 함수입니다.
-
-- **타입**: `(value: string) => void`
-
-### `intent`
-
-탭 인디케이터의 색상 의도를 결정합니다.
-
-- **타입**: `"primary" | "secondary" | "success" | "warning" | "danger" | "neutral"`
-- **기본값**: `"primary"`
-
-### `orientation`
+### Orientation
 
 탭 목록의 배치 방향을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `horizontal` | ✓ | 탭을 가로로 나열합니다. 일반적인 페이지 내 탭에 사용합니다. |
-| `vertical` | | 탭을 세로로 나열합니다. 사이드바 형태의 네비게이션에 사용합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`horizontal`", "✓", "탭을 가로로 나열합니다. 일반적인 페이지 내 탭에 사용합니다."],
+    ["`vertical`", "", "탭을 세로로 나열합니다. 사이드바 형태의 네비게이션에 사용합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<Tab tabs={tabs} orientation="vertical" />`}>
   <TabVerticalDemo />
 </ComponentPreview>
 
@@ -116,3 +83,7 @@ const tabs = [
   orientation="vertical"
 />
 ```
+
+## Props
+
+<PropsDoc component="tab" />

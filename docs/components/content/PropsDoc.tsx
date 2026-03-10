@@ -5,6 +5,7 @@ import checkboxProps from "../../content/props/checkbox.json";
 import dialogProps from "../../content/props/dialog.json";
 import dropdownProps from "../../content/props/dropdown.json";
 import switchProps from "../../content/props/switch.json";
+import tabProps from "../../content/props/tab.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
   button: buttonProps,
@@ -13,6 +14,7 @@ const PROPS_MAP: Record<string, PropDefinition[]> = {
   dialog: dialogProps,
   dropdown: dropdownProps,
   switch: switchProps,
+  tab: tabProps,
 };
 
 export interface PropsDocProps {

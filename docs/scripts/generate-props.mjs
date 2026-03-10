@@ -113,6 +113,44 @@ export interface DialogProps {
 }
 `;
 
+const TAB_CODE = `
+export interface TabItem {
+  value: string;
+  label: React.ReactNode;
+  content: React.ReactNode;
+  disabled?: boolean;
+}
+
+export interface TabProps {
+  /**
+   * 탭 목록을 정의하는 필수 prop입니다.
+   */
+  tabs: TabItem[];
+  /**
+   * 현재 활성화된 탭의 값 (controlled).
+   */
+  value?: string;
+  /**
+   * 초기에 활성화할 탭의 값 (uncontrolled).
+   */
+  defaultValue?: string;
+  /**
+   * 활성 탭이 변경될 때 호출되는 콜백 함수입니다.
+   */
+  onChange?: (value: string) => void;
+  /**
+   * 탭 인디케이터의 색상 의도를 결정합니다.
+   * @default "primary"
+   */
+  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  /**
+   * 탭 목록의 배치 방향을 결정합니다.
+   * @default "horizontal"
+   */
+  orientation?: "horizontal" | "vertical";
+}
+`;
+
 const SWITCH_CODE = `
 export interface SwitchProps {
   /**
@@ -338,6 +376,7 @@ function main() {
   const dialogProps = parseInterface(DIALOG_CODE, "DialogProps");
   const dropdownProps = parseInterface(DROPDOWN_CODE, "DropdownProps");
   const switchProps = parseInterface(SWITCH_CODE, "SwitchProps");
+  const tabProps = parseInterface(TAB_CODE, "TabProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -366,8 +405,12 @@ function main() {
     join(outputDir, "switch.json"),
     JSON.stringify(switchProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "tab.json"),
+    JSON.stringify(tabProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json");
 }
 
 main();
