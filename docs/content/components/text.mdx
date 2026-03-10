@@ -9,93 +9,125 @@ title: Text
 
 ## 미리보기
 
-<ComponentPreview>
+<ComponentPreview code={`<Text as="p" size="display-small" weight="bold">Display Small</Text>
+<Text as="p" size="xlarge" weight="semibold">XLarge Semibold</Text>
+<Text as="p" size="large">Large Regular</Text>
+<Text as="p" size="medium">Medium Regular</Text>
+<Text as="p" size="small">Small Regular</Text>`}>
   <TextDemo />
 </ComponentPreview>
 
-## Props
+## 예제
 
-### `as`
+### As
 
 렌더링할 HTML 요소를 지정합니다. 시각적 스타일과 시멘틱 요소를 분리하여 사용할 수 있습니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `p` | ✓ | 일반 단락 텍스트 |
-| `span` | | 인라인 텍스트 |
-| `div` | | 블록 컨테이너 |
-| `h1` ~ `h6` | | 제목 요소 |
-| `label` | | 폼 레이블 |
-| `li`, `ul`, `ol` | | 목록 요소 |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`p`", "✓", "일반 단락 텍스트"],
+    ["`span`", "", "인라인 텍스트"],
+    ["`div`", "", "블록 컨테이너"],
+    ["`h1` ~ `h6`", "", "제목 요소"],
+    ["`label`", "", "폼 레이블"],
+    ["`li`, `ul`, `ol`", "", "목록 요소"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-### `size`
+### Size
 
 텍스트의 크기를 결정합니다. 디자인 토큰에 정의된 타이포그래피 스케일을 따릅니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `display-large` | | 랜딩 페이지 히어로 영역의 대형 제목 |
-| `display-medium` | | 페이지 단위 대형 제목 |
-| `display-small` | | 섹션 단위 대형 제목 |
-| `xlarge` | | 주요 섹션 제목 |
-| `large` | | 서브 제목, 카드 제목 |
-| `medium` | ✓ | 본문 텍스트 기본 크기 |
-| `small` | | 보조 텍스트, 설명 |
-| `xsmall` | | 캡션, 라벨, 힌트 |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`display-large`", "", "랜딩 페이지 히어로 영역의 대형 제목"],
+    ["`display-medium`", "", "페이지 단위 대형 제목"],
+    ["`display-small`", "", "섹션 단위 대형 제목"],
+    ["`xlarge`", "", "주요 섹션 제목"],
+    ["`large`", "", "서브 제목, 카드 제목"],
+    ["`medium`", "✓", "본문 텍스트 기본 크기"],
+    ["`small`", "", "보조 텍스트, 설명"],
+    ["`xsmall`", "", "캡션, 라벨, 힌트"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<Text size="display-large">Display Large</Text>
+<Text size="display-medium">Display Medium</Text>
+<Text size="display-small">Display Small</Text>
+<Text size="xlarge">XLarge</Text>
+<Text size="large">Large</Text>
+<Text size="medium">Medium</Text>
+<Text size="small">Small</Text>
+<Text size="xsmall">XSmall</Text>`}>
   <TextSizeDemo />
 </ComponentPreview>
 
-### `weight`
+### Weight
 
 폰트 두께를 결정합니다.
 
-| 값 | 기본값 | CSS 값 | 설명 |
-| --- | :---: | --- | --- |
-| `regular` | ✓ | 400 | 본문, 설명 텍스트 |
-| `medium` | | 500 | 강조가 필요한 본문 |
-| `semibold` | | 600 | 서브 제목, 라벨 |
-| `bold` | | 700 | 주요 제목, 강한 강조 |
+<DocTable
+  headers={["값", "기본값", "CSS 값", "설명"]}
+  rows={[
+    ["`regular`", "✓", "400", "본문, 설명 텍스트"],
+    ["`medium`", "", "500", "강조가 필요한 본문"],
+    ["`semibold`", "", "600", "서브 제목, 라벨"],
+    ["`bold`", "", "700", "주요 제목, 강한 강조"],
+  ]}
+  align={["left", "center", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<Text weight="regular">Regular — 400</Text>
+<Text weight="medium">Medium — 500</Text>
+<Text weight="semibold">Semibold — 600</Text>
+<Text weight="bold">Bold — 700</Text>`}>
   <TextWeightDemo />
 </ComponentPreview>
 
-### `intent`
+### Intent
 
 텍스트의 색상 의도를 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `inherit` | ✓ | 부모 요소의 색상을 상속합니다. |
-| `primary` | | 주요 콘텐츠 텍스트 색상 |
-| `secondary` | | 보조 콘텐츠 텍스트 색상 |
-| `success` | | 성공·완료를 나타내는 색상 |
-| `warning` | | 경고를 나타내는 색상 |
-| `danger` | | 오류·위험을 나타내는 색상 |
-| `neutral` | | 중립적인 색상 |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`inherit`", "✓", "부모 요소의 색상을 상속합니다."],
+    ["`primary`", "", "주요 콘텐츠 텍스트 색상"],
+    ["`secondary`", "", "보조 콘텐츠 텍스트 색상"],
+    ["`success`", "", "성공·완료를 나타내는 색상"],
+    ["`warning`", "", "경고를 나타내는 색상"],
+    ["`danger`", "", "오류·위험을 나타내는 색상"],
+    ["`neutral`", "", "중립적인 색상"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<Text intent="inherit">Inherit</Text>
+<Text intent="primary">Primary</Text>
+<Text intent="success">Success</Text>
+<Text intent="warning">Warning</Text>
+<Text intent="danger">Danger</Text>
+<Text intent="neutral">Neutral</Text>`}>
   <TextIntentDemo />
 </ComponentPreview>
 
-### `align`
+### Align
 
 텍스트 정렬을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `left` | ✓ | 왼쪽 정렬 |
-| `center` | | 가운데 정렬 |
-| `right` | | 오른쪽 정렬 |
-
-### `truncate`
-
-`true`로 설정하면 텍스트가 컨테이너를 넘칠 때 `...`으로 잘라냅니다.
-
-- **타입**: `boolean`
-- **기본값**: `false`
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`left`", "✓", "왼쪽 정렬"],
+    ["`center`", "", "가운데 정렬"],
+    ["`right`", "", "오른쪽 정렬"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 ## 사용 가이드
 
@@ -128,3 +160,7 @@ import { Text } from "pine-design-system";
 // 말줄임
 <Text truncate style={{ maxWidth: 200 }}>길어지는 텍스트는 자동으로 줄임처리됩니다.</Text>
 ```
+
+## Props
+
+<PropsDoc component="text" />

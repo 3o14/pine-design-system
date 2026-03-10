@@ -1,0 +1,44 @@
+[
+  {
+    "name": "as",
+    "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"p\" | \"span\" | \"div\" | \"label\" | \"li\" | \"ul\" | \"ol\"",
+    "description": "렌더링할 HTML 요소를 지정합니다.",
+    "default": "\"p\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"xsmall\" | \"small\" | \"medium\" | \"large\" | \"xlarge\" | \"display-small\" | \"display-medium\" | \"display-large\"",
+    "description": "텍스트의 크기를 결정합니다.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "weight",
+    "type": "\"regular\" | \"medium\" | \"semibold\" | \"bold\"",
+    "description": "폰트 두께를 결정합니다.",
+    "default": "\"regular\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"inherit\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "텍스트의 색상 의도를 결정합니다.",
+    "default": "\"inherit\"",
+    "required": false
+  },
+  {
+    "name": "align",
+    "type": "\"left\" | \"center\" | \"right\"",
+    "description": "텍스트 정렬을 결정합니다.",
+    "default": "\"left\"",
+    "required": false
+  },
+  {
+    "name": "truncate",
+    "type": "boolean",
+    "description": "true로 설정하면 텍스트가 컨테이너를 넘칠 때 ...으로 잘라냅니다.",
+    "default": "false",
+    "required": false
+  }
+]

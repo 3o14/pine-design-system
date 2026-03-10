@@ -113,6 +113,41 @@ export interface DialogProps {
 }
 `;
 
+const TEXT_CODE = `
+export interface TextProps {
+  /**
+   * 렌더링할 HTML 요소를 지정합니다.
+   * @default "p"
+   */
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div" | "label" | "li" | "ul" | "ol";
+  /**
+   * 텍스트의 크기를 결정합니다.
+   * @default "medium"
+   */
+  size?: "xsmall" | "small" | "medium" | "large" | "xlarge" | "display-small" | "display-medium" | "display-large";
+  /**
+   * 폰트 두께를 결정합니다.
+   * @default "regular"
+   */
+  weight?: "regular" | "medium" | "semibold" | "bold";
+  /**
+   * 텍스트의 색상 의도를 결정합니다.
+   * @default "inherit"
+   */
+  intent?: "inherit" | "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  /**
+   * 텍스트 정렬을 결정합니다.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
+  /**
+   * true로 설정하면 텍스트가 컨테이너를 넘칠 때 ...으로 잘라냅니다.
+   * @default false
+   */
+  truncate?: boolean;
+}
+`;
+
 const TAB_CODE = `
 export interface TabItem {
   value: string;
@@ -377,6 +412,7 @@ function main() {
   const dropdownProps = parseInterface(DROPDOWN_CODE, "DropdownProps");
   const switchProps = parseInterface(SWITCH_CODE, "SwitchProps");
   const tabProps = parseInterface(TAB_CODE, "TabProps");
+  const textProps = parseInterface(TEXT_CODE, "TextProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -409,8 +445,12 @@ function main() {
     join(outputDir, "tab.json"),
     JSON.stringify(tabProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "text.json"),
+    JSON.stringify(textProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json, text.json");
 }
 
 main();
