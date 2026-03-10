@@ -113,6 +113,63 @@ export interface DialogProps {
 }
 `;
 
+const DROPDOWN_CODE = `
+export interface DropdownOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface DropdownProps {
+  /**
+   * 드롭다운에서 선택할 수 있는 옵션 목록입니다.
+   */
+  options: DropdownOption[];
+  /**
+   * 현재 선택된 값 (controlled).
+   */
+  value?: string;
+  /**
+   * 초기 선택값 (uncontrolled).
+   */
+  defaultValue?: string;
+  /**
+   * 선택된 값이 변경될 때 호출되는 콜백 함수입니다.
+   */
+  onValueChange?: (value: string | null) => void;
+  /**
+   * 아무 옵션도 선택되지 않은 상태에서 보여줄 플레이스홀더 텍스트입니다.
+   * @default "Select an option"
+   */
+  placeholder?: string;
+  /**
+   * 드롭다운의 크기를 결정합니다.
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large";
+  /**
+   * 드롭다운 모서리의 곡률을 결정합니다.
+   * @default "medium"
+   */
+  rounded?: "small" | "medium" | "large";
+  /**
+   * 드롭다운의 색상 의도를 결정합니다.
+   * @default "primary"
+   */
+  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  /**
+   * true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * 드롭다운을 비활성화합니다.
+   * @default false
+   */
+  disabled?: boolean;
+}
+`;
+
 const CHECKBOX_CODE = `
 export interface CheckboxProps {
   /**
@@ -238,6 +295,7 @@ function main() {
   const buttonProps = parseInterface(BUTTON_CODE, "ButtonProps");
   const checkboxProps = parseInterface(CHECKBOX_CODE, "CheckboxProps");
   const dialogProps = parseInterface(DIALOG_CODE, "DialogProps");
+  const dropdownProps = parseInterface(DROPDOWN_CODE, "DropdownProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -258,8 +316,12 @@ function main() {
     join(outputDir, "dialog.json"),
     JSON.stringify(dialogProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "dropdown.json"),
+    JSON.stringify(dropdownProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json");
 }
 
 main();

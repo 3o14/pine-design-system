@@ -1,0 +1,68 @@
+[
+  {
+    "name": "options",
+    "type": "DropdownOption[]",
+    "description": "드롭다운에서 선택할 수 있는 옵션 목록입니다.",
+    "required": true
+  },
+  {
+    "name": "value",
+    "type": "string",
+    "description": "현재 선택된 값 (controlled).",
+    "required": false
+  },
+  {
+    "name": "defaultValue",
+    "type": "string",
+    "description": "초기 선택값 (uncontrolled).",
+    "required": false
+  },
+  {
+    "name": "onValueChange",
+    "type": "(value: string | null) => void",
+    "description": "선택된 값이 변경될 때 호출되는 콜백 함수입니다.",
+    "required": false
+  },
+  {
+    "name": "placeholder",
+    "type": "string",
+    "description": "아무 옵션도 선택되지 않은 상태에서 보여줄 플레이스홀더 텍스트입니다.",
+    "default": "\"Select an option\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "드롭다운의 크기를 결정합니다.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "드롭다운 모서리의 곡률을 결정합니다.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "드롭다운의 색상 의도를 결정합니다.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "fullWidth",
+    "type": "boolean",
+    "description": "true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "disabled",
+    "type": "boolean",
+    "description": "드롭다운을 비활성화합니다.",
+    "default": "false",
+    "required": false
+  }
+]

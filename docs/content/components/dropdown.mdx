@@ -11,97 +11,51 @@ title: Dropdown
 
 ## 미리보기
 
-<ComponentPreview>
+<ComponentPreview code={`const options = [
+  { value: "a", label: "Option A" },
+  { value: "b", label: "Option B" },
+  { value: "c", label: "Option C" },
+];
+
+<Dropdown options={options} placeholder="Select an option" />`}>
   <DropdownDemo />
 </ComponentPreview>
 
-## Props
+## 예제
 
-### `options`
-
-드롭다운에서 선택할 수 있는 옵션 목록입니다.
-
-- **타입**: `Array<{ value: string; label: string; disabled?: boolean }>`
-
-```ts
-type DropdownOption = {
-  value: string;   // 선택 시 반환되는 값
-  label: string;   // 화면에 표시되는 텍스트
-  disabled?: boolean; // 해당 옵션 비활성화 여부
-};
-```
-
-### `value`
-
-현재 선택된 값 (controlled). 이 prop을 사용하면 `onValueChange`와 함께 써야 합니다.
-
-- **타입**: `string`
-- **기본값**: `undefined`
-
-### `defaultValue`
-
-초기 선택값 (uncontrolled).
-
-- **타입**: `string`
-- **기본값**: `undefined`
-
-### `onValueChange`
-
-선택된 값이 변경될 때 호출되는 콜백 함수입니다.
-
-- **타입**: `(value: string | null) => void`
-
-### `placeholder`
-
-아무 옵션도 선택되지 않은 상태에서 보여줄 플레이스홀더 텍스트입니다.
-
-- **타입**: `string`
-- **기본값**: `"Select an option"`
-
-### `size`
+### Size
 
 드롭다운의 크기를 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 좁은 공간의 폼에 사용합니다. |
-| `medium` | ✓ | 일반적인 폼에서 사용합니다. |
-| `large` | | 충분한 클릭 영역이 필요할 때 사용합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "좁은 공간의 폼에 사용합니다."],
+    ["`medium`", "✓", "일반적인 폼에서 사용합니다."],
+    ["`large`", "", "충분한 클릭 영역이 필요할 때 사용합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<Dropdown options={options} size="small" placeholder="Small" />
+<Dropdown options={options} size="medium" placeholder="Medium" />
+<Dropdown options={options} size="large" placeholder="Large" />`}>
   <DropdownSizeDemo />
 </ComponentPreview>
 
-### `rounded`
+### Rounded
 
 드롭다운 모서리의 곡률을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 작은 모서리 반경 |
-| `medium` | ✓ | 기본 모서리 반경 |
-| `large` | | 큰 모서리 반경 |
-
-### `intent`
-
-드롭다운의 색상 의도를 결정합니다.
-
-- **타입**: `"primary" | "secondary" | "success" | "warning" | "danger" | "neutral"`
-- **기본값**: `"primary"`
-
-### `fullWidth`
-
-`true`로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
-
-- **타입**: `boolean`
-- **기본값**: `false`
-
-### `disabled`
-
-드롭다운을 비활성화합니다.
-
-- **타입**: `boolean`
-- **기본값**: `false`
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "작은 모서리 반경"],
+    ["`medium`", "✓", "기본 모서리 반경"],
+    ["`large`", "", "큰 모서리 반경"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 ## 코드
 
@@ -130,3 +84,7 @@ const options = [
   { value: "b", label: "Option B (사용 불가)", disabled: true },
 ];
 ```
+
+## Props
+
+<PropsDoc component="dropdown" />
