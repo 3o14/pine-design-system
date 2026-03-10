@@ -4,13 +4,15 @@ import badgeProps from "../../content/props/badge.json";
 import checkboxProps from "../../content/props/checkbox.json";
 import dialogProps from "../../content/props/dialog.json";
 import dropdownProps from "../../content/props/dropdown.json";
+import switchProps from "../../content/props/switch.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
-  button: buttonProps as PropDefinition[],
-  badge: badgeProps as PropDefinition[],
-  checkbox: checkboxProps as PropDefinition[],
-  dialog: dialogProps as PropDefinition[],
-  dropdown: dropdownProps as PropDefinition[],
+  button: buttonProps,
+  badge: badgeProps,
+  checkbox: checkboxProps,
+  dialog: dialogProps,
+  dropdown: dropdownProps,
+  switch: switchProps,
 };
 
 export interface PropsDocProps {

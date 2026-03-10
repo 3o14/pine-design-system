@@ -113,6 +113,47 @@ export interface DialogProps {
 }
 `;
 
+const SWITCH_CODE = `
+export interface SwitchProps {
+  /**
+   * Switch의 켜짐/꺼짐 상태를 제어합니다. controlled 컴포넌트가 됩니다.
+   */
+  checked?: boolean;
+  /**
+   * Switch의 초기 상태를 설정합니다. uncontrolled 방식으로 사용할 때 씁니다.
+   */
+  defaultChecked?: boolean;
+  /**
+   * Switch 상태가 변경될 때 호출되는 콜백 함수입니다.
+   */
+  onCheckedChange?: (checked: boolean) => void;
+  /**
+   * Switch 트랙의 색상 의도를 결정합니다.
+   * @default "primary"
+   */
+  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  /**
+   * Switch의 크기를 결정합니다.
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large" | "xlarge";
+  /**
+   * Switch 옆에 표시되는 라벨 텍스트입니다.
+   */
+  label?: string;
+  /**
+   * Switch를 비활성화합니다.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * Switch를 읽기 전용으로 만듭니다.
+   * @default false
+   */
+  readOnly?: boolean;
+}
+`;
+
 const DROPDOWN_CODE = `
 export interface DropdownOption {
   value: string;
@@ -296,6 +337,7 @@ function main() {
   const checkboxProps = parseInterface(CHECKBOX_CODE, "CheckboxProps");
   const dialogProps = parseInterface(DIALOG_CODE, "DialogProps");
   const dropdownProps = parseInterface(DROPDOWN_CODE, "DropdownProps");
+  const switchProps = parseInterface(SWITCH_CODE, "SwitchProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -320,8 +362,12 @@ function main() {
     join(outputDir, "dropdown.json"),
     JSON.stringify(dropdownProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "switch.json"),
+    JSON.stringify(switchProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json");
 }
 
 main();
