@@ -40,7 +40,7 @@ export function ComponentPreview({
   return (
     <div className="not-prose my-5 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       {/* Tab header */}
-      <div className="flex items-center border-b border-gray-200 dark:border-gray-700 px-5 bg-white dark:bg-gray-950">
+      <div className="flex items-center border-b border-gray-200 dark:border-gray-700 px-5 py-3 bg-white dark:bg-gray-950">
         <button
           type="button"
           onClick={() => setActiveTab("preview")}
@@ -57,11 +57,13 @@ export function ComponentPreview({
             코드
           </button>
         )}
-        {activeTab === "code" && code && (
+        {code && (
           <button
             type="button"
             onClick={handleCopy}
-            className="ml-auto px-2.5 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+            className={`ml-auto px-2.5 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors ${
+              activeTab !== "code" ? "invisible pointer-events-none" : ""
+            }`}
           >
             {copied ? "복사됨" : "복사"}
           </button>
@@ -71,9 +73,9 @@ export function ComponentPreview({
       {/* Preview panel */}
       {(activeTab === "preview" || !code) && (
         <div
-          className={`flex flex-wrap items-center gap-3 p-8 bg-white dark:bg-gray-950 ${
+          className={`flex flex-wrap items-end gap-3 p-8 bg-white dark:bg-gray-950 ${
             align === "center" ? "justify-center" : "justify-start"
-          }`}
+          } [&>*]:inline-flex [&>*]:items-center`}
           style={{ minHeight }}
         >
           {children}
@@ -82,12 +84,12 @@ export function ComponentPreview({
 
       {/* Code panel */}
       {activeTab === "code" && code && (
-        <div className="bg-white">
+        <div className="!bg-white">
           <Highlight theme={themes.github} code={code.trim()} language="jsx">
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre
-                className={`${className} overflow-x-auto py-5 px-6 m-0 text-[13px] leading-relaxed font-mono bg-white`}
-                style={style}
+                className={`${className} overflow-x-auto py-5 px-6 m-0 text-[13px] leading-relaxed font-mono !bg-white`}
+                style={{ ...style, background: "#ffffff" }}
               >
                 {tokens.map((line, i) => (
                   <div key={i} {...getLineProps({ line })}>
