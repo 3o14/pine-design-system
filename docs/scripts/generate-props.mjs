@@ -43,6 +43,76 @@ export interface BadgeProps {
 }
 `;
 
+const DIALOG_CODE = `
+export interface DialogAction {
+  label: string;
+  onClick: () => void;
+  variant?: "solid" | "outline" | "ghost" | "weak";
+  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  disabled?: boolean;
+}
+
+export interface DialogProps {
+  /**
+   * Dialog의 열림/닫힘 상태를 제어합니다.
+   */
+  open: boolean;
+  /**
+   * 열림 상태가 변경될 때 호출되는 콜백입니다.
+   */
+  onOpenChange?: (open: boolean) => void;
+  /**
+   * Dialog가 닫힐 때 추가로 호출되는 콜백입니다.
+   */
+  onClose?: () => void;
+  /**
+   * Dialog 헤더에 표시되는 제목 텍스트입니다.
+   */
+  title?: string;
+  /**
+   * 제목 아래에 표시되는 설명 텍스트입니다.
+   */
+  description?: string;
+  /**
+   * Dialog의 최대 너비를 결정합니다.
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large" | "xlarge" | "full";
+  /**
+   * Dialog 모서리의 곡률을 결정합니다.
+   * @default "medium"
+   */
+  rounded?: "small" | "medium" | "large";
+  /**
+   * Dialog 하단에 표시되는 액션 버튼 목록입니다.
+   */
+  actions?: DialogAction[];
+  /**
+   * actions 대신 완전히 커스텀된 하단 영역을 렌더링할 때 사용합니다.
+   */
+  footer?: React.ReactNode;
+  /**
+   * 헤더 우측 상단의 닫기(X) 버튼 표시 여부를 결정합니다.
+   * @default true
+   */
+  showCloseButton?: boolean;
+  /**
+   * 오버레이(배경) 클릭 시 Dialog를 닫을지 결정합니다.
+   * @default true
+   */
+  closeOnOverlayClick?: boolean;
+  /**
+   * Escape 키 입력 시 Dialog를 닫을지 결정합니다.
+   * @default true
+   */
+  closeOnEscape?: boolean;
+  /**
+   * Dialog 본문에 표시할 콘텐츠입니다.
+   */
+  children: React.ReactNode;
+}
+`;
+
 const CHECKBOX_CODE = `
 export interface CheckboxProps {
   /**
@@ -167,6 +237,7 @@ function main() {
   const badgeProps = parseInterface(BADGE_CODE, "BadgeProps");
   const buttonProps = parseInterface(BUTTON_CODE, "ButtonProps");
   const checkboxProps = parseInterface(CHECKBOX_CODE, "CheckboxProps");
+  const dialogProps = parseInterface(DIALOG_CODE, "DialogProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -183,8 +254,12 @@ function main() {
     join(outputDir, "checkbox.json"),
     JSON.stringify(checkboxProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "dialog.json"),
+    JSON.stringify(dialogProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json");
 }
 
 main();

@@ -7,102 +7,64 @@ title: Dialog
 중요한 정보를 전달하거나 사용자의 확인·입력을 받는 모달 컴포넌트입니다.
 [Base UI Dialog](https://base-ui.com/components/react-dialog/)를 기반으로 포커스 트랩, 스크롤 잠금, Escape 키 닫기를 기본으로 지원합니다.
 
-## Props
+## 미리보기
 
-### `open` (필수)
+<ComponentPreview code={`const [open, setOpen] = useState(false);
 
-Dialog의 열림/닫힘 상태를 제어합니다.
+<Button intent="primary" onClick={() => setOpen(true)}>Dialog 열기</Button>
+<Dialog
+  open={open}
+  onOpenChange={setOpen}
+  title="Dialog 제목"
+  description="Dialog 설명 텍스트입니다."
+  size="small"
+  actions={[
+    { label: "취소", variant: "weak", intent: "neutral", onClick: () => setOpen(false) },
+    { label: "확인", variant: "solid", intent: "primary", onClick: () => setOpen(false) },
+  ]}
+>
+  <p>Dialog 본문 콘텐츠입니다.</p>
+</Dialog>`}>
+  <DialogDemo />
+</ComponentPreview>
 
-- **타입**: `boolean`
+## 예제
 
-### `onOpenChange`
-
-열림 상태가 변경될 때 호출되는 콜백입니다. 오버레이 클릭이나 Escape 키로 닫힐 때도 호출됩니다.
-
-- **타입**: `(open: boolean) => void`
-
-### `onClose`
-
-Dialog가 닫힐 때 추가로 호출되는 콜백입니다. `onOpenChange`와 함께 사용하거나, 닫힐 때만 별도 처리가 필요할 때 사용합니다.
-
-- **타입**: `() => void`
-
-### `title`
-
-Dialog 헤더에 표시되는 제목 텍스트입니다. `aria-labelledby` 역할을 하여 스크린리더 접근성을 보장합니다.
-
-- **타입**: `string`
-
-### `description`
-
-제목 아래에 표시되는 설명 텍스트입니다.
-
-- **타입**: `string`
-
-### `size`
+### Size
 
 Dialog의 최대 너비를 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 확인/취소 등 간단한 확인 Dialog |
-| `medium` | ✓ | 일반적인 폼이나 정보 Dialog |
-| `large` | | 복잡한 폼이나 상세 내용 Dialog |
-| `xlarge` | | 많은 콘텐츠가 필요한 Dialog |
-| `full` | | 전체 화면 Dialog |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "확인/취소 등 간단한 확인 Dialog"],
+    ["`medium`", "✓", "일반적인 폼이나 정보 Dialog"],
+    ["`large`", "", "복잡한 폼이나 상세 내용 Dialog"],
+    ["`xlarge`", "", "많은 콘텐츠가 필요한 Dialog"],
+    ["`full`", "", "전체 화면 Dialog"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-### `rounded`
+<ComponentPreview code={`<Dialog open={open} onOpenChange={setOpen} title="Size: small" size="small" actions={[...]}>
+  <p>Dialog 본문입니다.</p>
+</Dialog>`}>
+  <DialogSizeDemo />
+</ComponentPreview>
+
+### Rounded
 
 Dialog 모서리의 곡률을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 작은 모서리 반경 |
-| `medium` | ✓ | 기본 모서리 반경 |
-| `large` | | 큰 모서리 반경 |
-
-### `actions`
-
-Dialog 하단에 표시되는 액션 버튼 목록입니다. 각 버튼의 스타일을 `variant`와 `intent`로 개별 지정할 수 있습니다.
-
-- **타입**: `DialogAction[]`
-
-```ts
-type DialogAction = {
-  label: string;
-  onClick: () => void;
-  variant?: ButtonVariant;   // "solid" | "outline" | "ghost" | "weak"
-  intent?: ButtonIntent;     // "primary" | "danger" | ...
-  disabled?: boolean;
-};
-```
-
-### `footer`
-
-`actions` 대신 완전히 커스텀된 하단 영역을 렌더링할 때 사용합니다.
-
-- **타입**: `React.ReactNode`
-
-### `showCloseButton`
-
-헤더 우측 상단의 닫기(X) 버튼 표시 여부를 결정합니다.
-
-- **타입**: `boolean`
-- **기본값**: `true`
-
-### `closeOnOverlayClick`
-
-오버레이(배경) 클릭 시 Dialog를 닫을지 결정합니다.
-
-- **타입**: `boolean`
-- **기본값**: `true`
-
-### `closeOnEscape`
-
-Escape 키 입력 시 Dialog를 닫을지 결정합니다.
-
-- **타입**: `boolean`
-- **기본값**: `true`
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "작은 모서리 반경"],
+    ["`medium`", "✓", "기본 모서리 반경"],
+    ["`large`", "", "큰 모서리 반경"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 ## 사용 가이드
 
@@ -157,3 +119,7 @@ function DeleteConfirmDialog() {
   );
 }
 ```
+
+## Props
+
+<PropsDoc component="dialog" />

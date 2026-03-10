@@ -1,6 +1,8 @@
 export {
   IntroDemo,
   ButtonDemo,
+  DialogDemo,
+  DialogSizeDemo,
   ButtonVariantDemo,
   ButtonSizeDemo,
   ButtonIntentDemo,
