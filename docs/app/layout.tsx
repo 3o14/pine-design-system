@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 import "./globals.css";
 import "pine-design-system/style.css";
-import { ThemeProviderWrapper } from "../components/ThemeProviderWrapper";
-import { DesignThemeProvider } from "../components/DesignThemeProvider";
+import { ThemeProviderWrapper, DesignThemeProvider } from "../components/layout";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

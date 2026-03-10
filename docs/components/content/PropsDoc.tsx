@@ -1,6 +1,6 @@
 import { PropsTable, type PropDefinition } from "./PropsTable";
-import buttonProps from "../content/props/button.json";
-import badgeProps from "../content/props/badge.json";
+import buttonProps from "../../content/props/button.json";
+import badgeProps from "../../content/props/badge.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
   button: buttonProps as PropDefinition[],

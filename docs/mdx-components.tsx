@@ -1,15 +1,15 @@
 import { useMDXComponents as getDocsMDXComponents } from "nextra-theme-docs";
-import { ComponentPreview } from "./components/ComponentPreview";
-import { DocTable } from "./components/DocTable";
-import { PropsDoc } from "./components/PropsDoc";
-import { ColorPalette } from "./components/ColorPalette";
-import { ColorTokenTable } from "./components/ColorTokenTable";
-import { TypographyScale } from "./components/TypographyScale";
-import { FontWeightPreview } from "./components/FontWeightPreview";
-import { FontFamilyPreview } from "./components/FontFamilyPreview";
-import { RadiusScale } from "./components/RadiusScale";
-import { ShadowScale } from "./components/ShadowScale";
-import { SpacingScale } from "./components/SpacingScale";
+import { ComponentPreview, DocTable, PropsDoc } from "./components/content";
+import {
+  ColorPalette,
+  ColorTokenTable,
+  TypographyScale,
+  FontWeightPreview,
+  FontFamilyPreview,
+  RadiusScale,
+  ShadowScale,
+  SpacingScale,
+} from "./components/foundation";
 import {
   IntroDemo,
   ButtonDemo,
@@ -41,7 +41,7 @@ import {
   TextFieldVariantDemo,
   TextFieldStatusDemo,
   TextFieldMultilineDemo,
-} from "./components/Demos";
+} from "./components/demos";
 
 const docsComponents = getDocsMDXComponents();
 

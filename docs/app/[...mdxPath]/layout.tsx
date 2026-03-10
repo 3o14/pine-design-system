@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Layout } from "nextra-theme-docs";
 import { getPageMap } from "nextra/page-map";
-import { DocsNavbar } from "../../components/DocsNavbar";
+import { DocsNavbar } from "../../components/layout";
 
 export default async function DocsLayout({ children }: { children: ReactNode }) {
   const pageMap = await getPageMap();
