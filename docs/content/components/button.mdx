@@ -24,12 +24,16 @@ title: Button
 
 버튼의 시각적 강조 수준을 결정합니다. 화면 내 액션의 중요도에 맞게 선택하세요.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `solid` | ✓ | 배경색이 채워진 스타일. 가장 강조가 필요한 주요 CTA에 사용합니다. |
-| `outline` | | 테두리만 있는 스타일. Solid보다 낮은 강조의 보조 액션에 사용합니다. |
-| `ghost` | | 배경과 테두리가 없는 스타일. 가장 낮은 강조가 필요할 때 사용합니다. |
-| `weak` | | 반투명 배경 스타일. Solid와 함께 보조 액션으로 조합하기에 적합합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`solid`", "✓", "배경색이 채워진 스타일. 가장 강조가 필요한 주요 CTA에 사용합니다."],
+    ["`outline`", "", "테두리만 있는 스타일. Solid보다 낮은 강조의 보조 액션에 사용합니다."],
+    ["`ghost`", "", "배경과 테두리가 없는 스타일. 가장 낮은 강조가 필요할 때 사용합니다."],
+    ["`weak`", "", "반투명 배경 스타일. Solid와 함께 보조 액션으로 조합하기에 적합합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 <ComponentPreview code={`<Button variant="solid" intent="primary">Solid</Button>
 <Button variant="outline" intent="primary">Outline</Button>
@@ -42,12 +46,16 @@ title: Button
 
 버튼의 크기를 결정합니다. 화면 맥락과 클릭 영역 필요도에 맞게 선택하세요.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 좁은 공간이나 보조 액션에 사용합니다. |
-| `medium` | ✓ | 가장 범용적인 크기입니다. |
-| `large` | | 주요 CTA 또는 충분한 클릭 영역이 필요할 때 사용합니다. |
-| `xlarge` | | 큰 화면의 주목도 높은 CTA에 사용합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "좁은 공간이나 보조 액션에 사용합니다."],
+    ["`medium`", "✓", "가장 범용적인 크기입니다."],
+    ["`large`", "", "주요 CTA 또는 충분한 클릭 영역이 필요할 때 사용합니다."],
+    ["`xlarge`", "", "큰 화면의 주목도 높은 CTA에 사용합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 <ComponentPreview code={`<Button size="small">Small</Button>
 <Button size="medium">Medium</Button>
@@ -60,14 +68,18 @@ title: Button
 
 버튼의 의미적 목적을 색상으로 표현합니다. 동작의 성격에 맞는 intent를 선택하세요.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `primary` | ✓ | 앱의 핵심 기능에 사용하는 주요 액션입니다. |
-| `secondary` | | Primary와 함께 조합하는 보조 액션입니다. |
-| `success` | | 완료, 저장, 확인 등 긍정적 결과의 액션에 사용합니다. |
-| `warning` | | 주의가 필요한 액션에 사용합니다. |
-| `danger` | | 삭제, 초기화 등 되돌릴 수 없는 액션에 사용합니다. 사용자에게 위험을 명확히 알려주세요. |
-| `neutral` | | 의미적 강조 없이 중립적인 액션에 사용합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`primary`", "✓", "앱의 핵심 기능에 사용하는 주요 액션입니다."],
+    ["`secondary`", "", "Primary와 함께 조합하는 보조 액션입니다."],
+    ["`success`", "", "완료, 저장, 확인 등 긍정적 결과의 액션에 사용합니다."],
+    ["`warning`", "", "주의가 필요한 액션에 사용합니다."],
+    ["`danger`", "", "삭제, 초기화 등 되돌릴 수 없는 액션에 사용합니다. 사용자에게 위험을 명확히 알려주세요."],
+    ["`neutral`", "", "의미적 강조 없이 중립적인 액션에 사용합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 <ComponentPreview code={`<Button intent="primary">Primary</Button>
 <Button intent="secondary">Secondary</Button>
@@ -82,11 +94,15 @@ title: Button
 
 버튼 모서리의 곡률을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 작은 모서리 반경 |
-| `medium` | ✓ | 기본 모서리 반경 |
-| `large` | | 큰 모서리 반경 (pill 형태에 가깝습니다) |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "작은 모서리 반경"],
+    ["`medium`", "✓", "기본 모서리 반경"],
+    ["`large`", "", "큰 모서리 반경 (pill 형태에 가깝습니다)"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
 <ComponentPreview code={`<Button rounded="small">Small</Button>
 <Button rounded="medium">Medium</Button>

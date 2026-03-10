@@ -1,5 +1,6 @@
 import { useMDXComponents as getDocsMDXComponents } from "nextra-theme-docs";
 import { ComponentPreview } from "./components/ComponentPreview";
+import { DocTable } from "./components/DocTable";
 import { BadgePropsDoc, ButtonPropsDoc } from "./components/PropsTables";
 import { ColorPalette } from "./components/ColorPalette";
 import { ColorTokenTable } from "./components/ColorTokenTable";
@@ -48,6 +49,7 @@ export function useMDXComponents(components?: Record<string, unknown>) {
   return {
     ...docsComponents,
     ComponentPreview,
+    DocTable,
     BadgePropsDoc,
     ButtonPropsDoc,
     ColorPalette,
