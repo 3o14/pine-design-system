@@ -1,10 +1,12 @@
 import { PropsTable, type PropDefinition } from "./PropsTable";
 import buttonProps from "../../content/props/button.json";
 import badgeProps from "../../content/props/badge.json";
+import checkboxProps from "../../content/props/checkbox.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
   button: buttonProps as PropDefinition[],
   badge: badgeProps as PropDefinition[],
+  checkbox: checkboxProps as PropDefinition[],
 };
 
 export interface PropsDocProps {

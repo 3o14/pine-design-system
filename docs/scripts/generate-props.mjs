@@ -43,6 +43,52 @@ export interface BadgeProps {
 }
 `;
 
+const CHECKBOX_CODE = `
+export interface CheckboxProps {
+  /**
+   * Checkbox의 체크 상태를 제어합니다. 이 prop을 사용하면 controlled 컴포넌트가 됩니다.
+   */
+  checked?: boolean;
+  /**
+   * Checkbox의 초기 체크 상태를 설정합니다. uncontrolled 방식으로 사용할 때 씁니다.
+   */
+  defaultChecked?: boolean;
+  /**
+   * 체크 상태가 변경될 때 호출되는 콜백 함수입니다.
+   */
+  onCheckedChange?: (checked: boolean) => void;
+  /**
+   * Checkbox의 색상 의도를 결정합니다.
+   * @default "primary"
+   */
+  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  /**
+   * Checkbox의 크기를 결정합니다.
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large" | "xlarge";
+  /**
+   * Checkbox 옆에 표시되는 라벨 텍스트입니다. 라벨 클릭 시 Checkbox가 토글됩니다.
+   */
+  label?: string;
+  /**
+   * Checkbox를 비활성화합니다.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * 체크 상태를 읽기 전용으로 만듭니다.
+   * @default false
+   */
+  readOnly?: boolean;
+  /**
+   * 폼 유효성 검사 시 필수 입력 항목으로 표시합니다.
+   * @default false
+   */
+  required?: boolean;
+}
+`;
+
 const BUTTON_CODE = `
 import type { ReactNode } from "react"
 
@@ -120,6 +166,7 @@ function parseInterface(code, exportName) {
 function main() {
   const badgeProps = parseInterface(BADGE_CODE, "BadgeProps");
   const buttonProps = parseInterface(BUTTON_CODE, "ButtonProps");
+  const checkboxProps = parseInterface(CHECKBOX_CODE, "CheckboxProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -132,8 +179,12 @@ function main() {
     join(outputDir, "button.json"),
     JSON.stringify(buttonProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "checkbox.json"),
+    JSON.stringify(checkboxProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json");
 }
 
 main();
