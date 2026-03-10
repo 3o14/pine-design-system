@@ -113,6 +113,68 @@ export interface DialogProps {
 }
 `;
 
+const TEXT_FIELD_CODE = `
+export interface TextFieldProps {
+  /**
+   * 입력 필드 위에 표시되는 라벨 텍스트입니다.
+   */
+  label?: string;
+  /**
+   * 값이 없을 때 표시되는 플레이스홀더 텍스트입니다.
+   */
+  placeholder?: string;
+  /**
+   * 입력 필드 아래에 표시되는 보조 텍스트입니다.
+   */
+  helperText?: string;
+  /**
+   * 입력 필드의 시각적 스타일을 결정합니다.
+   * @default "outline"
+   */
+  variant?: "outline" | "filled";
+  /**
+   * 입력 필드의 유효성 상태를 표시합니다.
+   * @default "default"
+   */
+  status?: "default" | "error" | "success";
+  /**
+   * 입력 필드의 크기를 결정합니다.
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large" | "xlarge";
+  /**
+   * 모서리 곡률을 결정합니다.
+   * @default "medium"
+   */
+  rounded?: "small" | "medium" | "large";
+  /**
+   * true로 설정하면 input 대신 textarea로 렌더링됩니다.
+   * @default false
+   */
+  multiline?: boolean;
+  /**
+   * multiline이 true일 때 textarea의 기본 높이(행 수)를 지정합니다.
+   * @default 3
+   */
+  rows?: number;
+  /**
+   * true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * 입력 필드를 비활성화합니다.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * 폼 유효성 검사 시 필수 입력 항목으로 표시합니다.
+   * @default false
+   */
+  required?: boolean;
+}
+`;
+
 const TEXT_CODE = `
 export interface TextProps {
   /**
@@ -413,6 +475,7 @@ function main() {
   const switchProps = parseInterface(SWITCH_CODE, "SwitchProps");
   const tabProps = parseInterface(TAB_CODE, "TabProps");
   const textProps = parseInterface(TEXT_CODE, "TextProps");
+  const textFieldProps = parseInterface(TEXT_FIELD_CODE, "TextFieldProps");
 
   const outputDir = join(__dirname, "../content/props");
   mkdirSync(outputDir, { recursive: true });
@@ -449,8 +512,12 @@ function main() {
     join(outputDir, "text.json"),
     JSON.stringify(textProps, null, 2)
   );
+  writeFileSync(
+    join(outputDir, "text-field.json"),
+    JSON.stringify(textFieldProps, null, 2)
+  );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json, text.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json, text.json, text-field.json");
 }
 
 main();

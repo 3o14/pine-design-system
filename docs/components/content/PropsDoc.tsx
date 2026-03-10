@@ -7,6 +7,7 @@ import dropdownProps from "../../content/props/dropdown.json";
 import switchProps from "../../content/props/switch.json";
 import tabProps from "../../content/props/tab.json";
 import textProps from "../../content/props/text.json";
+import textFieldProps from "../../content/props/text-field.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
   button: buttonProps,
@@ -17,6 +18,7 @@ const PROPS_MAP: Record<string, PropDefinition[]> = {
   switch: switchProps,
   tab: tabProps,
   text: textProps,
+  "text-field": textFieldProps,
 };
 
 export interface PropsDocProps {

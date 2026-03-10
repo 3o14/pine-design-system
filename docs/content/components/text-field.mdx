@@ -9,118 +9,87 @@ title: TextField
 
 ## 미리보기
 
-<ComponentPreview>
+<ComponentPreview code={`<TextField label="Name" placeholder="Enter your name" />
+<TextField label="Email" placeholder="you@example.com" helperText="We'll never share your email." />`}>
   <TextFieldDemo />
 </ComponentPreview>
 
-## Props
+## 예제
 
-### `label`
-
-입력 필드 위에 표시되는 라벨 텍스트입니다. 라벨은 `<label>` 요소로 렌더링되어 입력 필드와 자동으로 연결됩니다.
-
-- **타입**: `string`
-
-### `placeholder`
-
-값이 없을 때 표시되는 플레이스홀더 텍스트입니다.
-
-- **타입**: `string`
-
-### `helperText`
-
-입력 필드 아래에 표시되는 보조 텍스트입니다. 에러 메시지, 힌트, 형식 안내 등에 사용합니다.
-
-- **타입**: `string`
-
-### `variant`
+### Variant
 
 입력 필드의 시각적 스타일을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `outline` | ✓ | 테두리가 있는 일반적인 입력 스타일입니다. |
-| `filled` | | 배경이 채워진 입력 스타일입니다. 다른 폼 요소와 구분이 필요할 때 사용합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`outline`", "✓", "테두리가 있는 일반적인 입력 스타일입니다."],
+    ["`filled`", "", "배경이 채워진 입력 스타일입니다. 다른 폼 요소와 구분이 필요할 때 사용합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<TextField label="Outline" variant="outline" placeholder="Outline style" />
+<TextField label="Filled" variant="filled" placeholder="Filled style" />`}>
   <TextFieldVariantDemo />
 </ComponentPreview>
 
-### `status`
+### Status
 
 입력 필드의 유효성 상태를 표시합니다. `status`에 따라 테두리 색상과 헬퍼 텍스트 색상이 변경됩니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `default` | ✓ | 기본 상태입니다. |
-| `error` | | 유효성 검사 실패 상태입니다. 헬퍼 텍스트를 오류 메시지로 활용하세요. |
-| `success` | | 유효성 검사 성공 상태입니다. 헬퍼 텍스트를 확인 메시지로 활용하세요. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`default`", "✓", "기본 상태입니다."],
+    ["`error`", "", "유효성 검사 실패 상태입니다. 헬퍼 텍스트를 오류 메시지로 활용하세요."],
+    ["`success`", "", "유효성 검사 성공 상태입니다. 헬퍼 텍스트를 확인 메시지로 활용하세요."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-<ComponentPreview>
+<ComponentPreview code={`<TextField label="Default" status="default" placeholder="Default" />
+<TextField label="Error" status="error" helperText="This field is required." placeholder="Error" />
+<TextField label="Success" status="success" helperText="Looks good!" placeholder="Success" defaultValue="john@doe.com" />`}>
   <TextFieldStatusDemo />
 </ComponentPreview>
 
-### `size`
+### Size
 
 입력 필드의 크기를 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 밀도 높은 폼에 사용합니다. |
-| `medium` | ✓ | 일반적인 폼에서 사용합니다. |
-| `large` | | 충분한 입력 영역이 필요할 때 사용합니다. |
-| `xlarge` | | 큰 입력 영역이 필요할 때 사용합니다. |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "밀도 높은 폼에 사용합니다."],
+    ["`medium`", "✓", "일반적인 폼에서 사용합니다."],
+    ["`large`", "", "충분한 입력 영역이 필요할 때 사용합니다."],
+    ["`xlarge`", "", "큰 입력 영역이 필요할 때 사용합니다."],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-### `rounded`
+### Rounded
 
 모서리 곡률을 결정합니다.
 
-| 값 | 기본값 | 설명 |
-| --- | :---: | --- |
-| `small` | | 작은 모서리 반경 |
-| `medium` | ✓ | 기본 모서리 반경 |
-| `large` | | 큰 모서리 반경 |
+<DocTable
+  headers={["값", "기본값", "설명"]}
+  rows={[
+    ["`small`", "", "작은 모서리 반경"],
+    ["`medium`", "✓", "기본 모서리 반경"],
+    ["`large`", "", "큰 모서리 반경"],
+  ]}
+  align={["left", "center", "left"]}
+/>
 
-### `multiline`
+### Multiline
 
-`true`로 설정하면 `<input>` 대신 `<textarea>`로 렌더링됩니다.
-`rows` prop으로 기본 표시 행 수를 지정할 수 있습니다.
+`true`로 설정하면 `<input>` 대신 `<textarea>`로 렌더링됩니다. `rows` prop으로 기본 표시 행 수를 지정할 수 있습니다.
 
-- **타입**: `boolean`
-- **기본값**: `false`
-
-<ComponentPreview>
+<ComponentPreview code={`<TextField label="Bio" multiline rows={4} placeholder="Tell us about yourself…" />`}>
   <TextFieldMultilineDemo />
 </ComponentPreview>
-
-### `rows`
-
-`multiline`이 `true`일 때 textarea의 기본 높이(행 수)를 지정합니다.
-
-- **타입**: `number`
-- **기본값**: `3`
-- **조건**: `multiline: true`일 때만 사용 가능
-
-### `fullWidth`
-
-`true`로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
-
-- **타입**: `boolean`
-- **기본값**: `false`
-
-### `disabled`
-
-입력 필드를 비활성화합니다.
-
-- **타입**: `boolean`
-- **기본값**: `false`
-
-### `required`
-
-폼 유효성 검사 시 필수 입력 항목으로 표시합니다.
-
-- **타입**: `boolean`
-- **기본값**: `false`
 
 ## 사용 가이드
 
@@ -165,3 +134,7 @@ import { TextField } from "pine-design-system";
 // 전체 너비
 <TextField label="주소" fullWidth />
 ```
+
+## Props
+
+<PropsDoc component="text-field" />
