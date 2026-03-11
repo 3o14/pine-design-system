@@ -1,4 +1,4 @@
-# Migration: pine-ui-kit → pine-design-system
+# 패키지 마이그레이션 가이드
 
 패키지가 **pine-ui-kit**에서 **pine-design-system**으로 이름이 변경되었습니다. 기존 프로젝트를 옮기려면 아래 단계를 따르세요.
 
@@ -38,10 +38,14 @@ import "pine-design-system/style.css";
 
 ## 3. 요약
 
-| 항목        | pine-ui-kit           | pine-design-system        |
-| ----------- | -------------------- | ------------------------- |
-| 패키지명    | `pine-ui-kit`        | `pine-design-system`      |
-| 스타일 import | `pine-ui-kit/style.css` | `pine-design-system/style.css` |
-| 컴포넌트/API | 동일                 | 동일                      |
+<DocTable
+  headers={["항목", "pine-ui-kit", "pine-design-system"]}
+  rows={[
+    ["패키지명", "`pine-ui-kit`", "`pine-design-system`"],
+    ["스타일 import", "`pine-ui-kit/style.css`", "`pine-design-system/style.css`"],
+    ["컴포넌트/API", "동일", "동일"],
+  ]}
+  align={["left", "left", "left"]}
+/>
 
 `pine-ui-kit`은 deprecated 패키지로 유지되며, 내부적으로 `pine-design-system`을 re-export합니다. 가능하면 `pine-design-system`으로 직접 전환하는 것을 권장합니다.
