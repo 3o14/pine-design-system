@@ -1,6 +1,6 @@
 # Get Started
 
-## 설치
+## Installation
 
 ```bash
 # npm
@@ -13,11 +13,11 @@ yarn add pine-design-system
 pnpm add pine-design-system
 ```
 
-React 18 이상이 필요합니다.
+React 18 or higher is required.
 
-## 기본 사용
+## Basic Usage
 
-앱 루트를 `ThemeProvider`로 감싸고, 스타일 시트를 한 번 불러옵니다.
+Wrap your app root with `ThemeProvider` and import the stylesheet once.
 
 ```tsx
 import { ThemeProvider, Button } from "pine-design-system";
@@ -32,18 +32,20 @@ export default function App() {
 }
 ```
 
-## design / theme
+## ThemeProvider Options
 
-- **design**: `"basic"` | `"game"` | `"crayon"` — 디자인 컨셉을 선택합니다. 기본값은 `"basic"`입니다.
-- **theme**: `"light"` | `"dark"` — 라이트/다크 모드입니다. 제어하지 않으면 `syncWithSystem`에 따라 시스템 설정을 따릅니다.
+- **design** / **defaultDesign**: `"basic"` | `"game"` | `"crayon"` — Design concept. Use `defaultDesign` for uncontrolled (default: `"basic"`), or `design` + `onDesignChange` for controlled.
+- **theme** / **defaultTheme**: `"light"` | `"dark"` — Light/dark mode. Use `defaultTheme` for initial value when uncontrolled, or `theme` + `onThemeChange` for controlled.
+- **syncWithSystem**: `boolean` (default: `true`) — When `true` and `theme` is not controlled, the app follows the OS color scheme. Set to `false` to use `defaultTheme` as the initial value instead.
+- **primaryColor**: `string` — Optional hex color to customize the primary palette (e.g. `"#6366f1"`).
 
 ```tsx
 <ThemeProvider design="game" defaultTheme="dark">
-  {/* 게임 스타일 + 다크 모드 */}
+  {/* Game style + dark mode */}
 </ThemeProvider>
 ```
 
-## 다음 단계
+## Next Steps
 
-- [Foundation](/foundation): 토큰(색상, 타이포, 간격) 구조
-- [Components](/components): 컴포넌트 목록과 사용법
+- [Foundation](/foundation): Token structure (colors, typography, spacing)
+- [Components](/components): Component list and usage
