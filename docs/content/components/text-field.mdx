@@ -107,34 +107,6 @@ title: TextField
 />
 ```
 
-## 코드
-
-```tsx
-import { TextField } from "pine-design-system";
-
-// 기본 사용
-<TextField label="이름" placeholder="홍길동" />
-
-// 유효성 상태
-<TextField
-  label="이메일"
-  type="email"
-  status="error"
-  helperText="올바른 이메일 형식을 입력하세요."
-/>
-
-// 여러 줄 입력 (textarea)
-<TextField
-  label="자기소개"
-  multiline
-  rows={5}
-  placeholder="간단하게 소개해 주세요."
-/>
-
-// 전체 너비
-<TextField label="주소" fullWidth />
-```
-
 ## Props
 
 <PropsDoc component="text-field" />

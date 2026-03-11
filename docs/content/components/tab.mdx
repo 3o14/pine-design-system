@@ -48,42 +48,6 @@ title: Tab
 
 URL 파라미터와 탭 상태를 동기화하거나, 탭 전환 시 외부 동작(데이터 fetch 등)이 필요할 때는 `value` + `onChange`를 사용하세요. 단순한 UI 탭 전환은 `defaultValue`만으로 충분합니다.
 
-## 코드
-
-```tsx
-import { Tab } from "pine-design-system";
-
-const tabs = [
-  {
-    value: "profile",
-    label: "프로필",
-    content: <ProfilePanel />,
-  },
-  {
-    value: "settings",
-    label: "설정",
-    content: <SettingsPanel />,
-  },
-  {
-    value: "billing",
-    label: "결제",
-    content: <BillingPanel />,
-    disabled: true,
-  },
-];
-
-// 기본 사용
-<Tab tabs={tabs} />
-
-// Controlled + 수직 방향
-<Tab
-  tabs={tabs}
-  value={activeTab}
-  onChange={setActiveTab}
-  orientation="vertical"
-/>
-```
-
 ## Props
 
 <PropsDoc component="tab" />

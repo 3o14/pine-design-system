@@ -84,26 +84,6 @@ Switch의 크기를 결정합니다.
 
 `label` prop을 통해 스크린리더가 Switch의 목적을 읽을 수 있도록 반드시 레이블을 제공하세요.
 
-## 코드
-
-```tsx
-import { Switch } from "pine-design-system";
-
-// 기본 사용
-<Switch label="알림 받기" defaultChecked />
-
-// Controlled
-<Switch
-  label="다크 모드"
-  intent="neutral"
-  checked={isDark}
-  onCheckedChange={setIsDark}
-/>
-
-// 비활성화
-<Switch label="관리자만 변경 가능" disabled defaultChecked />
-```
-
 ## Props
 
 <PropsDoc component="switch" />
