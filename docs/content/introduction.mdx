@@ -1,25 +1,25 @@
 # Introduction
 
-Pine Design System은 **토큰 기반 테마**와 **접근성**을 갖춘 React UI 컴포넌트 라이브러리입니다.
+Pine Design System is a React UI component library with **token-based theming** and **accessibility** built in.
 
-## 한 번에 바꾸는 디자인 컨셉
+## Switch Design Concepts at Once
 
-`ThemeProvider`의 **`design`** prop 하나로 앱 전체의 디자인 컨셉을 바꿀 수 있습니다. 코드는 그대로 두고, basic / game / crayon 중 하나를 선택하면 됩니다.
+Change the entire app's design concept with a single **`design`** prop on `ThemeProvider`. Keep your code as-is and choose from basic, game, or crayon.
 
 <ComponentPreview>
-  <IntroDemo />
+	<IntroDemo />
 </ComponentPreview>
 
-위 데모에서 **Design**과 **Mode** 버튼으로 스타일 전환을 확인해 보세요.
+Try the **Design** and **Mode** buttons in the demo above to see the style switch in action.
 
-## Base UI 기반
+## Accessibility and Behavior Consistency
 
-컴포넌트는 [Base UI](https://base-ui.com/)의 headless 프리미티브를 기반으로 합니다. 마크업과 키보드/스크린 리더 동작은 Base UI가 담당하고, Pine은 토큰과 스타일만 적용합니다. 따라서 접근성과 동작 일관성을 유지하면서도 디자인만 자유롭게 바꿀 수 있습니다.
+Components are built on top of [Base UI](https://base-ui.com/) headless primitives. Base UI handles markup, keyboard navigation, and screen reader support, while Pine applies only the token and style layer. As a result, you can switch designs freely while preserving accessibility and consistent behavior.
 
-## 다크/라이트 모드
+## Light/Dark Mode
 
-`theme` prop으로 **light** / **dark** 모드를 지정할 수 있고, `syncWithSystem={true}`(기본값)로 OS 설정을 따르게 할 수 있습니다. 모든 테마(basic, game, crayon)가 라이트/다크 모드를 지원합니다.
+Use the `theme` prop to set **light** or **dark** mode, or `syncWithSystem={true}` (default) to follow the OS setting. All themes (basic, game, crayon) support both light and dark modes.
 
 ---
 
-다음: [Get Started](/get-started)에서 설치와 첫 사용법을 확인하세요.
+Next: See [Get Started](/get-started) for installation and first steps.

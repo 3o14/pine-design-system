@@ -46,7 +46,7 @@ export function ComponentPreview({
           onClick={() => setActiveTab("preview")}
           className={`${tabBase} ${activeTab === "preview" ? tabActive : tabInactive}`}
         >
-          미리보기
+          Preview
         </button>
         {code && (
           <button
@@ -54,7 +54,7 @@ export function ComponentPreview({
             onClick={() => setActiveTab("code")}
             className={`${tabBase} ${activeTab === "code" ? tabActive : tabInactive}`}
           >
-            코드
+            Code
           </button>
         )}
         {code && (
@@ -65,7 +65,7 @@ export function ComponentPreview({
               activeTab !== "code" ? "invisible pointer-events-none" : ""
             }`}
           >
-            {copied ? "복사됨" : "복사"}
+            {copied ? "Copied" : "Copy"}
           </button>
         )}
       </div>
