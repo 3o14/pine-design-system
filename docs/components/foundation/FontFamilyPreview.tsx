@@ -55,7 +55,7 @@ export function FontFamilyPreview() {
         ))}
       </div>
       <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-        game·crayon 테마는 웹폰트(DungGeunMo, 온글잎-승훈체) 로드 시 해당 글꼴로 표시됩니다.
+        game and crayon themes display their fonts when web fonts (DungGeunMo, 온글잎-승훈체) are loaded.
       </p>
     </div>
   );

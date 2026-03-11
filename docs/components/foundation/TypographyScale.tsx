@@ -60,7 +60,7 @@ export function TypographyScale() {
           ))}
         </tbody>
       </table>
-      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">기준 1rem = 16px</p>
+      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Base: 1rem = 16px</p>
     </div>
   );
 }

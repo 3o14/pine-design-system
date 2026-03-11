@@ -1,49 +1,49 @@
 # Typography
 
-타이포그래피는 콘텐츠를 명확하고 효율적으로 표현하기 위한 디자인 요소입니다.
+Typography is the design element that expresses content clearly and efficiently.
 
-## 개요
+## Overview
 
-타이포그래피는 모든 디지털 채널에서 텍스트를 명확하고 일관되며 접근 가능하게 표현하기 위한 핵심 요소입니다. 재사용 가능한 토큰과 컴포넌트를 정의함으로써, 본 시스템은 제목, 본문 등 다양한 텍스트 스타일을 체계적으로 관리할 수 있도록 돕습니다. 이를 통해 시각적 계층 구조와 일관성을 유지할 수 있습니다.
+Typography is essential for presenting text clearly, consistently, and accessibly across all digital channels. By defining reusable tokens and components, this system helps manage diverse text styles—headings, body copy, and more—in a structured way, maintaining visual hierarchy and consistency.
 
-Pine 타이포그래피 시스템은 폰트 크기, 줄 높이, 폰트 두께를 각각 토큰으로 정의합니다. 이 토큰들은 시맨틱 이름(xsmall, small, medium, large, xlarge, display-small, display-medium, display-large)으로 제공되며, 테마(basic, game, crayon)별로 실제 rem/line-height 값이 매핑됩니다. `Text` 컴포넌트의 `size`, `weight` prop이 이 토큰과 연결됩니다.
+The Pine typography system defines font size, line height, and font weight as separate tokens. These tokens use semantic names (xsmall, small, medium, large, xlarge, display-small, display-medium, display-large) and map to actual rem/line-height values per theme (basic, game, crayon). The `Text` component's `size` and `weight` props connect to these tokens.
 
-## 글꼴
+## Font Families
 
-테마별로 다른 글꼴 스택이 적용됩니다. basic 테마는 Inter(본문)와 Roboto Mono(코드), game 테마는 DungGeunMo(픽셀 폰트), crayon 테마는 온글잎-승훈체를 사용합니다.
+Each theme applies a different font stack. The basic theme uses Inter (body) and Roboto Mono (code), the game theme uses DungGeunMo (pixel font), and the crayon theme uses 온글잎-승훈체.
 
 <FontFamilyPreview />
 
-웹에서는 각 테마의 CSS 변수 또는 foundation 토큰을 통해 위와 같은 `font-family` 스택이 적용됩니다.
+In the browser, these `font-family` stacks are applied via CSS variables or foundation tokens per theme.
 
-## 폰트 크기 토큰
+## Font Size Tokens
 
-폰트 크기 토큰은 접근성과 확장성을 위해 상대 단위(rem)를 사용합니다. 기준 1rem = 16px로 계산됩니다.
+Font size tokens use relative units (rem) for accessibility and scalability. Base: 1rem = 16px.
 
 <TypographyScale />
 
-## 줄 높이 토큰
+## Line Height Tokens
 
-줄 높이 토큰은 적절한 수직 리듬과 가독성을 보장합니다. 동일한 시맨틱 크기(xsmall, small, …)의 폰트 크기 토큰과 함께 사용하는 것을 권장하며, 위 테이블의 Line height 컬럼에 대응값이 표시되어 있습니다.
+Line height tokens ensure proper vertical rhythm and readability. They are paired with the same semantic size (xsmall, small, …) as the font size tokens. The Line height column in the table above shows the corresponding values.
 
-## 폰트 두께 토큰
+## Font Weight Tokens
 
-명확한 시각적 대비와 계층 구조를 위해 네 가지 폰트 두께 토큰을 정의합니다.
+Four font weight tokens are defined for clear visual contrast and hierarchy.
 
 <FontWeightPreview />
 
-## 타이포그래피 컴포넌트
+## Typography Component
 
-`Text` 컴포넌트는 위 토큰들을 `size`, `weight` prop으로 조합해 사용할 수 있습니다.
+The `Text` component combines the tokens above via its `size` and `weight` props.
 
 - **size**: xsmall, small, medium, large, xlarge, display-small, display-medium, display-large
 - **weight**: regular, medium, semibold, bold
 
-일반적으로 small–xlarge는 본문 및 캡션에, display-small–display-large는 제목 및 강조 텍스트에 사용됩니다.
+Generally, small–xlarge is used for body text and captions; display-small–display-large for headings and emphasis. The game theme uses a smaller display-small for its pixel font.
 
-## 사용 가이드라인
+## Guidelines
 
-- **일관성 유지**: 모든 사례에서 정의된 토큰과 컴포넌트를 사용하여 일관된 타이포그래피를 유지합니다.
-- **명확한 계층 구조**: 제목과 본문 등의 계층을 명확하게 구분하여, 사용자가 정보를 효율적으로 인식할 수 있도록 합니다.
-- **상대 단위 사용**: rem과 같은 상대 단위를 사용하여 사용자의 폰트 크기 설정을 존중합니다.
-- **시맨틱 우선**: 특정 역할이 요구되는 경우(예: 화면 제목, 본문) 시맨틱 size 토큰을 사용하여 디자인 의도와 기능을 함께 담아냅니다.
+- **Maintain consistency**: Use defined tokens and components everywhere for consistent typography.
+- **Clear hierarchy**: Distinguish headings from body text so users can scan information efficiently.
+- **Use relative units**: Use rem and other relative units to respect the user's font size settings.
+- **Prefer semantic tokens**: When a specific role is needed (e.g. page title, body), use semantic size tokens to convey both design intent and function.
