@@ -34,11 +34,7 @@ export function RadiusScale() {
               <td className={cellClass}>
                 <div
                   className="w-16 h-16 bg-gray-200 dark:bg-gray-700"
-                  style={
-                    token === "full"
-                      ? { borderRadius: "100%" }
-                      : { borderTopRightRadius: value }
-                  }
+                  style={{ borderRadius: value }}
                 />
               </td>
               <td className={`${cellClass} text-right font-mono`}>{value}</td>
