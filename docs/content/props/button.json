@@ -2,49 +2,49 @@
   {
     "name": "variant",
     "type": "\"solid\" | \"outline\" | \"ghost\" | \"weak\"",
-    "description": "버튼의 시각적 강조 수준을 결정합니다.",
+    "description": "Controls the visual emphasis level of the button.",
     "default": "\"solid\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "버튼의 의미적 목적을 색상으로 표현합니다.",
+    "description": "Expresses the semantic purpose of the button through color.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "버튼의 크기를 결정합니다.",
+    "description": "Controls the button size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "버튼 모서리의 곡률을 결정합니다.",
+    "description": "Controls the corner radius of the button.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.",
+    "description": "When true, the button fills the full width of its parent container.",
     "default": "false",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "버튼을 비활성화합니다.",
+    "description": "Disables the button.",
     "default": "false",
     "required": false
   },
   {
     "name": "children",
     "type": "ReactNode",
-    "description": "버튼에 표시할 내용입니다.",
+    "description": "Content to display inside the button.",
     "required": true
   }
 ]

@@ -71,6 +71,14 @@ export function ButtonRoundedDemo() {
   );
 }
 
+export function ButtonFullWidthDemo() {
+  return (
+    <div className="max-w-[200px]">
+      <Button fullWidth intent="primary">Full width</Button>
+    </div>
+  );
+}
+
 export function ButtonDisabledDemo() {
   return (
     <>

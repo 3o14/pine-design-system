@@ -7,6 +7,7 @@ export {
   ButtonSizeDemo,
   ButtonIntentDemo,
   ButtonRoundedDemo,
+  ButtonFullWidthDemo,
   ButtonDisabledDemo,
   BadgeDemo,
   BadgeVariantDemo,
