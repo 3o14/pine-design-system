@@ -1,16 +1,39 @@
 # Shadow
 
-그림자(shadow) 토큰은 카드, 모달, 드롭다운 등 레이어의 깊이를 표현합니다.
+Shadow tokens express depth for cards, modals, dropdowns, and other layered elements.
 
-## 개요
+## Overview
 
-Pine에서는 `none`부터 `xl`까지 6단계의 box-shadow 토큰을 제공합니다. 슬레이트 톤의 반투명 rgba로 정의되어 라이트/다크 모드에서 모두 사용할 수 있습니다.
+Pine provides 6 foundation shadow tokens from `none` to `xl`. These map to semantic tokens (xsmall, small, medium, large, xlarge) that components use for elevation. Shadows are defined with slate-toned semi-transparent rgba values, so they work in both light and dark modes.
 
-## Shadow 토큰
+## Foundation Shadow Tokens
 
 <ShadowScale />
 
-## 사용 가이드라인
+## Theme Adapters
 
-- **계층 표현**: 상위 레이어(모달, 팝오버)일수록 더 큰 shadow 토큰을 사용해 시각적 위계를 만듭니다.
-- **game 테마**: pixelBox 등 테마 전용 shadow가 별도로 정의될 수 있습니다.
+Standard shadow tokens map identically across all themes:
+
+<DocTable
+  headers={["Theme", "xsmall", "small", "medium", "large", "xlarge"]}
+  rows={[
+    ["basic", "xs", "sm", "md", "lg", "xl"],
+    ["game", "xs", "sm", "md", "lg", "xl"],
+    ["crayon", "xs", "sm", "md", "lg", "xl"],
+  ]}
+  align={["left", "left", "left", "left", "left", "left"]}
+/>
+
+The **game** theme adds two extra tokens for a pixel-art outline effect:
+
+- **pixelBox** — 4px black/white outline drawn via `box-shadow` (used on Button, Badge, Checkbox, Switch, Tab, Dialog, Dropdown)
+- **pixelBoxMargin** — Layout offset for the outline (typically `0`)
+
+basic and crayon themes set both to `none` and `0`.
+
+## Guidelines
+
+- **Visual hierarchy**: Use larger shadow tokens for higher layers (modals, popovers) to create clear elevation.
+- **Consistency**: Use the same shadow token for components at the same layer (e.g. cards, dropdowns).
+- **Game theme**: The pixelBox token replaces standard shadows on many components to match the pixel-art style.
+- **Accessibility**: Avoid heavy shadows on small elements; they can reduce perceived contrast and readability.
