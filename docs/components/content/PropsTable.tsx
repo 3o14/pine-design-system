@@ -49,10 +49,11 @@ export function PropsTable({ props: propList, title = "Props" }: PropsTableProps
 
       <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
         {/* Header row */}
-        <div className="grid grid-cols-[1fr_1fr_auto] gap-4 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)_2.5rem] gap-4 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
           <div>Prop</div>
+          <div>Default</div>
           <div>Type</div>
-          <div className="w-6" />
+          <div />
         </div>
 
         {/* Prop rows */}
@@ -83,7 +84,7 @@ export function PropsTable({ props: propList, title = "Props" }: PropsTableProps
                       }
                     : undefined
                 }
-                className={`grid grid-cols-[1fr_1fr_auto] gap-4 items-center px-4 py-3 transition-colors ${
+                className={`grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)_2.5rem] gap-4 items-center px-4 py-3 transition-colors ${
                   hasDetails ? "cursor-pointer" : ""
                 } ${isExpanded ? "bg-gray-50 dark:bg-gray-900/50" : ""}`}
               >
@@ -93,10 +94,19 @@ export function PropsTable({ props: propList, title = "Props" }: PropsTableProps
                     {!prop.required && "?"}
                   </code>
                 </div>
+                <div className="font-mono text-xs text-gray-500 dark:text-gray-400">
+                  {prop.default && prop.default !== "" ? (
+                    <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-[11px] border border-gray-200 dark:border-gray-700">
+                      {prop.default}
+                    </code>
+                  ) : (
+                    <span className="text-gray-300 dark:text-gray-600">—</span>
+                  )}
+                </div>
                 <div className="font-mono text-xs text-gray-500 dark:text-gray-400 break-all">
                   {prop.type}
                 </div>
-                <div className="w-6 flex items-center justify-center text-gray-500 dark:text-gray-400">
+                <div className="flex items-center justify-center text-gray-500 dark:text-gray-400">
                   {hasDetails ? (
                     <ChevronDown expanded={isExpanded} />
                   ) : (
