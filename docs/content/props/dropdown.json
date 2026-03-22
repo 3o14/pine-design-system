@@ -2,66 +2,66 @@
   {
     "name": "options",
     "type": "DropdownOption[]",
-    "description": "드롭다운에서 선택할 수 있는 옵션 목록입니다.",
+    "description": "List of options available for selection.",
     "required": true
   },
   {
     "name": "value",
     "type": "string",
-    "description": "현재 선택된 값 (controlled).",
+    "description": "Currently selected value (controlled).",
     "required": false
   },
   {
     "name": "defaultValue",
     "type": "string",
-    "description": "초기 선택값 (uncontrolled).",
+    "description": "Initial selected value (uncontrolled).",
     "required": false
   },
   {
     "name": "onValueChange",
     "type": "(value: string | null) => void",
-    "description": "선택된 값이 변경될 때 호출되는 콜백 함수입니다.",
+    "description": "Callback invoked when the selected value changes.",
     "required": false
   },
   {
     "name": "placeholder",
     "type": "string",
-    "description": "아무 옵션도 선택되지 않은 상태에서 보여줄 플레이스홀더 텍스트입니다.",
+    "description": "Placeholder text when no option is selected.",
     "default": "\"Select an option\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "드롭다운의 크기를 결정합니다.",
+    "description": "Controls the dropdown size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "드롭다운 모서리의 곡률을 결정합니다.",
+    "description": "Controls the corner radius of the dropdown.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "드롭다운의 색상 의도를 결정합니다.",
+    "description": "Controls the color intent of the dropdown.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.",
+    "description": "When true, the dropdown fills the full width of its parent container.",
     "default": "false",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "드롭다운을 비활성화합니다.",
+    "description": "Disables the dropdown.",
     "default": "false",
     "required": false
   }

@@ -4,12 +4,11 @@ title: Dropdown
 
 # Dropdown
 
-여러 옵션 중 하나를 선택하는 드롭다운 선택 컴포넌트입니다.
-[Base UI Select](https://base-ui.com/react/components/select)를 기반으로 키보드 탐색과 스크린리더 접근성을 기본으로 지원합니다.
+A dropdown selection component for choosing one option from many. Built on [Base UI Select](https://base-ui.com/react/components/select) for keyboard navigation and screen reader accessibility.
 
-선택지가 5개 이하이거나 모든 옵션을 동시에 보여줘야 할 때는 라디오 버튼을 고려하세요.
+Consider radio buttons when there are 5 or fewer options or when all options need to be visible at once.
 
-## 미리보기
+## Preview
 
 <ComponentPreview code={`const options = [
   { value: "a", label: "Option A" },
@@ -21,18 +20,18 @@ title: Dropdown
   <DropdownDemo />
 </ComponentPreview>
 
-## 예제
+## Examples
 
 ### Size
 
-드롭다운의 크기를 결정합니다.
+Controls the dropdown size.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`small`", "", "좁은 공간의 폼에 사용합니다."],
-    ["`medium`", "✓", "일반적인 폼에서 사용합니다."],
-    ["`large`", "", "충분한 클릭 영역이 필요할 때 사용합니다."],
+    ["`small`", "", "For forms in tight spaces."],
+    ["`medium`", "✓", "General form use."],
+    ["`large`", "", "When a larger click area is needed."],
   ]}
   align={["left", "center", "left"]}
 />
@@ -45,17 +44,27 @@ title: Dropdown
 
 ### Rounded
 
-드롭다운 모서리의 곡률을 결정합니다.
+Controls the corner radius of the dropdown.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`small`", "", "작은 모서리 반경"],
-    ["`medium`", "✓", "기본 모서리 반경"],
-    ["`large`", "", "큰 모서리 반경"],
+    ["`small`", "", "Small corner radius"],
+    ["`medium`", "✓", "Default corner radius"],
+    ["`large`", "", "Large corner radius"],
   ]}
   align={["left", "center", "left"]}
 />
+
+## Guidelines
+
+### Dropdown vs Radio
+
+Use **Dropdown** when there are many options (6 or more) or when space is limited. Use **Radio** when there are few options (5 or fewer) and you want all choices visible at once.
+
+### Controlled vs Uncontrolled
+
+Use `defaultValue` for uncontrolled usage. Use `value` with `onValueChange` when integrating with form libraries or when the selection needs to drive other UI.
 
 ## Props
 
