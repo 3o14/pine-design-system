@@ -4,10 +4,9 @@ title: Text
 
 # Text
 
-일관된 타이포그래피를 적용하는 텍스트 렌더링 컴포넌트입니다.
-`as` prop으로 시멘틱 HTML 요소를 지정할 수 있어 접근성과 SEO를 모두 고려한 마크업이 가능합니다.
+A text rendering component that applies consistent typography. The `as` prop lets you choose the semantic HTML element, so you can combine accessibility and SEO with flexible styling.
 
-## 미리보기
+## Preview
 
 <ComponentPreview code={`<Text as="p" size="display-small" weight="bold">Display Small</Text>
 <Text as="p" size="xlarge" weight="semibold">XLarge Semibold</Text>
@@ -17,40 +16,40 @@ title: Text
   <TextDemo />
 </ComponentPreview>
 
-## 예제
+## Examples
 
 ### As
 
-렌더링할 HTML 요소를 지정합니다. 시각적 스타일과 시멘틱 요소를 분리하여 사용할 수 있습니다.
+Specifies the HTML element to render. Visual style and semantics are independent, so you can use any element with any size.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`p`", "✓", "일반 단락 텍스트"],
-    ["`span`", "", "인라인 텍스트"],
-    ["`div`", "", "블록 컨테이너"],
-    ["`h1` ~ `h6`", "", "제목 요소"],
-    ["`label`", "", "폼 레이블"],
-    ["`li`, `ul`, `ol`", "", "목록 요소"],
+    ["`p`", "✓", "Paragraph text"],
+    ["`span`", "", "Inline text"],
+    ["`div`", "", "Block container"],
+    ["`h1` ~ `h6`", "", "Heading elements"],
+    ["`label`", "", "Form label"],
+    ["`li`, `ul`, `ol`", "", "List elements"],
   ]}
   align={["left", "center", "left"]}
 />
 
 ### Size
 
-텍스트의 크기를 결정합니다. 디자인 토큰에 정의된 타이포그래피 스케일을 따릅니다.
+Controls the text size. Follows the typography scale defined in design tokens.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`display-large`", "", "랜딩 페이지 히어로 영역의 대형 제목"],
-    ["`display-medium`", "", "페이지 단위 대형 제목"],
-    ["`display-small`", "", "섹션 단위 대형 제목"],
-    ["`xlarge`", "", "주요 섹션 제목"],
-    ["`large`", "", "서브 제목, 카드 제목"],
-    ["`medium`", "✓", "본문 텍스트 기본 크기"],
-    ["`small`", "", "보조 텍스트, 설명"],
-    ["`xsmall`", "", "캡션, 라벨, 힌트"],
+    ["`display-large`", "", "Large hero headings for landing pages"],
+    ["`display-medium`", "", "Page-level headings"],
+    ["`display-small`", "", "Section-level headings"],
+    ["`xlarge`", "", "Major section titles"],
+    ["`large`", "", "Subheadings, card titles"],
+    ["`medium`", "✓", "Default body text size"],
+    ["`small`", "", "Secondary text, descriptions"],
+    ["`xsmall`", "", "Captions, labels, hints"],
   ]}
   align={["left", "center", "left"]}
 />
@@ -68,15 +67,15 @@ title: Text
 
 ### Weight
 
-폰트 두께를 결정합니다.
+Controls the font weight.
 
 <DocTable
-  headers={["값", "기본값", "CSS 값", "설명"]}
+  headers={["Value", "Default", "CSS", "Description"]}
   rows={[
-    ["`regular`", "✓", "400", "본문, 설명 텍스트"],
-    ["`medium`", "", "500", "강조가 필요한 본문"],
-    ["`semibold`", "", "600", "서브 제목, 라벨"],
-    ["`bold`", "", "700", "주요 제목, 강한 강조"],
+    ["`regular`", "✓", "400", "Body and descriptive text"],
+    ["`medium`", "", "500", "Body text that needs emphasis"],
+    ["`semibold`", "", "600", "Subheadings, labels"],
+    ["`bold`", "", "700", "Primary headings, strong emphasis"],
   ]}
   align={["left", "center", "center", "left"]}
 />
@@ -90,18 +89,18 @@ title: Text
 
 ### Intent
 
-텍스트의 색상 의도를 결정합니다.
+Controls the color intent of the text.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`inherit`", "✓", "부모 요소의 색상을 상속합니다."],
-    ["`primary`", "", "주요 콘텐츠 텍스트 색상"],
-    ["`secondary`", "", "보조 콘텐츠 텍스트 색상"],
-    ["`success`", "", "성공·완료를 나타내는 색상"],
-    ["`warning`", "", "경고를 나타내는 색상"],
-    ["`danger`", "", "오류·위험을 나타내는 색상"],
-    ["`neutral`", "", "중립적인 색상"],
+    ["`inherit`", "✓", "Inherits color from the parent element"],
+    ["`primary`", "", "Primary content text color"],
+    ["`secondary`", "", "Secondary content text color"],
+    ["`success`", "", "Success or completion"],
+    ["`warning`", "", "Warning"],
+    ["`danger`", "", "Error or danger"],
+    ["`neutral`", "", "Neutral color"],
   ]}
   align={["left", "center", "left"]}
 />
@@ -117,30 +116,30 @@ title: Text
 
 ### Align
 
-텍스트 정렬을 결정합니다.
+Controls text alignment.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`left`", "✓", "왼쪽 정렬"],
-    ["`center`", "", "가운데 정렬"],
-    ["`right`", "", "오른쪽 정렬"],
+    ["`left`", "✓", "Left align"],
+    ["`center`", "", "Center align"],
+    ["`right`", "", "Right align"],
   ]}
   align={["left", "center", "left"]}
 />
 
-## 사용 가이드
+## Guidelines
 
-### 시멘틱 마크업 유지하기
+### Semantic markup
 
-`size`가 시각적 크기를 제어하고 `as`가 HTML 요소를 결정합니다. 두 가지가 독립적으로 동작하므로 SEO·접근성을 위한 적절한 시멘틱 구조를 유지하면서 디자인을 자유롭게 적용할 수 있습니다.
+`size` controls visual size and `as` controls the HTML element. They work independently, so you can keep good semantic structure for SEO and accessibility while applying any design.
 
 ```tsx
-// 시각적으로 large이지만 h2 태그로 렌더링
-<Text as="h2" size="large" weight="semibold">섹션 제목</Text>
+// Visually large but rendered as h2
+<Text as="h2" size="large" weight="semibold">Section title</Text>
 
-// 시각적으로 small이지만 label 태그로 렌더링
-<Text as="label" size="small" weight="medium">이름</Text>
+// Visually small but rendered as label
+<Text as="label" size="small" weight="medium">Name</Text>
 ```
 
 ## Props

@@ -2,81 +2,81 @@
   {
     "name": "label",
     "type": "string",
-    "description": "입력 필드 위에 표시되는 라벨 텍스트입니다.",
+    "description": "Label text displayed above the input field.",
     "required": false
   },
   {
     "name": "placeholder",
     "type": "string",
-    "description": "값이 없을 때 표시되는 플레이스홀더 텍스트입니다.",
+    "description": "Placeholder text shown when the field is empty.",
     "required": false
   },
   {
     "name": "helperText",
     "type": "string",
-    "description": "입력 필드 아래에 표시되는 보조 텍스트입니다.",
+    "description": "Helper text displayed below the input field.",
     "required": false
   },
   {
     "name": "variant",
     "type": "\"outline\" | \"filled\"",
-    "description": "입력 필드의 시각적 스타일을 결정합니다.",
+    "description": "Controls the visual style of the input field.",
     "default": "\"outline\"",
     "required": false
   },
   {
     "name": "status",
     "type": "\"default\" | \"error\" | \"success\"",
-    "description": "입력 필드의 유효성 상태를 표시합니다.",
+    "description": "Indicates the validation state of the field.",
     "default": "\"default\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "입력 필드의 크기를 결정합니다.",
+    "description": "Controls the input field size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "모서리 곡률을 결정합니다.",
+    "description": "Controls the corner radius.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "multiline",
     "type": "boolean",
-    "description": "true로 설정하면 input 대신 textarea로 렌더링됩니다.",
+    "description": "When true, renders a textarea instead of an input.",
     "default": "false",
     "required": false
   },
   {
     "name": "rows",
     "type": "number",
-    "description": "multiline이 true일 때 textarea의 기본 높이(행 수)를 지정합니다.",
+    "description": "When multiline is true, sets the default height (number of rows) of the textarea.",
     "default": "3",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.",
+    "description": "When true, the field fills the full width of its parent container.",
     "default": "false",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "입력 필드를 비활성화합니다.",
+    "description": "Disables the input field.",
     "default": "false",
     "required": false
   },
   {
     "name": "required",
     "type": "boolean",
-    "description": "폼 유효성 검사 시 필수 입력 항목으로 표시합니다.",
+    "description": "Marks the field as required for form validation.",
     "default": "false",
     "required": false
   }
