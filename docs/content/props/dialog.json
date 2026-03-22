@@ -2,84 +2,84 @@
   {
     "name": "open",
     "type": "boolean",
-    "description": "Dialog의 열림/닫힘 상태를 제어합니다.",
+    "description": "Controls whether the dialog is open or closed.",
     "required": true
   },
   {
     "name": "onOpenChange",
     "type": "(open: boolean) => void",
-    "description": "열림 상태가 변경될 때 호출되는 콜백입니다.",
+    "description": "Callback invoked when the open state changes.",
     "required": false
   },
   {
     "name": "onClose",
     "type": "() => void",
-    "description": "Dialog가 닫힐 때 추가로 호출되는 콜백입니다.",
+    "description": "Additional callback invoked when the dialog closes.",
     "required": false
   },
   {
     "name": "title",
     "type": "string",
-    "description": "Dialog 헤더에 표시되는 제목 텍스트입니다.",
+    "description": "Title text displayed in the dialog header.",
     "required": false
   },
   {
     "name": "description",
     "type": "string",
-    "description": "제목 아래에 표시되는 설명 텍스트입니다.",
+    "description": "Description text displayed below the title.",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\" | \"full\"",
-    "description": "Dialog의 최대 너비를 결정합니다.",
+    "description": "Controls the maximum width of the dialog.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Dialog 모서리의 곡률을 결정합니다.",
+    "description": "Controls the corner radius of the dialog.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "actions",
     "type": "DialogAction[]",
-    "description": "Dialog 하단에 표시되는 액션 버튼 목록입니다.",
+    "description": "Array of action buttons to display at the bottom of the dialog.",
     "required": false
   },
   {
     "name": "footer",
     "type": "React.ReactNode",
-    "description": "actions 대신 완전히 커스텀된 하단 영역을 렌더링할 때 사용합니다.",
+    "description": "Renders a fully custom footer instead of using actions.",
     "required": false
   },
   {
     "name": "showCloseButton",
     "type": "boolean",
-    "description": "헤더 우측 상단의 닫기(X) 버튼 표시 여부를 결정합니다.",
+    "description": "Whether to show the close (X) button in the top-right of the header.",
     "default": "true",
     "required": false
   },
   {
     "name": "closeOnOverlayClick",
     "type": "boolean",
-    "description": "오버레이(배경) 클릭 시 Dialog를 닫을지 결정합니다.",
+    "description": "Whether to close the dialog when the overlay (background) is clicked.",
     "default": "true",
     "required": false
   },
   {
     "name": "closeOnEscape",
     "type": "boolean",
-    "description": "Escape 키 입력 시 Dialog를 닫을지 결정합니다.",
+    "description": "Whether to close the dialog when the Escape key is pressed.",
     "default": "true",
     "required": false
   },
   {
     "name": "children",
     "type": "React.ReactNode",
-    "description": "Dialog 본문에 표시할 콘텐츠입니다.",
+    "description": "Content to display in the dialog body.",
     "required": true
   }
 ]
