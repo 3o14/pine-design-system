@@ -4,10 +4,9 @@ title: Tab
 
 # Tab
 
-관련 콘텐츠를 여러 패널로 나누어 탐색할 수 있게 해주는 네비게이션 컴포넌트입니다.
-[Base UI Tabs](https://base-ui.com/react/components/tabs)를 기반으로 키보드 탐색과 ARIA 패턴을 기본으로 지원합니다.
+A navigation component that organizes related content into multiple panels. Built on [Base UI Tabs](https://base-ui.com/react/components/tabs) for keyboard navigation and ARIA patterns.
 
-## 미리보기
+## Preview
 
 <ComponentPreview code={`const tabs = [
   { value: "one", label: "Overview", content: <p>Overview panel content.</p> },
@@ -19,17 +18,17 @@ title: Tab
   <TabDemo />
 </ComponentPreview>
 
-## 예제
+## Examples
 
 ### Orientation
 
-탭 목록의 배치 방향을 결정합니다.
+Controls the layout direction of the tab list.
 
 <DocTable
-  headers={["값", "기본값", "설명"]}
+  headers={["Value", "Default", "Description"]}
   rows={[
-    ["`horizontal`", "✓", "탭을 가로로 나열합니다. 일반적인 페이지 내 탭에 사용합니다."],
-    ["`vertical`", "", "탭을 세로로 나열합니다. 사이드바 형태의 네비게이션에 사용합니다."],
+    ["`horizontal`", "✓", "Tabs laid out in a row. For typical in-page tabs."],
+    ["`vertical`", "", "Tabs laid out in a column. For sidebar-style navigation."],
   ]}
   align={["left", "center", "left"]}
 />
@@ -38,15 +37,15 @@ title: Tab
   <TabVerticalDemo />
 </ComponentPreview>
 
-## 사용 가이드
+## Guidelines
 
-### 탭 수 제한
+### Tab count
 
-탭이 너무 많으면 사용자가 콘텐츠를 파악하기 어렵습니다. 일반적으로 2~6개 이내로 유지하는 것을 권장합니다. 탭이 그보다 많다면 Dropdown이나 사이드 네비게이션 방식을 고려하세요.
+Too many tabs make it harder to grasp content. Keep tabs between 2 and 6 when possible. For more options, consider a Dropdown or sidebar navigation.
 
 ### Controlled vs Uncontrolled
 
-URL 파라미터와 탭 상태를 동기화하거나, 탭 전환 시 외부 동작(데이터 fetch 등)이 필요할 때는 `value` + `onChange`를 사용하세요. 단순한 UI 탭 전환은 `defaultValue`만으로 충분합니다.
+Use `value` with `onChange` when syncing tab state with URL params or when tab changes trigger external actions (e.g. data fetch). For simple UI switching, `defaultValue` alone is enough.
 
 ## Props
 

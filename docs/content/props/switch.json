@@ -2,52 +2,52 @@
   {
     "name": "checked",
     "type": "boolean",
-    "description": "Switch의 켜짐/꺼짐 상태를 제어합니다. controlled 컴포넌트가 됩니다.",
+    "description": "Controls the on/off state. Using this makes the switch a controlled component.",
     "required": false
   },
   {
     "name": "defaultChecked",
     "type": "boolean",
-    "description": "Switch의 초기 상태를 설정합니다. uncontrolled 방식으로 사용할 때 씁니다.",
+    "description": "Sets the initial state. Use for uncontrolled usage.",
     "required": false
   },
   {
     "name": "onCheckedChange",
     "type": "(checked: boolean) => void",
-    "description": "Switch 상태가 변경될 때 호출되는 콜백 함수입니다.",
+    "description": "Callback invoked when the switch state changes.",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Switch 트랙의 색상 의도를 결정합니다.",
+    "description": "Controls the color intent of the switch track.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Switch의 크기를 결정합니다.",
+    "description": "Controls the switch size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "label",
     "type": "string",
-    "description": "Switch 옆에 표시되는 라벨 텍스트입니다.",
+    "description": "Label text displayed next to the switch.",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Switch를 비활성화합니다.",
+    "description": "Disables the switch.",
     "default": "false",
     "required": false
   },
   {
     "name": "readOnly",
     "type": "boolean",
-    "description": "Switch를 읽기 전용으로 만듭니다.",
+    "description": "Makes the switch read-only.",
     "default": "false",
     "required": false
   }
