@@ -9,9 +9,9 @@ type ActiveTab = "preview" | "code";
 interface ComponentPreviewProps {
   children: ReactNode;
   code?: string;
-  /** 미리보기 영역 정렬. 기본 center */
+  /** Preview area alignment. Defaults to center */
   align?: "center" | "start";
-  /** 미리보기 영역 최소 높이 */
+  /** Minimum height of the preview area */
   minHeight?: number;
 }
 
@@ -57,13 +57,11 @@ export function ComponentPreview({
             Code
           </button>
         )}
-        {code && (
+        {code && activeTab === "code" && (
           <button
             type="button"
             onClick={handleCopy}
-            className={`ml-auto px-2.5 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors ${
-              activeTab !== "code" ? "invisible pointer-events-none" : ""
-            }`}
+            className="ml-auto px-2.5 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             {copied ? "Copied" : "Copy"}
           </button>

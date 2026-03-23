@@ -5,17 +5,17 @@ import type { ReactNode } from "react";
 type Align = "left" | "center" | "right";
 
 export interface DocTableProps {
-  /** 테이블 헤더 */
+  /** Table headers */
   headers: string[];
-  /** 테이블 행. 각 행은 셀 값 배열 (문자열 또는 ReactNode) */
+  /** Table rows. Each row is an array of cell values (string or ReactNode) */
   rows: (string | ReactNode)[][];
-  /** 열별 정렬. 기본: 첫 열 left, 나머지 left. 기본값 열은 center 권장 */
+  /** Alignment per column. Default: first column left, rest left. Center recommended for default value column */
   align?: Align[];
 }
 
 function renderCell(content: string | ReactNode): ReactNode {
   if (typeof content !== "string") return content;
-  // `code` 형태의 문자열을 <code>로 렌더링
+  // Render strings in `code` format as <code>
   if (content.startsWith("`") && content.endsWith("`") && content.length > 1) {
     return (
       <code className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-xs font-mono">

@@ -22,7 +22,7 @@ const PROPS_MAP: Record<string, PropDefinition[]> = {
 };
 
 export interface PropsDocProps {
-  /** 컴포넌트 이름 (content/props/{component}.json) */
+  /** Component name (content/props/{component}.json) */
   component: keyof typeof PROPS_MAP;
 }
 
