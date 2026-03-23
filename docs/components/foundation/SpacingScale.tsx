@@ -2,7 +2,7 @@
 
 import { spacing } from "pine-design-system";
 
-const entries = Object.entries(spacing) as [keyof typeof spacing, string][];
+const entries = Object.entries(spacing);
 
 function pxFromSpacingValue(value: string): number {
 	const m = value.match(/^([\d.]+)px$/);

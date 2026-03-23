@@ -1,13 +1,11 @@
 "use client";
 
-import { useTheme } from "pine-design-system";
+import { useThemeRequired } from "pine-design-system";
 
 const DESIGNS = ["basic", "game", "crayon"] as const;
 
 export function DesignSelector() {
-  const { design, setDesign } = useTheme() ?? {};
-
-  if (!design || !setDesign) return null;
+  const { design, setDesign } = useThemeRequired();
 
   return (
     <div className="pds-design-selector flex items-center gap-1.5 mr-4">

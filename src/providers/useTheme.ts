@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext, type ThemeContextValue } from "./ThemeContext";
 
 /**
- * useTheme - 테마 컨텍스트에 접근하는 Hook
- * ThemeProvider가 컴포넌트 트리에 없으면 undefined를 반환합니다
+ * Accesses the Pine theme context.
+ * Returns `undefined` when used outside of `ThemeProvider` (e.g. optional usage in leaf components).
  *
  * @example
  * ```tsx
@@ -13,4 +13,20 @@ import { ThemeContext } from "./ThemeContext";
  */
 export const useTheme = () => {
 	return useContext(ThemeContext);
+};
+
+/**
+ * Same context as `useTheme`, but always returns a value.
+ * Must only be used under `ThemeProvider`; throws if the context is missing.
+ *
+ * @throws {Error} When no `ThemeProvider` ancestor exists.
+ */
+export const useThemeRequired = (): ThemeContextValue => {
+	const value = useContext(ThemeContext);
+	if (value === undefined) {
+		throw new Error(
+			"useThemeRequired must be used within ThemeProvider. For optional access, use useTheme() instead.",
+		);
+	}
+	return value;
 };

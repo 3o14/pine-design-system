@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
 import "./globals.css";
 import "pine-design-system/style.css";
-import { ThemeProviderWrapper, DesignThemeProvider } from "../components/layout";
+import { DocsShell } from "../components/layout";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="ko" suppressHydrationWarning>
-      <body>
-        <ThemeProviderWrapper>
-          <DesignThemeProvider>{children}</DesignThemeProvider>
-        </ThemeProviderWrapper>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="ko" suppressHydrationWarning>
+			<body>
+				<DocsShell>{children}</DocsShell>
+			</body>
+		</html>
+	);
 }

@@ -2,7 +2,7 @@
 
 import { shadow } from "pine-design-system";
 
-const entries = Object.entries(shadow) as [keyof typeof shadow, string][];
+const entries = Object.entries(shadow);
 
 function truncateCss(value: string, maxLen: number) {
   if (value.length <= maxLen) return value;
