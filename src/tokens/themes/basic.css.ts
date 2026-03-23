@@ -1,5 +1,5 @@
 import { createTheme } from "@vanilla-extract/css";
-import { semanticTokens } from "../semantic";
+import { semanticTokens, basicThemeSemanticTextStyles } from "../semantic";
 import * as foundation from "../foundation";
 import { getWeakColor } from "../utils/getWeakColor";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
@@ -72,26 +72,8 @@ export const basicLightTheme = createTheme(semanticTokens, {
 			mono: foundation.fontFamily.mono,
 			crayon: foundation.fontFamily.crayon,
 		},
-		fontSize: {
-			xsmall: foundation.fontSize.xs,
-			small: foundation.fontSize.sm,
-			medium: foundation.fontSize.md,
-			large: foundation.fontSize.lg,
-			xlarge: foundation.fontSize.xl,
-			"display-small": foundation.fontSize["2xl"],
-			"display-medium": foundation.fontSize["3xl"],
-			"display-large": foundation.fontSize["4xl"],
-		},
-		lineHeight: {
-			xsmall: String(foundation.lineHeight.snug),
-			small: String(foundation.lineHeight.normal),
-			medium: String(foundation.lineHeight.normal),
-			large: String(foundation.lineHeight.relaxed),
-			xlarge: String(foundation.lineHeight.relaxed),
-			"display-small": String(foundation.lineHeight.tight),
-			"display-medium": String(foundation.lineHeight.tight),
-			"display-large": String(foundation.lineHeight.tight),
-		},
+		fontSize: basicThemeSemanticTextStyles.fontSize,
+		lineHeight: basicThemeSemanticTextStyles.lineHeight,
 		fontWeight: {
 			regular: String(foundation.fontWeight.regular),
 			medium: String(foundation.fontWeight.medium),
@@ -201,26 +183,8 @@ export const basicDarkTheme = createTheme(semanticTokens, {
 			mono: foundation.fontFamily.mono,
 			crayon: foundation.fontFamily.crayon,
 		},
-		fontSize: {
-			xsmall: foundation.fontSize.xs,
-			small: foundation.fontSize.sm,
-			medium: foundation.fontSize.md,
-			large: foundation.fontSize.lg,
-			xlarge: foundation.fontSize.xl,
-			"display-small": foundation.fontSize["2xl"],
-			"display-medium": foundation.fontSize["3xl"],
-			"display-large": foundation.fontSize["4xl"],
-		},
-		lineHeight: {
-			xsmall: String(foundation.lineHeight.snug),
-			small: String(foundation.lineHeight.normal),
-			medium: String(foundation.lineHeight.normal),
-			large: String(foundation.lineHeight.relaxed),
-			xlarge: String(foundation.lineHeight.relaxed),
-			"display-small": String(foundation.lineHeight.tight),
-			"display-medium": String(foundation.lineHeight.tight),
-			"display-large": String(foundation.lineHeight.tight),
-		},
+		fontSize: basicThemeSemanticTextStyles.fontSize,
+		lineHeight: basicThemeSemanticTextStyles.lineHeight,
 		fontWeight: {
 			regular: String(foundation.fontWeight.regular),
 			medium: String(foundation.fontWeight.medium),

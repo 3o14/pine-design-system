@@ -1,17 +1,8 @@
 "use client";
 
-const RADIUS_TOKENS = [
-  { token: "none", value: "0px" },
-  { token: "xxs", value: "2px" },
-  { token: "xs", value: "4px" },
-  { token: "sm", value: "6px" },
-  { token: "md", value: "8px" },
-  { token: "lg", value: "12px" },
-  { token: "xl", value: "16px" },
-  { token: "xxl", value: "24px" },
-  { token: "xxxl", value: "32px" },
-  { token: "full", value: "100%" },
-] as const;
+import { radius } from "pine-design-system";
+
+const entries = Object.entries(radius);
 
 const cellClass =
   "py-2.5 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300";
@@ -28,7 +19,7 @@ export function RadiusScale() {
           </tr>
         </thead>
         <tbody>
-          {RADIUS_TOKENS.map(({ token, value }) => (
+          {entries.map(([token, value]) => (
             <tr key={token}>
               <td className={`${cellClass} font-mono text-xs`}>{token}</td>
               <td className={cellClass}>

@@ -1,20 +1,16 @@
 "use client";
 
-const SPACING_TOKENS: { token: string; value: string; px: number }[] = [
-  { token: "none", value: "0px", px: 0 },
-  { token: "xxxs", value: "2px", px: 2 },
-  { token: "xxs", value: "4px", px: 4 },
-  { token: "xs", value: "8px", px: 8 },
-  { token: "sm", value: "12px", px: 12 },
-  { token: "md", value: "16px", px: 16 },
-  { token: "lg", value: "24px", px: 24 },
-  { token: "xl", value: "32px", px: 32 },
-  { token: "xxl", value: "40px", px: 40 },
-  { token: "xxxl", value: "64px", px: 64 },
-];
+import { spacing } from "pine-design-system";
+
+const entries = Object.entries(spacing) as [keyof typeof spacing, string][];
+
+function pxFromSpacingValue(value: string): number {
+	const m = value.match(/^([\d.]+)px$/);
+	return m ? parseFloat(m[1]) : 0;
+}
 
 const MAX_BAR_PX = 200;
-const MAX_TOKEN_PX = 64;
+const MAX_TOKEN_PX = Math.max(...entries.map(([, v]) => pxFromSpacingValue(v)), 1);
 
 const cellClass =
   "py-2.5 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300";
@@ -31,7 +27,8 @@ export function SpacingScale() {
           </tr>
         </thead>
         <tbody>
-          {SPACING_TOKENS.map(({ token, value, px }) => {
+          {entries.map(([token, value]) => {
+            const px = pxFromSpacingValue(value);
             const barWidth = MAX_TOKEN_PX > 0 ? (px / MAX_TOKEN_PX) * MAX_BAR_PX : 0;
             return (
               <tr key={token}>

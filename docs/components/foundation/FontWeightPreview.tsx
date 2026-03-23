@@ -1,11 +1,8 @@
 "use client";
 
-const WEIGHTS: { token: string; value: number }[] = [
-  { token: "regular", value: 400 },
-  { token: "medium", value: 500 },
-  { token: "semibold", value: 600 },
-  { token: "bold", value: 700 },
-];
+import { fontWeight } from "pine-design-system";
+
+const TEXT_WEIGHTS = ["regular", "medium", "semibold", "bold"] as const;
 
 const SAMPLE = "The quick brown fox jumps over the lazy dog.";
 
@@ -28,24 +25,27 @@ export function FontWeightPreview() {
             </tr>
           </thead>
           <tbody>
-            {WEIGHTS.map(({ token, value }) => (
-              <tr key={token}>
-                <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800 font-mono text-sm text-gray-700 dark:text-gray-300">
-                  {token}
-                </td>
-                <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
-                  {value}
-                </td>
-                <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800">
-                  <span
-                    className="text-base leading-relaxed text-gray-900 dark:text-gray-100"
-                    style={{ fontWeight: value }}
-                  >
-                    {SAMPLE}
-                  </span>
-                </td>
-              </tr>
-            ))}
+            {TEXT_WEIGHTS.map((token) => {
+              const value = fontWeight[token];
+              return (
+                <tr key={token}>
+                  <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800 font-mono text-sm text-gray-700 dark:text-gray-300">
+                    {token}
+                  </td>
+                  <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
+                    {value}
+                  </td>
+                  <td className="py-3 px-3 border-b border-gray-100 dark:border-gray-800">
+                    <span
+                      className="text-base leading-relaxed text-gray-900 dark:text-gray-100"
+                      style={{ fontWeight: value }}
+                    >
+                      {SAMPLE}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

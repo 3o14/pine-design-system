@@ -1,32 +1,8 @@
 "use client";
 
-const SHADOW_TOKENS: { token: string; value: string }[] = [
-  { token: "none", value: "none" },
-  {
-    token: "xs",
-    value: "0 1px 2px rgba(15, 23, 42, 0.08)",
-  },
-  {
-    token: "sm",
-    value:
-      "0 1px 3px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.08)",
-  },
-  {
-    token: "md",
-    value:
-      "0 4px 6px -1px rgba(15, 23, 42, 0.12), 0 2px 4px -2px rgba(15, 23, 42, 0.1)",
-  },
-  {
-    token: "lg",
-    value:
-      "0 10px 15px -3px rgba(15, 23, 42, 0.18), 0 4px 6px -4px rgba(15, 23, 42, 0.12)",
-  },
-  {
-    token: "xl",
-    value:
-      "0 20px 25px -5px rgba(15, 23, 42, 0.2), 0 10px 10px -5px rgba(15, 23, 42, 0.12)",
-  },
-];
+import { shadow } from "pine-design-system";
+
+const entries = Object.entries(shadow) as [keyof typeof shadow, string][];
 
 function truncateCss(value: string, maxLen: number) {
   if (value.length <= maxLen) return value;
@@ -48,7 +24,7 @@ export function ShadowScale() {
           </tr>
         </thead>
         <tbody>
-          {SHADOW_TOKENS.map(({ token, value }) => (
+          {entries.map(([token, value]) => (
             <tr key={token}>
               <td className={`${cellClass} font-mono text-xs`}>{token}</td>
               <td className={cellClass}>
