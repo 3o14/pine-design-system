@@ -1,14 +1,14 @@
 /**
- * adaptColor: foundation 팔레트를 테마별로 변환하는 어댑터 함수
+ * adaptColor: adapts foundation palettes per theme.
  *
- * - toNeon()   : saturation 최대화 + lightness 상향 → game 테마 네온 느낌
- * - toPastel() : saturation 완화 + lightness 대폭 상향 → crayon 테마 파스텔 느낌
+ * - toNeon()   : max saturation + higher lightness → game “neon” look
+ * - toPastel() : softer saturation + much higher lightness → crayon pastel look
  */
 
 type ColorStep = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 type ColorStepScale = Record<ColorStep, string>;
 
-// ─── HSL ↔ Hex 변환 ─────────────────────────────────────────────────────────
+// ─── HSL ↔ Hex ───────────────────────────────────────────────────────────────
 
 function hexToHsl(hex: string): { h: number; s: number; l: number } {
 	const normalized =
@@ -55,19 +55,19 @@ function hslToHex(h: number, s: number, l: number): string {
 	return `#${f(0)}${f(8)}${f(4)}`;
 }
 
-// ─── 어댑터 함수 ─────────────────────────────────────────────────────────────
+// ─── Adapters ───────────────────────────────────────────────────────────────
 
 /**
- * 색상 스케일을 네온 버전으로 변환 (game 테마용)
+ * Converts a color scale to a neon variant (game theme).
  *
- * 규칙:
+ * Rules:
  * - Saturation → min(S + 30%, 100%)
- * - Lightness  → mid steps(200–700): L + 20%, 극단 steps은 변화량 축소
+ * - Lightness  → mid steps (200–700): L + 20%; extremes use smaller deltas
  */
 export function toNeon(scale: ColorStepScale): ColorStepScale {
 	const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
-	// mid steps일수록 lightness를 더 많이 올림
+	// Stronger lightness lift toward the middle of the scale
 	const lightnessBoost: Record<ColorStep, number> = {
 		50: 2,
 		100: 4,
@@ -92,11 +92,11 @@ export function toNeon(scale: ColorStepScale): ColorStepScale {
 }
 
 /**
- * 색상 스케일을 파스텔 버전으로 변환 (crayon 테마용)
+ * Converts a color scale to a pastel variant (crayon theme).
  *
- * 규칙:
- * - Saturation → S × 0.65 (채도 완화)
- * - Lightness  → L + (100 - L) × 0.55 (흰색 방향으로 55% 이동)
+ * Rules:
+ * - Saturation → S × 0.65 (softer chroma)
+ * - Lightness  → L + (100 − L) × 0.55 (55% shift toward white)
  */
 export function toPastel(scale: ColorStepScale): ColorStepScale {
 	const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;

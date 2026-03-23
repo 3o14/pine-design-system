@@ -2,42 +2,42 @@
   {
     "name": "as",
     "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"p\" | \"span\" | \"div\" | \"label\" | \"li\" | \"ul\" | \"ol\"",
-    "description": "The HTML element to render.",
+    "description": "HTML element to render.",
     "default": "\"p\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"xsmall\" | \"small\" | \"medium\" | \"large\" | \"xlarge\" | \"display-small\" | \"display-medium\" | \"display-large\"",
-    "description": "Controls the text size.",
+    "description": "Typography size token.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "weight",
     "type": "\"regular\" | \"medium\" | \"semibold\" | \"bold\"",
-    "description": "Controls the font weight.",
+    "description": "Font weight.",
     "default": "\"regular\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"inherit\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Controls the color intent of the text.",
+    "description": "Color intent.",
     "default": "\"inherit\"",
     "required": false
   },
   {
     "name": "align",
     "type": "\"left\" | \"center\" | \"right\"",
-    "description": "Controls text alignment.",
+    "description": "Text alignment.",
     "default": "\"left\"",
     "required": false
   },
   {
     "name": "truncate",
     "type": "boolean",
-    "description": "When true, truncates overflow with an ellipsis (...).",
+    "description": "When true, truncates overflowing text with an ellipsis.",
     "default": "false",
     "required": false
   }

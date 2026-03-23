@@ -2,35 +2,35 @@
   {
     "name": "variant",
     "type": "\"solid\" | \"outline\" | \"ghost\" | \"weak\"",
-    "description": "Controls the visual emphasis level of the button.",
+    "description": "Visual variant of the button.",
     "default": "\"solid\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Expresses the semantic purpose of the button through color.",
+    "description": "Semantic color intent.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Controls the button size.",
+    "description": "Button size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Controls the corner radius of the button.",
+    "description": "Corner radius.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "When true, the button fills the full width of its parent container.",
+    "description": "When true, stretches to the full width of the parent.",
     "default": "false",
     "required": false
   },
@@ -44,7 +44,7 @@
   {
     "name": "children",
     "type": "ReactNode",
-    "description": "Content to display inside the button.",
+    "description": "Content inside the button.",
     "required": true
   }
 ]

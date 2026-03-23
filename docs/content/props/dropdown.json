@@ -2,13 +2,13 @@
   {
     "name": "options",
     "type": "DropdownOption[]",
-    "description": "List of options available for selection.",
+    "description": "Selectable options.",
     "required": true
   },
   {
     "name": "value",
     "type": "string",
-    "description": "Currently selected value (controlled).",
+    "description": "Selected value (controlled).",
     "required": false
   },
   {
@@ -20,41 +20,41 @@
   {
     "name": "onValueChange",
     "type": "(value: string | null) => void",
-    "description": "Callback invoked when the selected value changes.",
+    "description": "Called when the selected value changes.",
     "required": false
   },
   {
     "name": "placeholder",
     "type": "string",
-    "description": "Placeholder text when no option is selected.",
+    "description": "Placeholder when no option is selected.",
     "default": "\"Select an option\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Controls the dropdown size.",
+    "description": "Dropdown size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Controls the corner radius of the dropdown.",
+    "description": "Corner radius.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Controls the color intent of the dropdown.",
+    "description": "Color intent.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "When true, the dropdown fills the full width of its parent container.",
+    "description": "When true, stretches to the full width of the parent.",
     "default": "false",
     "required": false
   },

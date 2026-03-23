@@ -40,8 +40,8 @@ export interface ThemeProviderProps {
 	className?: string;
 	style?: React.CSSProperties;
 	/**
-	 * `document.documentElement`에 테마 클래스를 적용할지 여부.
-	 * 여러 ThemeProvider를 동시에 렌더링하는 경우(예: 테마 쇼케이스) `false`로 설정합니다.
+	 * Whether to apply the theme class to `document.documentElement`.
+	 * Set to `false` when rendering multiple ThemeProviders (e.g. theme showcases).
 	 * @default true
 	 */
 	applyGlobal?: boolean;

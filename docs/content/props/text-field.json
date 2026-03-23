@@ -2,46 +2,46 @@
   {
     "name": "label",
     "type": "string",
-    "description": "Label text displayed above the input field.",
+    "description": "Label text shown above the field.",
     "required": false
   },
   {
     "name": "placeholder",
     "type": "string",
-    "description": "Placeholder text shown when the field is empty.",
+    "description": "Placeholder when the value is empty.",
     "required": false
   },
   {
     "name": "helperText",
     "type": "string",
-    "description": "Helper text displayed below the input field.",
+    "description": "Helper text shown below the field.",
     "required": false
   },
   {
     "name": "variant",
     "type": "\"outline\" | \"filled\"",
-    "description": "Controls the visual style of the input field.",
+    "description": "Visual style of the field.",
     "default": "\"outline\"",
     "required": false
   },
   {
     "name": "status",
     "type": "\"default\" | \"error\" | \"success\"",
-    "description": "Indicates the validation state of the field.",
+    "description": "Validation / feedback state.",
     "default": "\"default\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Controls the input field size.",
+    "description": "Field size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Controls the corner radius.",
+    "description": "Corner radius.",
     "default": "\"medium\"",
     "required": false
   },
@@ -55,21 +55,21 @@
   {
     "name": "rows",
     "type": "number",
-    "description": "When multiline is true, sets the default height (number of rows) of the textarea.",
+    "description": "Default height of the textarea in rows when multiline is true.",
     "default": "3",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "When true, the field fills the full width of its parent container.",
+    "description": "When true, stretches to the full width of the parent.",
     "default": "false",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Disables the input field.",
+    "description": "Disables the field.",
     "default": "false",
     "required": false
   },

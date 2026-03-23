@@ -2,39 +2,39 @@
   {
     "name": "checked",
     "type": "boolean",
-    "description": "Controls the on/off state. Using this makes the switch a controlled component.",
+    "description": "Checked state (controlled).",
     "required": false
   },
   {
     "name": "defaultChecked",
     "type": "boolean",
-    "description": "Sets the initial state. Use for uncontrolled usage.",
+    "description": "Initial checked state (uncontrolled).",
     "required": false
   },
   {
     "name": "onCheckedChange",
     "type": "(checked: boolean) => void",
-    "description": "Callback invoked when the switch state changes.",
+    "description": "Called when the checked state changes.",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Controls the color intent of the switch track.",
+    "description": "Color intent for the switch track.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Controls the switch size.",
+    "description": "Switch size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "label",
     "type": "string",
-    "description": "Label text displayed next to the switch.",
+    "description": "Label text next to the switch.",
     "required": false
   },
   {

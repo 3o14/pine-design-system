@@ -2,39 +2,39 @@
   {
     "name": "checked",
     "type": "boolean",
-    "description": "Controls the checked state. Using this makes the checkbox a controlled component.",
+    "description": "Checked state (controlled).",
     "required": false
   },
   {
     "name": "defaultChecked",
     "type": "boolean",
-    "description": "Sets the initial checked state. Use for uncontrolled usage.",
+    "description": "Initial checked state (uncontrolled).",
     "required": false
   },
   {
     "name": "onCheckedChange",
     "type": "(checked: boolean) => void",
-    "description": "Callback invoked when the checked state changes.",
+    "description": "Called when the checked state changes.",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Controls the color intent of the checkbox.",
+    "description": "Color intent.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Controls the checkbox size.",
+    "description": "Checkbox size.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "label",
     "type": "string",
-    "description": "Label text displayed next to the checkbox. Clicking the label toggles the checkbox.",
+    "description": "Label next to the checkbox; clicking the label toggles the checkbox.",
     "required": false
   },
   {
@@ -47,7 +47,7 @@
   {
     "name": "readOnly",
     "type": "boolean",
-    "description": "Makes the checked state read-only.",
+    "description": "Makes the checkbox read-only.",
     "default": "false",
     "required": false
   },

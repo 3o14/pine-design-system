@@ -1,6 +1,6 @@
 /**
- * ts-morph로 TSDoc 파싱 후 Props JSON 생성.
- * next build 전에 실행됩니다.
+ * Parses TSDoc with ts-morph and writes Props JSON files.
+ * Runs before `next build` (see docs/package.json prebuild).
  */
 import { writeFileSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
@@ -14,31 +14,31 @@ import type { ReactNode } from "react"
 
 export interface BadgeProps {
   /**
-   * Badge의 시각적 강조 수준을 결정합니다.
+   * Visual emphasis of the badge.
    * @default "solid"
    */
   variant?: "solid" | "outline" | "subtle" | "weak";
   /**
-   * Badge의 의미적 색상을 결정합니다.
+   * Semantic color intent.
    * @default "primary"
    */
   intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * Badge의 크기를 결정합니다.
+   * Badge size.
    * @default "medium"
    */
   size?: "small" | "medium" | "large" | "xlarge";
   /**
-   * Badge 모서리의 곡률을 결정합니다.
+   * Corner radius of the badge.
    * @default "medium"
    */
   rounded?: "small" | "medium" | "large";
   /**
-   * Badge 앞에 상태 표시 dot을 노출합니다.
+   * Shows a status dot before the badge content.
    * @default false
    */
   showDot?: boolean;
-  /** Badge에 표시할 내용입니다. */
+  /** Content displayed inside the badge. */
   children: ReactNode;
 }
 `;
@@ -54,60 +54,60 @@ export interface DialogAction {
 
 export interface DialogProps {
   /**
-   * Dialog의 열림/닫힘 상태를 제어합니다.
+   * Controls whether the dialog is open.
    */
   open: boolean;
   /**
-   * 열림 상태가 변경될 때 호출되는 콜백입니다.
+   * Called when the open state changes.
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Dialog가 닫힐 때 추가로 호출되는 콜백입니다.
+   * Called when the dialog closes (in addition to open state updates).
    */
   onClose?: () => void;
   /**
-   * Dialog 헤더에 표시되는 제목 텍스트입니다.
+   * Title text shown in the header.
    */
   title?: string;
   /**
-   * 제목 아래에 표시되는 설명 텍스트입니다.
+   * Description text shown below the title.
    */
   description?: string;
   /**
-   * Dialog의 최대 너비를 결정합니다.
+   * Maximum width of the dialog.
    * @default "medium"
    */
   size?: "small" | "medium" | "large" | "xlarge" | "full";
   /**
-   * Dialog 모서리의 곡률을 결정합니다.
+   * Corner radius of the dialog.
    * @default "medium"
    */
   rounded?: "small" | "medium" | "large";
   /**
-   * Dialog 하단에 표시되는 액션 버튼 목록입니다.
+   * Action buttons rendered in the footer.
    */
   actions?: DialogAction[];
   /**
-   * actions 대신 완전히 커스텀된 하단 영역을 렌더링할 때 사용합니다.
+   * Fully custom footer content; use instead of the actions prop.
    */
   footer?: React.ReactNode;
   /**
-   * 헤더 우측 상단의 닫기(X) 버튼 표시 여부를 결정합니다.
+   * Whether to show the close (X) control in the header.
    * @default true
    */
   showCloseButton?: boolean;
   /**
-   * 오버레이(배경) 클릭 시 Dialog를 닫을지 결정합니다.
+   * Close the dialog when the overlay is clicked.
    * @default true
    */
   closeOnOverlayClick?: boolean;
   /**
-   * Escape 키 입력 시 Dialog를 닫을지 결정합니다.
+   * Close the dialog when Escape is pressed.
    * @default true
    */
   closeOnEscape?: boolean;
   /**
-   * Dialog 본문에 표시할 콘텐츠입니다.
+   * Main dialog content.
    */
   children: React.ReactNode;
 }
@@ -116,59 +116,59 @@ export interface DialogProps {
 const TEXT_FIELD_CODE = `
 export interface TextFieldProps {
   /**
-   * 입력 필드 위에 표시되는 라벨 텍스트입니다.
+   * Label text shown above the field.
    */
   label?: string;
   /**
-   * 값이 없을 때 표시되는 플레이스홀더 텍스트입니다.
+   * Placeholder when the value is empty.
    */
   placeholder?: string;
   /**
-   * 입력 필드 아래에 표시되는 보조 텍스트입니다.
+   * Helper text shown below the field.
    */
   helperText?: string;
   /**
-   * 입력 필드의 시각적 스타일을 결정합니다.
+   * Visual style of the field.
    * @default "outline"
    */
   variant?: "outline" | "filled";
   /**
-   * 입력 필드의 유효성 상태를 표시합니다.
+   * Validation / feedback state.
    * @default "default"
    */
   status?: "default" | "error" | "success";
   /**
-   * 입력 필드의 크기를 결정합니다.
+   * Field size.
    * @default "medium"
    */
   size?: "small" | "medium" | "large" | "xlarge";
   /**
-   * 모서리 곡률을 결정합니다.
+   * Corner radius.
    * @default "medium"
    */
   rounded?: "small" | "medium" | "large";
   /**
-   * true로 설정하면 input 대신 textarea로 렌더링됩니다.
+   * When true, renders a textarea instead of an input.
    * @default false
    */
   multiline?: boolean;
   /**
-   * multiline이 true일 때 textarea의 기본 높이(행 수)를 지정합니다.
+   * Default height of the textarea in rows when multiline is true.
    * @default 3
    */
   rows?: number;
   /**
-   * true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
+   * When true, stretches to the full width of the parent.
    * @default false
    */
   fullWidth?: boolean;
   /**
-   * 입력 필드를 비활성화합니다.
+   * Disables the field.
    * @default false
    */
   disabled?: boolean;
   /**
-   * 폼 유효성 검사 시 필수 입력 항목으로 표시합니다.
+   * Marks the field as required for form validation.
    * @default false
    */
   required?: boolean;
@@ -178,32 +178,32 @@ export interface TextFieldProps {
 const TEXT_CODE = `
 export interface TextProps {
   /**
-   * 렌더링할 HTML 요소를 지정합니다.
+   * HTML element to render.
    * @default "p"
    */
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div" | "label" | "li" | "ul" | "ol";
   /**
-   * 텍스트의 크기를 결정합니다.
+   * Typography size token.
    * @default "medium"
    */
   size?: "xsmall" | "small" | "medium" | "large" | "xlarge" | "display-small" | "display-medium" | "display-large";
   /**
-   * 폰트 두께를 결정합니다.
+   * Font weight.
    * @default "regular"
    */
   weight?: "regular" | "medium" | "semibold" | "bold";
   /**
-   * 텍스트의 색상 의도를 결정합니다.
+   * Color intent.
    * @default "inherit"
    */
   intent?: "inherit" | "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * 텍스트 정렬을 결정합니다.
+   * Text alignment.
    * @default "left"
    */
   align?: "left" | "center" | "right";
   /**
-   * true로 설정하면 텍스트가 컨테이너를 넘칠 때 ...으로 잘라냅니다.
+   * When true, truncates overflowing text with an ellipsis.
    * @default false
    */
   truncate?: boolean;
@@ -220,28 +220,28 @@ export interface TabItem {
 
 export interface TabProps {
   /**
-   * 탭 목록을 정의하는 필수 prop입니다.
+   * Tab definitions (required).
    */
   tabs: TabItem[];
   /**
-   * 현재 활성화된 탭의 값 (controlled).
+   * Active tab value (controlled).
    */
   value?: string;
   /**
-   * 초기에 활성화할 탭의 값 (uncontrolled).
+   * Initial active tab value (uncontrolled).
    */
   defaultValue?: string;
   /**
-   * 활성 탭이 변경될 때 호출되는 콜백 함수입니다.
+   * Called when the active tab changes.
    */
   onChange?: (value: string) => void;
   /**
-   * 탭 인디케이터의 색상 의도를 결정합니다.
+   * Color intent for the tab indicator.
    * @default "primary"
    */
   intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * 탭 목록의 배치 방향을 결정합니다.
+   * Layout direction of the tab list.
    * @default "horizontal"
    */
   orientation?: "horizontal" | "vertical";
@@ -251,38 +251,38 @@ export interface TabProps {
 const SWITCH_CODE = `
 export interface SwitchProps {
   /**
-   * Switch의 켜짐/꺼짐 상태를 제어합니다. controlled 컴포넌트가 됩니다.
+   * Checked state (controlled).
    */
   checked?: boolean;
   /**
-   * Switch의 초기 상태를 설정합니다. uncontrolled 방식으로 사용할 때 씁니다.
+   * Initial checked state (uncontrolled).
    */
   defaultChecked?: boolean;
   /**
-   * Switch 상태가 변경될 때 호출되는 콜백 함수입니다.
+   * Called when the checked state changes.
    */
   onCheckedChange?: (checked: boolean) => void;
   /**
-   * Switch 트랙의 색상 의도를 결정합니다.
+   * Color intent for the switch track.
    * @default "primary"
    */
   intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * Switch의 크기를 결정합니다.
+   * Switch size.
    * @default "medium"
    */
   size?: "small" | "medium" | "large" | "xlarge";
   /**
-   * Switch 옆에 표시되는 라벨 텍스트입니다.
+   * Label text next to the switch.
    */
   label?: string;
   /**
-   * Switch를 비활성화합니다.
+   * Disables the switch.
    * @default false
    */
   disabled?: boolean;
   /**
-   * Switch를 읽기 전용으로 만듭니다.
+   * Makes the switch read-only.
    * @default false
    */
   readOnly?: boolean;
@@ -298,48 +298,48 @@ export interface DropdownOption {
 
 export interface DropdownProps {
   /**
-   * 드롭다운에서 선택할 수 있는 옵션 목록입니다.
+   * Selectable options.
    */
   options: DropdownOption[];
   /**
-   * 현재 선택된 값 (controlled).
+   * Selected value (controlled).
    */
   value?: string;
   /**
-   * 초기 선택값 (uncontrolled).
+   * Initial selected value (uncontrolled).
    */
   defaultValue?: string;
   /**
-   * 선택된 값이 변경될 때 호출되는 콜백 함수입니다.
+   * Called when the selected value changes.
    */
   onValueChange?: (value: string | null) => void;
   /**
-   * 아무 옵션도 선택되지 않은 상태에서 보여줄 플레이스홀더 텍스트입니다.
+   * Placeholder when no option is selected.
    * @default "Select an option"
    */
   placeholder?: string;
   /**
-   * 드롭다운의 크기를 결정합니다.
+   * Dropdown size.
    * @default "medium"
    */
   size?: "small" | "medium" | "large";
   /**
-   * 드롭다운 모서리의 곡률을 결정합니다.
+   * Corner radius.
    * @default "medium"
    */
   rounded?: "small" | "medium" | "large";
   /**
-   * 드롭다운의 색상 의도를 결정합니다.
+   * Color intent.
    * @default "primary"
    */
   intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
+   * When true, stretches to the full width of the parent.
    * @default false
    */
   fullWidth?: boolean;
   /**
-   * 드롭다운을 비활성화합니다.
+   * Disables the dropdown.
    * @default false
    */
   disabled?: boolean;
@@ -349,43 +349,43 @@ export interface DropdownProps {
 const CHECKBOX_CODE = `
 export interface CheckboxProps {
   /**
-   * Checkbox의 체크 상태를 제어합니다. 이 prop을 사용하면 controlled 컴포넌트가 됩니다.
+   * Checked state (controlled).
    */
   checked?: boolean;
   /**
-   * Checkbox의 초기 체크 상태를 설정합니다. uncontrolled 방식으로 사용할 때 씁니다.
+   * Initial checked state (uncontrolled).
    */
   defaultChecked?: boolean;
   /**
-   * 체크 상태가 변경될 때 호출되는 콜백 함수입니다.
+   * Called when the checked state changes.
    */
   onCheckedChange?: (checked: boolean) => void;
   /**
-   * Checkbox의 색상 의도를 결정합니다.
+   * Color intent.
    * @default "primary"
    */
   intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * Checkbox의 크기를 결정합니다.
+   * Checkbox size.
    * @default "medium"
    */
   size?: "small" | "medium" | "large" | "xlarge";
   /**
-   * Checkbox 옆에 표시되는 라벨 텍스트입니다. 라벨 클릭 시 Checkbox가 토글됩니다.
+   * Label next to the checkbox; clicking the label toggles the checkbox.
    */
   label?: string;
   /**
-   * Checkbox를 비활성화합니다.
+   * Disables the checkbox.
    * @default false
    */
   disabled?: boolean;
   /**
-   * 체크 상태를 읽기 전용으로 만듭니다.
+   * Makes the checkbox read-only.
    * @default false
    */
   readOnly?: boolean;
   /**
-   * 폼 유효성 검사 시 필수 입력 항목으로 표시합니다.
+   * Marks the field as required for form validation.
    * @default false
    */
   required?: boolean;
@@ -397,36 +397,36 @@ import type { ReactNode } from "react"
 
 export interface ButtonProps {
   /**
-   * 버튼의 시각적 강조 수준을 결정합니다.
+   * Visual variant of the button.
    * @default "solid"
    */
   variant?: "solid" | "outline" | "ghost" | "weak";
   /**
-   * 버튼의 의미적 목적을 색상으로 표현합니다.
+   * Semantic color intent.
    * @default "primary"
    */
   intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
   /**
-   * 버튼의 크기를 결정합니다.
+   * Button size.
    * @default "medium"
    */
   size?: "small" | "medium" | "large" | "xlarge";
   /**
-   * 버튼 모서리의 곡률을 결정합니다.
+   * Corner radius.
    * @default "medium"
    */
   rounded?: "small" | "medium" | "large";
   /**
-   * true로 설정하면 부모 컨테이너의 전체 너비를 채웁니다.
+   * When true, stretches to the full width of the parent.
    * @default false
    */
   fullWidth?: boolean;
   /**
-   * 버튼을 비활성화합니다.
+   * Disables the button.
    * @default false
    */
   disabled?: boolean;
-  /** 버튼에 표시할 내용입니다. */
+  /** Content inside the button. */
   children: ReactNode;
 }
 `;

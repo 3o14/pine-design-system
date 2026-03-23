@@ -2,84 +2,84 @@
   {
     "name": "open",
     "type": "boolean",
-    "description": "Controls whether the dialog is open or closed.",
+    "description": "Controls whether the dialog is open.",
     "required": true
   },
   {
     "name": "onOpenChange",
     "type": "(open: boolean) => void",
-    "description": "Callback invoked when the open state changes.",
+    "description": "Called when the open state changes.",
     "required": false
   },
   {
     "name": "onClose",
     "type": "() => void",
-    "description": "Additional callback invoked when the dialog closes.",
+    "description": "Called when the dialog closes (in addition to open state updates).",
     "required": false
   },
   {
     "name": "title",
     "type": "string",
-    "description": "Title text displayed in the dialog header.",
+    "description": "Title text shown in the header.",
     "required": false
   },
   {
     "name": "description",
     "type": "string",
-    "description": "Description text displayed below the title.",
+    "description": "Description text shown below the title.",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\" | \"full\"",
-    "description": "Controls the maximum width of the dialog.",
+    "description": "Maximum width of the dialog.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Controls the corner radius of the dialog.",
+    "description": "Corner radius of the dialog.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "actions",
     "type": "DialogAction[]",
-    "description": "Array of action buttons to display at the bottom of the dialog.",
+    "description": "Action buttons rendered in the footer.",
     "required": false
   },
   {
     "name": "footer",
     "type": "React.ReactNode",
-    "description": "Renders a fully custom footer instead of using actions.",
+    "description": "Fully custom footer content; use instead of the actions prop.",
     "required": false
   },
   {
     "name": "showCloseButton",
     "type": "boolean",
-    "description": "Whether to show the close (X) button in the top-right of the header.",
+    "description": "Whether to show the close (X) control in the header.",
     "default": "true",
     "required": false
   },
   {
     "name": "closeOnOverlayClick",
     "type": "boolean",
-    "description": "Whether to close the dialog when the overlay (background) is clicked.",
+    "description": "Close the dialog when the overlay is clicked.",
     "default": "true",
     "required": false
   },
   {
     "name": "closeOnEscape",
     "type": "boolean",
-    "description": "Whether to close the dialog when the Escape key is pressed.",
+    "description": "Close the dialog when Escape is pressed.",
     "default": "true",
     "required": false
   },
   {
     "name": "children",
     "type": "React.ReactNode",
-    "description": "Content to display in the dialog body.",
+    "description": "Main dialog content.",
     "required": true
   }
 ]

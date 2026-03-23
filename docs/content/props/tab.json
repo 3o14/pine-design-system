@@ -2,38 +2,38 @@
   {
     "name": "tabs",
     "type": "TabItem[]",
-    "description": "Required prop defining the list of tabs.",
+    "description": "Tab definitions (required).",
     "required": true
   },
   {
     "name": "value",
     "type": "string",
-    "description": "Value of the currently active tab (controlled).",
+    "description": "Active tab value (controlled).",
     "required": false
   },
   {
     "name": "defaultValue",
     "type": "string",
-    "description": "Value of the initially active tab (uncontrolled).",
+    "description": "Initial active tab value (uncontrolled).",
     "required": false
   },
   {
     "name": "onChange",
     "type": "(value: string) => void",
-    "description": "Callback invoked when the active tab changes.",
+    "description": "Called when the active tab changes.",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Controls the color intent of the tab indicator.",
+    "description": "Color intent for the tab indicator.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "orientation",
     "type": "\"horizontal\" | \"vertical\"",
-    "description": "Controls the layout direction of the tab list.",
+    "description": "Layout direction of the tab list.",
     "default": "\"horizontal\"",
     "required": false
   }
