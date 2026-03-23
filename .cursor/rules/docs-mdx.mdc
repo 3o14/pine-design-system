@@ -1,12 +1,12 @@
 ---
-description: docs MDX 페이지 규칙
+description: Docs MDX page rules
 globs: "docs/content/**/*.mdx"
 alwaysApply: false
 ---
 
-# Docs MDX 규칙
+# Docs MDX Rules
 
-## 구조
+## Structure
 
 ```mdx
 ---
@@ -15,9 +15,9 @@ title: ComponentName
 
 # ComponentName
 
-한 줄 설명.
+One-line description.
 
-## 미리보기
+## Preview
 
 <ComponentPreview code={...}>
   <ComponentDemo />
@@ -27,13 +27,13 @@ title: ComponentName
 
 ### `propName`
 
-설명. | 값 | 기본값 | 설명 | 테이블
+Description. Props table: | Name | Type | Default | Description |
 
 <ComponentPreview>...</ComponentPreview>
 
-## 사용 가이드
+## Usage
 
-## 코드
+## Code
 
 ```tsx
 import { Component } from "pine-design-system";
@@ -45,10 +45,10 @@ import { Component } from "pine-design-system";
 
 ## ComponentPreview
 
-- `code` prop: JSX 문자열 (Preview/Code 탭 전환)
-- `children`: Demo 컴포넌트
+- `code` prop: JSX string (Preview/Code tab toggle)
+- `children`: Demo component
 
-## Props 표
+## Props Table
 
-- 페이지 하단에 `<ComponentPropsDoc />`
-- generate-props.mjs + PropsTable 사용
+- Add `<ComponentPropsDoc />` at the bottom of the page
+- Uses generate-props.mjs + PropsTable

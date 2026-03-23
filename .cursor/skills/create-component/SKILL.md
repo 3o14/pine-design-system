@@ -34,7 +34,7 @@ ComponentName/
 - Use `useTheme()` for theme class: `themeContext?.themeClass ?? lightTheme`
 - Compose className: `clsx(themeClass, styles.component({ variant, size, ... }), className)`
 - Accept `className` and spread `...props` for HTML attributes
-- **FC 사용 금지** — `const Component = (props: Props) => {...}` 형태
+- **No FC** — Use `const Component = (props: Props) => {...}` form
 
 ```tsx
 export interface ComponentProps extends React.HTMLAttributes<HTMLXxxElement> {

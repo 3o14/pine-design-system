@@ -1,57 +1,57 @@
 ---
-description: Pine Design System 핵심 규칙
+description: Pine Design System core rules
 alwaysApply: true
 ---
 
 # Pine Design System Rules
 
-## 1. 프로젝트 개요
+## 1. Project Overview
 
-- React + TypeScript UI 라이브러리
-- Vanilla Extract (zero-runtime CSS), 토큰 기반 테마
-- @base-ui/react 기반 접근성, 다중 테마 (basic, game, crayon)
-- Storybook + docs (Nextra) 문서화
+- React + TypeScript UI library
+- Vanilla Extract (zero-runtime CSS), token-based theming
+- @base-ui/react for accessibility, multiple themes (basic, game, crayon)
+- Storybook + docs (Nextra) documentation
 
-## 2. 프로젝트 구조
+## 2. Project Structure
 
 ```
 pine-ui-kit/
 ├── src/
-│   ├── components/       # UI 컴포넌트 (ComponentName/ 폴더)
-│   ├── tokens/           # createThemeContract, 테마 정의
+│   ├── components/       # UI components (ComponentName/ folder)
+│   ├── tokens/           # createThemeContract, theme definitions
 │   └── providers/        # ThemeProvider
-├── docs/                 # Nextra 문서 사이트
+├── docs/                 # Nextra docs site
 └── (storybook)
 ```
 
-## 3. 컴포넌트 패턴
+## 3. Component Pattern
 
-- **폴더**: `src/components/ComponentName/`
-- **파일**: `Component.tsx`, `Component.css.ts`, `Component.spec.tsx`, `Component.stories.tsx`, `index.ts`
-- **forwardRef**: form control, focusable 요소에 사용
-- **Base UI**: Button, Checkbox, Switch, Dropdown, Dialog, Tab 등은 @base-ui/react 래핑
-- **테마**: `useTheme()` → `themeClass`, `clsx(themeClass, styles.xxx(), className)`
-- **props**: `className`, `...props` (HTML 속성 전달) 필수
+- **Folder**: `src/components/ComponentName/`
+- **Files**: `Component.tsx`, `Component.css.ts`, `Component.spec.tsx`, `Component.stories.tsx`, `index.ts`
+- **forwardRef**: Use for form controls and focusable elements
+- **Base UI**: Button, Checkbox, Switch, Dropdown, Dialog, Tab etc. wrap @base-ui/react
+- **Theme**: `useTheme()` → `themeClass`, `clsx(themeClass, styles.xxx(), className)`
+- **props**: `className`, `...props` (forward HTML attributes) required
 
-## 4. 토큰 & 테마
+## 4. Tokens & Theming
 
 - **Contract**: `src/tokens/semantic/tokens.css.ts` — `createThemeContract()`
 - **Intent**: `primary | secondary | success | warning | danger | neutral`
-- **Variant**: `solid | outline | subtle | weak` (컴포넌트별)
-- **테마별**: `.${gameLightTheme} &`, `.${crayonLightTheme} &` 셀렉터
+- **Variant**: `solid | outline | subtle | weak` (per component)
+- **Per theme**: `.${gameLightTheme} &`, `.${crayonLightTheme} &` selectors
 
-## 5. 코드 스타일
+## 5. Code Style
 
-- **FC 금지**: `const C = (props: Props) => {...}` 형태
-- **Named export**: default export 사용 금지
+- **No FC**: Use `const C = (props: Props) => {...}` form
+- **Named export**: No default exports
 - **Commit**: `feat(Component):`, `fix(Component):`, `docs(Component):`
 
-## 6. 명령어
+## 6. Commands
 
 ```bash
-pnpm run build    # 라이브러리 빌드
-pnpm run test     # Vitest
+pnpm run build     # Library build
+pnpm run test      # Vitest
 pnpm run storybook # Storybook
-pnpm run docs     # docs dev
-pnpm run release  # 배포
+pnpm run docs      # Docs dev server
+pnpm run release   # Publish
 ```

@@ -1,10 +1,10 @@
 ---
-description: Storybook 스토리 작성 규칙
+description: Storybook story writing rules
 globs: "**/*.stories.tsx"
 alwaysApply: false
 ---
 
-# Storybook 규칙
+# Storybook Rules
 
 ## Meta
 
@@ -21,11 +21,11 @@ const meta = {
 ## ArgTypes
 
 - `control`: "select" | "boolean" | "text"
-- `options`: variant/size/intent 배열
-- `description`: 한글 설명
+- `options`: variant/size/intent arrays
+- `description`: field description
 - `table`: `type: { summary: "TypeName" }`, `defaultValue: { summary: "value" }`
 
 ## Stories
 
-- Default, Variant별, Size별, Intent별 스토리
-- `render` 함수로 커스텀 렌더링 가능
+- Default, per Variant, per Size, per Intent stories
+- Use `render` function for custom rendering

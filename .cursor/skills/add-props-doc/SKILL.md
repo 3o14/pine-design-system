@@ -25,11 +25,11 @@ import type { ReactNode } from "react"
 
 export interface ComponentProps {
   /**
-   * 설명.
+   * Description.
    * @default "value"
    */
   propName?: "option1" | "option2";
-  /** 필수 prop 설명. */
+  /** Required prop description. */
   children: ReactNode;
 }
 `;
@@ -79,7 +79,7 @@ At the bottom of the page (after code block):
 
 ## TSDoc Format
 
-- `/** 설명. */` — description
+- `/** Description. */` — description
 - `@default "value"` — default value (in same block or separate line)
 - Optional props: `propName?: Type`
 - Required: `children: ReactNode` (no `?`)

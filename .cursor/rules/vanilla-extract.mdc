@@ -1,20 +1,20 @@
 ---
-description: Vanilla Extract 스타일 규칙
+description: Vanilla Extract style rules
 globs: "**/*.css.ts"
 alwaysApply: false
 ---
 
-# Vanilla Extract CSS 규칙
+# Vanilla Extract CSS Rules
 
-## 파일 위치
+## File Location
 
 - `src/components/ComponentName/Component.css.ts`
 
-## 패턴
+## Pattern
 
-- **Variants**: `recipe()` 사용 — `variant`, `intent`, `size`, `rounded` 등
-- **단일 스타일**: `style()` 사용
-- **토큰**: `themeContract.color[intent].surface` 등
+- **Variants**: Use `recipe()` — `variant`, `intent`, `size`, `rounded` etc.
+- **Single style**: Use `style()`
+- **Tokens**: `themeContract.color[intent].surface` etc.
 
 ## Import
 
@@ -25,12 +25,12 @@ import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
 ```
 
-## 테마별 오버라이드
+## Theme-specific Overrides
 
-- **Game**: `createGameBoxShadow(borderColor)` — box-shadow로 테두리
-- **Crayon**: `createCrayonBeforeStyle`, `createCrayonBeforeBaseStyle` 등
-- 셀렉터: `.${gameLightThemeClass} &`, `.${crayonLightThemeClass} &`
+- **Game**: `createGameBoxShadow(borderColor)` — box-shadow for border
+- **Crayon**: `createCrayonBeforeStyle`, `createCrayonBeforeBaseStyle` etc.
+- Selectors: `.${gameLightThemeClass} &`, `.${crayonLightThemeClass} &`
 
-## 참고
+## Reference
 
-- 기존 Badge.css.ts, Button.css.ts 패턴 따르기
+- Follow existing Badge.css.ts, Button.css.ts patterns

@@ -1,21 +1,21 @@
 ---
-description: Vitest 테스트 규칙
+description: Vitest test rules
 globs: "**/*.spec.tsx"
 alwaysApply: false
 ---
 
-# Vitest + RTL 규칙
+# Vitest + RTL Rules
 
-## 쿼리
+## Queries
 
-- `getByRole`, `getByLabelText`, `getByText` 우선
-- `getByTestId`는 최소화
+- Prefer `getByRole`, `getByLabelText`, `getByText`
+- Minimize `getByTestId`
 
-## 상호작용
+## Interactions
 
-- `userEvent` 사용 (click, type 등)
+- Use `userEvent` (click, type, etc.)
 
-## 구조
+## Structure
 
 ```ts
 describe("Component", () => {
@@ -27,4 +27,4 @@ describe("Component", () => {
 
 ## ThemeProvider
 
-- 테마 의존 테스트 시 `ThemeProvider`로 감싸기
+- Wrap with `ThemeProvider` when testing theme-dependent behavior
