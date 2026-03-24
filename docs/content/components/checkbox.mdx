@@ -1,0 +1,77 @@
+---
+title: Checkbox
+---
+
+# Checkbox
+
+A selection control for when users choose one or more options or agree to terms. Built on [Base UI Checkbox](https://base-ui.com/react/components/checkbox) for accessibility.
+
+## Preview
+
+<ComponentPreview code={`<Checkbox defaultChecked />
+<Checkbox label="With label" />
+<Checkbox label="Disabled" disabled />`}>
+  <CheckboxDemo />
+</ComponentPreview>
+
+## Examples
+
+### Intent
+
+Controls the color intent of the checkbox.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "General selection items."],
+    ["`secondary`", "", "Secondary selection items."],
+    ["`success`", "", "Positive choices such as agreement or completion."],
+    ["`warning`", "", "Choices that require caution."],
+    ["`danger`", "", "Choices that imply risk or deletion."],
+    ["`neutral`", "", "Neutral choices."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Checkbox defaultChecked intent="primary" label="Primary" />
+<Checkbox defaultChecked intent="success" label="Success" />
+<Checkbox defaultChecked intent="warning" label="Warning" />
+<Checkbox defaultChecked intent="danger" label="Danger" />`}>
+  <CheckboxIntentDemo />
+</ComponentPreview>
+
+### Size
+
+Controls the checkbox size. Choose based on adjacent text or form components.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For dense forms or secondary options."],
+    ["`medium`", "✓", "General form use."],
+    ["`large`", "", "When a larger click area is needed."],
+    ["`xlarge`", "", "When a large touch target is needed (e.g. mobile)."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Checkbox size="small" defaultChecked label="Small" />
+<Checkbox size="medium" defaultChecked label="Medium" />
+<Checkbox size="large" defaultChecked label="Large" />
+<Checkbox size="xlarge" defaultChecked label="XLarge" />`}>
+  <CheckboxSizeDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Controlled vs Uncontrolled
+
+Use `defaultChecked` when you don't need to manage state. Use `checked` with `onCheckedChange` when integrating with form libraries, external state, or when rendering different UI based on the checked state.
+
+### Accessibility
+
+Use the `label` prop or connect the checkbox to a `<label>` element so screen readers can identify its purpose.
+
+## Props
+
+<PropsDoc component="checkbox" />

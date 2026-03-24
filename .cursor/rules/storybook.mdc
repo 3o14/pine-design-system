@@ -1,0 +1,31 @@
+---
+description: Storybook story writing rules
+globs: "**/*.stories.tsx"
+alwaysApply: false
+---
+
+# Storybook Rules
+
+## Meta
+
+```ts
+const meta = {
+  title: "Category/ComponentName",
+  component: Component,
+  tags: ["autodocs"],
+  args: { ...defaults },
+  argTypes: ...
+};
+```
+
+## ArgTypes
+
+- `control`: "select" | "boolean" | "text"
+- `options`: variant/size/intent arrays
+- `description`: field description
+- `table`: `type: { summary: "TypeName" }`, `defaultValue: { summary: "value" }`
+
+## Stories
+
+- Default, per Variant, per Size, per Intent stories
+- Use `render` function for custom rendering

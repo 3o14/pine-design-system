@@ -1,0 +1,85 @@
+[
+  {
+    "name": "open",
+    "type": "boolean",
+    "description": "Controls whether the dialog is open.",
+    "required": true
+  },
+  {
+    "name": "onOpenChange",
+    "type": "(open: boolean) => void",
+    "description": "Called when the open state changes.",
+    "required": false
+  },
+  {
+    "name": "onClose",
+    "type": "() => void",
+    "description": "Called when the dialog closes (in addition to open state updates).",
+    "required": false
+  },
+  {
+    "name": "title",
+    "type": "string",
+    "description": "Title text shown in the header.",
+    "required": false
+  },
+  {
+    "name": "description",
+    "type": "string",
+    "description": "Description text shown below the title.",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\" | \"full\"",
+    "description": "Maximum width of the dialog.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Corner radius of the dialog.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "actions",
+    "type": "DialogAction[]",
+    "description": "Action buttons rendered in the footer.",
+    "required": false
+  },
+  {
+    "name": "footer",
+    "type": "React.ReactNode",
+    "description": "Fully custom footer content; use instead of the actions prop.",
+    "required": false
+  },
+  {
+    "name": "showCloseButton",
+    "type": "boolean",
+    "description": "Whether to show the close (X) control in the header.",
+    "default": "true",
+    "required": false
+  },
+  {
+    "name": "closeOnOverlayClick",
+    "type": "boolean",
+    "description": "Close the dialog when the overlay is clicked.",
+    "default": "true",
+    "required": false
+  },
+  {
+    "name": "closeOnEscape",
+    "type": "boolean",
+    "description": "Close the dialog when Escape is pressed.",
+    "default": "true",
+    "required": false
+  },
+  {
+    "name": "children",
+    "type": "React.ReactNode",
+    "description": "Main dialog content.",
+    "required": true
+  }
+]

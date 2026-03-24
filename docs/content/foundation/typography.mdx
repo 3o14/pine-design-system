@@ -1,0 +1,49 @@
+# Typography
+
+Typography is the design element that expresses content clearly and efficiently.
+
+## Overview
+
+Typography is essential for presenting text clearly, consistently, and accessibly across all digital channels. By defining reusable tokens and components, this system helps manage diverse text styles—headings, body copy, and more—in a structured way, maintaining visual hierarchy and consistency.
+
+The Pine typography system defines font size, line height, and font weight as separate tokens. These tokens use semantic names (xsmall, small, medium, large, xlarge, display-small, display-medium, display-large) and map to actual rem/line-height values per theme (basic, game, crayon). The `Text` component's `size` and `weight` props connect to these tokens.
+
+## Font Families
+
+Each theme applies a different font stack. The basic theme uses Inter (body) and Roboto Mono (code), the game theme uses DungGeunMo (pixel font), and the crayon theme uses 온글잎-승훈체.
+
+<FontFamilyPreview />
+
+In the browser, these `font-family` stacks are applied via CSS variables or foundation tokens per theme.
+
+## Font Size Tokens
+
+Font size tokens use relative units (rem) for accessibility and scalability. Base: 1rem = 16px.
+
+<TypographyScale />
+
+## Line Height Tokens
+
+Line height tokens ensure proper vertical rhythm and readability. They are paired with the same semantic size (xsmall, small, …) as the font size tokens. The Line height column in the table above shows the corresponding values.
+
+## Font Weight Tokens
+
+Four font weight tokens are defined for clear visual contrast and hierarchy.
+
+<FontWeightPreview />
+
+## Typography Component
+
+The `Text` component combines the tokens above via its `size` and `weight` props.
+
+- **size**: xsmall, small, medium, large, xlarge, display-small, display-medium, display-large
+- **weight**: regular, medium, semibold, bold
+
+Generally, small–xlarge is used for body text and captions; display-small–display-large for headings and emphasis. The game theme uses a smaller display-small for its pixel font.
+
+## Guidelines
+
+- **Maintain consistency**: Use defined tokens and components everywhere for consistent typography.
+- **Clear hierarchy**: Distinguish headings from body text so users can scan information efficiently.
+- **Use relative units**: Use rem and other relative units to respect the user's font size settings.
+- **Prefer semantic tokens**: When a specific role is needed (e.g. page title, body), use semantic size tokens to convey both design intent and function.

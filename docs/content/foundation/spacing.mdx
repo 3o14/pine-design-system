@@ -1,0 +1,50 @@
+# Spacing
+
+Spacing tokens define consistent padding, margin, and gap for layouts and within components.
+
+## Overview
+
+Pine provides 10 foundation spacing tokens from `none` to `xxxl`. Pixel values are fixed and shared across all themes (basic, game, crayon). Components use these tokens for padding and layout so that spacing ratios stay consistent even when themes change. The game theme generally uses tighter padding than the basic and crayon themes.
+
+## Foundation Spacing Tokens
+
+<SpacingScale />
+
+Bar width is proportional to the token value in pixels.
+
+## Theme Adapters
+
+All themes share the same foundation spacing scale, but semantic padding for components differs by theme.
+
+**Button** — has four size variants (`small`, `medium`, `large`, `xlarge`) with theme-specific padding:
+
+<DocTable
+  headers={["Theme", "small", "medium", "large", "xlarge"]}
+  rows={[
+    ["basic / crayon", "`xs sm`", "`sm md`", "`md lg`", "`lg xl`"],
+    ["game", "`xxxs xs`", "`xs sm`", "`sm md`", "`md lg`"],
+  ]}
+  align={["left", "left", "left", "left", "left"]}
+/>
+
+**Card and Input** — use a single padding value (no size variants):
+
+<DocTable
+  headers={["Component", "basic / crayon", "game"]}
+  rows={[
+    ["Card", "`md` (16px)", "`sm` (12px)"],
+    ["Input", "`sm` (12px)", "`xs` (8px)"],
+  ]}
+  align={["left", "left", "left"]}
+/>
+
+## Component Mapping
+
+The `ThemeProvider`'s `design` prop selects the active theme. Semantic spacing used by components (such as `button.padding.small`, `card.padding`, `input.padding`) is then resolved to the foundation spacing tokens shown above.
+
+## Guidelines
+
+- **Token-first**: Prefer spacing tokens (e.g. `md`) over raw numbers (e.g. `16`) to preserve scale consistency.
+- **Consistency**: Use the same spacing tokens for components at the same hierarchy level so layouts feel coherent.
+- **Theme alignment**: Let each theme control density—game uses tighter padding, while basic and crayon are more spacious.
+- **Responsive consideration**: For complex layouts, combine spacing tokens with responsive utilities rather than introducing arbitrary values.

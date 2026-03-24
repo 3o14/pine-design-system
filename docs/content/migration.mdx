@@ -1,0 +1,51 @@
+# Package Migration Guide
+
+The package has been renamed from **pine-ui-kit** to **pine-design-system**. Follow the steps below to migrate your project.
+
+## 1. Replace the package
+
+**Before:**
+
+```bash
+npm uninstall pine-ui-kit
+npm install pine-design-system
+```
+
+**After (example with pnpm):**
+
+```bash
+pnpm remove pine-ui-kit
+pnpm add pine-design-system
+```
+
+## 2. Update import paths
+
+Only the package name changes. Component names, Provider names, and APIs stay the same.
+
+**Before:**
+
+```tsx
+import { Button, ThemeProvider } from "pine-ui-kit";
+import "pine-ui-kit/style.css";
+```
+
+**After:**
+
+```tsx
+import { Button, ThemeProvider } from "pine-design-system";
+import "pine-design-system/style.css";
+```
+
+## 3. Summary
+
+<DocTable
+  headers={["Item", "pine-ui-kit", "pine-design-system"]}
+  rows={[
+    ["Package name", "`pine-ui-kit`", "`pine-design-system`"],
+    ["Style import", "`pine-ui-kit/style.css`", "`pine-design-system/style.css`"],
+    ["Components / API", "Same", "Same"],
+  ]}
+  align={["left", "left", "left"]}
+/>
+
+The `pine-ui-kit` package is kept as deprecated and re-exports `pine-design-system` internally. Migrating directly to `pine-design-system` is recommended.

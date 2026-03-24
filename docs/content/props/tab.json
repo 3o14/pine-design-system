@@ -1,0 +1,40 @@
+[
+  {
+    "name": "tabs",
+    "type": "TabItem[]",
+    "description": "Tab definitions (required).",
+    "required": true
+  },
+  {
+    "name": "value",
+    "type": "string",
+    "description": "Active tab value (controlled).",
+    "required": false
+  },
+  {
+    "name": "defaultValue",
+    "type": "string",
+    "description": "Initial active tab value (uncontrolled).",
+    "required": false
+  },
+  {
+    "name": "onChange",
+    "type": "(value: string) => void",
+    "description": "Called when the active tab changes.",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent for the tab indicator.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "orientation",
+    "type": "\"horizontal\" | \"vertical\"",
+    "description": "Layout direction of the tab list.",
+    "default": "\"horizontal\"",
+    "required": false
+  }
+]

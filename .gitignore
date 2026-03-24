@@ -10,6 +10,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+
+# TypeScript incremental build cache
+*.tsbuildinfo
 *.local
 storybook-static
 
@@ -30,3 +33,13 @@ storybook-static
 
 *storybook.log
 CLAUDE.md
+
+# Next.js
+.next
+docs/out
+
+# Vercel
+.vercel
+
+# oh-my-claudecode
+.omc

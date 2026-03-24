@@ -1,0 +1,152 @@
+---
+title: Button
+---
+
+# Button
+
+An interactive component that helps users perform clear actions. Built on [Base UI Button](https://base-ui.com/react/components/button) for keyboard accessibility and focus management.
+
+## Preview
+
+<ComponentPreview code={`import { Button } from "pine-design-system";
+
+<Button variant="solid" intent="primary">Solid</Button>
+<Button variant="outline" intent="primary">Outline</Button>
+<Button variant="ghost" intent="primary">Ghost</Button>
+<Button variant="weak" intent="primary">Weak</Button>`}>
+  <ButtonDemo />
+</ComponentPreview>
+
+## Examples
+
+### Variant
+
+Controls the visual emphasis level. Choose based on the importance of the action in context.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`solid`", "✓", "Filled background. Use for the primary CTA that needs the most emphasis."],
+    ["`outline`", "", "Border only. Use for secondary actions with less emphasis than solid."],
+    ["`ghost`", "", "No background or border. Use when minimal emphasis is needed."],
+    ["`weak`", "", "Semi-transparent background. Pairs well with solid as a secondary action."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Button variant="solid" intent="primary">Solid</Button>
+<Button variant="outline" intent="primary">Outline</Button>
+<Button variant="ghost" intent="primary">Ghost</Button>
+<Button variant="weak" intent="primary">Weak</Button>`}>
+  <ButtonVariantDemo />
+</ComponentPreview>
+
+### Size
+
+Controls the button size. Choose based on context and required click area.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For tight spaces or secondary actions."],
+    ["`medium`", "✓", "Most versatile size."],
+    ["`large`", "", "For primary CTAs or when a larger click area is needed."],
+    ["`xlarge`", "", "For high-visibility CTAs on large screens."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Button size="small">Small</Button>
+<Button size="medium">Medium</Button>
+<Button size="large">Large</Button>
+<Button size="xlarge">XLarge</Button>`}>
+  <ButtonSizeDemo />
+</ComponentPreview>
+
+### Intent
+
+Expresses the semantic purpose of the button through color. Choose based on the nature of the action.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "Main action for core app features."],
+    ["`secondary`", "", "Secondary action to pair with primary."],
+    ["`success`", "", "Positive outcomes: complete, save, confirm."],
+    ["`warning`", "", "Actions that require caution."],
+    ["`danger`", "", "Irreversible actions like delete or reset. Clearly warn the user."],
+    ["`neutral`", "", "Neutral actions with no semantic emphasis."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Button intent="primary">Primary</Button>
+<Button intent="secondary">Secondary</Button>
+<Button intent="success">Success</Button>
+<Button intent="warning">Warning</Button>
+<Button intent="danger">Danger</Button>
+<Button intent="neutral">Neutral</Button>`}>
+  <ButtonIntentDemo />
+</ComponentPreview>
+
+### Rounded
+
+Controls the corner radius of the button.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "Small corner radius"],
+    ["`medium`", "✓", "Default corner radius"],
+    ["`large`", "", "Large corner radius (pill-like)"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Button rounded="small">Small</Button>
+<Button rounded="medium">Medium</Button>
+<Button rounded="large">Large</Button>`}>
+  <ButtonRoundedDemo />
+</ComponentPreview>
+
+### Full width
+
+When `fullWidth` is `true`, the button fills the full width of its parent container.
+
+<ComponentPreview code={`<div className="max-w-[200px]">
+  <Button fullWidth intent="primary">Full width</Button>
+</div>`}>
+  <ButtonFullWidthDemo />
+</ComponentPreview>
+
+### Disabled
+
+Disables the button. When disabled, click events do not fire and the disabled style is applied.
+
+<ComponentPreview code={`<Button intent="primary">Enabled</Button>
+<Button intent="primary" disabled>Disabled</Button>`}>
+  <ButtonDisabledDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Choosing variant
+
+Choose the variant based on the importance of actions on the screen. Prefer a single `solid` button per view. Multiple solid buttons make it harder for users to identify the primary action.
+
+- `solid` → Single most important CTA on the screen
+- `weak` → Secondary action paired with solid
+- `outline` / `ghost` → Tertiary actions with low emphasis
+
+### Choosing intent
+
+Use `intent` to convey the semantic nature of the action. For irreversible actions (delete, reset), always use `danger` to clearly warn the user.
+
+### Submit and links
+
+- **Submit buttons**: Unlike the native `<button>`, you must set `type="submit"` for the Button to act as a submit button in forms.
+- **Links**: Do not use Button for links. If a link should look like a button, style the `<a>` element directly.
+
+## Props
+
+<PropsDoc component="button" />

@@ -1,0 +1,40 @@
+# Radius
+
+Radius tokens define consistent corner curvature for buttons, cards, input fields, and other components.
+
+## Overview
+
+Pine provides 10 foundation radius tokens from `none` to `full`. These map to semantic tokens (small, medium, large, xlarge, full) that components use via `button.radius`, `card.radius`, `input.radius`, and similar. Each theme (basic, game, crayon) maps semantic tokens to different foundation values, so the same component can look sharp in the game theme and rounded in the crayon theme.
+
+## Foundation Radius Tokens
+
+<RadiusScale />
+
+## Theme Adapters
+
+Semantic tokens (small, medium, large, xlarge) map to foundation tokens per theme:
+
+<DocTable
+  headers={["Theme", "small", "medium", "large", "xlarge", "full"]}
+  rows={[
+    ["basic", "sm (6px)", "xl (16px)", "xxl (24px)", "xxxl (32px)", "100%"],
+    ["game", "none (0px)", "none (0px)", "none (0px)", "none (0px)", "100%"],
+    ["crayon", "lg (12px)", "xxl (24px)", "xxxl (32px)", "xxxl (32px)", "100%"],
+  ]}
+  align={["left", "left", "left", "left", "left", "left"]}
+/>
+
+- **basic**: Rounded, pill-friendly style
+- **game**: Sharp corners (0px) for pixel-art feel
+- **crayon**: Very rounded for a soft, hand-drawn look
+
+## Component Mapping
+
+The `ThemeProvider`'s `design` prop selects the theme. Semantic radius tokens (`button.radius.small`, `card.radius`, `input.radius`, etc.) are then resolved to the foundation values above.
+
+## Guidelines
+
+- **Consistency**: Use the same radius token for components at the same hierarchy level (e.g. buttons, cards).
+- **Theme alignment**: Let the theme drive radius—avoid overriding with custom values unless necessary.
+- **Visual hierarchy**: Use larger radius for containers (cards, modals) and smaller for controls (buttons, inputs) within the same theme.
+- **Accessibility**: Avoid extreme radius on small touch targets; it can reduce the perceived clickable area.

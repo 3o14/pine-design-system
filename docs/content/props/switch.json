@@ -1,0 +1,54 @@
+[
+  {
+    "name": "checked",
+    "type": "boolean",
+    "description": "Checked state (controlled).",
+    "required": false
+  },
+  {
+    "name": "defaultChecked",
+    "type": "boolean",
+    "description": "Initial checked state (uncontrolled).",
+    "required": false
+  },
+  {
+    "name": "onCheckedChange",
+    "type": "(checked: boolean) => void",
+    "description": "Called when the checked state changes.",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent for the switch track.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Switch size.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "label",
+    "type": "string",
+    "description": "Label text next to the switch.",
+    "required": false
+  },
+  {
+    "name": "disabled",
+    "type": "boolean",
+    "description": "Disables the switch.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "readOnly",
+    "type": "boolean",
+    "description": "Makes the switch read-only.",
+    "default": "false",
+    "required": false
+  }
+]

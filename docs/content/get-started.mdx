@@ -1,0 +1,51 @@
+# Get Started
+
+## Installation
+
+```bash
+# npm
+npm install pine-design-system
+
+# yarn
+yarn add pine-design-system
+
+# pnpm
+pnpm add pine-design-system
+```
+
+React 18 or higher is required.
+
+## Basic Usage
+
+Wrap your app root with `ThemeProvider` and import the stylesheet once.
+
+```tsx
+import { ThemeProvider, Button } from "pine-design-system";
+import "pine-design-system/style.css";
+
+export default function App() {
+  return (
+    <ThemeProvider defaultDesign="basic">
+      <Button intent="primary">Click me</Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## ThemeProvider Options
+
+- **design** / **defaultDesign**: `"basic"` | `"game"` | `"crayon"` — Design concept. Use `defaultDesign` for uncontrolled (default: `"basic"`), or `design` + `onDesignChange` for controlled.
+- **theme** / **defaultTheme**: `"light"` | `"dark"` — Light/dark mode. Use `defaultTheme` for initial value when uncontrolled, or `theme` + `onThemeChange` for controlled.
+- **syncWithSystem**: `boolean` (default: `true`) — When `true` and `theme` is not controlled, the app follows the OS color scheme. Set to `false` to use `defaultTheme` as the initial value instead.
+- **primaryColor**: `string` — Optional hex color to customize the primary palette (e.g. `"#6366f1"`).
+
+```tsx
+<ThemeProvider design="game" defaultTheme="dark">
+  {/* Game style + dark mode */}
+</ThemeProvider>
+```
+
+## Next Steps
+
+- [Foundation](/foundation): Token structure (colors, typography, spacing)
+- [Components](/components): Component list and usage

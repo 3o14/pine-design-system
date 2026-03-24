@@ -1,0 +1,147 @@
+---
+title: Text
+---
+
+# Text
+
+A text rendering component that applies consistent typography. The `as` prop lets you choose the semantic HTML element, so you can combine accessibility and SEO with flexible styling.
+
+## Preview
+
+<ComponentPreview code={`<Text as="p" size="display-small" weight="bold">Display Small</Text>
+<Text as="p" size="xlarge" weight="semibold">XLarge Semibold</Text>
+<Text as="p" size="large">Large Regular</Text>
+<Text as="p" size="medium">Medium Regular</Text>
+<Text as="p" size="small">Small Regular</Text>`}>
+  <TextDemo />
+</ComponentPreview>
+
+## Examples
+
+### As
+
+Specifies the HTML element to render. Visual style and semantics are independent, so you can use any element with any size.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`p`", "✓", "Paragraph text"],
+    ["`span`", "", "Inline text"],
+    ["`div`", "", "Block container"],
+    ["`h1` ~ `h6`", "", "Heading elements"],
+    ["`label`", "", "Form label"],
+    ["`li`, `ul`, `ol`", "", "List elements"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+### Size
+
+Controls the text size. Follows the typography scale defined in design tokens.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`display-large`", "", "Large hero headings for landing pages"],
+    ["`display-medium`", "", "Page-level headings"],
+    ["`display-small`", "", "Section-level headings"],
+    ["`xlarge`", "", "Major section titles"],
+    ["`large`", "", "Subheadings, card titles"],
+    ["`medium`", "✓", "Default body text size"],
+    ["`small`", "", "Secondary text, descriptions"],
+    ["`xsmall`", "", "Captions, labels, hints"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Text size="display-large">Display Large</Text>
+<Text size="display-medium">Display Medium</Text>
+<Text size="display-small">Display Small</Text>
+<Text size="xlarge">XLarge</Text>
+<Text size="large">Large</Text>
+<Text size="medium">Medium</Text>
+<Text size="small">Small</Text>
+<Text size="xsmall">XSmall</Text>`}>
+  <TextSizeDemo />
+</ComponentPreview>
+
+### Weight
+
+Controls the font weight.
+
+<DocTable
+  headers={["Value", "Default", "CSS", "Description"]}
+  rows={[
+    ["`regular`", "✓", "400", "Body and descriptive text"],
+    ["`medium`", "", "500", "Body text that needs emphasis"],
+    ["`semibold`", "", "600", "Subheadings, labels"],
+    ["`bold`", "", "700", "Primary headings, strong emphasis"],
+  ]}
+  align={["left", "center", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Text weight="regular">Regular — 400</Text>
+<Text weight="medium">Medium — 500</Text>
+<Text weight="semibold">Semibold — 600</Text>
+<Text weight="bold">Bold — 700</Text>`}>
+  <TextWeightDemo />
+</ComponentPreview>
+
+### Intent
+
+Controls the color intent of the text.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`inherit`", "✓", "Inherits color from the parent element"],
+    ["`primary`", "", "Primary content text color"],
+    ["`secondary`", "", "Secondary content text color"],
+    ["`success`", "", "Success or completion"],
+    ["`warning`", "", "Warning"],
+    ["`danger`", "", "Error or danger"],
+    ["`neutral`", "", "Neutral color"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Text intent="inherit">Inherit</Text>
+<Text intent="primary">Primary</Text>
+<Text intent="success">Success</Text>
+<Text intent="warning">Warning</Text>
+<Text intent="danger">Danger</Text>
+<Text intent="neutral">Neutral</Text>`}>
+  <TextIntentDemo />
+</ComponentPreview>
+
+### Align
+
+Controls text alignment.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`left`", "✓", "Left align"],
+    ["`center`", "", "Center align"],
+    ["`right`", "", "Right align"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+## Guidelines
+
+### Semantic markup
+
+`size` controls visual size and `as` controls the HTML element. They work independently, so you can keep good semantic structure for SEO and accessibility while applying any design.
+
+```tsx
+// Visually large but rendered as h2
+<Text as="h2" size="large" weight="semibold">Section title</Text>
+
+// Visually small but rendered as label
+<Text as="label" size="small" weight="medium">Name</Text>
+```
+
+## Props
+
+<PropsDoc component="text" />

@@ -1,0 +1,25 @@
+# Introduction
+
+Pine Design System is a React UI component library with **token-based theming** and **accessibility** built in.
+
+## Switch Design Concepts at Once
+
+Change the entire app's design concept with a single **`design`** prop on `ThemeProvider`. Keep your code as-is and choose from basic, game, or crayon.
+
+<ComponentPreview>
+	<IntroDemo />
+</ComponentPreview>
+
+Try the **Design** and **Mode** buttons in the demo above to see the style switch in action.
+
+## Accessibility and Behavior Consistency
+
+Components are built on top of [Base UI](https://base-ui.com/) headless primitives. Base UI handles markup, keyboard navigation, and screen reader support, while Pine applies only the token and style layer. As a result, you can switch designs freely while preserving accessibility and consistent behavior.
+
+## Light/Dark Mode
+
+Use the `theme` prop to set **light** or **dark** mode, or `syncWithSystem={true}` (default) to follow the OS setting. All themes (basic, game, crayon) support both light and dark modes.
+
+---
+
+Next: See [Get Started](/get-started) for installation and first steps.

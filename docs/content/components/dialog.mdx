@@ -1,0 +1,80 @@
+---
+title: Dialog
+---
+
+# Dialog
+
+A modal component for conveying important information or capturing user confirmation or input. Built on [Base UI Dialog](https://base-ui.com/react/components/dialog) with focus trap, scroll lock, and Escape-to-close by default.
+
+## Preview
+
+<ComponentPreview code={`const [open, setOpen] = useState(false);
+
+<Button intent="primary" onClick={() => setOpen(true)}>Open Dialog</Button>
+<Dialog
+  open={open}
+  onOpenChange={setOpen}
+  title="Dialog title"
+  description="Dialog description text."
+  size="small"
+  actions={[
+    { label: "Cancel", variant: "weak", intent: "neutral", onClick: () => setOpen(false) },
+    { label: "Confirm", variant: "solid", intent: "primary", onClick: () => setOpen(false) },
+  ]}
+>
+  <p>Dialog body content.</p>
+</Dialog>`}>
+  <DialogDemo />
+</ComponentPreview>
+
+## Examples
+
+### Size
+
+Controls the maximum width of the dialog.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "Simple confirmation dialogs (e.g. confirm/cancel)"],
+    ["`medium`", "✓", "General forms or information dialogs"],
+    ["`large`", "", "Complex forms or detailed content dialogs"],
+    ["`xlarge`", "", "Dialogs with a lot of content"],
+    ["`full`", "", "Full-screen dialog"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Dialog open={open} onOpenChange={setOpen} title="Size: small" size="small" actions={[...]}>
+  <p>Dialog body content.</p>
+</Dialog>`}>
+  <DialogSizeDemo />
+</ComponentPreview>
+
+### Rounded
+
+Controls the corner radius of the dialog.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "Small corner radius"],
+    ["`medium`", "✓", "Default corner radius"],
+    ["`large`", "", "Large corner radius"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+## Guidelines
+
+### Confirmation dialogs
+
+Always get user confirmation for irreversible actions (delete, reset, etc.). In such cases, include a `danger` intent button in `actions` and set `closeOnOverlayClick: false`.
+
+### Form dialogs
+
+Use `closeOnOverlayClick: false` when the dialog contains a form. This prevents users from accidentally losing their input.
+
+## Props
+
+<PropsDoc component="dialog" />

@@ -333,7 +333,8 @@ const menuBase = style({
 	position: "absolute",
 	top: "calc(100% + 4px)",
 	left: 0,
-	minWidth: "100%",
+	minWidth: "max(100%, max-content)",
+	width: "max-content",
 	backgroundColor: themeContract.color.surface.background,
 	borderRadius: themeContract.radius.medium,
 	border: `1px solid ${themeContract.color.surface.outline}`,
@@ -402,6 +403,7 @@ const menuItemBase = style({
 	backgroundColor: "transparent",
 	width: "100%",
 	textAlign: "left",
+	whiteSpace: "nowrap",
 	":disabled": {
 		opacity: 0.5,
 		cursor: "not-allowed",

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "options",
+    "type": "DropdownOption[]",
+    "description": "Selectable options.",
+    "required": true
+  },
+  {
+    "name": "value",
+    "type": "string",
+    "description": "Selected value (controlled).",
+    "required": false
+  },
+  {
+    "name": "defaultValue",
+    "type": "string",
+    "description": "Initial selected value (uncontrolled).",
+    "required": false
+  },
+  {
+    "name": "onValueChange",
+    "type": "(value: string | null) => void",
+    "description": "Called when the selected value changes.",
+    "required": false
+  },
+  {
+    "name": "placeholder",
+    "type": "string",
+    "description": "Placeholder when no option is selected.",
+    "default": "\"Select an option\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Dropdown size.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Corner radius.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "fullWidth",
+    "type": "boolean",
+    "description": "When true, stretches to the full width of the parent.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "disabled",
+    "type": "boolean",
+    "description": "Disables the dropdown.",
+    "default": "false",
+    "required": false
+  }
+]

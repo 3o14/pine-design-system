@@ -1,0 +1,83 @@
+[
+  {
+    "name": "label",
+    "type": "string",
+    "description": "Label text shown above the field.",
+    "required": false
+  },
+  {
+    "name": "placeholder",
+    "type": "string",
+    "description": "Placeholder when the value is empty.",
+    "required": false
+  },
+  {
+    "name": "helperText",
+    "type": "string",
+    "description": "Helper text shown below the field.",
+    "required": false
+  },
+  {
+    "name": "variant",
+    "type": "\"outline\" | \"filled\"",
+    "description": "Visual style of the field.",
+    "default": "\"outline\"",
+    "required": false
+  },
+  {
+    "name": "status",
+    "type": "\"default\" | \"error\" | \"success\"",
+    "description": "Validation / feedback state.",
+    "default": "\"default\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Field size.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Corner radius.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "multiline",
+    "type": "boolean",
+    "description": "When true, renders a textarea instead of an input.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "rows",
+    "type": "number",
+    "description": "Default height of the textarea in rows when multiline is true.",
+    "default": "3",
+    "required": false
+  },
+  {
+    "name": "fullWidth",
+    "type": "boolean",
+    "description": "When true, stretches to the full width of the parent.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "disabled",
+    "type": "boolean",
+    "description": "Disables the field.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "required",
+    "type": "boolean",
+    "description": "Marks the field as required for form validation.",
+    "default": "false",
+    "required": false
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "as",
+    "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"p\" | \"span\" | \"div\" | \"label\" | \"li\" | \"ul\" | \"ol\"",
+    "description": "HTML element to render.",
+    "default": "\"p\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"xsmall\" | \"small\" | \"medium\" | \"large\" | \"xlarge\" | \"display-small\" | \"display-medium\" | \"display-large\"",
+    "description": "Typography size token.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "weight",
+    "type": "\"regular\" | \"medium\" | \"semibold\" | \"bold\"",
+    "description": "Font weight.",
+    "default": "\"regular\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"inherit\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent.",
+    "default": "\"inherit\"",
+    "required": false
+  },
+  {
+    "name": "align",
+    "type": "\"left\" | \"center\" | \"right\"",
+    "description": "Text alignment.",
+    "default": "\"left\"",
+    "required": false
+  },
+  {
+    "name": "truncate",
+    "type": "boolean",
+    "description": "When true, truncates overflowing text with an ellipsis.",
+    "default": "false",
+    "required": false
+  }
+]

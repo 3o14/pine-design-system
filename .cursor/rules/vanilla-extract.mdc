@@ -1,0 +1,36 @@
+---
+description: Vanilla Extract style rules
+globs: "**/*.css.ts"
+alwaysApply: false
+---
+
+# Vanilla Extract CSS Rules
+
+## File Location
+
+- `src/components/ComponentName/Component.css.ts`
+
+## Pattern
+
+- **Variants**: Use `recipe()` — `variant`, `intent`, `size`, `rounded` etc.
+- **Single style**: Use `style()`
+- **Tokens**: `themeContract.color[intent].surface` etc.
+
+## Import
+
+```ts
+import { style, recipe } from "@vanilla-extract/css";
+import { themeContract, type ColorIntent } from "@/tokens";
+import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
+import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+```
+
+## Theme-specific Overrides
+
+- **Game**: `createGameBoxShadow(borderColor)` — box-shadow for border
+- **Crayon**: `createCrayonBeforeStyle`, `createCrayonBeforeBaseStyle` etc.
+- Selectors: `.${gameLightThemeClass} &`, `.${crayonLightThemeClass} &`
+
+## Reference
+
+- Follow existing Badge.css.ts, Button.css.ts patterns

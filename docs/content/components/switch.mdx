@@ -1,0 +1,88 @@
+---
+title: Switch
+---
+
+# Switch
+
+A toggle control for turning settings or features on and off. Built on [Base UI Switch](https://base-ui.com/react/components/switch) for accessibility.
+
+Unlike Checkbox, Switch is for changes that take effect immediately. It fits cases where settings are applied without a separate save action.
+
+## Preview
+
+<ComponentPreview code={`<Switch defaultChecked />
+<Switch label="With label" defaultChecked />
+<Switch label="Disabled" disabled />`}>
+  <SwitchDemo />
+</ComponentPreview>
+
+## Examples
+
+### Intent
+
+Controls the color intent of the switch track. Affects the color shown when the switch is on.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "General setting toggles."],
+    ["`secondary`", "", "Secondary settings."],
+    ["`success`", "", "When activation has a positive meaning."],
+    ["`warning`", "", "When activation requires caution."],
+    ["`danger`", "", "When activation indicates a risky action."],
+    ["`neutral`", "", "Neutral toggles."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Switch defaultChecked intent="primary" label="Primary" />
+<Switch defaultChecked intent="success" label="Success" />
+<Switch defaultChecked intent="warning" label="Warning" />
+<Switch defaultChecked intent="danger" label="Danger" />`}>
+  <SwitchIntentDemo />
+</ComponentPreview>
+
+### Size
+
+Controls the switch size.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For dense setting lists."],
+    ["`medium`", "✓", "General settings screens."],
+    ["`large`", "", "When a larger click area is needed."],
+    ["`xlarge`", "", "When a large touch target is needed (e.g. mobile)."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Switch size="small" defaultChecked label="Small" />
+<Switch size="medium" defaultChecked label="Medium" />
+<Switch size="large" defaultChecked label="Large" />
+<Switch size="xlarge" defaultChecked label="XLarge" />`}>
+  <SwitchSizeDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Switch vs Checkbox
+
+<DocTable
+  headers={["Use case", "Recommended"]}
+  rows={[
+    ["On/off takes effect immediately (no save)", <strong>Switch</strong>],
+    ["Reflected on form submit", <strong>Checkbox</strong>],
+    ["Multiple selection from many options", <strong>Checkbox</strong>],
+    ["Single setting toggle", <strong>Switch</strong>],
+  ]}
+  align={["left", "left"]}
+/>
+
+### Accessibility
+
+Always provide a label via the `label` prop so screen readers can identify the purpose of the switch.
+
+## Props
+
+<PropsDoc component="switch" />

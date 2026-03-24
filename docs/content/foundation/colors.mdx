@@ -1,0 +1,64 @@
+# Colors
+
+Colors are mapped from the **Foundation palette** to semantic **intent** tokens. All themes (basic, game, crayon) share the same foundation palette; the game theme derives colors via `toNeon()`, and the crayon theme via `toPastel()`.
+
+## Foundation Palette
+
+Raw color scales. Hover over each step to see the hex value.
+
+<ColorPalette scales={[
+  { name: "purple", colors: { 50: "#faf5ff", 100: "#f3e8ff", 200: "#e9d5ff", 300: "#d8b4fe", 400: "#c084fc", 500: "#a855f7", 600: "#9333ea", 700: "#7e22ce", 800: "#6b21a8", 900: "#581c87" } },
+  { name: "slate",  colors: { 50: "#f8fafc", 100: "#f1f5f9", 200: "#e2e8f0", 300: "#cbd5e1", 400: "#94a3b8", 500: "#64748b", 600: "#475569", 700: "#334155", 800: "#1e293b", 900: "#0f172a" } },
+  { name: "green",  colors: { 50: "#f0fdf4", 100: "#dcfce7", 200: "#bbf7d0", 300: "#86efac", 400: "#4ade80", 500: "#22c55e", 600: "#16a34a", 700: "#15803d", 800: "#166534", 900: "#14532d" } },
+  { name: "yellow", colors: { 50: "#fefce8", 100: "#fef9c3", 200: "#fef08a", 300: "#fde047", 400: "#facc15", 500: "#eab308", 600: "#ca8a04", 700: "#a16207", 800: "#854d0e", 900: "#713f12" } },
+  { name: "orange", colors: { 50: "#fff8f0", 100: "#fff1dc", 200: "#ffe3b8", 300: "#ffd594", 400: "#ffc770", 500: "#ffb94c", 600: "#cc943d", 700: "#996f2e", 800: "#664a1f", 900: "#332510" } },
+  { name: "red",    colors: { 50: "#fef2f2", 100: "#fee2e2", 200: "#fecaca", 300: "#fca5a5", 400: "#f87171", 500: "#ef4444", 600: "#dc2626", 700: "#b91c1c", 800: "#991b1b", 900: "#7f1d1d" } },
+  { name: "blue",   colors: { 50: "#f0f8ff", 100: "#dcf0ff", 200: "#b8e1ff", 300: "#94d2ff", 400: "#70c3ff", 500: "#4cb4ff", 600: "#3d90cc", 700: "#2e6c99", 800: "#1f4866", 900: "#102433" } },
+  { name: "pink",   colors: { 50: "#fff5f9", 100: "#ffebf3", 200: "#ffd7e7", 300: "#ffc3db", 400: "#ffafcf", 500: "#ffb4d4", 600: "#cc90aa", 700: "#996c80", 800: "#664855", 900: "#33242b" } },
+  { name: "cream",  colors: { 50: "#fffefb", 100: "#fffdf7", 200: "#fffbf0", 300: "#fff9e8", 400: "#fff7e0", 500: "#faf3ec", 600: "#c8c2bc", 700: "#96918d", 800: "#64615e", 900: "#32302f" } },
+  { name: "charcoal", colors: { 50: "#f5f5f5", 100: "#ebebeb", 200: "#d7d7d7", 300: "#c3c3c3", 400: "#afafaf", 500: "#4b4b4b", 600: "#3c3c3c", 700: "#2d2d2d", 800: "#1e1e1e", 900: "#0f0f0f" } },
+]} />
+
+## Theme Adapters
+
+<DocTable
+  headers={["Theme", "Adapter", "Behavior"]}
+  rows={[
+    ["basic", "—", "Uses Foundation palette directly"],
+    ["game", "`toNeon()`", "Saturation +30%, Lightness boosted (neon effect)"],
+    ["crayon", "`toPastel()`", "Saturation ×0.65, Lightness 55% toward white (pastel effect)"],
+  ]}
+  align={["left", "left", "left"]}
+/>
+
+## Semantic Color Tokens
+
+The table below shows the **basic theme** semantic tokens. Switch the light/dark tab to see the actual hex values for each mode.
+
+<ColorTokenTable />
+
+## Intent Guide
+
+<DocTable
+  headers={["Intent", "Use case"]}
+  rows={[
+    ["primary", "Main CTA, emphasis"],
+    ["secondary", "Secondary actions, less emphasis"],
+    ["success", "Success, completion, confirmation"],
+    ["warning", "Warning, caution"],
+    ["danger", "Delete, error, danger"],
+    ["neutral", "Background, border, non-emphasized text"],
+  ]}
+  align={["left", "left"]}
+/>
+
+Each intent has the following state tokens:
+
+- **surface** — Default background
+- **surfaceHover** — Background on hover
+- **surfaceActive** — Background on click/active
+- **text** — Text color on that background
+- **border** — Border color
+- **weak** — Low-intensity background (e.g. subtle badges)
+
+The component `intent` prop maps directly to these tokens. You can override the primary palette with `ThemeProvider`'s `primaryColor` prop (hex value).

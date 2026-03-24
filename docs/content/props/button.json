@@ -1,0 +1,50 @@
+[
+  {
+    "name": "variant",
+    "type": "\"solid\" | \"outline\" | \"ghost\" | \"weak\"",
+    "description": "Visual variant of the button.",
+    "default": "\"solid\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Semantic color intent.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Button size.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Corner radius.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "fullWidth",
+    "type": "boolean",
+    "description": "When true, stretches to the full width of the parent.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "disabled",
+    "type": "boolean",
+    "description": "Disables the button.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "children",
+    "type": "ReactNode",
+    "description": "Content inside the button.",
+    "required": true
+  }
+]

@@ -1,0 +1,54 @@
+---
+description: Docs MDX page rules
+globs: "docs/content/**/*.mdx"
+alwaysApply: false
+---
+
+# Docs MDX Rules
+
+## Structure
+
+```mdx
+---
+title: ComponentName
+---
+
+# ComponentName
+
+One-line description.
+
+## Preview
+
+<ComponentPreview code={...}>
+  <ComponentDemo />
+</ComponentPreview>
+
+## Props
+
+### `propName`
+
+Description. Props table: | Name | Type | Default | Description |
+
+<ComponentPreview>...</ComponentPreview>
+
+## Usage
+
+## Code
+
+```tsx
+import { Component } from "pine-design-system";
+...
+```
+
+<ComponentPropsDoc />
+```
+
+## ComponentPreview
+
+- `code` prop: JSX string (Preview/Code tab toggle)
+- `children`: Demo component
+
+## Props Table
+
+- Add `<ComponentPropsDoc />` at the bottom of the page
+- Uses generate-props.mjs + PropsTable

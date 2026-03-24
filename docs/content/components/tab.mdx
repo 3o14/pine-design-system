@@ -1,0 +1,52 @@
+---
+title: Tab
+---
+
+# Tab
+
+A navigation component that organizes related content into multiple panels. Built on [Base UI Tabs](https://base-ui.com/react/components/tabs) for keyboard navigation and ARIA patterns.
+
+## Preview
+
+<ComponentPreview code={`const tabs = [
+  { value: "one", label: "Overview", content: <p>Overview panel content.</p> },
+  { value: "two", label: "Details", content: <p>Details panel content.</p> },
+  { value: "three", label: "Settings", content: <p>Settings panel content.</p> },
+];
+
+<Tab tabs={tabs} />`}>
+  <TabDemo />
+</ComponentPreview>
+
+## Examples
+
+### Orientation
+
+Controls the layout direction of the tab list.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`horizontal`", "✓", "Tabs laid out in a row. For typical in-page tabs."],
+    ["`vertical`", "", "Tabs laid out in a column. For sidebar-style navigation."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Tab tabs={tabs} orientation="vertical" />`}>
+  <TabVerticalDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Tab count
+
+Too many tabs make it harder to grasp content. Keep tabs between 2 and 6 when possible. For more options, consider a Dropdown or sidebar navigation.
+
+### Controlled vs Uncontrolled
+
+Use `value` with `onChange` when syncing tab state with URL params or when tab changes trigger external actions (e.g. data fetch). For simple UI switching, `defaultValue` alone is enough.
+
+## Props
+
+<PropsDoc component="tab" />

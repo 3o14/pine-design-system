@@ -3,3 +3,4 @@ export * from "./getWeakColor";
 export * from "./generateColorScale";
 export * from "./applyPrimaryColor";
 export * from "./types";
+export * from "./adaptColor";

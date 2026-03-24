@@ -1,0 +1,30 @@
+---
+description: Vitest test rules
+globs: "**/*.spec.tsx"
+alwaysApply: false
+---
+
+# Vitest + RTL Rules
+
+## Queries
+
+- Prefer `getByRole`, `getByLabelText`, `getByText`
+- Minimize `getByTestId`
+
+## Interactions
+
+- Use `userEvent` (click, type, etc.)
+
+## Structure
+
+```ts
+describe("Component", () => {
+  describe("Rendering", () => { ... });
+  describe("Props", () => { ... });
+  describe("HTML Attributes", () => { ... });
+});
+```
+
+## ThemeProvider
+
+- Wrap with `ThemeProvider` when testing theme-dependent behavior

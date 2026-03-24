@@ -1,0 +1,71 @@
+---
+title: Dropdown
+---
+
+# Dropdown
+
+A dropdown selection component for choosing one option from many. Built on [Base UI Select](https://base-ui.com/react/components/select) for keyboard navigation and screen reader accessibility.
+
+Consider radio buttons when there are 5 or fewer options or when all options need to be visible at once.
+
+## Preview
+
+<ComponentPreview code={`const options = [
+  { value: "a", label: "Option A" },
+  { value: "b", label: "Option B" },
+  { value: "c", label: "Option C" },
+];
+
+<Dropdown options={options} placeholder="Select an option" />`}>
+  <DropdownDemo />
+</ComponentPreview>
+
+## Examples
+
+### Size
+
+Controls the dropdown size.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For forms in tight spaces."],
+    ["`medium`", "✓", "General form use."],
+    ["`large`", "", "When a larger click area is needed."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Dropdown options={options} size="small" placeholder="Small" />
+<Dropdown options={options} size="medium" placeholder="Medium" />
+<Dropdown options={options} size="large" placeholder="Large" />`}>
+  <DropdownSizeDemo />
+</ComponentPreview>
+
+### Rounded
+
+Controls the corner radius of the dropdown.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "Small corner radius"],
+    ["`medium`", "✓", "Default corner radius"],
+    ["`large`", "", "Large corner radius"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+## Guidelines
+
+### Dropdown vs Radio
+
+Use **Dropdown** when there are many options (6 or more) or when space is limited. Use **Radio** when there are few options (5 or fewer) and you want all choices visible at once.
+
+### Controlled vs Uncontrolled
+
+Use `defaultValue` for uncontrolled usage. Use `value` with `onValueChange` when integrating with form libraries or when the selection needs to drive other UI.
+
+## Props
+
+<PropsDoc component="dropdown" />

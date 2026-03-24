@@ -1,0 +1,111 @@
+---
+title: TextField
+---
+
+# TextField
+
+A form component for text input. Built on [Base UI Field](https://base-ui.com/react/components/field) and [Base UI Input](https://base-ui.com/react/components/input) to provide label, input area, and helper text in a single component. Use the `multiline` prop to render a `<textarea>` instead of `<input>`.
+
+## Preview
+
+<ComponentPreview code={`<TextField label="Name" placeholder="Enter your name" />
+<TextField label="Email" placeholder="you@example.com" helperText="We'll never share your email." />`}>
+  <TextFieldDemo />
+</ComponentPreview>
+
+## Examples
+
+### Variant
+
+Controls the visual style of the input field.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`outline`", "✓", "Default bordered input style."],
+    ["`filled`", "", "Filled background. Use when you need to distinguish from other form elements."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<TextField label="Outline" variant="outline" placeholder="Outline style" />
+<TextField label="Filled" variant="filled" placeholder="Filled style" />`}>
+  <TextFieldVariantDemo />
+</ComponentPreview>
+
+### Status
+
+Indicates validation state. Border and helper text colors change based on `status`.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`default`", "✓", "Default state."],
+    ["`error`", "", "Validation failed. Use helperText for the error message."],
+    ["`success`", "", "Validation passed. Use helperText for the success message."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<TextField label="Default" status="default" placeholder="Default" />
+<TextField label="Error" status="error" helperText="This field is required." placeholder="Error" />
+<TextField label="Success" status="success" helperText="Looks good!" placeholder="Success" defaultValue="john@doe.com" />`}>
+  <TextFieldStatusDemo />
+</ComponentPreview>
+
+### Size
+
+Controls the input field size.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For dense forms."],
+    ["`medium`", "✓", "General form use."],
+    ["`large`", "", "When a larger input area is needed."],
+    ["`xlarge`", "", "When a large input area is needed."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+### Rounded
+
+Controls the corner radius.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "Small corner radius"],
+    ["`medium`", "✓", "Default corner radius"],
+    ["`large`", "", "Large corner radius"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+### Multiline
+
+When `true`, renders a `<textarea>` instead of `<input>`. Use the `rows` prop to set the default height.
+
+<ComponentPreview code={`<TextField label="Bio" multiline rows={4} placeholder="Tell us about yourself…" />`}>
+  <TextFieldMultilineDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Showing error state
+
+Use `status="error"` with `helperText` to explain what went wrong. A clear message helps users understand what to fix.
+
+```tsx
+<TextField
+  label="Email"
+  status="error"
+  helperText="Please enter a valid email address."
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+```
+
+## Props
+
+<PropsDoc component="text-field" />

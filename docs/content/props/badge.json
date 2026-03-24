@@ -1,0 +1,43 @@
+[
+  {
+    "name": "variant",
+    "type": "\"solid\" | \"outline\" | \"subtle\" | \"weak\"",
+    "description": "Visual emphasis of the badge.",
+    "default": "\"solid\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Semantic color intent.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Badge size.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Corner radius of the badge.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "showDot",
+    "type": "boolean",
+    "description": "Shows a status dot before the badge content.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "children",
+    "type": "ReactNode",
+    "description": "Content displayed inside the badge.",
+    "required": true
+  }
+]

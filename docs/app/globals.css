@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Nextra theme styles */
+@import "nextra-theme-docs/style.css";
+
+@variant dark (&:where(.dark *));
+
+/* Design selector in navbar - dark mode */
+.dark .pds-design-selector span {
+  color: #9ca3af;
+}
+
+.dark .pds-design-selector button {
+  border-color: #374151;
+  color: #d1d5db;
+}
+
+.dark .pds-design-selector button[data-selected="true"] {
+  background: #f9fafb !important;
+  color: #111827 !important;
+  border-color: #f9fafb !important;
+}
+
+.dark .pds-design-selector button:not([data-selected="true"]):hover {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #f9fafb !important;
+}

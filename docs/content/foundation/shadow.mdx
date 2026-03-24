@@ -1,0 +1,39 @@
+# Shadow
+
+Shadow tokens express depth for cards, modals, dropdowns, and other layered elements.
+
+## Overview
+
+Pine provides 6 foundation shadow tokens from `none` to `xl`. These map to semantic tokens (xsmall, small, medium, large, xlarge) that components use for elevation. Shadows are defined with slate-toned semi-transparent rgba values, so they work in both light and dark modes.
+
+## Foundation Shadow Tokens
+
+<ShadowScale />
+
+## Theme Adapters
+
+Standard shadow tokens map identically across all themes:
+
+<DocTable
+  headers={["Theme", "xsmall", "small", "medium", "large", "xlarge"]}
+  rows={[
+    ["basic", "xs", "sm", "md", "lg", "xl"],
+    ["game", "xs", "sm", "md", "lg", "xl"],
+    ["crayon", "xs", "sm", "md", "lg", "xl"],
+  ]}
+  align={["left", "left", "left", "left", "left", "left"]}
+/>
+
+The **game** theme adds two extra tokens for a pixel-art outline effect:
+
+- **pixelBox** — 4px black/white outline drawn via `box-shadow` (used on Button, Badge, Checkbox, Switch, Tab, Dialog, Dropdown)
+- **pixelBoxMargin** — Layout offset for the outline (typically `0`)
+
+basic and crayon themes set both to `none` and `0`.
+
+## Guidelines
+
+- **Visual hierarchy**: Use larger shadow tokens for higher layers (modals, popovers) to create clear elevation.
+- **Consistency**: Use the same shadow token for components at the same layer (e.g. cards, dropdowns).
+- **Game theme**: The pixelBox token replaces standard shadows on many components to match the pixel-art style.
+- **Accessibility**: Avoid heavy shadows on small elements; they can reduce perceived contrast and readability.

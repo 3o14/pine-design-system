@@ -1,0 +1,130 @@
+---
+title: Badge
+---
+
+# Badge
+
+An inline component that visually displays status, labels, categories, and similar. Use it next to text to convey supplementary information or to indicate the state of list items.
+
+## Preview
+
+<ComponentPreview code={`<Badge intent="primary">Primary</Badge>
+<Badge intent="success" variant="outline">Success</Badge>
+<Badge intent="warning" showDot>Warning</Badge>
+<Badge intent="danger" variant="subtle">Danger</Badge>`}>
+  <BadgeDemo />
+</ComponentPreview>
+
+## Examples
+
+### Variant
+
+Controls the visual emphasis level of the badge.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`solid`", "✓", "Filled background. Use for states that need the most emphasis."],
+    ["`outline`", "", "Border only. Use for states with medium emphasis."],
+    ["`subtle`", "", "Light background. Use for supplementary information with low emphasis."],
+    ["`weak`", "", "Lightest background. Use for tags with low contrast against the background."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Badge variant="solid" intent="primary">Solid</Badge>
+<Badge variant="outline" intent="primary">Outline</Badge>
+<Badge variant="subtle" intent="primary">Subtle</Badge>
+<Badge variant="weak" intent="primary">Weak</Badge>`}>
+  <BadgeVariantDemo />
+</ComponentPreview>
+
+### Intent
+
+Controls the semantic color of the badge.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "Primary categories and core information."],
+    ["`secondary`", "", "Secondary categories and supplementary information."],
+    ["`success`", "", "Completion, normal, or active state."],
+    ["`warning`", "", "Caution or incomplete state."],
+    ["`danger`", "", "Error, inactive, or danger state."],
+    ["`neutral`", "", "Neutral state."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Badge intent="primary">Primary</Badge>
+<Badge intent="secondary">Secondary</Badge>
+<Badge intent="success">Success</Badge>
+<Badge intent="warning">Warning</Badge>
+<Badge intent="danger">Danger</Badge>
+<Badge intent="neutral">Neutral</Badge>`}>
+  <BadgeIntentDemo />
+</ComponentPreview>
+
+### Size
+
+Controls the badge size. Choose based on the size of adjacent text or components.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For secondary labels next to body text."],
+    ["`medium`", "✓", "Most versatile size."],
+    ["`large`", "", "For use with larger components."],
+    ["`xlarge`", "", "When heading-level size is needed."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Badge size="small" intent="primary">Small</Badge>
+<Badge size="medium" intent="primary">Medium</Badge>
+<Badge size="large" intent="primary">Large</Badge>
+<Badge size="xlarge" intent="primary">XLarge</Badge>`}>
+  <BadgeSizeDemo />
+</ComponentPreview>
+
+### Rounded
+
+Controls the corner radius of the badge.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "Small corner radius"],
+    ["`medium`", "✓", "Default corner radius"],
+    ["`large`", "", "Large corner radius (pill-like)"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+### Show dot
+
+Shows a status dot before the badge. Use when indicating real-time state changes or notifications.
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+<ComponentPreview code={`<Badge intent="success" showDot>Active</Badge>
+<Badge intent="danger" showDot>Error</Badge>
+<Badge intent="warning" showDot>Pending</Badge>`}>
+  <BadgeDotDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Choosing variant
+
+- **solid**: Use when information needs clear emphasis. Suitable for list status indicators, count badges near CTAs, and similar.
+- **outline / subtle / weak**: Use for lightweight tags or category labels next to text. Avoid over-emphasizing on the screen.
+
+### Using the dot
+
+Use `showDot` to indicate real-time status. Recommended patterns: `success` ↔ online/normal, `danger` ↔ error/offline, `warning` ↔ caution.
+
+## Props
+
+<PropsDoc component="badge" />
