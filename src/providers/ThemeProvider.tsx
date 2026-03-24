@@ -27,6 +27,20 @@ import {
 import { CrayonThemeFilters } from "./CrayonThemeFilters";
 import clsx from "clsx";
 
+/** Theme class names that may be set on `document.documentElement` when `applyGlobal` is true */
+const DOCUMENT_THEME_CLASS_NAMES = [
+	basicLightTheme,
+	basicDarkTheme,
+	gameLightTheme,
+	gameDarkTheme,
+	crayonLightTheme,
+	crayonDarkTheme,
+] as const;
+
+function stripDocumentThemeClasses(root: HTMLElement) {
+	root.classList.remove(...DOCUMENT_THEME_CLASS_NAMES);
+}
+
 export interface ThemeProviderProps {
 	children: React.ReactNode;
 	defaultTheme?: Theme;
@@ -164,22 +178,23 @@ export const ThemeProvider = ({
 	}, [primaryColor, theme]);
 
 	useEffect(() => {
-		if (typeof document === "undefined" || !applyGlobal) {
+		if (typeof document === "undefined") {
 			return;
 		}
 
 		const root = document.documentElement;
 
-		root.classList.remove(
-			basicLightTheme,
-			basicDarkTheme,
-			gameLightTheme,
-			gameDarkTheme,
-			crayonLightTheme,
-			crayonDarkTheme
-		);
+		if (!applyGlobal) {
+			stripDocumentThemeClasses(root);
+			return;
+		}
 
+		stripDocumentThemeClasses(root);
 		root.classList.add(themeClass);
+
+		return () => {
+			stripDocumentThemeClasses(root);
+		};
 	}, [theme, design, themeClass, applyGlobal]);
 
 	const setTheme = useCallback(
