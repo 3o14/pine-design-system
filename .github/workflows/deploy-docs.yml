@@ -31,8 +31,21 @@ jobs:
         # which resolves to the local dist/ — build it first
         run: pnpm run build:lib
 
-      - name: Build docs
+      - name: Build docs (static export)
         run: pnpm run docs:build
+
+      - name: Pull Vercel project settings
+        run: pnpm dlx vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--environment=production' || '--environment=preview' }}
+        working-directory: docs
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Package static output for Vercel
+        run: |
+          mkdir -p docs/.vercel/output/static
+          echo '{"version":3}' > docs/.vercel/output/config.json
+          cp -r docs/out/. docs/.vercel/output/static/
 
       - name: Deploy to Vercel
         run: pnpm dlx vercel --prebuilt --token=${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
