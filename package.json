@@ -57,6 +57,7 @@
 		"changeset:auto": "./scripts/auto-changeset.sh",
 		"version": "changeset version",
 		"release": "pnpm run version && pnpm run build:lib && npm publish --access public",
+		"ci:publish": "pnpm run build:lib && pnpm changeset publish",
 		"pr": "./scripts/create-pr.sh"
 	},
 	"dependencies": {

@@ -50,7 +50,7 @@ jobs:
         with:
           # Version Packages PR을 생성하거나 배포
           version: pnpm run version
-          publish: pnpm run build:lib && pnpm changeset publish
+          publish: pnpm run ci:publish
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
