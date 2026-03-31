@@ -4,13 +4,36 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTheme as useDocsTheme } from "nextra-theme-docs";
-import { Button, type Design } from "pine-design-system";
+import {
+  Button,
+  Badge,
+  Checkbox,
+  Switch,
+  TextField,
+  Dropdown,
+  Tab,
+  Text,
+  ThemeProvider,
+  type Design,
+} from "pine-design-system";
 
 type ThemeMode = "light" | "dark";
 
 const DESIGNS: Design[] = ["basic", "game", "crayon"];
 
 const INSTALL_CMD = "npm install pine-design-system";
+
+const SHOWCASE_DROPDOWN_OPTIONS = [
+  { value: "a", label: "Option A" },
+  { value: "b", label: "Option B" },
+  { value: "c", label: "Option C" },
+];
+
+const SHOWCASE_TAB_ITEMS = [
+  { value: "one", label: "Overview", content: <p style={{ padding: "12px 0 0", margin: 0, fontSize: "13px" }}>Overview content.</p> },
+  { value: "two", label: "Details", content: <p style={{ padding: "12px 0 0", margin: 0, fontSize: "13px" }}>Details content.</p> },
+  { value: "three", label: "Settings", content: <p style={{ padding: "12px 0 0", margin: 0, fontSize: "13px" }}>Settings content.</p> },
+];
 
 const palette = {
   light: {
@@ -41,6 +64,7 @@ const palette = {
 
 export function LandingPage() {
   const [copied, setCopied] = useState(false);
+  const [showcaseDesign, setShowcaseDesign] = useState<Design>("basic");
   const { resolvedTheme } = useDocsTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -205,14 +229,14 @@ export function LandingPage() {
         </div>
       </main>
 
-      {/* Theme showcase */}
+      {/* Components showcase */}
       <section style={{ padding: "64px 24px", borderTop: `1px solid ${themeColors.borderColor}` }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "8px", color: themeColors.textColor }}>
-            Switch themes with one design prop
+            Components
           </h2>
-          <p style={{ color: themeColors.mutedTextColor, marginBottom: "40px", maxWidth: "600px", lineHeight: 1.6 }}>
-            Change only the <strong>design</strong> prop on{" "}
+          <p style={{ color: themeColors.mutedTextColor, marginBottom: "32px", maxWidth: "600px", lineHeight: 1.6 }}>
+            Toggle the design to see every component update instantly — same code, different{" "}
             <code
               style={{
                 borderRadius: "4px",
@@ -221,59 +245,130 @@ export function LandingPage() {
                 fontSize: "14px",
               }}
             >
-              ThemeProvider
+              design
             </code>{" "}
-            and the same buttons render with different styles.
+            prop.
           </p>
+
+          {/* Design toggle */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: "24px",
+              display: "inline-flex",
+              padding: "4px",
+              borderRadius: "10px",
+              backgroundColor: themeMode === "dark" ? "#1f2937" : "#f3f4f6",
+              gap: "2px",
             }}
           >
-            {DESIGNS.map((design) => {
-              const label = design.charAt(0).toUpperCase() + design.slice(1);
+            {DESIGNS.map((d) => {
+              const isActive = showcaseDesign === d;
               return (
-                <div
-                  key={design}
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => setShowcaseDesign(d)}
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "16px",
-                    borderRadius: "12px",
-                    border: `1px solid ${themeColors.borderColor}`,
-                    backgroundColor: themeColors.cardBackgroundColor,
-                    overflow: "hidden",
+                    padding: "6px 20px",
+                    borderRadius: "7px",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    transition: "all 0.15s",
+                    backgroundColor: isActive
+                      ? themeMode === "dark" ? "#374151" : "#ffffff"
+                      : "transparent",
+                    color: isActive
+                      ? themeColors.textColor
+                      : themeColors.mutedTextColor,
+                    boxShadow: isActive
+                      ? "0 1px 3px rgba(0,0,0,0.12)"
+                      : "none",
                   }}
                 >
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 600,
-                      color: themeColors.labelTextColor,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                      padding: "24px 24px 0",
-                    }}
-                  >
-                    {label}
-                  </span>
-                  <iframe
-                    title={`${label} design preview`}
-                    src={`/embed/theme-preview?design=${design}&theme=${themeMode}`}
-                    style={{
-                      width: "100%",
-                      height: 200,
-                      border: "none",
-                      display: "block",
-                      backgroundColor: "transparent",
-                    }}
-                  />
-                </div>
+                  {d.charAt(0).toUpperCase() + d.slice(1)}
+                </button>
               );
             })}
           </div>
+          </div>
+
+          {/* Component grid */}
+          <ThemeProvider
+            design={showcaseDesign}
+            theme={themeMode}
+            syncWithSystem={false}
+            applyGlobal={false}
+            style={{ background: "transparent" }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                gap: "16px",
+              }}
+            >
+              <ShowcaseCard title="Button" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+                  <Button variant="solid" intent="primary">Primary</Button>
+                  <Button variant="outline" intent="secondary">Secondary</Button>
+                  <Button variant="ghost" intent="neutral">Ghost</Button>
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Badge" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+                  <Badge intent="primary">Primary</Badge>
+                  <Badge intent="success" showDot>Active</Badge>
+                  <Badge intent="warning" variant="subtle">Warning</Badge>
+                  <Badge intent="danger" variant="outline">Danger</Badge>
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Checkbox" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}>
+                  <Checkbox defaultChecked label="Checked" />
+                  <Checkbox label="Unchecked" />
+                  <Checkbox defaultChecked intent="success" label="Success" />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Switch" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}>
+                  <Switch defaultChecked label="Enabled" />
+                  <Switch defaultChecked intent="success" label="Success" />
+                  <Switch label="Disabled" disabled />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="TextField" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ width: "100%" }}>
+                  <TextField label="Name" placeholder="Enter your name" />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Dropdown" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ width: "100%" }}>
+                  <Dropdown options={SHOWCASE_DROPDOWN_OPTIONS} placeholder="Select option" />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Tab" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ width: "100%" }}>
+                  <Tab tabs={SHOWCASE_TAB_ITEMS} />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Text" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                  <Text as="p" size="large" weight="bold">Large Bold</Text>
+                  <Text as="p" size="medium">Medium Regular</Text>
+                  <Text as="p" size="small" intent="neutral">Small Neutral</Text>
+                </div>
+              </ShowcaseCard>
+            </div>
+          </ThemeProvider>
         </div>
       </section>
 
@@ -346,6 +441,52 @@ export function LandingPage() {
           GitHub
         </a>
       </footer>
+    </div>
+  );
+}
+
+function ShowcaseCard({
+  title,
+  themeColors,
+  themeMode,
+  children,
+}: {
+  title: string;
+  themeColors: typeof palette.light;
+  themeMode: ThemeMode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      style={{
+        borderRadius: "10px",
+        border: `1px solid ${themeColors.borderColor}`,
+        backgroundColor: themeColors.cardBackgroundColor,
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          padding: "8px 14px",
+          borderBottom: `1px solid ${themeColors.borderColor}`,
+          backgroundColor: themeMode === "dark" ? "#111827" : "#f9fafb",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "11px",
+            fontWeight: 600,
+            color: themeColors.subtleTextColor,
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+          }}
+        >
+          {title}
+        </span>
+      </div>
+      <div style={{ padding: "16px", minHeight: "72px", display: "flex", alignItems: "center" }}>
+        {children}
+      </div>
     </div>
   );
 }
