@@ -34,10 +34,18 @@ export default function App() {
 
 ## ThemeProvider Options
 
-- **design** / **defaultDesign**: `"basic"` | `"game"` | `"crayon"` — Design concept. Use `defaultDesign` for uncontrolled (default: `"basic"`), or `design` + `onDesignChange` for controlled.
-- **theme** / **defaultTheme**: `"light"` | `"dark"` — Light/dark mode. Use `defaultTheme` for initial value when uncontrolled, or `theme` + `onThemeChange` for controlled.
-- **syncWithSystem**: `boolean` (default: `true`) — When `true` and `theme` is not controlled, the app follows the OS color scheme. Set to `false` to use `defaultTheme` as the initial value instead.
-- **primaryColor**: `string` — Optional hex color to customize the primary palette (e.g. `"#6366f1"`).
+<DocTable
+  headers={["Prop", "Type", "Default", "Description"]}
+  rows={[
+    ["`defaultDesign`", '`"basic" | "game" | "crayon"`', '`"basic"`', "Initial design concept (uncontrolled)."],
+    ["`design`", '`"basic" | "game" | "crayon"`', "—", <span>Design concept (controlled). Use with <code>onDesignChange</code>.</span>],
+    ["`defaultTheme`", '`"light" | "dark"`', "—", "Initial color mode (uncontrolled)."],
+    ["`theme`", '`"light" | "dark"`', "—", <span>Color mode (controlled). Use with <code>onThemeChange</code>.</span>],
+    ["`syncWithSystem`", "`boolean`", "`true`", <span>Follows the OS color scheme when <code>theme</code> is uncontrolled. Set to <code>false</code> to use <code>defaultTheme</code> instead.</span>],
+    ["`primaryColor`", "`string`", "—", <span>Hex color to customize the primary palette (e.g. <code>"#6366f1"</code>).</span>],
+  ]}
+  align={["left", "left", "center", "left"]}
+/>
 
 ```tsx
 <ThemeProvider design="game" defaultTheme="dark">
