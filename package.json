@@ -12,7 +12,7 @@
 	"bugs": {
 		"url": "https://github.com/3o14/pine-design-system/issues"
 	},
-	"homepage": "https://3o14.github.io/pine-design-system",
+	"homepage": "https://pine-design-system.vercel.app/",
 	"keywords": [
 		"react",
 		"ui",
