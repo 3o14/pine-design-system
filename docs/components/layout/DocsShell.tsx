@@ -3,10 +3,9 @@
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { ThemeProviderWrapper } from "./ThemeProviderWrapper";
-import { DesignThemeProvider } from "./DesignThemeProvider";
 
 /**
- * Embeds (e.g. theme previews in iframes) must not sit under DesignThemeProvider:
+ * Embeds (e.g. theme previews in iframes) must not sit under any ThemeProvider:
  * Pine applies theme classes to documentElement; descendant selectors would style every preview the same.
  */
 export function DocsShell({ children }: { children: ReactNode }) {
@@ -17,9 +16,5 @@ export function DocsShell({ children }: { children: ReactNode }) {
     return <>{children}</>;
   }
 
-  return (
-    <ThemeProviderWrapper>
-      <DesignThemeProvider>{children}</DesignThemeProvider>
-    </ThemeProviderWrapper>
-  );
+  return <ThemeProviderWrapper>{children}</ThemeProviderWrapper>;
 }

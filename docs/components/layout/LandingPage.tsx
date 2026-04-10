@@ -84,6 +84,13 @@ export function LandingPage() {
   }, []);
 
   return (
+    <ThemeProvider
+      design="basic"
+      theme={themeMode}
+      syncWithSystem={false}
+      applyGlobal={false}
+      style={{ display: "contents" }}
+    >
     <div
       style={{
         minHeight: "100vh",
@@ -348,12 +355,6 @@ export function LandingPage() {
                 </div>
               </ShowcaseCard>
 
-              <ShowcaseCard title="Dropdown" themeColors={themeColors} themeMode={themeMode}>
-                <div style={{ width: "100%" }}>
-                  <Dropdown options={SHOWCASE_DROPDOWN_OPTIONS} placeholder="Select option" />
-                </div>
-              </ShowcaseCard>
-
               <ShowcaseCard title="Tab" themeColors={themeColors} themeMode={themeMode}>
                 <div style={{ width: "100%" }}>
                   <Tab tabs={SHOWCASE_TAB_ITEMS} />
@@ -442,6 +443,7 @@ export function LandingPage() {
         </a>
       </footer>
     </div>
+    </ThemeProvider>
   );
 }
 
