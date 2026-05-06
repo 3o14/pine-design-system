@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+dist-ssr/
+storybook-static/
+docs/out/
+docs/.next/
+
+# Lock files
+pnpm-lock.yaml
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temp / generated
+vite.config.ts.timestamp-*
+*.log
+
+# oh-my-claudecode state
+.omc/
+
+# Misc
+.DS_Store
+.vercel
+CHANGELOG.md
