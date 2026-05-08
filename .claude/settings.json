@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(node_modules/**)",
+      "Read(.pnpm-store/**)",
+      "Read(dist/**)",
+      "Read(dist-ssr/**)",
+      "Read(storybook-static/**)",
+      "Read(docs/out/**)",
+      "Read(docs/.next/**)",
+      "Read(pnpm-lock.yaml)",
+      "Read(**/*.tsbuildinfo)",
+      "Read(vite.config.ts.timestamp-*)",
+      "Read(**/*.log)",
+      "Read(.omc/**)",
+      "Read(.DS_Store)",
+      "Read(.vercel/**)",
+      "Read(CHANGELOG.md)"
+    ]
+  }
+}
