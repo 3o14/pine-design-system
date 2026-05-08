@@ -1,5 +1,19 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(pnpm run lint)",
+      "Bash(pnpm run test:run)",
+      "Bash(pnpm run build)",
+      "Bash(pnpm run storybook)",
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git show*)",
+      "Bash(find . *)",
+      "Bash(grep *)",
+      "Bash(ls*)"
+    ],
     "deny": [
       "Read(node_modules/**)",
       "Read(.pnpm-store/**)",
