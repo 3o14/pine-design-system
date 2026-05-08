@@ -127,36 +127,38 @@ export const LongContent: Story = {
 	},
 };
 
-export const Controlled: Story = {
-	render: (args) => {
-		const [open, setOpen] = useState(false);
-		return (
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					gap: "1rem",
-				}}
+const ControlledDemo = (args: React.ComponentProps<typeof Tooltip>) => {
+	const [open, setOpen] = useState(false);
+	return (
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				gap: "1rem",
+			}}
+		>
+			<Tooltip
+				{...args}
+				content="controlled 툴팁입니다"
+				open={open}
+				onOpenChange={setOpen}
 			>
-				<Tooltip
-					{...args}
-					content="controlled 툴팁입니다"
-					open={open}
-					onOpenChange={setOpen}
-				>
-					<Button variant="outline" intent="neutral">호버 또는 아래 버튼으로 제어</Button>
-				</Tooltip>
-				<Button
-					variant="solid"
-					intent={open ? "danger" : "primary"}
-					onClick={() => setOpen((v) => !v)}
-				>
-					{open ? "툴팁 닫기" : "툴팁 열기"}
-				</Button>
-			</div>
-		);
-	},
+				<Button variant="outline" intent="neutral">호버 또는 아래 버튼으로 제어</Button>
+			</Tooltip>
+			<Button
+				variant="solid"
+				intent={open ? "danger" : "primary"}
+				onClick={() => setOpen((v) => !v)}
+			>
+				{open ? "툴팁 닫기" : "툴팁 열기"}
+			</Button>
+		</div>
+	);
+};
+
+export const Controlled: Story = {
+	render: (args) => <ControlledDemo {...args} />,
 };
 
 export const AlwaysOpen: Story = {
