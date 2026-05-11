@@ -134,7 +134,7 @@ describe("Dialog", () => {
 				</Dialog>
 			);
 
-			const button = screen.getByText("Disabled");
+			const button = screen.getByRole("button", { name: "Disabled" });
 			expect(button).toBeDisabled();
 		});
 
@@ -320,8 +320,8 @@ describe("Dialog", () => {
 				</Dialog>
 			);
 
-			const cancelButton = screen.getByText("Cancel");
-			const confirmButton = screen.getByText("Confirm");
+			const cancelButton = screen.getByRole("button", { name: "Cancel" });
+			const confirmButton = screen.getByRole("button", { name: "Confirm" });
 
 			// Tab through dialog elements
 			await user.tab();

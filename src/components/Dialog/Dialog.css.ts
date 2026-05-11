@@ -1,5 +1,5 @@
 import { style, styleVariants, keyframes } from "@vanilla-extract/css";
-import { themeContract } from "@/tokens";
+import { themeContract, zIndex } from "@/tokens";
 import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
 import {
@@ -100,7 +100,7 @@ export const overlay = style({
 	position: "fixed",
 	inset: "0",
 	backgroundColor: "rgba(0, 0, 0, 0.5)",
-	zIndex: "9999",
+	zIndex: zIndex.dialogBackdrop,
 	animation: `${fadeIn} 0.2s ease-out`,
 	selectors: {
 		"&[data-state='closing']": {
@@ -123,7 +123,7 @@ export const container = style({
 	flexDirection: "column",
 	maxHeight: "90vh",
 	width: "100%",
-	zIndex: "10000",
+	zIndex: zIndex.dialog,
 	animation: `${scaleIn} 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
 	selectors: {
 		"&[data-ending-style]": {

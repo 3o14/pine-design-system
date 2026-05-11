@@ -17,7 +17,7 @@ describe("Badge", () => {
 
 		it("renders with custom className", () => {
 			render(<Badge className="custom-class">Test</Badge>);
-			const element = screen.getByText("Test");
+			const element = screen.getByText("Test").parentElement!;
 			expect(element).toHaveClass("custom-class");
 		});
 	});
@@ -32,8 +32,8 @@ describe("Badge", () => {
 
 		it("renders dot when showDot is true", () => {
 			render(<Badge showDot>With Dot</Badge>);
-			const badge = screen.getByText("With Dot");
-			const dot = badge.querySelector("span");
+			const badge = screen.getByText("With Dot").parentElement!;
+			const dot = badge.firstElementChild;
 			expect(dot).toBeInTheDocument();
 		});
 	});
@@ -41,7 +41,7 @@ describe("Badge", () => {
 	describe("HTML Attributes", () => {
 		it("accepts id attribute", () => {
 			render(<Badge id="custom-id">Test</Badge>);
-			const element = screen.getByText("Test");
+			const element = screen.getByText("Test").parentElement!;
 			expect(element).toHaveAttribute("id", "custom-id");
 		});
 
@@ -53,19 +53,19 @@ describe("Badge", () => {
 
 		it("accepts aria attributes", () => {
 			render(<Badge aria-label="Custom label">Test</Badge>);
-			const element = screen.getByText("Test");
+			const element = screen.getByText("Test").parentElement!;
 			expect(element).toHaveAttribute("aria-label", "Custom label");
 		});
 
 		it("accepts style attribute", () => {
 			render(<Badge style={{ marginLeft: "10px" }}>Test</Badge>);
-			const element = screen.getByText("Test");
+			const element = screen.getByText("Test").parentElement!;
 			expect(element).toHaveStyle({ marginLeft: "10px" });
 		});
 
 		it("accepts title attribute", () => {
 			render(<Badge title="Tooltip text">Test</Badge>);
-			const element = screen.getByText("Test");
+			const element = screen.getByText("Test").parentElement!;
 			expect(element).toHaveAttribute("title", "Tooltip text");
 		});
 
@@ -118,7 +118,7 @@ describe("Badge", () => {
 	describe("Accessibility", () => {
 		it("has proper role when used as status indicator", () => {
 			render(<Badge role="status">Active</Badge>);
-			const element = screen.getByText("Active");
+			const element = screen.getByText("Active").parentElement!;
 			expect(element).toHaveAttribute("role", "status");
 		});
 
@@ -135,7 +135,7 @@ describe("Badge", () => {
 					<span id="badge-desc">This item is new</span>
 				</>
 			);
-			const badge = screen.getByText("New");
+			const badge = screen.getByText("New").parentElement!;
 			expect(badge).toHaveAttribute("aria-describedby", "badge-desc");
 		});
 	});
