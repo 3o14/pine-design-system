@@ -9,7 +9,7 @@ const crayonLightThemeClass = String(crayonLightTheme);
 const crayonDarkThemeClass = String(crayonDarkTheme);
 
 export const positioner = style({
-	zIndex: 9000,
+	zIndex: 10001,
 });
 
 export const popup = style({

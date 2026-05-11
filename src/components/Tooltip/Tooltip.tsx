@@ -8,6 +8,8 @@ import { useTheme } from "@/providers";
 export type TooltipSide = "top" | "bottom" | "left" | "right";
 export type TooltipAlign = "start" | "center" | "end";
 
+const TOOLTIP_SIDE_OFFSET = 6;
+
 export interface TooltipProps {
 	content: React.ReactNode;
 	children: React.ReactElement;
@@ -16,16 +18,21 @@ export interface TooltipProps {
 	showArrow?: boolean;
 	open?: boolean;
 	defaultOpen?: boolean;
-	onOpenChange?: (open: boolean) => void;
+	/**
+	 * Called when the tooltip open state changes.
+	 * @param open - The new open state.
+	 * @param eventDetails - Details about what triggered the change (e.g., hover, focus, Escape key).
+	 */
+	onOpenChange?: (open: boolean, eventDetails: BaseTooltip.Root.ChangeEventDetails) => void;
 	disabled?: boolean;
 	className?: string;
-	/** Hover-open delay in ms. For cross-tooltip grouping, mount a shared TooltipProvider instead. */
-	delay?: number;
-	/** Close delay in ms after the cursor leaves. */
-	closeDelay?: number;
 }
 
-export const Tooltip = ({
+/**
+ * Tooltip component that wraps a single trigger element.
+ * The `ref` is forwarded to the trigger (child) element, not the Tooltip wrapper.
+ */
+export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 	content,
 	children,
 	side = "top",
@@ -36,39 +43,50 @@ export const Tooltip = ({
 	onOpenChange,
 	disabled = false,
 	className,
-	delay = 400,
-	closeDelay = 200,
-}: TooltipProps) => {
+}, ref) => {
 	const themeContext = useTheme();
 	const themeClass = themeContext?.themeClass ?? lightTheme;
 
 	return (
-		<BaseTooltip.Provider delay={delay} closeDelay={closeDelay}>
-			<BaseTooltip.Root
-				open={open}
-				defaultOpen={defaultOpen}
-				onOpenChange={onOpenChange}
-				disabled={disabled}
-			>
-				<BaseTooltip.Trigger render={children} />
-				<BaseTooltip.Portal>
-					<BaseTooltip.Positioner side={side} align={align} sideOffset={6} className={styles.positioner}>
-						<BaseTooltip.Popup
-							role="tooltip"
-							className={clsx(themeClass, styles.popup, className)}
-						>
-							{content}
-							{showArrow && <BaseTooltip.Arrow className={styles.arrow} />}
-						</BaseTooltip.Popup>
-					</BaseTooltip.Positioner>
-				</BaseTooltip.Portal>
-			</BaseTooltip.Root>
-		</BaseTooltip.Provider>
+		<BaseTooltip.Root
+			open={open}
+			defaultOpen={defaultOpen}
+			onOpenChange={onOpenChange}
+			disabled={disabled}
+		>
+			<BaseTooltip.Trigger render={children} ref={ref} />
+			<BaseTooltip.Portal>
+				<BaseTooltip.Positioner side={side} align={align} sideOffset={TOOLTIP_SIDE_OFFSET} className={styles.positioner}>
+					<BaseTooltip.Popup
+						role="tooltip"
+						className={clsx(themeClass, styles.popup, className)}
+					>
+						{content}
+						{showArrow && <BaseTooltip.Arrow className={styles.arrow} />}
+					</BaseTooltip.Popup>
+				</BaseTooltip.Positioner>
+			</BaseTooltip.Portal>
+		</BaseTooltip.Root>
 	);
-};
+});
+
+Tooltip.displayName = "Tooltip";
+
+export interface TooltipProviderProps {
+	children: React.ReactNode;
+	/** Hover-open delay in ms. */
+	delay?: number;
+	/** Close delay in ms after the cursor leaves. */
+	closeDelay?: number;
+}
 
 /**
  * Shared provider for multiple tooltips — enables instant-open grouping behavior.
  * Wrap a region or the whole app when multiple Tooltip instances should feel connected.
+ * Configure delay and closeDelay here to apply consistent timing across all tooltips.
  */
-export const TooltipProvider = BaseTooltip.Provider;
+export const TooltipProvider = ({ children, delay, closeDelay }: TooltipProviderProps) => (
+	<BaseTooltip.Provider delay={delay} closeDelay={closeDelay}>
+		{children}
+	</BaseTooltip.Provider>
+);

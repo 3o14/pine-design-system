@@ -99,7 +99,7 @@ describe("Tooltip", () => {
 	});
 
 	// Hover tests use real timers + waitFor to avoid fake-timer / userEvent deadlock.
-	// base-ui's tooltip delay fires via real setTimeout (400ms in Provider).
+	// base-ui fires tooltip open/close via real setTimeout using its internal defaults.
 	describe("Hover behavior", () => {
 		it("shows tooltip after hover delay", async () => {
 			const user = userEvent.setup();
@@ -172,15 +172,15 @@ describe("Tooltip", () => {
 	});
 
 	describe("Accessibility", () => {
-		it("trigger is accessible by keyboard focus", () => {
+		it("trigger is accessible by keyboard focus", async () => {
+			const user = userEvent.setup();
 			render(
 				<Tooltip content="Focus tooltip">
 					<button>Focus me</button>
 				</Tooltip>,
 			);
-			const button = screen.getByRole("button", { name: "Focus me" });
-			button.focus();
-			expect(button).toHaveFocus();
+			await user.tab();
+			expect(screen.getByRole("button", { name: "Focus me" })).toHaveFocus();
 		});
 
 		it("popup has tooltip role when open", () => {
@@ -190,6 +190,39 @@ describe("Tooltip", () => {
 				</Tooltip>,
 			);
 			expect(screen.getByRole("tooltip")).toBeInTheDocument();
+		});
+
+		it("shows tooltip on keyboard focus", async () => {
+			const user = userEvent.setup();
+			render(
+				<Tooltip content="Focus tooltip">
+					<button>Focus me</button>
+				</Tooltip>,
+			);
+			await user.tab();
+			await waitFor(
+				() => expect(screen.getByRole("tooltip")).toBeInTheDocument(),
+				{ timeout: 1000 },
+			);
+		});
+
+		it("dismisses tooltip on Escape key", async () => {
+			const user = userEvent.setup();
+			render(
+				<Tooltip content="Escape tooltip">
+					<button>Trigger</button>
+				</Tooltip>,
+			);
+			await user.tab();
+			await waitFor(
+				() => expect(screen.getByRole("tooltip")).toBeInTheDocument(),
+				{ timeout: 1000 },
+			);
+			await user.keyboard("{Escape}");
+			await waitFor(
+				() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument(),
+				{ timeout: 1000 },
+			);
 		});
 	});
 });
