@@ -1,5 +1,4 @@
 export * from "./Badge";
-export * from "./Tooltip";
 export * from "./Button";
 export * from "./Checkbox";
 export * from "./Dialog";
@@ -8,6 +7,7 @@ export * from "./Switch";
 export * from "./Tab";
 export * from "./Text";
 export * from "./TextField";
+export * from "./Tooltip";
 
 export * from "../providers";
 export * from "../tokens/colors";
