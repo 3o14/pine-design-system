@@ -18,12 +18,7 @@ export interface TooltipProps {
 	showArrow?: boolean;
 	open?: boolean;
 	defaultOpen?: boolean;
-	/**
-	 * Called when the tooltip open state changes.
-	 * @param open - The new open state.
-	 * @param eventDetails - Details about what triggered the change (e.g., hover, focus, Escape key).
-	 */
-	onOpenChange?: (open: boolean, eventDetails: BaseTooltip.Root.ChangeEventDetails) => void;
+	onOpenChange?: (open: boolean) => void;
 	disabled?: boolean;
 	className?: string;
 }
@@ -51,7 +46,7 @@ export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 		<BaseTooltip.Root
 			open={open}
 			defaultOpen={defaultOpen}
-			onOpenChange={onOpenChange}
+			onOpenChange={onOpenChange ? (open) => onOpenChange(open) : undefined}
 			disabled={disabled}
 		>
 			<BaseTooltip.Trigger render={children} ref={ref} />

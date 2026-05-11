@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Tooltip } from "./Tooltip";
+import { Tooltip, TooltipProvider } from "./Tooltip";
 
 describe("Tooltip", () => {
 	describe("Rendering", () => {
@@ -164,8 +164,7 @@ describe("Tooltip", () => {
 
 			await user.hover(screen.getByRole("button"));
 			await waitFor(
-				() =>
-					expect(handleChange).toHaveBeenCalledWith(true, expect.anything()),
+				() => expect(handleChange).toHaveBeenCalledWith(true),
 				{ timeout: 1000 },
 			);
 		});
@@ -222,6 +221,59 @@ describe("Tooltip", () => {
 			await waitFor(
 				() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument(),
 				{ timeout: 1000 },
+			);
+		});
+	});
+
+	describe("TooltipProvider", () => {
+		it("renders children without error", () => {
+			render(
+				<TooltipProvider>
+					<Tooltip content="Provider tooltip">
+						<button>Trigger</button>
+					</Tooltip>
+				</TooltipProvider>,
+			);
+			expect(screen.getByRole("button", { name: "Trigger" })).toBeInTheDocument();
+		});
+
+		it("applies delay to wrapped tooltips", async () => {
+			const user = userEvent.setup();
+			render(
+				<TooltipProvider delay={0} closeDelay={0}>
+					<Tooltip content="Provider tooltip">
+						<button>Trigger</button>
+					</Tooltip>
+				</TooltipProvider>,
+			);
+			await user.hover(screen.getByRole("button"));
+			await waitFor(
+				() => expect(screen.getByRole("tooltip")).toBeInTheDocument(),
+				{ timeout: 100 },
+			);
+		});
+
+		it("enables instant-open grouping across multiple tooltips", async () => {
+			const user = userEvent.setup();
+			render(
+				<TooltipProvider delay={0} closeDelay={0}>
+					<Tooltip content="First tooltip">
+						<button>First</button>
+					</Tooltip>
+					<Tooltip content="Second tooltip">
+						<button>Second</button>
+					</Tooltip>
+				</TooltipProvider>,
+			);
+			await user.hover(screen.getByRole("button", { name: "First" }));
+			await waitFor(
+				() => expect(screen.getByText("First tooltip")).toBeInTheDocument(),
+				{ timeout: 100 },
+			);
+			await user.hover(screen.getByRole("button", { name: "Second" }));
+			await waitFor(
+				() => expect(screen.getByText("Second tooltip")).toBeInTheDocument(),
+				{ timeout: 100 },
 			);
 		});
 	});

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { themeContract } from "@/tokens";
+import { themeContract, zIndex } from "@/tokens";
 import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
 
@@ -9,7 +9,7 @@ const crayonLightThemeClass = String(crayonLightTheme);
 const crayonDarkThemeClass = String(crayonDarkTheme);
 
 export const positioner = style({
-	zIndex: 10001,
+	zIndex: zIndex.tooltip,
 });
 
 export const popup = style({
