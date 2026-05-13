@@ -44,7 +44,16 @@ jobs:
       - name: Package static output for Vercel
         run: |
           mkdir -p docs/.vercel/output/static
-          echo '{"version":3,"cleanUrls":true}' > docs/.vercel/output/config.json
+          cat > docs/.vercel/output/config.json << 'EOF'
+          {
+            "version": 3,
+            "routes": [
+              { "src": "^/([^.]+)$", "dest": "/$1.html", "continue": true },
+              { "handle": "filesystem" },
+              { "src": "/(.*)", "dest": "/404.html", "status": 404 }
+            ]
+          }
+          EOF
           cp -r docs/out/. docs/.vercel/output/static/
 
       - name: Deploy to Vercel
