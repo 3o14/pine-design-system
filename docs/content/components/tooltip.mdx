@@ -1,0 +1,140 @@
+---
+title: Tooltip
+---
+
+# Tooltip
+
+A contextual popup that appears on hover or keyboard focus to provide supplementary information. Built on [Base UI Tooltip](https://base-ui.com/react/components/tooltip) with built-in ARIA attributes and keyboard support.
+
+## Preview
+
+<ComponentPreview code={`<Tooltip content="Save the document" side="top">
+  <Button variant="outline" intent="neutral">Hover me</Button>
+</Tooltip>`}>
+  <TooltipDemo />
+</ComponentPreview>
+
+## Examples
+
+### Side
+
+Controls which side of the trigger the tooltip appears on. The tooltip automatically flips to the opposite side when there is not enough space.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`top`", "✓", "Tooltip appears above the trigger"],
+    ["`bottom`", "", "Tooltip appears below the trigger"],
+    ["`left`", "", "Tooltip appears to the left of the trigger"],
+    ["`right`", "", "Tooltip appears to the right of the trigger"],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Tooltip content="Top" side="top"><Button>Top</Button></Tooltip>
+<Tooltip content="Bottom" side="bottom"><Button>Bottom</Button></Tooltip>
+<Tooltip content="Left" side="left"><Button>Left</Button></Tooltip>
+<Tooltip content="Right" side="right"><Button>Right</Button></Tooltip>`}>
+  <TooltipSideDemo />
+</ComponentPreview>
+
+### Arrow
+
+Visible by default. Set `showArrow={false}` to hide it.
+
+Not shown in the **game** theme, where the pixel-art aesthetic omits directional arrows.
+
+<ComponentPreview code={`<Tooltip content="With arrow" showArrow>…</Tooltip>
+<Tooltip content="Without arrow" showArrow={false}>…</Tooltip>`}>
+  <TooltipArrowDemo />
+</ComponentPreview>
+
+### Rich content
+
+`content` accepts any `ReactNode`, allowing arbitrary markup inside the tooltip.
+
+<ComponentPreview code={`<Tooltip
+  content={
+    <div>
+      <strong style={{ display: "block", marginBottom: "4px" }}>Keyboard shortcut</strong>
+      <span>⌘ + S</span>
+    </div>
+  }
+>
+  <Button variant="solid" intent="primary">Save</Button>
+</Tooltip>`}>
+  <TooltipRichContentDemo />
+</ComponentPreview>
+
+### Disabled
+
+Prevents the tooltip from rendering.
+
+<ComponentPreview code={`<Tooltip content="This won't show" disabled>
+  <Button disabled>Disabled trigger</Button>
+</Tooltip>`}>
+  <TooltipDisabledDemo />
+</ComponentPreview>
+
+### TooltipProvider — grouped timing
+
+Wrapping tooltips in `TooltipProvider` gives them a shared hover-delay timer. After the first tooltip opens, subsequent ones appear without delay. This pattern is common in toolbar implementations.
+
+Set `delay` and `closeDelay` on the provider to control timing for all wrapped tooltips.
+
+<ComponentPreview code={`<TooltipProvider delay={600} closeDelay={300}>
+  <Tooltip content="Bold"><Button>B</Button></Tooltip>
+  <Tooltip content="Italic"><Button>I</Button></Tooltip>
+  <Tooltip content="Underline"><Button>U</Button></Tooltip>
+</TooltipProvider>`}>
+  <TooltipProviderDemo />
+</ComponentPreview>
+
+### Controlled
+
+Pass `open` and `onOpenChange` to control visibility programmatically.
+
+<ComponentPreview code={`const [open, setOpen] = useState(false);
+
+<Tooltip content="Controlled tooltip" open={open} onOpenChange={setOpen}>
+  <Button variant="outline" intent="neutral">Hover or use button below</Button>
+</Tooltip>
+<Button onClick={() => setOpen(v => !v)}>
+  {open ? "Close tooltip" : "Open tooltip"}
+</Button>`}>
+  <TooltipControlledDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### When to use
+
+Use Tooltip for supplementary information that is helpful but not required. Touch and keyboard users may not have access to tooltip content; do not rely on it for anything essential.
+
+<DocTable
+  headers={["Use case", "Recommended"]}
+  rows={[
+    ["Label an icon-only button", <strong>Tooltip</strong>],
+    ["Show a keyboard shortcut", <strong>Tooltip</strong>],
+    ["Provide field hints", <strong>TextField helperText</strong>],
+    ["Confirm a destructive action", <strong>Dialog</strong>],
+    ["Show form validation errors", <strong>TextField status + helperText</strong>],
+  ]}
+  align={["left", "left"]}
+/>
+
+### Accessibility
+
+- The popup has `role="tooltip"` and is associated with its trigger element via ARIA automatically.
+- The tooltip opens on keyboard focus and closes on `Escape`.
+- Avoid placing interactive elements (links, buttons) inside the popup. Keyboard users cannot reach them.
+
+## Props
+
+### Tooltip
+
+<PropsDoc component="tooltip" />
+
+### TooltipProvider
+
+<PropsDoc component="tooltip-provider" />

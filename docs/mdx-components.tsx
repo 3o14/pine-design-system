@@ -44,6 +44,13 @@ import {
   TextFieldVariantDemo,
   TextFieldStatusDemo,
   TextFieldMultilineDemo,
+  TooltipDemo,
+  TooltipSideDemo,
+  TooltipArrowDemo,
+  TooltipRichContentDemo,
+  TooltipDisabledDemo,
+  TooltipProviderDemo,
+  TooltipControlledDemo,
 } from "./components/demos";
 
 const docsComponents = getDocsMDXComponents();
@@ -95,6 +102,13 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     TextFieldVariantDemo,
     TextFieldStatusDemo,
     TextFieldMultilineDemo,
+    TooltipDemo,
+    TooltipSideDemo,
+    TooltipArrowDemo,
+    TooltipRichContentDemo,
+    TooltipDisabledDemo,
+    TooltipProviderDemo,
+    TooltipControlledDemo,
     ...components,
   };
 }

@@ -8,4 +8,5 @@ export default {
   tab: "Tab",
   text: "Text",
   "text-field": "TextField",
+  tooltip: "Tooltip",
 };

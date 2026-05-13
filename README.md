@@ -41,7 +41,7 @@ yarn add pine-design-system
 Import components and start building:
 
 ```tsx
-import { ThemeProvider, Button, Badge, TextField, Switch } from "pine-design-system";
+import { ThemeProvider, Button, Badge, TextField, Switch, Tooltip, TooltipProvider } from "pine-design-system";
 import "pine-design-system/style.css";
 
 function App() {
@@ -59,6 +59,9 @@ function App() {
 				placeholder="you@example.com"
 				variant="outline"
 			/>
+			<Tooltip content="More information">
+				<Button intent="neutral" variant="outline">Hover me</Button>
+			</Tooltip>
 		</ThemeProvider>
 	);
 }
@@ -145,15 +148,117 @@ pnpm run storybook
 
 ## Components
 
-| Component     | Description                            |
-| ------------- | -------------------------------------- |
-| **Badge**     | Display status, labels, or counts      |
-| **Button**    | Primary actions with multiple variants |
-| **Checkbox**  | Selectable input with custom styling   |
-| **Dialog**    | Modal dialogs with Portal support      |
-| **Dropdown**  | Select input with custom options       |
-| **Switch**    | Toggle between two states              |
-| **TextField** | Text input with validation states      |
+| Component           | Description                                          |
+| ------------------- | ---------------------------------------------------- |
+| **Badge**           | Display status, labels, or counts                    |
+| **Button**          | Primary actions with multiple variants               |
+| **Checkbox**        | Selectable input with custom styling                 |
+| **Dialog**          | Modal dialogs with Portal support                    |
+| **Dropdown**        | Select input with custom options                     |
+| **Switch**          | Toggle between two states                            |
+| **Tab**             | Tabbed navigation with accessible panel switching   |
+| **Text**            | Typography primitive with semantic variants          |
+| **TextField**       | Text input with validation states                    |
+| **Tooltip**         | Contextual popup triggered by hover or focus         |
+| **TooltipProvider** | Shared timing provider for grouped tooltip instances |
+
+## Tooltip
+
+The `Tooltip` component renders a contextual popup anchored to any trigger element. It opens on hover and keyboard focus, and closes on `Escape`.
+
+### Basic usage
+
+```tsx
+import { Tooltip } from "pine-design-system";
+
+<Tooltip content="Save the document" side="top">
+  <button>Save</button>
+</Tooltip>
+```
+
+### Rich content
+
+`content` accepts any `ReactNode`, so you can render formatted markup inside the tooltip.
+
+```tsx
+<Tooltip
+  content={
+    <div>
+      <strong>Keyboard shortcut</strong>
+      <span>⌘ + S</span>
+    </div>
+  }
+>
+  <Button intent="primary">Save</Button>
+</Tooltip>
+```
+
+### Positioning
+
+Control which side and alignment the tooltip appears on:
+
+```tsx
+<Tooltip content="Top center" side="top" align="center">…</Tooltip>
+<Tooltip content="Bottom right" side="bottom" align="end">…</Tooltip>
+<Tooltip content="Left" side="left">…</Tooltip>
+<Tooltip content="Right" side="right">…</Tooltip>
+```
+
+### Controlled mode
+
+Pass `open` + `onOpenChange` to take full control of visibility:
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<Tooltip content="Controlled tooltip" open={open} onOpenChange={setOpen}>
+  <button>Hover or toggle</button>
+</Tooltip>
+<button onClick={() => setOpen(v => !v)}>Toggle tooltip</button>
+```
+
+### TooltipProvider — grouped timing
+
+Wrap a region (or the whole app) with `TooltipProvider` to share a single hover-delay timer across all tooltips. Once the first tooltip opens, subsequent ones appear instantly — the same pattern used in most toolbars.
+
+```tsx
+import { TooltipProvider, Tooltip } from "pine-design-system";
+
+<TooltipProvider delay={600} closeDelay={300}>
+  <Tooltip content="Bold"><button>B</button></Tooltip>
+  <Tooltip content="Italic"><button>I</button></Tooltip>
+  <Tooltip content="Underline"><button>U</button></Tooltip>
+</TooltipProvider>
+```
+
+### Tooltip props
+
+| Prop            | Type                                      | Default   | Description                                      |
+| --------------- | ----------------------------------------- | --------- | ------------------------------------------------ |
+| `content`       | `ReactNode`                               | —         | Content rendered inside the tooltip popup        |
+| `children`      | `ReactElement`                            | —         | Trigger element (must accept a `ref`)            |
+| `side`          | `"top" \| "bottom" \| "left" \| "right"` | `"top"`   | Side of the trigger the tooltip appears on       |
+| `align`         | `"start" \| "center" \| "end"`           | `"center"`| Alignment along the chosen side                  |
+| `showArrow`     | `boolean`                                 | `true`    | Whether to render the directional arrow          |
+| `open`          | `boolean`                                 | —         | Controlled open state                            |
+| `defaultOpen`   | `boolean`                                 | —         | Initial open state (uncontrolled)                |
+| `onOpenChange`  | `(open: boolean) => void`                 | —         | Callback fired when open state changes           |
+| `disabled`      | `boolean`                                 | `false`   | Disables the tooltip entirely                    |
+| `className`     | `string`                                  | —         | Additional class applied to the popup element    |
+
+### TooltipProvider props
+
+| Prop         | Type     | Default | Description                                               |
+| ------------ | -------- | ------- | --------------------------------------------------------- |
+| `children`   | `ReactNode` | —    | One or more `Tooltip` components                          |
+| `delay`      | `number` | —       | Hover-open delay in ms for all wrapped tooltips           |
+| `closeDelay` | `number` | —       | Close delay in ms after the cursor leaves                 |
+
+### Accessibility
+
+- Popup has `role="tooltip"` and is linked to its trigger automatically.
+- Opens on **keyboard focus** (`Tab`) and closes on **`Escape`**.
+- Game theme hides the arrow; crayon theme uses the crayon typeface — both happen automatically via the active theme class.
 
 ## Tech Stack
 
