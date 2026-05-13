@@ -8,6 +8,8 @@ import switchProps from "../../content/props/switch.json";
 import tabProps from "../../content/props/tab.json";
 import textProps from "../../content/props/text.json";
 import textFieldProps from "../../content/props/text-field.json";
+import tooltipProps from "../../content/props/tooltip.json";
+import tooltipProviderProps from "../../content/props/tooltip-provider.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
   button: buttonProps,
@@ -19,6 +21,8 @@ const PROPS_MAP: Record<string, PropDefinition[]> = {
   tab: tabProps,
   text: textProps,
   "text-field": textFieldProps,
+  tooltip: tooltipProps,
+  "tooltip-provider": tooltipProviderProps,
 };
 
 export interface PropsDocProps {

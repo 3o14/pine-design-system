@@ -32,4 +32,11 @@ export {
   TextFieldVariantDemo,
   TextFieldStatusDemo,
   TextFieldMultilineDemo,
+  TooltipDemo,
+  TooltipSideDemo,
+  TooltipArrowDemo,
+  TooltipRichContentDemo,
+  TooltipDisabledDemo,
+  TooltipProviderDemo,
+  TooltipControlledDemo,
 } from "./Demos";
