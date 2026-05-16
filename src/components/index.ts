@@ -10,6 +10,14 @@ export * from "./TextField";
 export * from "./Tooltip";
 
 export * from "../providers";
+export {
+	basicLightTheme,
+	basicDarkTheme,
+	gameLightTheme,
+	gameDarkTheme,
+	crayonLightTheme,
+	crayonDarkTheme,
+} from "../tokens/themes";
 export * from "../tokens/colors";
 export { radius } from "../tokens/foundation/radius";
 export { spacing } from "../tokens/foundation/spacing";

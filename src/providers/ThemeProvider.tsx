@@ -41,6 +41,23 @@ function stripDocumentThemeClasses(root: HTMLElement) {
 	root.classList.remove(...DOCUMENT_THEME_CLASS_NAMES);
 }
 
+const loadedThemes = new Set<string>();
+
+async function loadThemeCSS(design: 'game' | 'crayon'): Promise<void> {
+	if (typeof window === 'undefined') return; // SSR guard
+	if (loadedThemes.has(design)) return;
+
+	loadedThemes.add(design);
+	try {
+		const cssPath: string = `pine-design-system/style-${design}.css`;
+		await import(/* @vite-ignore */ cssPath);
+	} catch {
+		loadedThemes.delete(design);
+	}
+}
+
+// --- Component ---
+
 export interface ThemeProviderProps {
 	children: React.ReactNode;
 	defaultTheme?: Theme;
@@ -95,6 +112,8 @@ export const ThemeProvider = ({
 	const [internalDesign, setInternalDesign] = useState<Design>(defaultDesign);
 	const containerRef = useRef<HTMLDivElement>(null);
 
+	const [cssLoading, setCssLoading] = useState(false);
+
 	useEffect(() => {
 		if (controlledTheme !== undefined) {
 			setInternalTheme(controlledTheme);
@@ -136,6 +155,15 @@ export const ThemeProvider = ({
 	const design = useMemo(() => {
 		return controlledDesign ?? internalDesign;
 	}, [controlledDesign, internalDesign]);
+
+	useEffect(() => {
+		if (design === 'basic' || loadedThemes.has(design)) return;
+
+		setCssLoading(true);
+		void loadThemeCSS(design).finally(() => {
+			setCssLoading(false);
+		});
+	}, [design]);
 
 	const themeClass = useMemo(() => {
 		if (design === "game") {
@@ -224,8 +252,9 @@ export const ThemeProvider = ({
 			design,
 			setDesign,
 			themeClass,
+			cssLoading,
 		};
-	}, [theme, design, themeClass, setTheme, setDesign]);
+	}, [theme, design, themeClass, setTheme, setDesign, cssLoading]);
 
 	return (
 		<ThemeContext.Provider value={value}>
@@ -240,4 +269,3 @@ export const ThemeProvider = ({
 		</ThemeContext.Provider>
 	);
 };
-

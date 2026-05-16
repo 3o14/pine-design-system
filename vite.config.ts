@@ -19,7 +19,10 @@ export default defineConfig({
 			formats: ["es", "cjs"],
 		},
 		rollupOptions: {
-			external: ["react", "react-dom", "react/jsx-runtime"],
+			external: (id: string) =>
+				["react", "react-dom", "react/jsx-runtime"].includes(id) ||
+				id === "pine-design-system/style-game.css" ||
+				id === "pine-design-system/style-crayon.css",
 			output: {
 				globals: {
 					react: "React",

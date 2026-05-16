@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import "pine-design-system/style.css";
+import "pine-design-system/style-game.css";
+import "pine-design-system/style-crayon.css";
 import { DocsShell } from "../components/layout";
 
 export const metadata: Metadata = {
