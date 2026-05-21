@@ -51,8 +51,9 @@ async function loadThemeCSS(design: 'game' | 'crayon'): Promise<void> {
 	try {
 		const cssPath: string = `pine-design-system/style-${design}.css`;
 		await import(/* @vite-ignore */ cssPath);
-	} catch {
+	} catch (err) {
 		loadedThemes.delete(design);
+		console.warn(`[pine-ui-kit] Failed to load CSS for "${design}" theme. Check your bundler config.`, err);
 	}
 }
 
