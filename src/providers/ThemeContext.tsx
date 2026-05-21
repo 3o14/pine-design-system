@@ -9,6 +9,7 @@ export interface ThemeContextValue {
 	design: Design;
 	setDesign: (design: Design) => void;
 	themeClass: string;
+	cssLoading: boolean;
 }
 
 export const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);

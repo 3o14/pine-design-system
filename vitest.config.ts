@@ -14,6 +14,8 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@": resolve(__dirname, "./src"),
+			"pine-design-system/style-game.css": resolve(__dirname, "./src/__mocks__/empty.css"),
+			"pine-design-system/style-crayon.css": resolve(__dirname, "./src/__mocks__/empty.css"),
 		},
 	},
 });

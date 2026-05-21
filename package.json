@@ -32,6 +32,8 @@
 			"types": "./dist/components/index.d.ts"
 		},
 		"./style.css": "./dist/style.css",
+		"./style-game.css": "./dist/style-game.css",
+		"./style-crayon.css": "./dist/style-crayon.css",
 		"./package.json": "./package.json"
 	},
 	"files": [
@@ -41,7 +43,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "vite build && tsc --project tsconfig.build.json",
+		"build": "vite build && tsx scripts/split-css.ts && tsc --project tsconfig.build.json",
 		"build:lib": "pnpm run build",
 		"lint": "eslint .",
 		"test": "vitest",
@@ -97,6 +99,8 @@
 		"globals": "^16.5.0",
 		"jsdom": "^27.4.0",
 		"next": "^16.1.6",
+		"postcss": "^8.5.0",
+		"tsx": "^4.19.0",
 		"nextra": "^4.6.1",
 		"nextra-theme-docs": "^4.6.1",
 		"react": "^19.0.0",
