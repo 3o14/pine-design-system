@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { createRef } from "react";
 import { ProgressBar } from "./ProgressBar";
 
 describe("ProgressBar", () => {
@@ -96,6 +97,59 @@ describe("ProgressBar", () => {
 			expect(screen.getByRole("progressbar")).toHaveAttribute(
 				"data-indeterminate"
 			);
+		});
+
+		it("is indeterminate by default when no value is given", () => {
+			render(<ProgressBar label="Loading" />);
+			expect(screen.getByRole("progressbar")).toHaveAttribute(
+				"data-indeterminate"
+			);
+		});
+	});
+
+	describe("Edge cases", () => {
+		it("does not produce NaN width when min equals max", () => {
+			const { container } = render(
+				<ProgressBar value={5} min={5} max={5} label="Loading" />
+			);
+			const indicator = container.querySelector(
+				"[class*='indicator']"
+			) as HTMLElement;
+			// Width must never be the string "NaN%"
+			expect(indicator.style.width).not.toContain("NaN");
+		});
+
+		it("clamps value above max to 100%", () => {
+			const { container } = render(
+				<ProgressBar value={150} max={100} label="Loading" />
+			);
+			const indicator = container.querySelector(
+				"[class*='indicator']"
+			) as HTMLElement;
+			expect(indicator.style.width).toBe("100%");
+		});
+	});
+
+	describe("API", () => {
+		it("forwards ref to the root element", () => {
+			const ref = createRef<HTMLDivElement>();
+			render(<ProgressBar value={50} label="Loading" ref={ref} />);
+			expect(ref.current).toBeInstanceOf(HTMLElement);
+			expect(ref.current).toHaveAttribute("role", "progressbar");
+		});
+
+		it("passes through arbitrary HTML attributes to the root", () => {
+			render(
+				<ProgressBar
+					value={50}
+					label="Loading"
+					id="upload-progress"
+					data-testid="bar"
+				/>
+			);
+			const bar = screen.getByRole("progressbar");
+			expect(bar).toHaveAttribute("id", "upload-progress");
+			expect(bar).toHaveAttribute("data-testid", "bar");
 		});
 	});
 });
