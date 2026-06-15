@@ -248,6 +248,48 @@ export interface TabProps {
 }
 `;
 
+const PROGRESS_BAR_CODE = `
+export interface ProgressBarProps {
+  /**
+   * Current value. Pass null for an indeterminate (unknown-progress) bar.
+   */
+  value?: number | null;
+  /**
+   * Minimum value.
+   * @default 0
+   */
+  min?: number;
+  /**
+   * Maximum value.
+   * @default 100
+   */
+  max?: number;
+  /**
+   * Height of the bar.
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large";
+  /**
+   * Color intent.
+   * @default "primary"
+   */
+  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
+  /**
+   * Accessible label (required). Also rendered as visible text above the bar.
+   */
+  label: string;
+  /**
+   * Shows the formatted value (e.g. "72%") next to the label.
+   * @default false
+   */
+  showValue?: boolean;
+  /**
+   * Custom formatter for the displayed value and aria-valuetext.
+   */
+  formatValue?: (value: number) => string;
+}
+`;
+
 const SWITCH_CODE = `
 export interface SwitchProps {
   /**
@@ -472,6 +514,7 @@ function main() {
   const checkboxProps = parseInterface(CHECKBOX_CODE, "CheckboxProps");
   const dialogProps = parseInterface(DIALOG_CODE, "DialogProps");
   const dropdownProps = parseInterface(DROPDOWN_CODE, "DropdownProps");
+  const progressBarProps = parseInterface(PROGRESS_BAR_CODE, "ProgressBarProps");
   const switchProps = parseInterface(SWITCH_CODE, "SwitchProps");
   const tabProps = parseInterface(TAB_CODE, "TabProps");
   const textProps = parseInterface(TEXT_CODE, "TextProps");
@@ -501,6 +544,10 @@ function main() {
     JSON.stringify(dropdownProps, null, 2)
   );
   writeFileSync(
+    join(outputDir, "progress-bar.json"),
+    JSON.stringify(progressBarProps, null, 2)
+  );
+  writeFileSync(
     join(outputDir, "switch.json"),
     JSON.stringify(switchProps, null, 2)
   );
@@ -517,7 +564,7 @@ function main() {
     JSON.stringify(textFieldProps, null, 2)
   );
 
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json, text.json, text-field.json");
+  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, progress-bar.json, switch.json, tab.json, text.json, text-field.json");
 }
 
 main();

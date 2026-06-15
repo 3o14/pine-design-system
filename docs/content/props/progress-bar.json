@@ -1,0 +1,55 @@
+[
+  {
+    "name": "value",
+    "type": "number | null",
+    "description": "Current value. Pass null for an indeterminate (unknown-progress) bar.",
+    "required": false
+  },
+  {
+    "name": "min",
+    "type": "number",
+    "description": "Minimum value.",
+    "default": "0",
+    "required": false
+  },
+  {
+    "name": "max",
+    "type": "number",
+    "description": "Maximum value.",
+    "default": "100",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Height of the bar.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "label",
+    "type": "string",
+    "description": "Accessible label (required). Also rendered as visible text above the bar.",
+    "required": true
+  },
+  {
+    "name": "showValue",
+    "type": "boolean",
+    "description": "Shows the formatted value (e.g. \"72%\") next to the label.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "formatValue",
+    "type": "(value: number) => string",
+    "description": "Custom formatter for the displayed value and aria-valuetext.",
+    "required": false
+  }
+]
