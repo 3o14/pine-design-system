@@ -5,4 +5,5 @@ export default {
   foundation: "Foundation",
   components: "Components",
   migration: "Migration",
+  changelog: "Changelog",
 };

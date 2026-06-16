@@ -128,6 +128,17 @@ export function LandingPage() {
           >
             Docs
           </Link>
+          <Link
+            href="/changelog"
+            style={{
+              fontSize: "14px",
+              fontWeight: 500,
+              color: themeColors.mutedTextColor,
+              textDecoration: "none",
+            }}
+          >
+            Changelog
+          </Link>
           <a
             href="https://github.com/3o14/pine-design-system"
             target="_blank"

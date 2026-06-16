@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "predev": "node scripts/copy-fonts.mjs",
-    "prebuild": "node scripts/copy-fonts.mjs && node scripts/generate-props.mjs",
+    "predev": "node scripts/copy-fonts.mjs && node scripts/generate-changelog.mjs",
+    "prebuild": "node scripts/copy-fonts.mjs && node scripts/generate-props.mjs && node scripts/generate-changelog.mjs",
     "build": "next build",
     "start": "next start"
   },

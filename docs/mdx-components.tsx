@@ -1,5 +1,6 @@
 import { useMDXComponents as getDocsMDXComponents } from "nextra-theme-docs";
 import { ComponentPreview, DocTable, PropsDoc } from "./components/content";
+import { Changelog } from "./components/changelog";
 import {
   ColorPalette,
   ColorTokenTable,
@@ -66,6 +67,7 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     ComponentPreview,
     DocTable,
     PropsDoc,
+    Changelog,
     ColorPalette,
     ColorTokenTable,
     TypographyScale,
