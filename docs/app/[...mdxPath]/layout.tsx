@@ -11,6 +11,7 @@ export default async function DocsLayout({ children }: { children: ReactNode }) 
       <Layout
         pageMap={pageMap}
         docsRepositoryBase="https://github.com/3o14/pine-design-system"
+        editLink={null}
         navbar={<DocsNavbar key="navbar" />}
       >
         {children}
