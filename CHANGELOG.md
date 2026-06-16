@@ -1,5 +1,13 @@
 # pine-design-system
 
+## 1.1.0
+
+### Minor Changes
+
+- f834b03: Add Tooltip component with support for placement (`side`, `align`), optional arrow, open state control (`open`, `defaultOpen`, `onOpenChange`), hover/close delay, and disabled state. Includes a shared `TooltipProvider` for cross-tooltip grouping behavior.
+- 8fce678: Add `ProgressBar` component built on `@base-ui/react` Progress. Supports determinate and indeterminate (`value={null}`) states, three sizes, and six color intents, with theming for basic, game, and crayon. Renders `role="progressbar"` with full ARIA wiring — `label` is required for an accessible name and `formatValue` drives both the displayed value and `aria-valuetext`.
+- c8b3ddc: Split theme CSS into per-theme chunks at build time, reducing the basic-theme bundle from 109 KB to 35.5 KB. `ThemeProvider` now lazily loads `style-game.css` and `style-crayon.css` on first design switch. Adds `cssLoading: boolean` to `ThemeContextValue` and exports theme class names (`basicLightTheme`, `basicDarkTheme`, `gameLightTheme`, `gameDarkTheme`, `crayonLightTheme`, `crayonDarkTheme`) as public API.
+
 ## 1.0.2
 
 ### Patch Changes
