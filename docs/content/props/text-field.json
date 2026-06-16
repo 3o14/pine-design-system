@@ -1,83 +1,77 @@
 [
   {
-    "name": "label",
-    "type": "string",
-    "description": "Label text shown above the field.",
-    "required": false
-  },
-  {
-    "name": "placeholder",
-    "type": "string",
-    "description": "Placeholder when the value is empty.",
-    "required": false
-  },
-  {
-    "name": "helperText",
-    "type": "string",
-    "description": "Helper text shown below the field.",
-    "required": false
-  },
-  {
-    "name": "variant",
-    "type": "\"outline\" | \"filled\"",
-    "description": "Visual style of the field.",
-    "default": "\"outline\"",
-    "required": false
-  },
-  {
-    "name": "status",
-    "type": "\"default\" | \"error\" | \"success\"",
-    "description": "Validation / feedback state.",
-    "default": "\"default\"",
-    "required": false
-  },
-  {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Field size.",
+    "description": "Size of the input (small, medium, large, xlarge)",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Corner radius.",
+    "description": "Border radius size (small, medium, large)",
     "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "variant",
+    "type": "\"outline\" | \"filled\"",
+    "description": "Visual style variant (outline, filled)",
+    "default": "\"outline\"",
+    "required": false
+  },
+  {
+    "name": "status",
+    "type": "\"default\" | \"error\" | \"success\"",
+    "description": "Validation status (default, error, success)",
+    "default": "\"default\"",
+    "required": false
+  },
+  {
+    "name": "label",
+    "type": "string",
+    "description": "Label text for the input field",
+    "required": false
+  },
+  {
+    "name": "helperText",
+    "type": "string",
+    "description": "Helper text displayed below the input",
+    "required": false
+  },
+  {
+    "name": "fullWidth",
+    "type": "boolean",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "name",
+    "type": "string",
+    "required": false
+  },
+  {
+    "name": "required",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "name": "validate",
+    "type": "(value: unknown, formValues: Record<string, unknown>) => string | string[] | Promise<string | string[] | null> | null",
     "required": false
   },
   {
     "name": "multiline",
     "type": "boolean",
-    "description": "When true, renders a textarea instead of an input.",
+    "description": "Whether to render as textarea (default: false)",
     "default": "false",
     "required": false
   },
   {
     "name": "rows",
     "type": "number",
-    "description": "Default height of the textarea in rows when multiline is true.",
+    "description": "Number of rows for textarea (default: 3, only when multiline is true)",
     "default": "3",
-    "required": false
-  },
-  {
-    "name": "fullWidth",
-    "type": "boolean",
-    "description": "When true, stretches to the full width of the parent.",
-    "default": "false",
-    "required": false
-  },
-  {
-    "name": "disabled",
-    "type": "boolean",
-    "description": "Disables the field.",
-    "default": "false",
-    "required": false
-  },
-  {
-    "name": "required",
-    "type": "boolean",
-    "description": "Marks the field as required for form validation.",
-    "default": "false",
     "required": false
   }
 ]
