@@ -8,11 +8,14 @@ import {
   Button,
   Badge,
   Checkbox,
+  Dialog,
   Switch,
   TextField,
   Dropdown,
+  ProgressBar,
   Tab,
   Text,
+  Tooltip,
   ThemeProvider,
   type Design,
 } from "pine-design-system";
@@ -65,6 +68,7 @@ const palette = {
 export function LandingPage() {
   const [copied, setCopied] = useState(false);
   const [showcaseDesign, setShowcaseDesign] = useState<Design>("basic");
+  const [showcaseDialogOpen, setShowcaseDialogOpen] = useState(false);
   const { resolvedTheme } = useDocsTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -123,6 +127,17 @@ export function LandingPage() {
             }}
           >
             Docs
+          </Link>
+          <Link
+            href="/changelog"
+            style={{
+              fontSize: "14px",
+              fontWeight: 500,
+              color: themeColors.mutedTextColor,
+              textDecoration: "none",
+            }}
+          >
+            Changelog
           </Link>
           <a
             href="https://github.com/3o14/pine-design-system"
@@ -366,6 +381,42 @@ export function LandingPage() {
                   <Text as="p" size="large" weight="bold">Large Bold</Text>
                   <Text as="p" size="medium">Medium Regular</Text>
                   <Text as="p" size="small" intent="neutral">Small Neutral</Text>
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="ProgressBar" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
+                  <ProgressBar value={72} label="Uploading" showValue />
+                  <ProgressBar value={null} label="Loading…" />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Tooltip" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+                  <Tooltip content="Save the document" side="top">
+                    <Button intent="neutral">Hover me</Button>
+                  </Tooltip>
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Dialog" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+                  <Button intent="primary" onClick={() => setShowcaseDialogOpen(true)}>
+                    Open dialog
+                  </Button>
+                  <Dialog
+                    open={showcaseDialogOpen}
+                    onOpenChange={setShowcaseDialogOpen}
+                    title="Dialog title"
+                    description="A short description for the dialog."
+                    size="small"
+                    actions={[
+                      { label: "Cancel", variant: "weak", intent: "neutral", onClick: () => setShowcaseDialogOpen(false) },
+                      { label: "Confirm", variant: "solid", intent: "primary", onClick: () => setShowcaseDialogOpen(false) },
+                    ]}
+                  >
+                    <p>Dialog body content.</p>
+                  </Dialog>
                 </div>
               </ShowcaseCard>
             </div>

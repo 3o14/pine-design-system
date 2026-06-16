@@ -1,61 +1,61 @@
 [
   {
-    "name": "checked",
-    "type": "boolean",
-    "description": "Checked state (controlled).",
-    "required": false
-  },
-  {
-    "name": "defaultChecked",
-    "type": "boolean",
-    "description": "Initial checked state (uncontrolled).",
-    "required": false
-  },
-  {
-    "name": "onCheckedChange",
-    "type": "(checked: boolean) => void",
-    "description": "Called when the checked state changes.",
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Size of the checkbox (small, medium, large, xlarge)",
+    "default": "\"medium\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent.",
+    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
     "default": "\"primary\"",
-    "required": false
-  },
-  {
-    "name": "size",
-    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Checkbox size.",
-    "default": "\"medium\"",
     "required": false
   },
   {
     "name": "label",
     "type": "string",
-    "description": "Label next to the checkbox; clicking the label toggles the checkbox.",
+    "description": "Label text for the checkbox",
+    "required": false
+  },
+  {
+    "name": "checked",
+    "type": "boolean",
+    "description": "Controlled checked state",
+    "required": false
+  },
+  {
+    "name": "defaultChecked",
+    "type": "boolean",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Disables the checkbox.",
+    "description": "Whether the checkbox is disabled",
     "default": "false",
     "required": false
   },
   {
-    "name": "readOnly",
-    "type": "boolean",
-    "description": "Makes the checkbox read-only.",
-    "default": "false",
+    "name": "onCheckedChange",
+    "type": "(checked: boolean) => void",
+    "description": "Callback when checked state changes",
+    "required": false
+  },
+  {
+    "name": "name",
+    "type": "string",
     "required": false
   },
   {
     "name": "required",
     "type": "boolean",
-    "description": "Marks the field as required for form validation.",
-    "default": "false",
+    "required": false
+  },
+  {
+    "name": "readOnly",
+    "type": "boolean",
     "required": false
   }
 ]

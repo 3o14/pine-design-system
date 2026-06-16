@@ -4,6 +4,7 @@ export default {
   checkbox: "Checkbox",
   dialog: "Dialog",
   dropdown: "Dropdown",
+  "progress-bar": "ProgressBar",
   switch: "Switch",
   tab: "Tab",
   text: "Text",

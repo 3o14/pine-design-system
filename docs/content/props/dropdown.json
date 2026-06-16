@@ -2,67 +2,75 @@
   {
     "name": "options",
     "type": "DropdownOption[]",
-    "description": "Selectable options.",
+    "description": "Array of selectable options",
     "required": true
   },
   {
     "name": "value",
     "type": "string",
-    "description": "Selected value (controlled).",
+    "description": "Currently selected value (controlled)",
     "required": false
   },
   {
     "name": "defaultValue",
     "type": "string",
-    "description": "Initial selected value (uncontrolled).",
     "required": false
   },
   {
     "name": "onValueChange",
     "type": "(value: string | null) => void",
-    "description": "Called when the selected value changes.",
+    "description": "Callback when selected value changes",
     "required": false
   },
   {
     "name": "placeholder",
     "type": "string",
-    "description": "Placeholder when no option is selected.",
+    "description": "Placeholder text when no option is selected",
     "default": "\"Select an option\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Dropdown size.",
+    "description": "Size of the dropdown (small, medium, large)",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Corner radius.",
+    "description": "Border radius size (small, medium, large)",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent.",
+    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "When true, stretches to the full width of the parent.",
     "default": "false",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Disables the dropdown.",
+    "description": "Whether the dropdown is disabled",
     "default": "false",
+    "required": false
+  },
+  {
+    "name": "name",
+    "type": "string",
+    "required": false
+  },
+  {
+    "name": "required",
+    "type": "boolean",
     "required": false
   }
 ]

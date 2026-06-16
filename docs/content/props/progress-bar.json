@@ -1,0 +1,56 @@
+[
+  {
+    "name": "value",
+    "type": "number | null",
+    "description": "Current value. Pass `null` for an indeterminate (unknown-progress) bar.",
+    "default": "null",
+    "required": false
+  },
+  {
+    "name": "min",
+    "type": "number",
+    "description": "Minimum value. Defaults to 0.",
+    "default": "0",
+    "required": false
+  },
+  {
+    "name": "max",
+    "type": "number",
+    "description": "Maximum value. Defaults to 100.",
+    "default": "100",
+    "required": false
+  },
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Height of the bar (small, medium, large).",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent (primary, secondary, success, warning, danger, neutral).",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "label",
+    "type": "string",
+    "description": "Accessible label for the progress bar. Required — the WAI-ARIA `progressbar` role mandates an accessible name. Also rendered as visible text above the bar.",
+    "required": true
+  },
+  {
+    "name": "showValue",
+    "type": "boolean",
+    "description": "Whether to show the formatted value (e.g. \"72%\") next to the label.",
+    "default": "false",
+    "required": false
+  },
+  {
+    "name": "formatValue",
+    "type": "(value: number) => string",
+    "description": "Custom formatter for the displayed value and `aria-valuetext`. Receives the current numeric value. When omitted, base-ui's default percent format is used for the displayed value.",
+    "required": false
+  }
+]

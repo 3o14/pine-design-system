@@ -1,5 +1,6 @@
 import { useMDXComponents as getDocsMDXComponents } from "nextra-theme-docs";
 import { ComponentPreview, DocTable, PropsDoc } from "./components/content";
+import { Changelog } from "./components/changelog";
 import {
   ColorPalette,
   ColorTokenTable,
@@ -31,6 +32,11 @@ import {
   DialogSizeDemo,
   DropdownDemo,
   DropdownSizeDemo,
+  ProgressBarDemo,
+  ProgressBarSizeDemo,
+  ProgressBarIntentDemo,
+  ProgressBarIndeterminateDemo,
+  ProgressBarFormatDemo,
   SwitchDemo,
   SwitchIntentDemo,
   SwitchSizeDemo,
@@ -61,6 +67,7 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     ComponentPreview,
     DocTable,
     PropsDoc,
+    Changelog,
     ColorPalette,
     ColorTokenTable,
     TypographyScale,
@@ -89,6 +96,11 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     DialogSizeDemo,
     DropdownDemo,
     DropdownSizeDemo,
+    ProgressBarDemo,
+    ProgressBarSizeDemo,
+    ProgressBarIntentDemo,
+    ProgressBarIndeterminateDemo,
+    ProgressBarFormatDemo,
     SwitchDemo,
     SwitchIntentDemo,
     SwitchSizeDemo,

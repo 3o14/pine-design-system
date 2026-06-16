@@ -1,0 +1,111 @@
+---
+title: ProgressBar
+---
+
+# ProgressBar
+
+Visualizes the completion status of a task, such as file uploads, multi-step flows, or background processing. Built on [Base UI Progress](https://base-ui.com/react/components/progress), which renders `role="progressbar"` with `aria-valuenow`/`aria-valuemin`/`aria-valuemax` wired automatically.
+
+## Preview
+
+<ComponentPreview align="start" code={`<ProgressBar value={72} label="Uploading" showValue />
+<ProgressBar value={null} label="Loading…" />`}>
+  <ProgressBarDemo />
+</ComponentPreview>
+
+## Examples
+
+### Value
+
+`value` sets the current progress. By default it is interpreted against a `0`–`100` range, but you can adjust the bounds with `min` and `max`. Pair it with `showValue` to display the formatted value next to the label.
+
+<DocTable
+  headers={["Prop", "Type", "Default", "Description"]}
+  rows={[
+    ["`value`", "`number | null`", "`null`", "Current value. null renders an indeterminate bar."],
+    ["`min`", "`number`", "`0`", "Minimum value."],
+    ["`max`", "`number`", "`100`", "Maximum value."],
+  ]}
+  align={["left", "left", "center", "left"]}
+/>
+
+### Indeterminate
+
+When the progress is unknown (e.g. waiting on a network response with no measurable percentage), pass `value={null}`. The bar animates continuously and `aria-valuenow` is omitted.
+
+<ComponentPreview align="start" code={`<ProgressBar value={null} label="Loading…" />`}>
+  <ProgressBarIndeterminateDemo />
+</ComponentPreview>
+
+### Size
+
+Controls the height of the bar.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "For dense layouts or inline progress."],
+    ["`medium`", "✓", "Most versatile size."],
+    ["`large`", "", "When the progress is a primary focal point."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview align="start" code={`<ProgressBar size="small" value={60} label="Small" />
+<ProgressBar size="medium" value={60} label="Medium" />
+<ProgressBar size="large" value={60} label="Large" />`}>
+  <ProgressBarSizeDemo />
+</ComponentPreview>
+
+### Intent
+
+Controls the color of the progress indicator.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "General-purpose progress."],
+    ["`secondary`", "", "Secondary or supplementary progress."],
+    ["`success`", "", "Completion or positive outcome."],
+    ["`warning`", "", "Progress that requires caution."],
+    ["`danger`", "", "Failing or at-risk progress."],
+    ["`neutral`", "", "Low-emphasis, neutral progress."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview align="start" code={`<ProgressBar intent="primary" value={60} label="Primary" showValue />
+<ProgressBar intent="success" value={100} label="Success" showValue />
+<ProgressBar intent="warning" value={80} label="Warning" showValue />
+<ProgressBar intent="danger" value={30} label="Danger" showValue />`}>
+  <ProgressBarIntentDemo />
+</ComponentPreview>
+
+### Custom format
+
+By default `showValue` renders a percentage. Pass `formatValue` to customize the displayed text — it also drives `aria-valuetext`, so screen readers announce the same value.
+
+<ComponentPreview align="start" code={`<ProgressBar
+  value={2}
+  max={5}
+  label="Setup steps"
+  showValue
+  formatValue={(v) => \`\${v} / 5 steps\`}
+/>`}>
+  <ProgressBarFormatDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Determinate vs indeterminate
+
+- **Determinate** (`value` is a number): use when you can measure progress, such as upload byte counts or completed steps.
+- **Indeterminate** (`value={null}`): use when progress cannot be measured. Avoid leaving an indeterminate bar on screen indefinitely — switch to a determinate bar or a result state as soon as you can.
+
+### Accessibility
+
+The `label` prop is **required**. The WAI-ARIA `progressbar` role mandates an accessible name, so `label` is both rendered as visible text and used as the accessible name. When customizing the value text with `formatValue`, keep it concise so the screen-reader announcement stays clear.
+
+## Props
+
+<PropsDoc component="progress-bar" />

@@ -1,523 +1,222 @@
 /**
- * Parses TSDoc with ts-morph and writes Props JSON files.
+ * Generates Props JSON files by parsing the REAL component source in `src/components`
+ * with ts-morph. The library source is the single source of truth — if a prop is
+ * added, renamed, or retyped, this script reflects it (or fails loudly), so the docs
+ * cannot silently drift from the components they describe.
+ *
  * Runs before `next build` (see docs/package.json prebuild).
+ *
+ * What it extracts per prop:
+ *  - type:        the written type, with local string/number-literal aliases (e.g.
+ *                 `ColorIntent`, `BadgeSize`) expanded to their union for readability.
+ *  - description: the prop's own JSDoc, falling back to the component's `@param` tag.
+ *  - default:     the initializer from the component's parameter destructuring.
+ *  - required:    whether the prop is non-optional.
+ *
+ * Props inherited purely from DOM/React typings (e.g. `className`, `onClick`) are
+ * omitted — only props the component's own types declare or redeclare are documented.
  */
 import { writeFileSync, mkdirSync } from "fs";
-import { dirname, join } from "path";
+import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
-import { Project } from "ts-morph";
+import { Project, Node } from "ts-morph";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const BADGE_CODE = `
-import type { ReactNode } from "react"
+const REPO_ROOT = resolve(__dirname, "../..");
+const TSCONFIG = join(REPO_ROOT, "tsconfig.app.json");
+const COMPONENTS_DIR = join(REPO_ROOT, "src/components");
+const OUTPUT_DIR = join(__dirname, "../content/props");
 
-export interface BadgeProps {
-  /**
-   * Visual emphasis of the badge.
-   * @default "solid"
-   */
-  variant?: "solid" | "outline" | "subtle" | "weak";
-  /**
-   * Semantic color intent.
-   * @default "primary"
-   */
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * Badge size.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large" | "xlarge";
-  /**
-   * Corner radius of the badge.
-   * @default "medium"
-   */
-  rounded?: "small" | "medium" | "large";
-  /**
-   * Shows a status dot before the badge content.
-   * @default false
-   */
-  showDot?: boolean;
-  /** Content displayed inside the badge. */
-  children: ReactNode;
-}
-`;
+/** [output basename, source file (relative to src/components), exported type name]. */
+const COMPONENTS = [
+  ["badge", "Badge/Badge.tsx", "BadgeProps"],
+  ["button", "Button/Button.tsx", "ButtonProps"],
+  ["checkbox", "Checkbox/Checkbox.tsx", "CheckboxProps"],
+  ["dialog", "Dialog/Dialog.tsx", "DialogProps"],
+  ["dropdown", "Dropdown/Dropdown.tsx", "DropdownProps"],
+  ["progress-bar", "ProgressBar/ProgressBar.tsx", "ProgressBarProps"],
+  ["switch", "Switch/Switch.tsx", "SwitchProps"],
+  ["tab", "Tab/Tab.tsx", "TabProps"],
+  ["text", "Text/Text.tsx", "TextProps"],
+  ["text-field", "TextField/TextField.tsx", "TextFieldProps"],
+];
 
-const DIALOG_CODE = `
-export interface DialogAction {
-  label: string;
-  onClick: () => void;
-  variant?: "solid" | "outline" | "ghost" | "weak";
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  disabled?: boolean;
-}
+/** Type keywords / well-known aliases we never try to expand into a union. */
+const OPAQUE_TYPES = new Set([
+  "string",
+  "number",
+  "boolean",
+  "bigint",
+  "symbol",
+  "unknown",
+  "any",
+  "void",
+  "null",
+  "undefined",
+  "object",
+  "ReactNode",
+  "ReactElement",
+  "ReactNode[]",
+]);
 
-export interface DialogProps {
-  /**
-   * Controls whether the dialog is open.
-   */
-  open: boolean;
-  /**
-   * Called when the open state changes.
-   */
-  onOpenChange?: (open: boolean) => void;
-  /**
-   * Called when the dialog closes (in addition to open state updates).
-   */
-  onClose?: () => void;
-  /**
-   * Title text shown in the header.
-   */
-  title?: string;
-  /**
-   * Description text shown below the title.
-   */
-  description?: string;
-  /**
-   * Maximum width of the dialog.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large" | "xlarge" | "full";
-  /**
-   * Corner radius of the dialog.
-   * @default "medium"
-   */
-  rounded?: "small" | "medium" | "large";
-  /**
-   * Action buttons rendered in the footer.
-   */
-  actions?: DialogAction[];
-  /**
-   * Fully custom footer content; use instead of the actions prop.
-   */
-  footer?: React.ReactNode;
-  /**
-   * Whether to show the close (X) control in the header.
-   * @default true
-   */
-  showCloseButton?: boolean;
-  /**
-   * Close the dialog when the overlay is clicked.
-   * @default true
-   */
-  closeOnOverlayClick?: boolean;
-  /**
-   * Close the dialog when Escape is pressed.
-   * @default true
-   */
-  closeOnEscape?: boolean;
-  /**
-   * Main dialog content.
-   */
-  children: React.ReactNode;
-}
-`;
+/** Content slot props that are inherited (not redeclared) but worth documenting anyway. */
+const ALWAYS_INCLUDE = new Set(["children"]);
 
-const TEXT_FIELD_CODE = `
-export interface TextFieldProps {
-  /**
-   * Label text shown above the field.
-   */
-  label?: string;
-  /**
-   * Placeholder when the value is empty.
-   */
-  placeholder?: string;
-  /**
-   * Helper text shown below the field.
-   */
-  helperText?: string;
-  /**
-   * Visual style of the field.
-   * @default "outline"
-   */
-  variant?: "outline" | "filled";
-  /**
-   * Validation / feedback state.
-   * @default "default"
-   */
-  status?: "default" | "error" | "success";
-  /**
-   * Field size.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large" | "xlarge";
-  /**
-   * Corner radius.
-   * @default "medium"
-   */
-  rounded?: "small" | "medium" | "large";
-  /**
-   * When true, renders a textarea instead of an input.
-   * @default false
-   */
-  multiline?: boolean;
-  /**
-   * Default height of the textarea in rows when multiline is true.
-   * @default 3
-   */
-  rows?: number;
-  /**
-   * When true, stretches to the full width of the parent.
-   * @default false
-   */
-  fullWidth?: boolean;
-  /**
-   * Disables the field.
-   * @default false
-   */
-  disabled?: boolean;
-  /**
-   * Marks the field as required for form validation.
-   * @default false
-   */
-  required?: boolean;
-}
-`;
+const isOwnDeclaration = (decl) =>
+  !decl.getSourceFile().getFilePath().replace(/\\/g, "/").includes("/node_modules/");
 
-const TEXT_CODE = `
-export interface TextProps {
-  /**
-   * HTML element to render.
-   * @default "p"
-   */
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div" | "label" | "li" | "ul" | "ol";
-  /**
-   * Typography size token.
-   * @default "medium"
-   */
-  size?: "xsmall" | "small" | "medium" | "large" | "xlarge" | "display-small" | "display-medium" | "display-large";
-  /**
-   * Font weight.
-   * @default "regular"
-   */
-  weight?: "regular" | "medium" | "semibold" | "bold";
-  /**
-   * Color intent.
-   * @default "inherit"
-   */
-  intent?: "inherit" | "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * Text alignment.
-   * @default "left"
-   */
-  align?: "left" | "center" | "right";
-  /**
-   * When true, truncates overflowing text with an ellipsis.
-   * @default false
-   */
-  truncate?: boolean;
-}
-`;
+const collapseWhitespace = (text) => text.replace(/\s+/g, " ").trim();
 
-const TAB_CODE = `
-export interface TabItem {
-  value: string;
-  label: React.ReactNode;
-  content: React.ReactNode;
-  disabled?: boolean;
+/**
+ * Follow a type node (and any alias chain, across files) down to a union of
+ * string/number literals, returning the members in source order. Returns null
+ * when the node isn't ultimately a literal union.
+ */
+function resolveLiteralUnion(typeNode) {
+  if (Node.isUnionTypeNode(typeNode)) {
+    const members = typeNode.getTypeNodes();
+    return members.every((m) => Node.isLiteralTypeNode(m)) ? members.map((m) => m.getText()) : null;
+  }
+  if (Node.isTypeReference(typeNode)) {
+    let symbol = typeNode.getTypeName().getSymbol();
+    symbol = symbol?.getAliasedSymbol?.() ?? symbol;
+    const aliasDecl = symbol?.getDeclarations?.().find((d) => Node.isTypeAliasDeclaration(d));
+    const aliasNode = aliasDecl?.getTypeNode?.();
+    if (aliasNode) return resolveLiteralUnion(aliasNode);
+  }
+  return null;
 }
 
-export interface TabProps {
-  /**
-   * Tab definitions (required).
-   */
-  tabs: TabItem[];
-  /**
-   * Active tab value (controlled).
-   */
-  value?: string;
-  /**
-   * Initial active tab value (uncontrolled).
-   */
-  defaultValue?: string;
-  /**
-   * Called when the active tab changes.
-   */
-  onChange?: (value: string) => void;
-  /**
-   * Color intent for the tab indicator.
-   * @default "primary"
-   */
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * Layout direction of the tab list.
-   * @default "horizontal"
-   */
-  orientation?: "horizontal" | "vertical";
-}
-`;
+/**
+ * Expand a string/number-literal alias (e.g. `ColorIntent`, `ButtonVariant`) to its
+ * union for readability. Source order is preserved via the AST; a checker-based pass
+ * is the fallback so the union still expands even if the AST chain can't be followed.
+ */
+function expandAlias(text, decl) {
+  const typeNode = decl.getTypeNode?.();
+  const ordered = typeNode && resolveLiteralUnion(typeNode);
+  if (ordered) return ordered.join(" | ");
 
-const SWITCH_CODE = `
-export interface SwitchProps {
-  /**
-   * Checked state (controlled).
-   */
-  checked?: boolean;
-  /**
-   * Initial checked state (uncontrolled).
-   */
-  defaultChecked?: boolean;
-  /**
-   * Called when the checked state changes.
-   */
-  onCheckedChange?: (checked: boolean) => void;
-  /**
-   * Color intent for the switch track.
-   * @default "primary"
-   */
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * Switch size.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large" | "xlarge";
-  /**
-   * Label text next to the switch.
-   */
-  label?: string;
-  /**
-   * Disables the switch.
-   * @default false
-   */
-  disabled?: boolean;
-  /**
-   * Makes the switch read-only.
-   * @default false
-   */
-  readOnly?: boolean;
-}
-`;
-
-const DROPDOWN_CODE = `
-export interface DropdownOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
+  if (/^[A-Za-z_]\w*$/.test(text) && !OPAQUE_TYPES.has(text)) {
+    const type = decl.getType();
+    if (type.isUnion()) {
+      const parts = type.getUnionTypes().filter((t) => !t.isUndefined() && !t.isNull());
+      if (parts.length > 0 && parts.every((t) => t.isStringLiteral() || t.isNumberLiteral())) {
+        return parts.map((t) => t.getText()).join(" | ");
+      }
+    }
+  }
+  return text;
 }
 
-export interface DropdownProps {
-  /**
-   * Selectable options.
-   */
-  options: DropdownOption[];
-  /**
-   * Selected value (controlled).
-   */
-  value?: string;
-  /**
-   * Initial selected value (uncontrolled).
-   */
-  defaultValue?: string;
-  /**
-   * Called when the selected value changes.
-   */
-  onValueChange?: (value: string | null) => void;
-  /**
-   * Placeholder when no option is selected.
-   * @default "Select an option"
-   */
-  placeholder?: string;
-  /**
-   * Dropdown size.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large";
-  /**
-   * Corner radius.
-   * @default "medium"
-   */
-  rounded?: "small" | "medium" | "large";
-  /**
-   * Color intent.
-   * @default "primary"
-   */
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * When true, stretches to the full width of the parent.
-   * @default false
-   */
-  fullWidth?: boolean;
-  /**
-   * Disables the dropdown.
-   * @default false
-   */
-  disabled?: boolean;
-}
-`;
-
-const CHECKBOX_CODE = `
-export interface CheckboxProps {
-  /**
-   * Checked state (controlled).
-   */
-  checked?: boolean;
-  /**
-   * Initial checked state (uncontrolled).
-   */
-  defaultChecked?: boolean;
-  /**
-   * Called when the checked state changes.
-   */
-  onCheckedChange?: (checked: boolean) => void;
-  /**
-   * Color intent.
-   * @default "primary"
-   */
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * Checkbox size.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large" | "xlarge";
-  /**
-   * Label next to the checkbox; clicking the label toggles the checkbox.
-   */
-  label?: string;
-  /**
-   * Disables the checkbox.
-   * @default false
-   */
-  disabled?: boolean;
-  /**
-   * Makes the checkbox read-only.
-   * @default false
-   */
-  readOnly?: boolean;
-  /**
-   * Marks the field as required for form validation.
-   * @default false
-   */
-  required?: boolean;
-}
-`;
-
-const BUTTON_CODE = `
-import type { ReactNode } from "react"
-
-export interface ButtonProps {
-  /**
-   * Visual variant of the button.
-   * @default "solid"
-   */
-  variant?: "solid" | "outline" | "ghost" | "weak";
-  /**
-   * Semantic color intent.
-   * @default "primary"
-   */
-  intent?: "primary" | "secondary" | "success" | "warning" | "danger" | "neutral";
-  /**
-   * Button size.
-   * @default "medium"
-   */
-  size?: "small" | "medium" | "large" | "xlarge";
-  /**
-   * Corner radius.
-   * @default "medium"
-   */
-  rounded?: "small" | "medium" | "large";
-  /**
-   * When true, stretches to the full width of the parent.
-   * @default false
-   */
-  fullWidth?: boolean;
-  /**
-   * Disables the button.
-   * @default false
-   */
-  disabled?: boolean;
-  /** Content inside the button. */
-  children: ReactNode;
-}
-`;
-
-function extractDefault(jsdocTags) {
-  const def = jsdocTags.find((t) => t.getTagName() === "default");
-  return def?.getComment()?.toString().trim();
+function typeTextFor(symbol, decl, refNode) {
+  const typeNode = decl.getTypeNode?.();
+  let text = typeNode ? typeNode.getText() : decl.getType().getText();
+  // Discriminant literals from unions (e.g. `multiline?: false`) read as boolean.
+  if (text === "true" || text === "false") text = "boolean";
+  // `never` appears on a union member that opts out of a prop; resolve the merged type.
+  if (text === "never") text = symbol.getTypeAtLocation(refNode).getNonNullableType().getText();
+  // Optionality is captured by `required`; drop a redundant trailing `| undefined`.
+  text = text.replace(/\s*\|\s*undefined$/, "");
+  text = text.replace(/\bReact\.ReactNode\b/g, "ReactNode").replace(/\bReact\.ReactElement\b/g, "ReactElement");
+  // Tidy spacing inside function-type parentheses left by whitespace collapse.
+  return collapseWhitespace(expandAlias(text, decl)).replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
 }
 
-function parseInterface(code, exportName) {
-  const project = new Project({
-    compilerOptions: { target: 99 },
-    skipAddingFilesFromTsConfig: true,
-  });
-  const source = project.createSourceFile("$.ts", code, { overwrite: true });
-  const iface = source.getInterfaceOrThrow(exportName);
+/**
+ * Inspect the component's destructured first parameter, returning the set of prop
+ * names it reads and a map of prop name -> default initializer text.
+ */
+function destructuredParams(componentFn) {
+  const names = new Set();
+  const defaults = {};
+  const binding = componentFn?.getParameters()[0]?.getNameNode();
+  if (!binding || !Node.isObjectBindingPattern(binding)) return { names, defaults };
+  for (const element of binding.getElements()) {
+    const name = element.getPropertyNameNode()?.getText() ?? element.getName();
+    names.add(name);
+    const initializer = element.getInitializer();
+    if (initializer) defaults[name] = initializer.getText();
+  }
+  return { names, defaults };
+}
+
+/** Map of param name -> description, from the component's `@param name - desc` JSDoc tags. */
+function paramDocsFor(variableDecl) {
+  const docs = {};
+  const statement = variableDecl?.getVariableStatement?.();
+  for (const doc of statement?.getJsDocs?.() ?? []) {
+    for (const tag of doc.getTags()) {
+      if (tag.getTagName() !== "param") continue;
+      const name = tag.getName?.();
+      const comment = (tag.getCommentText?.() ?? "").replace(/^\s*-\s*/, "").trim();
+      if (name && comment && !docs[name]) docs[name] = comment;
+    }
+  }
+  return docs;
+}
+
+/** The arrow/function expression for a component, unwrapping `forwardRef(...)`/`memo(...)`. */
+function componentFunction(variableDecl) {
+  let init = variableDecl?.getInitializer();
+  if (init && Node.isCallExpression(init)) {
+    init = init.getArguments().find((arg) => Node.isArrowFunction(arg) || Node.isFunctionExpression(arg));
+  }
+  return init && (Node.isArrowFunction(init) || Node.isFunctionExpression(init)) ? init : null;
+}
+
+function extractProps(sourceFile, typeName) {
+  const typeDecl = sourceFile.getInterface(typeName) ?? sourceFile.getTypeAlias(typeName);
+  if (!typeDecl) throw new Error(`Type "${typeName}" not found in ${sourceFile.getBaseName()}`);
+
+  const componentName = typeName.replace(/Props$/, "");
+  const variableDecl = sourceFile.getVariableDeclaration(componentName);
+  const { names: destructured, defaults } = destructuredParams(componentFunction(variableDecl));
+  const paramDocs = paramDocsFor(variableDecl);
+
   const props = [];
+  for (const symbol of typeDecl.getType().getProperties()) {
+    const name = symbol.getName();
+    const ownDecl = symbol.getDeclarations().find(isOwnDeclaration);
+    // Skip props inherited purely from DOM/React typings, except a content slot
+    // (`children`) the component actually destructures and renders.
+    if (!ownDecl && !(ALWAYS_INCLUDE.has(name) && destructured.has(name))) continue;
 
-  for (const member of iface.getProperties()) {
-    const jsdoc = member.getJsDocs()[0];
-    const tags = jsdoc?.getTags() ?? [];
-    const desc = jsdoc?.getDescription().trim();
-    const defaultVal = extractDefault(tags);
-    const typeNode = member.getTypeNode();
-    const type = typeNode?.getText() ?? "unknown";
-    const optional = member.hasQuestionToken();
+    const decl = ownDecl ?? symbol.getDeclarations()[0];
+    const jsdocDescription = decl.getJsDocs?.()[0]?.getDescription?.().trim();
+    const rawDescription = jsdocDescription || paramDocs[name] || undefined;
+    const optional = decl.hasQuestionToken?.() ?? symbol.isOptional();
 
     props.push({
-      name: member.getName(),
-      type,
-      description: desc || undefined,
-      default: defaultVal,
+      // Own props keep source order; allowlisted inherited props sort to the end.
+      order: ownDecl ? ownDecl.getStart() : Number.MAX_SAFE_INTEGER,
+      name,
+      type: typeTextFor(symbol, decl, typeDecl),
+      description: rawDescription ? collapseWhitespace(rawDescription) : undefined,
+      default: defaults[name],
       required: !optional,
     });
   }
 
-  return props;
+  return props
+    .sort((a, b) => a.order - b.order)
+    .map(({ order, ...prop }) => prop);
 }
 
 function main() {
-  const badgeProps = parseInterface(BADGE_CODE, "BadgeProps");
-  const buttonProps = parseInterface(BUTTON_CODE, "ButtonProps");
-  const checkboxProps = parseInterface(CHECKBOX_CODE, "CheckboxProps");
-  const dialogProps = parseInterface(DIALOG_CODE, "DialogProps");
-  const dropdownProps = parseInterface(DROPDOWN_CODE, "DropdownProps");
-  const switchProps = parseInterface(SWITCH_CODE, "SwitchProps");
-  const tabProps = parseInterface(TAB_CODE, "TabProps");
-  const textProps = parseInterface(TEXT_CODE, "TextProps");
-  const textFieldProps = parseInterface(TEXT_FIELD_CODE, "TextFieldProps");
+  const project = new Project({ tsConfigFilePath: TSCONFIG, skipAddingFilesFromTsConfig: false });
+  mkdirSync(OUTPUT_DIR, { recursive: true });
 
-  const outputDir = join(__dirname, "../content/props");
-  mkdirSync(outputDir, { recursive: true });
+  const generated = [];
+  for (const [basename, relativeFile, typeName] of COMPONENTS) {
+    const sourceFile = project.getSourceFileOrThrow(join(COMPONENTS_DIR, relativeFile));
+    const props = extractProps(sourceFile, typeName);
+    writeFileSync(join(OUTPUT_DIR, `${basename}.json`), JSON.stringify(props, null, 2));
+    generated.push(`${basename}.json (${props.length})`);
+  }
 
-  writeFileSync(
-    join(outputDir, "badge.json"),
-    JSON.stringify(badgeProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "button.json"),
-    JSON.stringify(buttonProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "checkbox.json"),
-    JSON.stringify(checkboxProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "dialog.json"),
-    JSON.stringify(dialogProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "dropdown.json"),
-    JSON.stringify(dropdownProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "switch.json"),
-    JSON.stringify(switchProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "tab.json"),
-    JSON.stringify(tabProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "text.json"),
-    JSON.stringify(textProps, null, 2)
-  );
-  writeFileSync(
-    join(outputDir, "text-field.json"),
-    JSON.stringify(textFieldProps, null, 2)
-  );
-
-  console.log("Generated props: badge.json, button.json, checkbox.json, dialog.json, dropdown.json, switch.json, tab.json, text.json, text-field.json");
+  console.log(`Generated props from src/components: ${generated.join(", ")}`);
 }
 
 main();

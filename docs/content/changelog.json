@@ -1,0 +1,119 @@
+[
+  {
+    "version": "1.0.2",
+    "sections": [
+      {
+        "type": "patch",
+        "entries": [
+          {
+            "hash": "4e607f4",
+            "summary": "Release pine-design-system@1.0.1 and pine-ui-kit@1.0.2 bridge",
+            "body": "**Other Changes:**\n- rename package to pine-design-system and add pine-ui-kit bridge"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.0.1",
+    "sections": [
+      {
+        "type": "patch",
+        "entries": [
+          {
+            "hash": "2700bbb",
+            "summary": "rename prop and package name",
+            "body": "package name changee\n`pine-ui-kit` -> `pine-design-system`\n\nprop name change\n1. `mode` -> `theme`\n2. `theme` -> `design`"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.0.0",
+    "sections": [
+      {
+        "type": "major",
+        "entries": [
+          {
+            "hash": "ca45e68",
+            "summary": "ucrayon theming TextField",
+            "body": "**New Features:**\n- Switch crayon theming\n- Dropdown crayon theming\n- crayon theming layer\n\n**Other Changes:**\n- crayon theming TextField\n- delete CrayonTextureButton\n- crayon theming Dialog\n- crayon theming Checkbox\n- crayon theming Button\n- Badge crayon theming"
+          }
+        ]
+      },
+      {
+        "type": "minor",
+        "entries": [
+          {
+            "hash": "336a9a4",
+            "summary": "Component updates and improvements",
+            "body": "## New Components\n- **Tab**: Added tab interface component for organizing content\n\n## Component Improvements\n- **Base UI Migration**: Migrated all interactive components to Base UI for better accessibility and form handling\n  - Enhanced Button, Switch, Checkbox, Dialog, Dropdown, and TextField components\n  - Improved keyboard navigation and screen reader support\n  - Better form validation and state management\n\n## Browser Support\n- **iOS 26+ Safari**: Added backdrop support for overlay components like Dialog and Dropdown"
+          },
+          {
+            "hash": "78ca38b",
+            "summary": "**New Features:**",
+            "body": "- Tab indicator\n- game theming Dropdown\n- game theming Dialog\n- game theming Checkbox\n- Checkbox delete prop - variant, rounded\n- game theming Text\n- game theming Switch\n- TextField multiline prop\n- game theming textfield & font\n- game theming button\n- crayon theme\n\n**Bug Fixes:**\n- tab indicator\n- switch animation\n- dialog z-index\n\n**Other Changes:**\n- game theme padding\n- badge story\n- badge game dark theme\n- game badge ui\n- game theme font\n- crayon theme\n- theme layer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.1.2",
+    "sections": [
+      {
+        "type": "patch",
+        "entries": [
+          {
+            "hash": "dbd8174",
+            "summary": "provider export"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.1.1",
+    "sections": [
+      {
+        "type": "patch",
+        "entries": [
+          {
+            "hash": "d58af62",
+            "summary": "refactor: move ThemeProvider to providers package for better dependency hierarchy",
+            "body": "- Moved ThemeProvider from components/ to providers/ package\n- Components now use useTheme hook instead of direct ThemeContext imports\n- Improved encapsulation and clearer dependency direction\n- No breaking changes - public API remains unchanged"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.1.0",
+    "sections": [
+      {
+        "type": "minor",
+        "entries": [
+          {
+            "hash": "4e1a358",
+            "summary": "Add `primaryColor` prop to ThemeProvider to allow custom primary color configuration. The primary color automatically generates all variant colors (solid, outline, ghost, weak) and disabled states. Each ThemeProvider instance can independently set its own primary color using CSS variables scoped to its container element."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.3",
+    "sections": [
+      {
+        "type": "patch",
+        "entries": [
+          {
+            "hash": "26d6a48",
+            "summary": "Fix border styling consistency in Badge and Button components by explicitly setting borderColor and updating border property usage."
+          }
+        ]
+      }
+    ]
+  }
+]

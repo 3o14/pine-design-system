@@ -2,43 +2,48 @@
   {
     "name": "as",
     "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"p\" | \"span\" | \"div\" | \"label\" | \"li\" | \"ul\" | \"ol\"",
-    "description": "HTML element to render.",
+    "description": "HTML element to render (h1-h6, p, span, div, label, li, ul, ol)",
     "default": "\"p\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"xsmall\" | \"small\" | \"medium\" | \"large\" | \"xlarge\" | \"display-small\" | \"display-medium\" | \"display-large\"",
-    "description": "Typography size token.",
+    "description": "Font size token (xsmall, small, medium, large, xlarge, xxlarge, xxxlarge)",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "weight",
     "type": "\"regular\" | \"medium\" | \"semibold\" | \"bold\"",
-    "description": "Font weight.",
+    "description": "Font weight (regular, medium, semibold, bold)",
     "default": "\"regular\"",
     "required": false
   },
   {
     "name": "intent",
-    "type": "\"inherit\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent.",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\" | \"inherit\"",
+    "description": "Text color intent (inherit, primary, secondary, success, warning, danger, neutral, muted, subdued, disabled)",
     "default": "\"inherit\"",
     "required": false
   },
   {
     "name": "align",
     "type": "\"left\" | \"center\" | \"right\"",
-    "description": "Text alignment.",
+    "description": "Text alignment (left, center, right)",
     "default": "\"left\"",
     "required": false
   },
   {
     "name": "truncate",
     "type": "boolean",
-    "description": "When true, truncates overflowing text with an ellipsis.",
+    "description": "Whether to truncate text with ellipsis",
     "default": "false",
+    "required": false
+  },
+  {
+    "name": "children",
+    "type": "ReactNode",
     "required": false
   }
 ]

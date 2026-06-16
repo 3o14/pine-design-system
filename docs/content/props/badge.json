@@ -1,43 +1,43 @@
 [
   {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+    "description": "Size of the badge (small, medium, large, xlarge)",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
     "name": "variant",
     "type": "\"solid\" | \"outline\" | \"subtle\" | \"weak\"",
-    "description": "Visual emphasis of the badge.",
+    "description": "Visual style variant (solid, outline, subtle, weak)",
     "default": "\"solid\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Semantic color intent.",
+    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
     "default": "\"primary\"",
-    "required": false
-  },
-  {
-    "name": "size",
-    "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Badge size.",
-    "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Corner radius of the badge.",
+    "description": "Border radius size (small, medium, large)",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "showDot",
     "type": "boolean",
-    "description": "Shows a status dot before the badge content.",
+    "description": "Whether to show a dot indicator",
     "default": "false",
     "required": false
   },
   {
     "name": "children",
     "type": "ReactNode",
-    "description": "Content displayed inside the badge.",
+    "description": "Badge content",
     "required": true
   }
 ]

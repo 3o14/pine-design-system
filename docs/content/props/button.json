@@ -2,49 +2,48 @@
   {
     "name": "variant",
     "type": "\"solid\" | \"outline\" | \"ghost\" | \"weak\"",
-    "description": "Visual variant of the button.",
+    "description": "Visual style variant (solid, outline, ghost, weak)",
     "default": "\"solid\"",
-    "required": false
-  },
-  {
-    "name": "intent",
-    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Semantic color intent.",
-    "default": "\"primary\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Button size.",
+    "description": "Size of the button (small, medium, large, xlarge)",
     "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
+    "default": "\"primary\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Corner radius.",
+    "description": "Border radius size (small, medium, large)",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "fullWidth",
     "type": "boolean",
-    "description": "When true, stretches to the full width of the parent.",
+    "description": "Whether the button should take full width",
     "default": "false",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Disables the button.",
+    "description": "Whether the button is disabled",
     "default": "false",
     "required": false
   },
   {
     "name": "children",
     "type": "ReactNode",
-    "description": "Content inside the button.",
-    "required": true
+    "required": false
   }
 ]
