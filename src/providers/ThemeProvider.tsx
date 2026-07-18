@@ -49,11 +49,26 @@ async function loadThemeCSS(design: 'game' | 'crayon'): Promise<void> {
 
 	loadedThemes.add(design);
 	try {
-		const cssPath: string = `pine-design-system/style-${design}.css`;
-		await import(/* @vite-ignore */ cssPath);
+		// Static string literals required — Rollup rewrites template literals here to Object.assign({}) → dist/undefined.
+		const cssUrl = design === 'game'
+			? new URL('./style-game.css', import.meta.url).href
+			: new URL('./style-crayon.css', import.meta.url).href;
+
+		await new Promise<void>((resolve, reject) => {
+			if (document.head.querySelector(`link[href="${cssUrl}"]`)) {
+				resolve();
+				return;
+			}
+			const link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = cssUrl;
+			link.onload = () => resolve();
+			link.onerror = (e) => reject(e);
+			document.head.appendChild(link);
+		});
 	} catch (err) {
 		loadedThemes.delete(design);
-		console.warn(`[pine-ui-kit] Failed to load CSS for "${design}" theme. Check your bundler config.`, err);
+		console.warn(`[pine-ui-kit] Failed to load CSS for "${design}" theme.`, err);
 	}
 }
 
