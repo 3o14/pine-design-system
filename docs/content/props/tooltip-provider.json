@@ -1,20 +1,19 @@
 [
   {
     "name": "children",
-    "type": "React.ReactNode",
-    "description": "One or more Tooltip components to share timing state.",
+    "type": "ReactNode",
     "required": true
   },
   {
     "name": "delay",
     "type": "number",
-    "description": "Hover-open delay in milliseconds applied to all wrapped tooltips.",
+    "description": "Hover-open delay in ms.",
     "required": false
   },
   {
     "name": "closeDelay",
     "type": "number",
-    "description": "Close delay in milliseconds after the cursor leaves, applied to all wrapped tooltips.",
+    "description": "Close delay in ms after the cursor leaves.",
     "required": false
   }
 ]

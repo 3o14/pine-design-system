@@ -40,6 +40,8 @@ const COMPONENTS = [
   ["tab", "Tab/Tab.tsx", "TabProps"],
   ["text", "Text/Text.tsx", "TextProps"],
   ["text-field", "TextField/TextField.tsx", "TextFieldProps"],
+  ["tooltip", "Tooltip/Tooltip.tsx", "TooltipProps"],
+  ["tooltip-provider", "Tooltip/Tooltip.tsx", "TooltipProviderProps"],
 ];
 
 /** Type keywords / well-known aliases we never try to expand into a union. */
