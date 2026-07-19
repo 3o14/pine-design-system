@@ -1,66 +1,56 @@
 [
   {
     "name": "content",
-    "type": "React.ReactNode",
-    "description": "Content rendered inside the tooltip popup.",
+    "type": "ReactNode",
     "required": true
   },
   {
     "name": "children",
-    "type": "React.ReactElement",
-    "description": "Trigger element. Must be a single element that accepts a ref.",
+    "type": "ReactElement",
     "required": true
   },
   {
     "name": "side",
     "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
-    "description": "Side of the trigger the tooltip appears on.",
     "default": "\"top\"",
     "required": false
   },
   {
     "name": "align",
     "type": "\"start\" | \"center\" | \"end\"",
-    "description": "Alignment along the chosen side.",
     "default": "\"center\"",
     "required": false
   },
   {
     "name": "showArrow",
     "type": "boolean",
-    "description": "Whether to render the directional arrow pointing at the trigger.",
     "default": "true",
     "required": false
   },
   {
     "name": "open",
     "type": "boolean",
-    "description": "Controlled open state.",
     "required": false
   },
   {
     "name": "defaultOpen",
     "type": "boolean",
-    "description": "Initial open state for uncontrolled usage.",
     "required": false
   },
   {
     "name": "onOpenChange",
     "type": "(open: boolean) => void",
-    "description": "Called when the open state changes.",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Disables the tooltip entirely — no hover or focus triggers.",
     "default": "false",
     "required": false
   },
   {
     "name": "className",
     "type": "string",
-    "description": "Additional class applied to the popup element.",
     "required": false
   }
 ]

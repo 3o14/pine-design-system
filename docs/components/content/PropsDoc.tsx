@@ -4,6 +4,7 @@ import badgeProps from "../../content/props/badge.json";
 import checkboxProps from "../../content/props/checkbox.json";
 import dialogProps from "../../content/props/dialog.json";
 import dropdownProps from "../../content/props/dropdown.json";
+import progressBarProps from "../../content/props/progress-bar.json";
 import switchProps from "../../content/props/switch.json";
 import tabProps from "../../content/props/tab.json";
 import textProps from "../../content/props/text.json";
@@ -17,6 +18,7 @@ const PROPS_MAP: Record<string, PropDefinition[]> = {
   checkbox: checkboxProps,
   dialog: dialogProps,
   dropdown: dropdownProps,
+  "progress-bar": progressBarProps,
   switch: switchProps,
   tab: tabProps,
   text: textProps,
