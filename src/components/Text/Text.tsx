@@ -40,7 +40,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
  *
  * @param TextProps
  * @param as - HTML element to render (h1-h6, p, span, div, label, li, ul, ol)
- * @param size - Font size token (xsmall, small, medium, large, xlarge, xxlarge, xxxlarge)
+ * @param size - Font size token (xsmall, small, medium, large, xlarge, display-small, display-medium, display-large)
  * @param weight - Font weight (regular, medium, semibold, bold)
  * @param intent - Text color intent (inherit, primary, secondary, success, warning, danger, neutral, muted, subdued, disabled)
  * @param align - Text alignment (left, center, right)
