@@ -61,22 +61,22 @@ export const weightVariants = styleVariants({
 
 export const intentVariants = styleVariants({
 	primary: {
-		color: themeContract.color.primary.surface,
+		color: themeContract.color.primary.text,
 	},
 	secondary: {
-		color: themeContract.color.secondary.surface,
+		color: themeContract.color.secondary.text,
 	},
 	success: {
-		color: themeContract.color.success.surface,
+		color: themeContract.color.success.text,
 	},
 	warning: {
-		color: themeContract.color.warning.surface,
+		color: themeContract.color.warning.text,
 	},
 	danger: {
-		color: themeContract.color.danger.surface,
+		color: themeContract.color.danger.text,
 	},
 	neutral: {
-		color: themeContract.color.neutral.surface,
+		color: themeContract.color.neutral.text,
 	},
 	inherit: {
 		color: "inherit",
