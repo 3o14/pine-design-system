@@ -25,6 +25,7 @@ import {
 	crayonDarkTheme,
 } from "@/tokens/themes";
 import { CrayonThemeFilters } from "./CrayonThemeFilters";
+import * as styles from "./ThemeProvider.css";
 import clsx from "clsx";
 
 /** Theme class names that may be set on `document.documentElement` when `applyGlobal` is true */
@@ -276,7 +277,7 @@ export const ThemeProvider = ({
 		<ThemeContext.Provider value={value}>
 			<div
 				ref={containerRef}
-				className={clsx(themeClass, className)}
+				className={clsx(themeClass, styles.themeWrapper, className)}
 				style={style}
 			>
 				{design === "crayon" && <CrayonThemeFilters />}

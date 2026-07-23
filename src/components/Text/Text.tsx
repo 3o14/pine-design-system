@@ -58,12 +58,16 @@ export const Text = ({
 	...props
 }: TextProps & React.HTMLAttributes<HTMLElement>) => {
 	const themeContext = useTheme();
-	const themeClass = themeContext?.themeClass ?? lightTheme;
+	// Only apply a theme class when used standalone (outside ThemeProvider).
+	// Inside ThemeProvider, CSS vars cascade from the root via applyGlobal — adding
+	// the theme class here would re-scope the vars on each element and break dark mode
+	// inside portals when the fallback (lightTheme) is accidentally applied.
+	const standaloneClass = themeContext ? null : lightTheme;
 
 	return (
 		<Component
 			className={clsx(
-				themeClass,
+				standaloneClass,
 				styles.base,
 				styles.sizeVariants[size],
 				styles.weightVariants[weight],
