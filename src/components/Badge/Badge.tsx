@@ -10,24 +10,31 @@ export type BadgeIntent = ColorIntent;
 export type BadgeRounded = "small" | "medium" | "large";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+	/** Size of the badge. Choose based on the size of adjacent text or components. Default: 'medium'. */
 	size?: BadgeSize;
+	/**
+	 * Visual emphasis level. 'solid' (filled background) is for states needing the most emphasis —
+	 * use for list status indicators or count badges near CTAs. 'outline' (border only) is medium emphasis.
+	 * 'subtle' (light background) and 'weak' (lightest background) are for lightweight tags or category
+	 * labels next to text; avoid over-emphasizing multiple badges on the same screen. Default: 'solid'.
+	 */
 	variant?: BadgeVariant;
+	/** Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
 	intent?: BadgeIntent;
+	/** Corner radius (small, medium, large — 'large' is pill-like). Default: 'medium'. */
 	rounded?: BadgeRounded;
+	/**
+	 * Shows a status dot before the badge content. Use to indicate real-time status changes or
+	 * notifications. Recommended pairing: 'success' for online/normal, 'danger' for error/offline,
+	 * 'warning' for pending/caution. Default: false.
+	 */
 	showDot?: boolean;
+	/** Badge content. Required. */
 	children: React.ReactNode;
 }
 
 /**
  * Badge component for displaying labels, tags, or status indicators.
- *
- * @param BadgeProps
- * @param variant - Visual style variant (solid, outline, subtle, weak)
- * @param size - Size of the badge (small, medium, large, xlarge)
- * @param intent - Color intent (primary, secondary, success, warning, danger, neutral)
- * @param rounded - Border radius size (small, medium, large)
- * @param showDot - Whether to show a dot indicator
- * @param children - Badge content
  */
 export const Badge = ({
 	size = "medium",

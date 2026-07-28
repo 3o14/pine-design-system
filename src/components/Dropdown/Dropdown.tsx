@@ -10,22 +10,41 @@ export type DropdownIntent = ColorIntent;
 
 
 export interface DropdownOption {
+	/** Unique value for this option, used for selection and `onValueChange`. */
 	value: string;
+	/** Display label rendered in the trigger and option list. */
 	label: string;
 	disabled?: boolean;
 }
 
 export interface DropdownProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "onChange" | "defaultValue"> {
+	/**
+	 * Selectable options. Prefer Dropdown when there are 6 or more options or when space is
+	 * limited; for 5 or fewer options where all choices should stay visible at once, use a Radio
+	 * group instead.
+	 */
 	options: DropdownOption[];
+	/**
+	 * Controlled selected value. Use together with `onValueChange` when integrating with form
+	 * libraries or when the selection needs to drive other UI. For simple uncontrolled usage, use
+	 * `defaultValue` instead.
+	 */
 	value?: string;
+	/** Initial selected value for uncontrolled usage. */
 	defaultValue?: string;
+	/** Callback fired when the selected value changes. Pair with `value` for controlled usage. */
 	onValueChange?: (value: string | null) => void;
+	/** Text shown in the trigger when no option is selected. Default: 'Select an option'. */
 	placeholder?: string;
+	/** Size of the dropdown trigger. Default: 'medium'. */
 	size?: DropdownSize;
+	/** Corner radius of the dropdown trigger (small, medium, large). Default: 'medium'. */
 	rounded?: DropdownRounded;
+	/** Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
 	intent?: DropdownIntent;
 	fullWidth?: boolean;
+	/** Whether the dropdown is disabled. Default: false. */
 	disabled?: boolean;
 	name?: string;
 	required?: boolean;
@@ -33,16 +52,6 @@ export interface DropdownProps
 
 /**
  * Dropdown component for option selection.
- *
- * @param DropdownProps
- * @param options - Array of selectable options
- * @param value - Currently selected value (controlled)
- * @param placeholder - Placeholder text when no option is selected
- * @param size - Size of the dropdown (small, medium, large)
- * @param rounded - Border radius size (small, medium, large)
- * @param intent - Color intent (primary, secondary, success, warning, danger, neutral)
- * @param disabled - Whether the dropdown is disabled
- * @param onValueChange - Callback when selected value changes
  */
 export const Dropdown = ({
 	options,

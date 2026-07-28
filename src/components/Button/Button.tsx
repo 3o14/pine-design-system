@@ -14,24 +14,34 @@ export interface ButtonProps extends Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	"color"
 > {
+	/**
+	 * Visual emphasis level. Prefer a single 'solid' button per view — the primary CTA that needs
+	 * the most emphasis; multiple solid buttons make it harder for users to identify the primary
+	 * action. 'weak' pairs well as a secondary action alongside solid. 'outline' / 'ghost' are for
+	 * tertiary, low-emphasis actions. Default: 'solid'.
+	 */
 	variant?: ButtonVariant;
+	/** Size of the button. Choose based on context and required click area. Default: 'medium'. */
 	size?: ButtonSize;
+	/**
+	 * Semantic color intent conveying the nature of the action. For irreversible actions (delete,
+	 * reset), always use 'danger' to clearly warn the user. Default: 'primary'.
+	 */
 	intent?: ButtonIntent;
+	/** Corner radius (small, medium, large — 'large' is pill-like). Default: 'medium'. */
 	rounded?: ButtonRounded;
+	/** Whether the button fills the full width of its parent container. Default: false. */
 	fullWidth?: boolean;
+	/** Whether the button is disabled. When disabled, click events do not fire. Default: false. */
 	disabled?: boolean;
 }
 
 /**
  * Button component for user interactions.
  *
- * @param ButtonProps
- * @param variant - Visual style variant (solid, outline, ghost, weak)
- * @param size - Size of the button (small, medium, large, xlarge)
- * @param intent - Color intent (primary, secondary, success, warning, danger, neutral)
- * @param rounded - Border radius size (small, medium, large)
- * @param disabled - Whether the button is disabled
- * @param fullWidth - Whether the button should take full width
+ * Do not use Button for links — if a link should look like a button, style the `<a>` element
+ * directly. Unlike the native `<button>`, `type="submit"` must be set explicitly for the Button
+ * to act as a submit button in forms.
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(

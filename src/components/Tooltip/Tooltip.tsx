@@ -11,14 +11,35 @@ export type TooltipAlign = "start" | "center" | "end";
 const TOOLTIP_SIDE_OFFSET = 6;
 
 export interface TooltipProps {
+	/**
+	 * Content rendered inside the tooltip popup. Accepts any `ReactNode`. Use Tooltip only for
+	 * supplementary information that is helpful but not required — touch and keyboard users may
+	 * not reliably reach it, so do not rely on it for anything essential (use `TextField`'s
+	 * `helperText`/`status` for field hints and validation, and `Dialog` to confirm destructive
+	 * actions). Do not place interactive elements (links, buttons) inside the content.
+	 */
 	content: React.ReactNode;
+	/** Trigger element. Must accept a `ref`, which Tooltip forwards to it. */
 	children: React.ReactElement;
+	/**
+	 * Side of the trigger the tooltip appears on. Automatically flips to the opposite side when
+	 * there is not enough space. Default: 'top'.
+	 */
 	side?: TooltipSide;
+	/** Alignment along the chosen side. Default: 'center'. */
 	align?: TooltipAlign;
+	/**
+	 * Whether to render the directional arrow. Not shown in the game theme regardless of this
+	 * value, since its pixel-art aesthetic omits directional arrows. Default: true.
+	 */
 	showArrow?: boolean;
+	/** Controlled open state. Use together with `onOpenChange`. */
 	open?: boolean;
+	/** Initial open state for uncontrolled usage. */
 	defaultOpen?: boolean;
+	/** Callback fired when the open state changes. Pair with `open` for controlled usage. */
 	onOpenChange?: (open: boolean) => void;
+	/** Disables the tooltip entirely — it will not render. Default: false. */
 	disabled?: boolean;
 	className?: string;
 }
@@ -68,10 +89,11 @@ export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 Tooltip.displayName = "Tooltip";
 
 export interface TooltipProviderProps {
+	/** One or more `Tooltip` components that should share a single hover-delay timer. */
 	children: React.ReactNode;
-	/** Hover-open delay in ms. */
+	/** Hover-open delay in ms for all wrapped tooltips. */
 	delay?: number;
-	/** Close delay in ms after the cursor leaves. */
+	/** Close delay in ms after the cursor leaves, for all wrapped tooltips. */
 	closeDelay?: number;
 }
 

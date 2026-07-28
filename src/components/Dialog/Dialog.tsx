@@ -10,41 +10,62 @@ export type DialogSize = "small" | "medium" | "large" | "xlarge" | "full";
 export type DialogRounded = "small" | "medium" | "large";
 
 export interface DialogAction {
+	/** Button label text. */
 	label: string;
+	/** Click handler for the action button. */
 	onClick: () => void;
+	/** Visual style variant of the action button, forwarded to `Button`. */
 	variant?: ButtonVariant;
+	/**
+	 * Color intent of the action button, forwarded to `Button`. Use 'danger' for irreversible
+	 * confirmation actions (delete, reset) to clearly warn the user.
+	 */
 	intent?: ButtonIntent;
 	disabled?: boolean;
 }
 
 export interface DialogProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
+	/** Whether the dialog is open. Required — Dialog is always controlled. */
 	open: boolean;
+	/** Callback fired when the open state changes (e.g. overlay click, Escape, close button). */
 	onOpenChange?: (open: boolean) => void;
+	/** Callback fired specifically when the dialog closes (after `onOpenChange(false)`). */
 	onClose?: () => void;
+	/**
+	 * Maximum width of the dialog. 'small' suits simple confirmation dialogs; 'medium' fits general
+	 * forms or information; 'large' suits complex forms or detailed content; 'xlarge' suits dialogs
+	 * with a lot of content; 'full' is a full-screen dialog. Default: 'medium'.
+	 */
 	size?: DialogSize;
+	/** Corner radius of the dialog (small, medium, large). Default: 'medium'. */
 	rounded?: DialogRounded;
+	/** Dialog title, rendered as the accessible name. */
 	title?: string;
+	/** Dialog description text, rendered below the title. */
 	description?: string;
 	children: React.ReactNode;
+	/**
+	 * Action buttons rendered in the footer. For irreversible actions (delete, reset), include a
+	 * 'danger' intent action and set `closeOnOverlayClick: false` so the confirmation can't be
+	 * dismissed accidentally. Takes precedence over `footer` when both are provided.
+	 */
 	actions?: DialogAction[];
+	/** Custom footer content, used instead of `actions` for non-button footers. */
 	footer?: React.ReactNode;
+	/** Whether to show the close (X) button in the header. Default: true. */
 	showCloseButton?: boolean;
+	/**
+	 * Whether clicking the overlay closes the dialog. Set to `false` for confirmation dialogs on
+	 * irreversible actions, or when the dialog contains a form, to prevent users from accidentally
+	 * losing their input or bypassing a decision. Default: true.
+	 */
 	closeOnOverlayClick?: boolean;
+	/** Whether pressing Escape closes the dialog. Default: true. */
 	closeOnEscape?: boolean;
 }
 
 /**
  * Dialog component for modal interactions.
- *
- * @param DialogProps
- * @param open - Whether the dialog is open
- * @param onOpenChange - Callback when open state changes
- * @param title - Dialog title
- * @param description - Dialog description text
- * @param size - Size of the dialog (small, medium, large, xlarge, full)
- * @param rounded - Border radius size (small, medium, large)
- * @param actions - Array of action buttons to display
- * @param closeOnEscape - Whether to close on Escape key press
  */
 export const Dialog = ({
 	open,

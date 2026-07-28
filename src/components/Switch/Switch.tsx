@@ -12,12 +12,29 @@ export interface SwitchProps extends Omit<
 	React.HTMLAttributes<HTMLElement>,
 	"onChange"
 > {
+	/** Size of the switch. Default: 'medium'. */
 	size?: SwitchSize;
+	/**
+	 * Semantic color intent of the track, shown when the switch is on (primary, secondary,
+	 * success, warning, danger, neutral). Default: 'primary'.
+	 */
 	intent?: SwitchIntent;
+	/**
+	 * Label text rendered next to the switch. Always provide a label — either via this prop or by
+	 * connecting the switch to a `<label>` element — so screen readers can identify its purpose.
+	 */
 	label?: string;
+	/**
+	 * Controlled checked state. Use Switch (not Checkbox) when the on/off change takes effect
+	 * immediately with no separate save action. Use together with `onCheckedChange`; for
+	 * uncontrolled usage, use `defaultChecked` instead.
+	 */
 	checked?: boolean;
+	/** Initial checked state for uncontrolled usage. */
 	defaultChecked?: boolean;
+	/** Whether the switch is disabled. Default: false. */
 	disabled?: boolean;
+	/** Callback fired when the checked state changes. Pair with `checked` for controlled usage. */
 	onCheckedChange?: (checked: boolean) => void;
 	name?: string;
 	required?: boolean;
@@ -27,13 +44,9 @@ export interface SwitchProps extends Omit<
 /**
  * Switch component for toggle controls.
  *
- * @param SwitchProps
- * @param size - Size of the switch (small, medium, large, xlarge)
- * @param intent - Color intent (primary, secondary, success, warning, danger, neutral)
- * @param label - Label text for the switch
- * @param checked - Controlled checked state
- * @param disabled - Whether the switch is disabled
- * @param onCheckedChange - Callback when checked state changes
+ * Unlike Checkbox, Switch is for settings that apply immediately with no separate save action.
+ * Prefer Checkbox when the choice is reflected on form submit or when selecting multiple items
+ * from many options.
  */
 export const Switch = ({
 	size = "medium",
