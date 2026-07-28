@@ -1,0 +1,219 @@
+{
+	"$description": "Pine Design System tokens in W3C Design Tokens Community Group (DTCG) format ($value/$type). 'foundation' holds theme-agnostic raw values (source of truth: src/tokens/foundation/*.ts). 'semantic' holds the tokens components actually consume (source of truth: src/tokens/semantic/tokens.css.ts + src/tokens/themes/*.css.ts), grouped by design ('basic' | 'game' | 'crayon'). Within each design, 'typography', 'radius', 'shadow.xsmall..xlarge', and 'component' are identical between light and dark mode — only 'color' and 'shadow.pixelBox' vary by mode, so those are the only groups nested under light/dark.",
+	"foundation": {
+		"color": {
+			"$description": "Raw color scales. Theme-agnostic — the basic theme's semantic colors reference these directly; the game theme derives its palette via a toNeon() adapter and crayon via a toPastel() adapter (see semantic.game / semantic.crayon).",
+			"purple": {
+				"50": { "$value": "#faf5ff", "$type": "color" }, "100": { "$value": "#f3e8ff", "$type": "color" }, "200": { "$value": "#e9d5ff", "$type": "color" }, "300": { "$value": "#d8b4fe", "$type": "color" }, "400": { "$value": "#c084fc", "$type": "color" }, "500": { "$value": "#a855f7", "$type": "color" }, "600": { "$value": "#9333ea", "$type": "color" }, "700": { "$value": "#7e22ce", "$type": "color" }, "800": { "$value": "#6b21a8", "$type": "color" }, "900": { "$value": "#581c87", "$type": "color" }
+			},
+			"slate": {
+				"50": { "$value": "#f8fafc", "$type": "color" }, "100": { "$value": "#f1f5f9", "$type": "color" }, "200": { "$value": "#e2e8f0", "$type": "color" }, "300": { "$value": "#cbd5e1", "$type": "color" }, "400": { "$value": "#94a3b8", "$type": "color" }, "500": { "$value": "#64748b", "$type": "color" }, "600": { "$value": "#475569", "$type": "color" }, "700": { "$value": "#334155", "$type": "color" }, "800": { "$value": "#1e293b", "$type": "color" }, "900": { "$value": "#0f172a", "$type": "color" }
+			},
+			"green": {
+				"50": { "$value": "#f0fdf4", "$type": "color" }, "100": { "$value": "#dcfce7", "$type": "color" }, "200": { "$value": "#bbf7d0", "$type": "color" }, "300": { "$value": "#86efac", "$type": "color" }, "400": { "$value": "#4ade80", "$type": "color" }, "500": { "$value": "#22c55e", "$type": "color" }, "600": { "$value": "#16a34a", "$type": "color" }, "700": { "$value": "#15803d", "$type": "color" }, "800": { "$value": "#166534", "$type": "color" }, "900": { "$value": "#14532d", "$type": "color" }
+			},
+			"yellow": {
+				"50": { "$value": "#fefce8", "$type": "color" }, "100": { "$value": "#fef9c3", "$type": "color" }, "200": { "$value": "#fef08a", "$type": "color" }, "300": { "$value": "#fde047", "$type": "color" }, "400": { "$value": "#facc15", "$type": "color" }, "500": { "$value": "#eab308", "$type": "color" }, "600": { "$value": "#ca8a04", "$type": "color" }, "700": { "$value": "#a16207", "$type": "color" }, "800": { "$value": "#854d0e", "$type": "color" }, "900": { "$value": "#713f12", "$type": "color" }
+			},
+			"orange": {
+				"50": { "$value": "#fff8f0", "$type": "color" }, "100": { "$value": "#fff1dc", "$type": "color" }, "200": { "$value": "#ffe3b8", "$type": "color" }, "300": { "$value": "#ffd594", "$type": "color" }, "400": { "$value": "#ffc770", "$type": "color" }, "500": { "$value": "#ffb94c", "$type": "color" }, "600": { "$value": "#cc943d", "$type": "color" }, "700": { "$value": "#996f2e", "$type": "color" }, "800": { "$value": "#664a1f", "$type": "color" }, "900": { "$value": "#332510", "$type": "color" }
+			},
+			"red": {
+				"50": { "$value": "#fef2f2", "$type": "color" }, "100": { "$value": "#fee2e2", "$type": "color" }, "200": { "$value": "#fecaca", "$type": "color" }, "300": { "$value": "#fca5a5", "$type": "color" }, "400": { "$value": "#f87171", "$type": "color" }, "500": { "$value": "#ef4444", "$type": "color" }, "600": { "$value": "#dc2626", "$type": "color" }, "700": { "$value": "#b91c1c", "$type": "color" }, "800": { "$value": "#991b1b", "$type": "color" }, "900": { "$value": "#7f1d1d", "$type": "color" }
+			},
+			"blue": {
+				"50": { "$value": "#f0f8ff", "$type": "color" }, "100": { "$value": "#dcf0ff", "$type": "color" }, "200": { "$value": "#b8e1ff", "$type": "color" }, "300": { "$value": "#94d2ff", "$type": "color" }, "400": { "$value": "#70c3ff", "$type": "color" }, "500": { "$value": "#4cb4ff", "$type": "color" }, "600": { "$value": "#3d90cc", "$type": "color" }, "700": { "$value": "#2e6c99", "$type": "color" }, "800": { "$value": "#1f4866", "$type": "color" }, "900": { "$value": "#102433", "$type": "color" }
+			},
+			"pink": {
+				"50": { "$value": "#fff5f9", "$type": "color" }, "100": { "$value": "#ffebf3", "$type": "color" }, "200": { "$value": "#ffd7e7", "$type": "color" }, "300": { "$value": "#ffc3db", "$type": "color" }, "400": { "$value": "#ffafcf", "$type": "color" }, "500": { "$value": "#ffb4d4", "$type": "color" }, "600": { "$value": "#cc90aa", "$type": "color" }, "700": { "$value": "#996c80", "$type": "color" }, "800": { "$value": "#664855", "$type": "color" }, "900": { "$value": "#33242b", "$type": "color" }
+			},
+			"cream": {
+				"50": { "$value": "#fffefb", "$type": "color" }, "100": { "$value": "#fffdf7", "$type": "color" }, "200": { "$value": "#fffbf0", "$type": "color" }, "300": { "$value": "#fff9e8", "$type": "color" }, "400": { "$value": "#fff7e0", "$type": "color" }, "500": { "$value": "#faf3ec", "$type": "color" }, "600": { "$value": "#c8c2bc", "$type": "color" }, "700": { "$value": "#96918d", "$type": "color" }, "800": { "$value": "#64615e", "$type": "color" }, "900": { "$value": "#32302f", "$type": "color" }
+			},
+			"charcoal": {
+				"50": { "$value": "#f5f5f5", "$type": "color" }, "100": { "$value": "#ebebeb", "$type": "color" }, "200": { "$value": "#d7d7d7", "$type": "color" }, "300": { "$value": "#c3c3c3", "$type": "color" }, "400": { "$value": "#afafaf", "$type": "color" }, "500": { "$value": "#4b4b4b", "$type": "color" }, "600": { "$value": "#3c3c3c", "$type": "color" }, "700": { "$value": "#2d2d2d", "$type": "color" }, "800": { "$value": "#1e1e1e", "$type": "color" }, "900": { "$value": "#0f0f0f", "$type": "color" }
+			},
+			"neutral": {
+				"white": { "$value": "#ffffff", "$type": "color" },
+				"black": { "$value": "#000000", "$type": "color" },
+				"transparent": { "$value": "transparent", "$type": "color" }
+			}
+		},
+		"spacing": {
+			"$description": "Identical across all designs and modes. Referenced directly by every 'semantic.<design>.spacing' group.",
+			"none": { "$value": "0px", "$type": "dimension" }, "xxxs": { "$value": "2px", "$type": "dimension" }, "xxs": { "$value": "4px", "$type": "dimension" }, "xs": { "$value": "8px", "$type": "dimension" }, "sm": { "$value": "12px", "$type": "dimension" }, "md": { "$value": "16px", "$type": "dimension" }, "lg": { "$value": "24px", "$type": "dimension" }, "xl": { "$value": "32px", "$type": "dimension" }, "xxl": { "$value": "40px", "$type": "dimension" }, "xxxl": { "$value": "64px", "$type": "dimension" }
+		},
+		"radius": {
+			"none": { "$value": "0px", "$type": "dimension" }, "xxs": { "$value": "2px", "$type": "dimension" }, "xs": { "$value": "4px", "$type": "dimension" }, "sm": { "$value": "6px", "$type": "dimension" }, "md": { "$value": "8px", "$type": "dimension" }, "lg": { "$value": "12px", "$type": "dimension" }, "xl": { "$value": "16px", "$type": "dimension" }, "xxl": { "$value": "24px", "$type": "dimension" }, "xxxl": { "$value": "32px", "$type": "dimension" }, "full": { "$value": "100%", "$type": "dimension" }
+		},
+		"shadow": {
+			"$description": "Soft elevation shadows. Identical across all designs — see 'semantic.<design>.shadow' for the 'xsmall'..'xlarge' aliases and the design-specific 'pixelBox' hard-edge shadow used by the game theme.",
+			"none": { "$value": "none", "$type": "shadow" },
+			"xs": { "$value": "0 1px 2px rgba(15, 23, 42, 0.08)", "$type": "shadow" },
+			"sm": { "$value": "0 1px 3px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(15, 23, 42, 0.08)", "$type": "shadow" },
+			"md": { "$value": "0 4px 6px -1px rgba(15, 23, 42, 0.12), 0 2px 4px -2px rgba(15, 23, 42, 0.1)", "$type": "shadow" },
+			"lg": { "$value": "0 10px 15px -3px rgba(15, 23, 42, 0.18), 0 4px 6px -4px rgba(15, 23, 42, 0.12)", "$type": "shadow" },
+			"xl": { "$value": "0 20px 25px -5px rgba(15, 23, 42, 0.2), 0 10px 10px -5px rgba(15, 23, 42, 0.12)", "$type": "shadow" }
+		},
+		"typography": {
+			"fontFamily": {
+				"sans": { "$value": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif", "$type": "fontFamily" },
+				"mono": { "$value": "'Roboto Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace", "$type": "fontFamily" },
+				"crayon": { "$value": "'온글잎-승훈체', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "$type": "fontFamily" },
+				"pixel": { "$value": "'DungGeunMo', system-ui, -apple-system, sans-serif", "$type": "fontFamily" }
+			},
+			"fontWeight": {
+				"thin": { "$value": 100, "$type": "fontWeight" }, "extralight": { "$value": 200, "$type": "fontWeight" }, "light": { "$value": 300, "$type": "fontWeight" }, "regular": { "$value": 400, "$type": "fontWeight" }, "medium": { "$value": 500, "$type": "fontWeight" }, "semibold": { "$value": 600, "$type": "fontWeight" }, "bold": { "$value": 700, "$type": "fontWeight" }, "extrabold": { "$value": 800, "$type": "fontWeight" }, "black": { "$value": 900, "$type": "fontWeight" }
+			},
+			"fontSize": {
+				"2xs": { "$value": "0.625rem", "$type": "dimension" }, "xs": { "$value": "0.75rem", "$type": "dimension" }, "sm": { "$value": "0.875rem", "$type": "dimension" }, "md": { "$value": "1rem", "$type": "dimension" }, "lg": { "$value": "1.125rem", "$type": "dimension" }, "xl": { "$value": "1.25rem", "$type": "dimension" }, "2xl": { "$value": "1.5rem", "$type": "dimension" }, "3xl": { "$value": "1.875rem", "$type": "dimension" }, "4xl": { "$value": "2.25rem", "$type": "dimension" }, "5xl": { "$value": "3rem", "$type": "dimension" }
+			},
+			"lineHeight": {
+				"none": { "$value": 1, "$type": "number" }, "tight": { "$value": 1.25, "$type": "number" }, "snug": { "$value": 1.375, "$type": "number" }, "normal": { "$value": 1.5, "$type": "number" }, "relaxed": { "$value": 1.625, "$type": "number" }, "loose": { "$value": 2, "$type": "number" }
+			},
+			"letterSpacing": {
+				"tighter": { "$value": "-0.05em", "$type": "dimension" }, "tight": { "$value": "-0.025em", "$type": "dimension" }, "normal": { "$value": "0em", "$type": "dimension" }, "wide": { "$value": "0.025em", "$type": "dimension" }, "wider": { "$value": "0.05em", "$type": "dimension" }, "widest": { "$value": "0.1em", "$type": "dimension" }
+			}
+		}
+	},
+	"semantic": {
+		"basic": {
+			"$description": "Default design. secondary/success/warning/danger/neutral colors reference the foundation palette directly (no adapter).",
+			"typography": {
+				"fontFamily": { "sans": { "$value": "{foundation.typography.fontFamily.sans}", "$type": "fontFamily" }, "mono": { "$value": "{foundation.typography.fontFamily.mono}", "$type": "fontFamily" }, "crayon": { "$value": "{foundation.typography.fontFamily.crayon}", "$type": "fontFamily" } },
+				"fontSize": { "xsmall": { "$value": "0.75rem", "$type": "dimension" }, "small": { "$value": "0.875rem", "$type": "dimension" }, "medium": { "$value": "1rem", "$type": "dimension" }, "large": { "$value": "1.125rem", "$type": "dimension" }, "xlarge": { "$value": "1.25rem", "$type": "dimension" }, "display-small": { "$value": "1.5rem", "$type": "dimension" }, "display-medium": { "$value": "1.875rem", "$type": "dimension" }, "display-large": { "$value": "2.25rem", "$type": "dimension" } },
+				"lineHeight": { "xsmall": { "$value": 1.375, "$type": "number" }, "small": { "$value": 1.5, "$type": "number" }, "medium": { "$value": 1.5, "$type": "number" }, "large": { "$value": 1.625, "$type": "number" }, "xlarge": { "$value": 1.625, "$type": "number" }, "display-small": { "$value": 1.25, "$type": "number" }, "display-medium": { "$value": 1.25, "$type": "number" }, "display-large": { "$value": 1.25, "$type": "number" } },
+				"fontWeight": { "regular": { "$value": 400, "$type": "fontWeight" }, "medium": { "$value": 500, "$type": "fontWeight" }, "semibold": { "$value": 600, "$type": "fontWeight" }, "bold": { "$value": 700, "$type": "fontWeight" } }
+			},
+			"radius": {
+				"none": { "$value": "0px", "$type": "dimension" }, "small": { "$value": "6px", "$type": "dimension" }, "medium": { "$value": "16px", "$type": "dimension" }, "large": { "$value": "24px", "$type": "dimension" }, "xlarge": { "$value": "32px", "$type": "dimension" }, "full": { "$value": "100%", "$type": "dimension" }
+			},
+			"shadow": {
+				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
+				"pixelBox": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Basic theme does not use the pixel-art hard-edge shadow (game theme only)." },
+				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
+			},
+			"component": {
+				"button": {
+					"padding": { "small": { "$value": "8px 12px", "$type": "dimension" }, "medium": { "$value": "12px 16px", "$type": "dimension" }, "large": { "$value": "16px 24px", "$type": "dimension" }, "xlarge": { "$value": "24px 32px", "$type": "dimension" } },
+					"radius": { "small": { "$value": "6px", "$type": "dimension" }, "medium": { "$value": "16px", "$type": "dimension" }, "large": { "$value": "24px", "$type": "dimension" } }
+				},
+				"card": { "radius": { "$value": "16px", "$type": "dimension" }, "padding": { "$value": "16px", "$type": "dimension" } },
+				"input": { "radius": { "$value": "8px", "$type": "dimension" }, "padding": { "$value": "12px", "$type": "dimension" } }
+			},
+			"color": {
+				"light": {
+					"primary": { "$description": "Runtime-customizable via ThemeProvider's primaryColor prop (hex). Resolved through CSS custom properties, not a static value.", "surface": { "$value": "var(--pie-primary-surface)", "$type": "color" }, "surfaceHover": { "$value": "var(--pie-primary-surface-hover)", "$type": "color" }, "surfaceActive": { "$value": "var(--pie-primary-surface-active)", "$type": "color" }, "text": { "$value": "var(--pie-primary-text)", "$type": "color" }, "border": { "$value": "var(--pie-primary-border)", "$type": "color" }, "weak": { "$value": "var(--pie-primary-weak)", "$type": "color" } },
+					"secondary": { "surface": { "$value": "#64748b", "$type": "color" }, "surfaceHover": { "$value": "#475569", "$type": "color" }, "surfaceActive": { "$value": "#334155", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#475569", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #64748b 25%, white)", "$type": "color" } },
+					"success": { "surface": { "$value": "#16a34a", "$type": "color" }, "surfaceHover": { "$value": "#15803d", "$type": "color" }, "surfaceActive": { "$value": "#166534", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#15803d", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #16a34a 25%, white)", "$type": "color" } },
+					"warning": { "surface": { "$value": "#facc15", "$type": "color" }, "surfaceHover": { "$value": "#eab308", "$type": "color" }, "surfaceActive": { "$value": "#ca8a04", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#eab308", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #facc15 25%, white)", "$type": "color" } },
+					"danger": { "surface": { "$value": "#ef4444", "$type": "color" }, "surfaceHover": { "$value": "#dc2626", "$type": "color" }, "surfaceActive": { "$value": "#b91c1c", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#dc2626", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #ef4444 25%, white)", "$type": "color" } },
+					"neutral": { "surface": { "$value": "#e2e8f0", "$type": "color" }, "surfaceHover": { "$value": "#cbd5e1", "$type": "color" }, "surfaceActive": { "$value": "#94a3b8", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#cbd5e1", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #e2e8f0 25%, white)", "$type": "color" } },
+					"surface": { "background": { "$value": "#ffffff", "$type": "color" }, "backgroundElevated": { "$value": "#f8fafc", "$type": "color" }, "outline": { "$value": "#cbd5e1", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "textMuted": { "$value": "#64748b", "$type": "color" }, "divider": { "$value": "rgba(15, 23, 42, 0.08)", "$type": "color" } }
+				},
+				"dark": {
+					"primary": { "$description": "Runtime-customizable via ThemeProvider's primaryColor prop (hex). Resolved through CSS custom properties, not a static value.", "surface": { "$value": "var(--pie-primary-surface)", "$type": "color" }, "surfaceHover": { "$value": "var(--pie-primary-surface-hover)", "$type": "color" }, "surfaceActive": { "$value": "var(--pie-primary-surface-active)", "$type": "color" }, "text": { "$value": "var(--pie-primary-text)", "$type": "color" }, "border": { "$value": "var(--pie-primary-border)", "$type": "color" }, "weak": { "$value": "var(--pie-primary-weak)", "$type": "color" } },
+					"secondary": { "surface": { "$value": "#94a3b8", "$type": "color" }, "surfaceHover": { "$value": "#64748b", "$type": "color" }, "surfaceActive": { "$value": "#475569", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#64748b", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #94a3b8 25%, white)", "$type": "color" } },
+					"success": { "surface": { "$value": "#22c55e", "$type": "color" }, "surfaceHover": { "$value": "#16a34a", "$type": "color" }, "surfaceActive": { "$value": "#15803d", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#16a34a", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #22c55e 25%, white)", "$type": "color" } },
+					"warning": { "surface": { "$value": "#fde047", "$type": "color" }, "surfaceHover": { "$value": "#facc15", "$type": "color" }, "surfaceActive": { "$value": "#eab308", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#facc15", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #fde047 25%, white)", "$type": "color" } },
+					"danger": { "surface": { "$value": "#f87171", "$type": "color" }, "surfaceHover": { "$value": "#ef4444", "$type": "color" }, "surfaceActive": { "$value": "#dc2626", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#ef4444", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #f87171 25%, white)", "$type": "color" } },
+					"neutral": { "surface": { "$value": "#1e293b", "$type": "color" }, "surfaceHover": { "$value": "#334155", "$type": "color" }, "surfaceActive": { "$value": "#475569", "$type": "color" }, "text": { "$value": "#e2e8f0", "$type": "color" }, "border": { "$value": "#334155", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #1e293b 25%, white)", "$type": "color" } },
+					"surface": { "background": { "$value": "#0f172a", "$type": "color" }, "backgroundElevated": { "$value": "#1e293b", "$type": "color" }, "outline": { "$value": "#1e293b", "$type": "color" }, "text": { "$value": "#e2e8f0", "$type": "color" }, "textMuted": { "$value": "#94a3b8", "$type": "color" }, "divider": { "$value": "rgba(148, 163, 184, 0.24)", "$type": "color" } }
+				}
+			}
+		},
+		"game": {
+			"$description": "Pixel-art design. secondary/success/warning colors are derived from foundation blue/green/orange via a toNeon() adapter (saturation +30%, mid-scale lightness boosted). danger reuses foundation.red directly (not neon-adapted). Corners are square (radius 0) except 'full' (pill). Uses a hard-edge 'pixelBox' shadow instead of soft shadows for card/button elevation, and the pixel-font family for 'sans'.",
+			"typography": {
+				"fontFamily": { "sans": { "$value": "{foundation.typography.fontFamily.pixel}", "$type": "fontFamily" }, "mono": { "$value": "{foundation.typography.fontFamily.mono}", "$type": "fontFamily" }, "crayon": { "$value": "{foundation.typography.fontFamily.crayon}", "$type": "fontFamily" } },
+				"fontSize": { "xsmall": { "$value": "0.75rem", "$type": "dimension" }, "small": { "$value": "0.875rem", "$type": "dimension" }, "medium": { "$value": "1rem", "$type": "dimension" }, "large": { "$value": "1.125rem", "$type": "dimension" }, "xlarge": { "$value": "1.25rem", "$type": "dimension" }, "display-small": { "$value": "0.625rem", "$type": "dimension", "$description": "Intentionally smaller than 'xsmall' in the source theme file — verify against src/tokens/themes/game.css.ts before relying on this for a display heading." }, "display-medium": { "$value": "1.875rem", "$type": "dimension" }, "display-large": { "$value": "2.25rem", "$type": "dimension" } },
+				"lineHeight": { "xsmall": { "$value": 1.375, "$type": "number" }, "small": { "$value": 1.5, "$type": "number" }, "medium": { "$value": 1.5, "$type": "number" }, "large": { "$value": 1.625, "$type": "number" }, "xlarge": { "$value": 1.625, "$type": "number" }, "display-small": { "$value": 1.25, "$type": "number" }, "display-medium": { "$value": 1.25, "$type": "number" }, "display-large": { "$value": 1.25, "$type": "number" } },
+				"fontWeight": { "regular": { "$value": 400, "$type": "fontWeight" }, "medium": { "$value": 500, "$type": "fontWeight" }, "semibold": { "$value": 600, "$type": "fontWeight" }, "bold": { "$value": 700, "$type": "fontWeight" } }
+			},
+			"radius": {
+				"none": { "$value": "0px", "$type": "dimension" }, "small": { "$value": "0px", "$type": "dimension" }, "medium": { "$value": "0px", "$type": "dimension" }, "large": { "$value": "0px", "$type": "dimension" }, "xlarge": { "$value": "0px", "$type": "dimension" }, "full": { "$value": "100%", "$type": "dimension" }
+			},
+			"shadow": {
+				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
+				"pixelBox": {
+					"light": { "$value": "calc(-4px) 0 0 0 #000000, 4px 0 0 0 #000000, 0 4px 0 0 #000000, 0 calc(-4px) 0 0 #000000", "$type": "shadow" },
+					"dark": { "$value": "calc(-4px) 0 0 0 #ffffff, 4px 0 0 0 #ffffff, 0 4px 0 0 #ffffff, 0 calc(-4px) 0 0 #ffffff", "$type": "shadow" }
+				},
+				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
+			},
+			"component": {
+				"button": {
+					"padding": { "small": { "$value": "2px 8px", "$type": "dimension" }, "medium": { "$value": "8px 12px", "$type": "dimension" }, "large": { "$value": "12px 16px", "$type": "dimension" }, "xlarge": { "$value": "16px 24px", "$type": "dimension" } },
+					"radius": { "small": { "$value": "0px", "$type": "dimension" }, "medium": { "$value": "0px", "$type": "dimension" }, "large": { "$value": "0px", "$type": "dimension" } }
+				},
+				"card": { "radius": { "$value": "0px", "$type": "dimension" }, "padding": { "$value": "12px", "$type": "dimension" } },
+				"input": { "radius": { "$value": "0px", "$type": "dimension" }, "padding": { "$value": "8px", "$type": "dimension" } }
+			},
+			"color": {
+				"light": {
+					"primary": { "$description": "Runtime-customizable via ThemeProvider's primaryColor prop (hex). Resolved through CSS custom properties, not a static value.", "surface": { "$value": "var(--pie-primary-surface)", "$type": "color" }, "surfaceHover": { "$value": "var(--pie-primary-surface-hover)", "$type": "color" }, "surfaceActive": { "$value": "var(--pie-primary-surface-active)", "$type": "color" }, "text": { "$value": "var(--pie-primary-text)", "$type": "color" }, "border": { "$value": "var(--pie-primary-border)", "$type": "color" }, "weak": { "$value": "var(--pie-primary-weak)", "$type": "color" } },
+					"secondary": { "surface": { "$value": "#b2dfff", "$type": "color" }, "surfaceHover": { "$value": "#6fbef6", "$type": "color" }, "surfaceActive": { "$value": "#2398ec", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#6fbef6", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #b2dfff 25%, white)", "$type": "color" } },
+					"success": { "surface": { "$value": "#4eff8f", "$type": "color" }, "surfaceHover": { "$value": "#16ff6b", "$type": "color" }, "surfaceActive": { "$value": "#00dc51", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#16ff6b", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #4eff8f 25%, white)", "$type": "color" } },
+					"warning": { "surface": { "$value": "#ffe1b2", "$type": "color" }, "surfaceHover": { "$value": "#f6c26f", "$type": "color" }, "surfaceActive": { "$value": "#ec9b23", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#f6c26f", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #ffe1b2 25%, white)", "$type": "color" } },
+					"danger": { "surface": { "$value": "#ef4444", "$type": "color" }, "surfaceHover": { "$value": "#dc2626", "$type": "color" }, "surfaceActive": { "$value": "#b91c1c", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#dc2626", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #ef4444 25%, white)", "$type": "color" } },
+					"neutral": { "surface": { "$value": "#e2e8f0", "$type": "color" }, "surfaceHover": { "$value": "#cbd5e1", "$type": "color" }, "surfaceActive": { "$value": "#94a3b8", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "border": { "$value": "#cbd5e1", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #e2e8f0 25%, white)", "$type": "color" } },
+					"surface": { "background": { "$value": "#ffffff", "$type": "color" }, "backgroundElevated": { "$value": "#f8fafc", "$type": "color" }, "outline": { "$value": "#cbd5e1", "$type": "color" }, "text": { "$value": "#0f172a", "$type": "color" }, "textMuted": { "$value": "#64748b", "$type": "color" }, "divider": { "$value": "rgba(15, 23, 42, 0.08)", "$type": "color" } }
+				},
+				"dark": {
+					"primary": { "$description": "Runtime-customizable via ThemeProvider's primaryColor prop (hex). Resolved through CSS custom properties, not a static value.", "surface": { "$value": "var(--pie-primary-surface)", "$type": "color" }, "surfaceHover": { "$value": "var(--pie-primary-surface-hover)", "$type": "color" }, "surfaceActive": { "$value": "var(--pie-primary-surface-active)", "$type": "color" }, "text": { "$value": "var(--pie-primary-text)", "$type": "color" }, "border": { "$value": "var(--pie-primary-border)", "$type": "color" }, "weak": { "$value": "var(--pie-primary-weak)", "$type": "color" } },
+					"secondary": { "surface": { "$value": "#d6eeff", "$type": "color" }, "surfaceHover": { "$value": "#b2dfff", "$type": "color" }, "surfaceActive": { "$value": "#6fbef6", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#b2dfff", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #d6eeff 25%, white)", "$type": "color" } },
+					"success": { "surface": { "$value": "#8fffb8", "$type": "color" }, "surfaceHover": { "$value": "#4eff8f", "$type": "color" }, "surfaceActive": { "$value": "#16ff6b", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#4eff8f", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #8fffb8 25%, white)", "$type": "color" } },
+					"warning": { "surface": { "$value": "#ffefd6", "$type": "color" }, "surfaceHover": { "$value": "#ffe1b2", "$type": "color" }, "surfaceActive": { "$value": "#f6c26f", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#ffe1b2", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #ffefd6 25%, white)", "$type": "color" } },
+					"danger": { "surface": { "$value": "#f87171", "$type": "color" }, "surfaceHover": { "$value": "#ef4444", "$type": "color" }, "surfaceActive": { "$value": "#dc2626", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#ef4444", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #f87171 25%, white)", "$type": "color" } },
+					"neutral": { "surface": { "$value": "#1e293b", "$type": "color" }, "surfaceHover": { "$value": "#334155", "$type": "color" }, "surfaceActive": { "$value": "#475569", "$type": "color" }, "text": { "$value": "#e2e8f0", "$type": "color" }, "border": { "$value": "#334155", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #1e293b 25%, white)", "$type": "color" } },
+					"surface": { "background": { "$value": "#0f172a", "$type": "color" }, "backgroundElevated": { "$value": "#1e293b", "$type": "color" }, "outline": { "$value": "#1e293b", "$type": "color" }, "text": { "$value": "#e2e8f0", "$type": "color" }, "textMuted": { "$value": "#94a3b8", "$type": "color" }, "divider": { "$value": "rgba(148, 163, 184, 0.24)", "$type": "color" } }
+				}
+			}
+		},
+		"crayon": {
+			"$description": "Hand-drawn, soft design. secondary/success/warning colors are derived from foundation pink/green/yellow via a toPastel() adapter (saturation ×0.65, lightness shifted 55% toward white). danger reuses foundation.red directly (not pastel-adapted). Corners are large/rounded, uses the crayon handwritten font family for 'sans', and does not use the pixel-art hard-edge shadow.",
+			"typography": {
+				"fontFamily": { "sans": { "$value": "{foundation.typography.fontFamily.crayon}", "$type": "fontFamily" }, "mono": { "$value": "{foundation.typography.fontFamily.mono}", "$type": "fontFamily" }, "crayon": { "$value": "{foundation.typography.fontFamily.crayon}", "$type": "fontFamily" } },
+				"fontSize": { "xsmall": { "$value": "0.75rem", "$type": "dimension" }, "small": { "$value": "0.875rem", "$type": "dimension" }, "medium": { "$value": "1rem", "$type": "dimension" }, "large": { "$value": "1.125rem", "$type": "dimension" }, "xlarge": { "$value": "1.25rem", "$type": "dimension" }, "display-small": { "$value": "1.5rem", "$type": "dimension" }, "display-medium": { "$value": "1.875rem", "$type": "dimension" }, "display-large": { "$value": "2.25rem", "$type": "dimension" } },
+				"lineHeight": { "xsmall": { "$value": 1.375, "$type": "number" }, "small": { "$value": 1.5, "$type": "number" }, "medium": { "$value": 1.5, "$type": "number" }, "large": { "$value": 1.625, "$type": "number" }, "xlarge": { "$value": 1.625, "$type": "number" }, "display-small": { "$value": 1.25, "$type": "number" }, "display-medium": { "$value": 1.25, "$type": "number" }, "display-large": { "$value": 1.25, "$type": "number" } },
+				"fontWeight": { "regular": { "$value": 400, "$type": "fontWeight" }, "medium": { "$value": 500, "$type": "fontWeight" }, "semibold": { "$value": 600, "$type": "fontWeight" }, "bold": { "$value": 700, "$type": "fontWeight" } }
+			},
+			"radius": {
+				"none": { "$value": "0px", "$type": "dimension" }, "small": { "$value": "12px", "$type": "dimension" }, "medium": { "$value": "24px", "$type": "dimension" }, "large": { "$value": "32px", "$type": "dimension" }, "xlarge": { "$value": "32px", "$type": "dimension" }, "full": { "$value": "100%", "$type": "dimension" }
+			},
+			"shadow": {
+				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
+				"pixelBox": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Crayon theme does not use the pixel-art hard-edge shadow (game theme only)." },
+				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
+			},
+			"component": {
+				"button": {
+					"padding": { "small": { "$value": "8px 12px", "$type": "dimension" }, "medium": { "$value": "12px 16px", "$type": "dimension" }, "large": { "$value": "16px 24px", "$type": "dimension" }, "xlarge": { "$value": "24px 32px", "$type": "dimension" } },
+					"radius": { "small": { "$value": "24px", "$type": "dimension" }, "medium": { "$value": "32px", "$type": "dimension" }, "large": { "$value": "32px", "$type": "dimension" } }
+				},
+				"card": { "radius": { "$value": "32px", "$type": "dimension" }, "padding": { "$value": "16px", "$type": "dimension" } },
+				"input": { "radius": { "$value": "24px", "$type": "dimension" }, "padding": { "$value": "12px", "$type": "dimension" } }
+			},
+			"color": {
+				"light": {
+					"primary": { "$description": "Runtime-customizable via ThemeProvider's primaryColor prop (hex). Resolved through CSS custom properties, not a static value.", "surface": { "$value": "var(--pie-primary-surface)", "$type": "color" }, "surfaceHover": { "$value": "var(--pie-primary-surface-hover)", "$type": "color" }, "surfaceActive": { "$value": "var(--pie-primary-surface-active)", "$type": "color" }, "text": { "$value": "var(--pie-primary-text)", "$type": "color" }, "border": { "$value": "var(--pie-primary-border)", "$type": "color" }, "weak": { "$value": "var(--pie-primary-weak)", "$type": "color" } },
+					"secondary": { "surface": { "$value": "#f9e3ed", "$type": "color" }, "surfaceHover": { "$value": "#e3d2d9", "$type": "color" }, "surfaceActive": { "$value": "#cec0c6", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#e3d2d9", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #f9e3ed 25%, white)", "$type": "color" } },
+					"success": { "surface": { "$value": "#a3ddb9", "$type": "color" }, "surfaceHover": { "$value": "#92daac", "$type": "color" }, "surfaceActive": { "$value": "#88d4a4", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#92daac", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #a3ddb9 25%, white)", "$type": "color" } },
+					"warning": { "surface": { "$value": "#e7d59e", "$type": "color" }, "surfaceHover": { "$value": "#e5ca90", "$type": "color" }, "surfaceActive": { "$value": "#e0ba84", "$type": "color" }, "text": { "$value": "#4b4b4b", "$type": "color" }, "border": { "$value": "#e5ca90", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #e7d59e 25%, white)", "$type": "color" } },
+					"danger": { "surface": { "$value": "#f87171", "$type": "color" }, "surfaceHover": { "$value": "#ef4444", "$type": "color" }, "surfaceActive": { "$value": "#dc2626", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#ef4444", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #f87171 25%, white)", "$type": "color" } },
+					"neutral": { "surface": { "$value": "#faf3ec", "$type": "color" }, "surfaceHover": { "$value": "#c8c2bc", "$type": "color" }, "surfaceActive": { "$value": "#96918d", "$type": "color" }, "text": { "$value": "#4b4b4b", "$type": "color" }, "border": { "$value": "#c8c2bc", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #faf3ec 25%, white)", "$type": "color" } },
+					"surface": { "background": { "$value": "#fffefb", "$type": "color" }, "backgroundElevated": { "$value": "#ffffff", "$type": "color" }, "outline": { "$value": "#fff9e8", "$type": "color" }, "text": { "$value": "#4b4b4b", "$type": "color" }, "textMuted": { "$value": "#afafaf", "$type": "color" }, "divider": { "$value": "rgba(75, 75, 75, 0.08)", "$type": "color" } }
+				},
+				"dark": {
+					"primary": { "$description": "Runtime-customizable via ThemeProvider's primaryColor prop (hex). Resolved through CSS custom properties, not a static value.", "surface": { "$value": "var(--pie-primary-surface)", "$type": "color" }, "surfaceHover": { "$value": "var(--pie-primary-surface-hover)", "$type": "color" }, "surfaceActive": { "$value": "var(--pie-primary-surface-active)", "$type": "color" }, "text": { "$value": "var(--pie-primary-text)", "$type": "color" }, "border": { "$value": "var(--pie-primary-border)", "$type": "color" }, "weak": { "$value": "var(--pie-primary-weak)", "$type": "color" } },
+					"secondary": { "surface": { "$value": "#f9e1eb", "$type": "color" }, "surfaceHover": { "$value": "#f9e3ed", "$type": "color" }, "surfaceActive": { "$value": "#e3d2d9", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#f9e3ed", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #f9e1eb 25%, white)", "$type": "color" } },
+					"success": { "surface": { "$value": "#b9e4c9", "$type": "color" }, "surfaceHover": { "$value": "#a3ddb9", "$type": "color" }, "surfaceActive": { "$value": "#92daac", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#a3ddb9", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #b9e4c9 25%, white)", "$type": "color" } },
+					"warning": { "surface": { "$value": "#ebdda8", "$type": "color" }, "surfaceHover": { "$value": "#e7d59e", "$type": "color" }, "surfaceActive": { "$value": "#e5ca90", "$type": "color" }, "text": { "$value": "#4b4b4b", "$type": "color" }, "border": { "$value": "#e7d59e", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #ebdda8 25%, white)", "$type": "color" } },
+					"danger": { "surface": { "$value": "#f87171", "$type": "color" }, "surfaceHover": { "$value": "#ef4444", "$type": "color" }, "surfaceActive": { "$value": "#dc2626", "$type": "color" }, "text": { "$value": "#ffffff", "$type": "color" }, "border": { "$value": "#ef4444", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #f87171 25%, white)", "$type": "color" } },
+					"neutral": { "surface": { "$value": "#4b4b4b", "$type": "color" }, "surfaceHover": { "$value": "#3c3c3c", "$type": "color" }, "surfaceActive": { "$value": "#2d2d2d", "$type": "color" }, "text": { "$value": "#faf3ec", "$type": "color" }, "border": { "$value": "#3c3c3c", "$type": "color" }, "weak": { "$value": "color-mix(in srgb, #4b4b4b 25%, white)", "$type": "color" } },
+					"surface": { "background": { "$value": "#0f0f0f", "$type": "color" }, "backgroundElevated": { "$value": "#1e1e1e", "$type": "color" }, "outline": { "$value": "#2d2d2d", "$type": "color" }, "text": { "$value": "#faf3ec", "$type": "color" }, "textMuted": { "$value": "#afafaf", "$type": "color" }, "divider": { "$value": "rgba(250, 243, 236, 0.24)", "$type": "color" } }
+				}
+			}
+		}
+	}
+}
