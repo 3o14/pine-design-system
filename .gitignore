@@ -11,6 +11,12 @@ node_modules
 dist
 dist-ssr
 
+# Generated from docs/public/ via `pnpm run sync-llms` (runs as part of `build`,
+# so it's always regenerated fresh before `npm publish`). Source of truth stays
+# in docs/public/llms.txt and docs/public/llms-full.txt — do not commit these.
+/llms.txt
+/llms-full.txt
+
 # TypeScript incremental build cache
 *.tsbuildinfo
 *.local

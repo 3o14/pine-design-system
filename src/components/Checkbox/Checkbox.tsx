@@ -12,12 +12,23 @@ export interface CheckboxProps extends Omit<
 	React.HTMLAttributes<HTMLElement>,
 	"onChange"
 > {
+	/** Size of the checkbox. Choose based on adjacent text or form components. Default: 'medium'. */
 	size?: CheckboxSize;
+	/** Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
 	intent?: CheckboxIntent;
+	/** Label text rendered next to the checkbox. Also required for screen readers to identify its purpose. */
 	label?: string;
+	/**
+	 * Controlled checked state. Use together with `onCheckedChange` when integrating with form
+	 * libraries, external state, or when rendering different UI based on the checked state. For
+	 * simple cases with no state management needed, use `defaultChecked` instead.
+	 */
 	checked?: boolean;
+	/** Initial checked state for uncontrolled usage. Use when you don't need to manage state externally. */
 	defaultChecked?: boolean;
+	/** Whether the checkbox is disabled. Default: false. */
 	disabled?: boolean;
+	/** Callback fired when the checked state changes. Pair with `checked` for controlled usage. */
 	onCheckedChange?: (checked: boolean) => void;
 	name?: string;
 	required?: boolean;
@@ -26,14 +37,6 @@ export interface CheckboxProps extends Omit<
 
 /**
  * Checkbox component for selection controls.
- *
- * @param CheckboxProps
- * @param size - Size of the checkbox (small, medium, large, xlarge)
- * @param intent - Color intent (primary, secondary, success, warning, danger, neutral)
- * @param label - Label text for the checkbox
- * @param checked - Controlled checked state
- * @param disabled - Whether the checkbox is disabled
- * @param onCheckedChange - Callback when checked state changes
  */
 export const Checkbox = ({
 	size = "medium",

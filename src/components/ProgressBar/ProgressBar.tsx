@@ -10,7 +10,12 @@ export type ProgressBarIntent = ColorIntent;
 
 export interface ProgressBarProps
 	extends React.HTMLAttributes<HTMLDivElement> {
-	/** Current value. Pass `null` for an indeterminate (unknown-progress) bar. */
+	/**
+	 * Current value. Use a number (determinate) when progress can be measured, such as upload
+	 * byte counts or completed steps. Pass `null` for an indeterminate bar when progress cannot
+	 * be measured — avoid leaving it indeterminate indefinitely; switch to determinate or a result
+	 * state as soon as possible.
+	 */
 	value?: number | null;
 	/** Minimum value. Defaults to 0. */
 	min?: number;

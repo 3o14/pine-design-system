@@ -11,8 +11,11 @@ export type TabIntent = ColorIntent;
 export type TabOrientation = "horizontal" | "vertical";
 
 export interface TabItem {
+	/** Unique value identifying this tab, used for selection and `onChange`. */
 	value: string;
+	/** Label rendered in the tab trigger. */
 	label: React.ReactNode;
+	/** Panel content rendered when this tab is selected. */
 	content: React.ReactNode;
 	disabled?: boolean;
 }
@@ -21,14 +24,34 @@ export interface TabProps extends Omit<
 	React.HTMLAttributes<HTMLElement>,
 	"onChange"
 > {
+	/**
+	 * Tabs to render. Keep the count between 2 and 6 where possible — too many tabs make it
+	 * harder to grasp the content; for more options, consider a Dropdown or sidebar navigation
+	 * instead.
+	 */
 	tabs: TabItem[];
+	/**
+	 * Controlled selected tab value. Use together with `onChange` when syncing tab state with URL
+	 * params or when tab changes trigger external actions (e.g. data fetch). For simple UI
+	 * switching, `defaultValue` alone is enough.
+	 */
 	value?: string;
+	/** Initial selected tab value for uncontrolled usage. Defaults to the first tab's value. */
 	defaultValue?: string;
+	/** Callback fired when the selected tab changes. Pair with `value` for controlled usage. */
 	onChange?: (value: string) => void;
+	/** Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
 	intent?: TabIntent;
+	/**
+	 * Layout direction of the tab list. 'horizontal' suits typical in-page tabs; 'vertical' suits
+	 * sidebar-style navigation. Default: 'horizontal'.
+	 */
 	orientation?: TabOrientation;
 }
 
+/**
+ * Tab component for organizing related content into multiple panels.
+ */
 export const Tab = ({
 	tabs,
 	value,
