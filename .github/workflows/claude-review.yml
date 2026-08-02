@@ -19,6 +19,11 @@ jobs:
           fetch-depth: 0
 
       - name: Claude review
+        # Non-blocking until the Claude GitHub App is installed on this repo
+        # (https://github.com/apps/claude) and ANTHROPIC_API_KEY is set under
+        # Settings → Secrets and variables → Actions. Once both are done this
+        # step starts succeeding with no workflow changes needed.
+        continue-on-error: true
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
