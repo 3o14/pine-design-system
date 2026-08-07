@@ -1,5 +1,12 @@
 # pine-design-system
 
+## 1.1.1
+
+### Patch Changes
+
+- 193b7a5: Add machine-readable docs for AI coding agents: `llms.txt`/`llms-full.txt` (served on the docs site and now also shipped inside the published package), per-prop JSDoc on every component's Props interface, and a W3C DTCG-formatted design tokens JSON export.
+- d1b0b39: Fix game and crayon theme CSS failing to load at runtime. Dynamic import with a bare specifier was unresolvable in the browser, and a template-literal `import.meta.url` fallback was silently broken by Rollup. Replaced with static string URL derivation and `<link>` tag injection.
+
 ## 1.1.0
 
 ### Minor Changes
