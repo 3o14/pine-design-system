@@ -1,0 +1,23 @@
+{
+	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"workspaces": {
+		".": {
+			"entry": [
+				"src/components/index.ts",
+				"src/**/*.stories.tsx",
+				"src/**/*.spec.tsx",
+				"scripts/*.{js,ts}"
+			],
+			"project": ["src/**/*.{ts,tsx}"]
+		},
+		"docs": {
+			"entry": [
+				"mdx-components.tsx",
+				"scripts/*.mjs",
+				"app/**/{page,layout,loading,error,not-found}.{ts,tsx}"
+			],
+			"project": ["**/*.{ts,tsx}"]
+		}
+	},
+	"ignoreWorkspaces": ["packages/pine-ui-kit"]
+}
