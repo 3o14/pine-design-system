@@ -76,7 +76,7 @@ export const intentVariants = styleVariants({
 		color: themeContract.color.danger.surface,
 	},
 	neutral: {
-		color: themeContract.color.neutral.surface,
+		color: themeContract.color.neutral.text,
 	},
 	inherit: {
 		color: "inherit",

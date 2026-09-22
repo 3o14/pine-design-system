@@ -1,6 +1,62 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Text } from "./Text";
+import { themeContract } from "@/tokens";
+import {
+	basicDarkTheme,
+	gameDarkTheme,
+	crayonDarkTheme,
+} from "@/tokens/themes";
+import { ThemeContext, type ThemeContextValue } from "@/providers/ThemeContext";
+
+/** Reads the literal hex a theme class assigns to a `var(--x)` reference, straight from the compiled stylesheet (jsdom does not resolve CSS custom properties itself). */
+function resolveVar(cssVarRef: string, themeClassName: string): string {
+	const varName = cssVarRef.slice(4, -1);
+	for (const sheet of Array.from(document.styleSheets)) {
+		let rules: CSSRuleList;
+		try {
+			rules = sheet.cssRules;
+		} catch {
+			continue;
+		}
+		for (const rule of Array.from(rules)) {
+			if (
+				rule instanceof CSSStyleRule &&
+				rule.selectorText?.includes(themeClassName)
+			) {
+				const value = rule.style.getPropertyValue(varName);
+				if (value) return value.trim();
+			}
+		}
+	}
+	throw new Error(`Could not resolve ${cssVarRef} for theme ${themeClassName}`);
+}
+
+function relativeLuminance(hex: string): number {
+	const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+	const [rl, gl, bl] = [r, g, b].map((c) =>
+		c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+	);
+	return 0.2126 * rl + 0.7152 * gl + 0.0722 * bl;
+}
+
+function contrastRatio(hexA: string, hexB: string): number {
+	const [l1, l2] = [relativeLuminance(hexA), relativeLuminance(hexB)].sort(
+		(a, b) => b - a
+	);
+	return (l1 + 0.05) / (l2 + 0.05);
+}
+
+function themeContextValue(themeClass: string): ThemeContextValue {
+	return {
+		theme: "dark",
+		setTheme: () => {},
+		design: "game",
+		setDesign: () => {},
+		themeClass,
+		cssLoading: false,
+	};
+}
 
 describe("Text", () => {
 	describe("Rendering", () => {
@@ -378,6 +434,45 @@ describe("Text", () => {
 			expect(element).toBeInTheDocument();
 			expect(element).toBeEmptyDOMElement();
 		});
+	});
+
+	describe("Neutral intent color (regression: was reading the surface/background token)", () => {
+		it("resolves to the neutral text token, not the neutral surface token", () => {
+			render(<Text intent="neutral">Neutral text</Text>);
+			const color = getComputedStyle(screen.getByText("Neutral text")).color;
+			expect(color).toBe(themeContract.color.neutral.text);
+			expect(color).not.toBe(themeContract.color.neutral.surface);
+		});
+
+		it("still resolves colored intents to their own surface token (untouched by the fix)", () => {
+			render(<Text intent="primary">Primary text</Text>);
+			const color = getComputedStyle(screen.getByText("Primary text")).color;
+			expect(color).toBe(themeContract.color.primary.surface);
+		});
+
+		it.each([
+			["basic", basicDarkTheme],
+			["game", gameDarkTheme],
+			["crayon", crayonDarkTheme],
+		])(
+			"renders readable neutral text against the app background in the %s dark theme (WCAG AA, >= 4.5:1)",
+			(_design, themeClass) => {
+				render(
+					<ThemeContext.Provider value={themeContextValue(themeClass)}>
+						<Text intent="neutral">Caption text</Text>
+					</ThemeContext.Provider>
+				);
+
+				const colorVar = getComputedStyle(screen.getByText("Caption text")).color;
+				const textHex = resolveVar(colorVar, themeClass);
+				const backgroundHex = resolveVar(
+					themeContract.color.surface.background,
+					themeClass
+				);
+
+				expect(contrastRatio(textHex, backgroundHex)).toBeGreaterThanOrEqual(4.5);
+			}
+		);
 	});
 });
 
