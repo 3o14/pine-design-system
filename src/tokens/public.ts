@@ -1,3 +1,11 @@
+/**
+ * Public token API — published as `pine-design-system/tokens`.
+ *
+ * This module and everything it (transitively) imports must have zero React or DOM
+ * dependency. It's consumed from server-only contexts (Server Components, Route Handlers,
+ * `generateMetadata`), so any React import here would silently reintroduce the RSC
+ * `createContext` crash this package's client/tokens split exists to avoid.
+ */
 export {
 	basicLightTheme,
 	basicDarkTheme,
