@@ -37,6 +37,16 @@ export default function App() {
 }
 ```
 
+### React Server Components
+
+The main `pine-design-system` entry ships with `"use client"` — every component and `ThemeProvider`/`useTheme` depend on React context and hooks, so this entry is a client boundary. Render it from a Client Component, or render it as JSX from a Server Component (the normal RSC pattern of a server tree containing a client subtree) — either works. What doesn't work is importing from `pine-design-system` and evaluating its exports as plain values inside server-only logic (e.g. inside a Server Component function body, a Route Handler, or `generateMetadata`).
+
+For that case — pure design token *values* (colors, radius, spacing, shadow, typography scale, theme class names) needed in actual server-side code, such as computing an OG image or a metadata field — import from the `pine-design-system/tokens` subpath instead. It has zero React or DOM dependency and carries no `"use client"` directive, so it evaluates safely on the server:
+
+```tsx
+import { radius, colors } from "pine-design-system/tokens";
+```
+
 ### ThemeProvider props
 
 | Prop | Type | Default | Description |

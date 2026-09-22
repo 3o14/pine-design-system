@@ -27,9 +27,14 @@
 	"types": "./dist/components/index.d.ts",
 	"exports": {
 		".": {
+			"types": "./dist/components/index.d.ts",
 			"import": "./dist/pine-design-system.es.js",
-			"require": "./dist/pine-design-system.cjs.js",
-			"types": "./dist/components/index.d.ts"
+			"require": "./dist/pine-design-system.cjs.js"
+		},
+		"./tokens": {
+			"types": "./dist/tokens/public.d.ts",
+			"import": "./dist/pine-design-system-tokens.es.js",
+			"require": "./dist/pine-design-system-tokens.cjs.js"
 		},
 		"./style.css": "./dist/style.css",
 		"./style-game.css": "./dist/style-game.css",
@@ -45,7 +50,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "vite build && tsx scripts/split-css.ts && tsc --project tsconfig.build.json && pnpm run sync-llms",
+		"build": "vite build && tsx scripts/split-css.ts && tsc --project tsconfig.build.json && pnpm run sync-llms && node scripts/verify-build-output.mjs",
 		"build:lib": "pnpm run build",
 		"lint": "eslint .",
 		"knip": "knip",

@@ -32,6 +32,17 @@ export default function App() {
 }
 ```
 
+## Next.js / React Server Components
+
+The main `pine-design-system` entry ships as a client boundary (`"use client"`) — every component and `ThemeProvider` depend on React context and hooks. Use it from a Client Component, or render it as JSX from a Server Component (a server tree rendering a client subtree, the normal RSC pattern) — both work fine. It's not safe to import from `pine-design-system` and read its exports as plain values inside server-only code (a Server Component's function body, a Route Handler, `generateMetadata`, etc.).
+
+For that, import design tokens from the `pine-design-system/tokens` subpath instead — it has no React or DOM dependency and carries no `"use client"` directive:
+
+```tsx
+// Safe in server-only logic — no React/DOM dependency
+import { radius, colors } from "pine-design-system/tokens";
+```
+
 ## ThemeProvider Options
 
 <DocTable
