@@ -330,10 +330,8 @@ export const triggerIcon = style({
 });
 
 const menuBase = style({
-	position: "absolute",
-	top: "calc(100% + 4px)",
-	left: 0,
-	minWidth: "max(100%, max-content)",
+	position: "relative",
+	minWidth: "var(--anchor-width)",
 	width: "max-content",
 	backgroundColor: themeContract.color.surface.background,
 	borderRadius: themeContract.radius.medium,
