@@ -139,5 +139,34 @@ describe("ThemeProvider", () => {
 
 			expect(captured?.theme).toBe("dark");
 		});
+
+		it("preserves a manual setTheme() choice across subsequent OS changes", async () => {
+			const { fireChange } = mockMatchMedia(false); // OS starts at light
+
+			let captured: ReturnType<typeof useTheme>;
+			render(
+				<ThemeProvider design="basic">
+					<Probe onValue={(ctx) => (captured = ctx)} />
+				</ThemeProvider>
+			);
+
+			await waitFor(() => expect(captured?.theme).toBe("light"));
+
+			act(() => {
+				captured?.setTheme("dark");
+			});
+			expect(captured?.theme).toBe("dark");
+
+			// The OS flipping (either direction) must not override the manual choice.
+			act(() => {
+				fireChange(true);
+			});
+			expect(captured?.theme).toBe("dark");
+
+			act(() => {
+				fireChange(false);
+			});
+			expect(captured?.theme).toBe("dark");
+		});
 	});
 });

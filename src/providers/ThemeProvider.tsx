@@ -164,12 +164,17 @@ export const ThemeProvider = ({
 		return defaultTheme ?? "light";
 	}, [controlledTheme, manualTheme, syncWithSystem, systemTheme, defaultTheme]);
 
+	// Kept in a ref (rather than a dependency) so an un-memoized `onThemeChange` passed by the
+	// consumer can't retrigger this effect on every parent re-render.
+	const onThemeChangeRef = useRef(onThemeChange);
+	onThemeChangeRef.current = onThemeChange;
+
 	useEffect(() => {
 		if (!syncWithSystem || controlledTheme !== undefined || manualTheme !== undefined) {
 			return;
 		}
-		onThemeChange?.(systemTheme);
-	}, [systemTheme, syncWithSystem, controlledTheme, manualTheme, onThemeChange]);
+		onThemeChangeRef.current?.(systemTheme);
+	}, [systemTheme, syncWithSystem, controlledTheme, manualTheme]);
 
 	const design = useMemo(() => {
 		return controlledDesign ?? internalDesign;
