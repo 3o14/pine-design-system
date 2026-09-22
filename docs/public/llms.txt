@@ -7,6 +7,7 @@ Core mental model for generating code against this library:
 - Wrap the app root in `ThemeProvider` once; components read the active theme via `useTheme()` internally, so consumers never pass a theme prop to individual components.
 - Every component accepts `className` for composition and forwards native HTML attributes not listed in its own prop table.
 - Prop names, defaults, and per-value guidance for every component are documented as JSDoc directly on each `Props` interface in `src/components/<Component>/<Component>.tsx` — read the source file if a page below is unavailable.
+- The main `pine-design-system` entry is a React Server Components client boundary (all components/providers use `useTheme()`, so it ships with `"use client"`) — only render it from a Client Component, or from a Server Component that just renders it as JSX (the RSC-normal "server renders a client tree" pattern). For pure token *values* (colors, radius, spacing, etc.) inside actual server-side logic (e.g. computing an OG image, a metadata value), import from `pine-design-system/tokens` instead — that subpath has zero React/DOM dependency and is safe to evaluate on the server.
 
 This file ships two ways: live at `https://pine-design-system.vercel.app/llms.txt` (links below resolve on that domain), and inside the npm package itself (`node_modules/pine-design-system/llms.txt`) for agents that only read local files. Links are absolute so both copies work identically.
 

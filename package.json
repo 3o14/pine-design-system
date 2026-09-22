@@ -31,6 +31,11 @@
 			"require": "./dist/pine-design-system.cjs.js",
 			"types": "./dist/components/index.d.ts"
 		},
+		"./tokens": {
+			"import": "./dist/pine-design-system-tokens.es.js",
+			"require": "./dist/pine-design-system-tokens.cjs.js",
+			"types": "./dist/tokens/public.d.ts"
+		},
 		"./style.css": "./dist/style.css",
 		"./style-game.css": "./dist/style-game.css",
 		"./style-crayon.css": "./dist/style-crayon.css",

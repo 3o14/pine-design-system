@@ -4,6 +4,7 @@
 		".": {
 			"entry": [
 				"src/components/index.ts",
+				"src/tokens/public.ts",
 				"src/**/*.stories.tsx",
 				"src/**/*.spec.tsx",
 				"scripts/*.{js,ts}"
