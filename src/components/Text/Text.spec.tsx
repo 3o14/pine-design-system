@@ -7,7 +7,7 @@ import {
 	gameDarkTheme,
 	crayonDarkTheme,
 } from "@/tokens/themes";
-import { ThemeContext, type ThemeContextValue } from "@/providers/ThemeContext";
+import { ThemeProvider, type Design } from "@/providers";
 
 /** Reads the literal hex a theme class assigns to a `var(--x)` reference, straight from the compiled stylesheet (jsdom does not resolve CSS custom properties itself). */
 function resolveVar(cssVarRef: string, themeClassName: string): string {
@@ -32,7 +32,14 @@ function resolveVar(cssVarRef: string, themeClassName: string): string {
 	throw new Error(`Could not resolve ${cssVarRef} for theme ${themeClassName}`);
 }
 
+const HEX_COLOR_PATTERN = /^#[0-9a-f]{6}$/i;
+
 function relativeLuminance(hex: string): number {
+	if (!HEX_COLOR_PATTERN.test(hex)) {
+		throw new Error(
+			`relativeLuminance expects a 6-digit hex color (e.g. "#e2e8f0"), got: ${JSON.stringify(hex)}`
+		);
+	}
 	const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
 	const [rl, gl, bl] = [r, g, b].map((c) =>
 		c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
@@ -45,17 +52,6 @@ function contrastRatio(hexA: string, hexB: string): number {
 		(a, b) => b - a
 	);
 	return (l1 + 0.05) / (l2 + 0.05);
-}
-
-function themeContextValue(themeClass: string): ThemeContextValue {
-	return {
-		theme: "dark",
-		setTheme: () => {},
-		design: "game",
-		setDesign: () => {},
-		themeClass,
-		cssLoading: false,
-	};
 }
 
 describe("Text", () => {
@@ -454,13 +450,18 @@ describe("Text", () => {
 			["basic", basicDarkTheme],
 			["game", gameDarkTheme],
 			["crayon", crayonDarkTheme],
-		])(
+		] as [Design, string][])(
 			"renders readable neutral text against the app background in the %s dark theme (WCAG AA, >= 4.5:1)",
-			(_design, themeClass) => {
+			(design, themeClass) => {
 				render(
-					<ThemeContext.Provider value={themeContextValue(themeClass)}>
+					<ThemeProvider
+						theme="dark"
+						design={design}
+						syncWithSystem={false}
+						applyGlobal={false}
+					>
 						<Text intent="neutral">Caption text</Text>
-					</ThemeContext.Provider>
+					</ThemeProvider>
 				);
 
 				const colorVar = getComputedStyle(screen.getByText("Caption text")).color;
