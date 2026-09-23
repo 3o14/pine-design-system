@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Text } from "./Text";
 import { themeContract } from "@/tokens";
@@ -446,34 +446,52 @@ describe("Text", () => {
 			expect(color).toBe(themeContract.color.primary.surface);
 		});
 
-		it.each([
-			["basic", basicDarkTheme],
-			["game", gameDarkTheme],
-			["crayon", crayonDarkTheme],
-		] as [Design, string][])(
-			"renders readable neutral text against the app background in the %s dark theme (WCAG AA, >= 4.5:1)",
-			(design, themeClass) => {
-				render(
-					<ThemeProvider
-						theme="dark"
-						design={design}
-						syncWithSystem={false}
-						applyGlobal={false}
-					>
-						<Text intent="neutral">Caption text</Text>
-					</ThemeProvider>
-				);
+		describe("in a dark ThemeProvider", () => {
+			// ThemeProvider always subscribes to `window.matchMedia` on the client (Rules of
+			// Hooks — useSyncExternalStore can't be called conditionally), even here where
+			// `syncWithSystem={false}` means the value is never read. jsdom doesn't implement
+			// matchMedia, so rendering ThemeProvider at all needs this stub.
+			afterEach(() => {
+				// @ts-expect-error test cleanup — matchMedia isn't implemented by jsdom by default
+				delete window.matchMedia;
+			});
 
-				const colorVar = getComputedStyle(screen.getByText("Caption text")).color;
-				const textHex = resolveVar(colorVar, themeClass);
-				const backgroundHex = resolveVar(
-					themeContract.color.surface.background,
-					themeClass
-				);
+			it.each([
+				["basic", basicDarkTheme],
+				["game", gameDarkTheme],
+				["crayon", crayonDarkTheme],
+			] as [Design, string][])(
+				"renders readable neutral text against the app background in the %s dark theme (WCAG AA, >= 4.5:1)",
+				(design, themeClass) => {
+					window.matchMedia = (() => ({
+						matches: false,
+						media: "(prefers-color-scheme: dark)",
+						addEventListener: () => {},
+						removeEventListener: () => {},
+					})) as unknown as typeof window.matchMedia;
 
-				expect(contrastRatio(textHex, backgroundHex)).toBeGreaterThanOrEqual(4.5);
-			}
-		);
+					render(
+						<ThemeProvider
+							theme="dark"
+							design={design}
+							syncWithSystem={false}
+							applyGlobal={false}
+						>
+							<Text intent="neutral">Caption text</Text>
+						</ThemeProvider>
+					);
+
+					const colorVar = getComputedStyle(screen.getByText("Caption text")).color;
+					const textHex = resolveVar(colorVar, themeClass);
+					const backgroundHex = resolveVar(
+						themeContract.color.surface.background,
+						themeClass
+					);
+
+					expect(contrastRatio(textHex, backgroundHex)).toBeGreaterThanOrEqual(4.5);
+				}
+			);
+		});
 	});
 });
 
