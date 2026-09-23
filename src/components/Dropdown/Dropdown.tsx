@@ -3,12 +3,13 @@ import clsx from "clsx";
 import * as styles from "./Dropdown.css";
 import { lightTheme, type ColorIntent } from "@/tokens";
 import { useTheme } from "@/providers";
+import type { Side, Align } from "@/utils/position";
 
 export type DropdownSize = "small" | "medium" | "large";
 export type DropdownRounded = "small" | "medium" | "large";
 export type DropdownIntent = ColorIntent;
-export type DropdownSide = "top" | "bottom" | "left" | "right";
-export type DropdownAlign = "start" | "center" | "end";
+export type DropdownSide = Side;
+export type DropdownAlign = Align;
 
 
 export interface DropdownOption {

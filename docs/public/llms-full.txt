@@ -235,6 +235,9 @@ const options = [
 | `rounded` | `"small" \| "medium" \| "large"` | `"medium"` | |
 | `intent` | `"primary" \| "secondary" \| "success" \| "warning" \| "danger" \| "neutral"` | `"primary"` | |
 | `disabled` | `boolean` | `false` | |
+| `side` | `"top" \| "bottom" \| "left" \| "right"` | `"bottom"` | Auto-flips when there is not enough space. |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | |
+| `sideOffset` | `number` | `4` | Gap in pixels between the trigger and the popup. |
 
 `DropdownOption`: `{ value: string; label: string; disabled?: boolean }`
 

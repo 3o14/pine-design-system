@@ -2,51 +2,52 @@
   {
     "name": "options",
     "type": "DropdownOption[]",
-    "description": "Array of selectable options",
+    "description": "Selectable options. Prefer Dropdown when there are 6 or more options or when space is limited; for 5 or fewer options where all choices should stay visible at once, use a Radio group instead.",
     "required": true
   },
   {
     "name": "value",
     "type": "string",
-    "description": "Currently selected value (controlled)",
+    "description": "Controlled selected value. Use together with `onValueChange` when integrating with form libraries or when the selection needs to drive other UI. For simple uncontrolled usage, use `defaultValue` instead.",
     "required": false
   },
   {
     "name": "defaultValue",
     "type": "string",
+    "description": "Initial selected value for uncontrolled usage.",
     "required": false
   },
   {
     "name": "onValueChange",
     "type": "(value: string | null) => void",
-    "description": "Callback when selected value changes",
+    "description": "Callback fired when the selected value changes. Pair with `value` for controlled usage.",
     "required": false
   },
   {
     "name": "placeholder",
     "type": "string",
-    "description": "Placeholder text when no option is selected",
+    "description": "Text shown in the trigger when no option is selected. Default: 'Select an option'.",
     "default": "\"Select an option\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Size of the dropdown (small, medium, large)",
+    "description": "Size of the dropdown trigger. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Border radius size (small, medium, large)",
+    "description": "Corner radius of the dropdown trigger (small, medium, large). Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
+    "description": "Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'.",
     "default": "\"primary\"",
     "required": false
   },
@@ -59,7 +60,7 @@
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Whether the dropdown is disabled",
+    "description": "Whether the dropdown is disabled. Default: false.",
     "default": "false",
     "required": false
   },
@@ -71,6 +72,27 @@
   {
     "name": "required",
     "type": "boolean",
+    "required": false
+  },
+  {
+    "name": "side",
+    "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+    "description": "Side of the trigger the popup appears on. Automatically flips to the opposite side when there is not enough space. Default: 'bottom'.",
+    "default": "\"bottom\"",
+    "required": false
+  },
+  {
+    "name": "align",
+    "type": "\"start\" | \"center\" | \"end\"",
+    "description": "Alignment along the chosen side, relative to the trigger. Default: 'start'.",
+    "default": "\"start\"",
+    "required": false
+  },
+  {
+    "name": "sideOffset",
+    "type": "number",
+    "description": "Gap in pixels between the trigger and the popup. Default: 4.",
+    "default": "4",
     "required": false
   }
 ]
