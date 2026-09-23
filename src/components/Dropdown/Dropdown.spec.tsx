@@ -303,6 +303,47 @@ describe("Dropdown", () => {
 		});
 	});
 
+	describe("Positioning", () => {
+		it("defaults to side='bottom' and align='start'", async () => {
+			const user = userEvent.setup();
+
+			render(<Dropdown options={mockOptions} />);
+			await user.click(screen.getByRole("combobox"));
+
+			const listbox = await screen.findByRole("listbox");
+			const positioner = listbox.closest('[role="presentation"]')?.parentElement;
+
+			expect(positioner).toHaveAttribute("data-side", "bottom");
+			expect(positioner).toHaveAttribute("data-align", "start");
+		});
+
+		it("forwards side and align to the underlying positioner", async () => {
+			const user = userEvent.setup();
+
+			render(<Dropdown options={mockOptions} side="top" align="end" />);
+			await user.click(screen.getByRole("combobox"));
+
+			const listbox = await screen.findByRole("listbox");
+			const positioner = listbox.closest('[role="presentation"]')?.parentElement;
+
+			expect(positioner).toHaveAttribute("data-side", "top");
+			expect(positioner).toHaveAttribute("data-align", "end");
+		});
+
+		it("accepts a custom sideOffset without breaking rendering", async () => {
+			const user = userEvent.setup();
+
+			render(<Dropdown options={mockOptions} sideOffset={12} />);
+			const trigger = screen.getByRole("combobox");
+			await user.click(trigger);
+
+			await waitFor(() => {
+				expect(trigger).toHaveAttribute("aria-expanded", "true");
+			});
+			expect(await screen.findAllByRole("option")).toHaveLength(mockOptions.length);
+		});
+	});
+
 	describe("Empty Options", () => {
 		it("renders with empty options array", () => {
 			render(<Dropdown options={[]} placeholder="No options" />);

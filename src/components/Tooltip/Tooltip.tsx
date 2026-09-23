@@ -4,9 +4,10 @@ import clsx from "clsx";
 import * as styles from "./Tooltip.css";
 import { lightTheme } from "@/tokens";
 import { useTheme } from "@/providers";
+import type { Side, Align } from "@/utils/position";
 
-export type TooltipSide = "top" | "bottom" | "left" | "right";
-export type TooltipAlign = "start" | "center" | "end";
+export type TooltipSide = Side;
+export type TooltipAlign = Align;
 
 const TOOLTIP_SIDE_OFFSET = 6;
 

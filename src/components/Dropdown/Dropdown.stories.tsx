@@ -520,3 +520,33 @@ export const FormExample: Story = {
 		);
 	},
 };
+
+// Trigger Near Viewport Bottom
+// Regression story for a bug where the popup rendered off-screen: with Base UI Select's
+// default `alignItemWithTrigger` positioning, the Positioner stretches from the trigger to
+// the viewport edge, so a Popup with hardcoded `top: calc(100% + 4px)` computed its offset
+// against that stretched box instead of the trigger, pushing it below the viewport.
+export const TriggerNearViewportBottom: Story = {
+	parameters: {
+		layout: "fullscreen",
+	},
+	render: function DropdownNearBottom(args) {
+		const [value, setValue] = React.useState<string>(args.value ?? "");
+		const manyOptions = Array.from({ length: 19 }, (_, i) => ({
+			value: `${i + 1}`,
+			label: `Option ${i + 1}`,
+		}));
+
+		return (
+			<div style={{ height: "100vh", display: "flex", alignItems: "flex-end", padding: "16px" }}>
+				<Dropdown
+					{...args}
+					options={manyOptions}
+					value={value}
+					onValueChange={(newValue) => setValue(newValue ?? "")}
+					placeholder="Select an option"
+				/>
+			</div>
+		);
+	},
+};

@@ -3,10 +3,13 @@ import clsx from "clsx";
 import * as styles from "./Dropdown.css";
 import { lightTheme, type ColorIntent } from "@/tokens";
 import { useTheme } from "@/providers";
+import type { Side, Align } from "@/utils/position";
 
 export type DropdownSize = "small" | "medium" | "large";
 export type DropdownRounded = "small" | "medium" | "large";
 export type DropdownIntent = ColorIntent;
+export type DropdownSide = Side;
+export type DropdownAlign = Align;
 
 
 export interface DropdownOption {
@@ -48,6 +51,15 @@ export interface DropdownProps
 	disabled?: boolean;
 	name?: string;
 	required?: boolean;
+	/**
+	 * Side of the trigger the popup appears on. Automatically flips to the opposite side when
+	 * there is not enough space. Default: 'bottom'.
+	 */
+	side?: DropdownSide;
+	/** Alignment along the chosen side, relative to the trigger. Default: 'start'. */
+	align?: DropdownAlign;
+	/** Gap in pixels between the trigger and the popup. Default: 4. */
+	sideOffset?: number;
 }
 
 /**
@@ -67,6 +79,9 @@ export const Dropdown = ({
 	className,
 	name,
 	required,
+	side = "bottom",
+	align = "start",
+	sideOffset = 4,
 }: DropdownProps) => {
 	const themeContext = useTheme();
 	const themeClass = themeContext?.themeClass ?? lightTheme;
@@ -125,7 +140,12 @@ export const Dropdown = ({
 				</BaseSelect.Trigger>
 
 				<BaseSelect.Portal>
-					<BaseSelect.Positioner sideOffset={4}>
+					<BaseSelect.Positioner
+						side={side}
+						align={align}
+						sideOffset={sideOffset}
+						alignItemWithTrigger={false}
+					>
 						<BaseSelect.Popup
 							className={styles.menu({ intent })}
 						>
