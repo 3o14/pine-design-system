@@ -549,12 +549,12 @@ export const menuItem = recipe({
 			style: {
 				":hover": {
 					backgroundColor: themeContract.color.surface.backgroundElevated,
-					color: themeContract.color.neutral.surface,
+					color: themeContract.color.neutral.text,
 				},
 				":focus-visible": {
 					outline: "none",
 					backgroundColor: themeContract.color.surface.backgroundElevated,
-					boxShadow: `inset 0 0 0 2px ${themeContract.color.neutral.surface}`,
+					boxShadow: `inset 0 0 0 2px ${themeContract.color.neutral.text}`,
 				},
 				selectors: {
 					"&[data-selected='true']": {

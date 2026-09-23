@@ -254,7 +254,7 @@ export const badge = recipe({
 			variants: { variant: "outline", intent: "neutral" },
 			style: {
 				borderColor: themeContract.color.neutral.border,
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				selectors: createThemeSelectors("neutral", "outline"),
 			},
 		},
@@ -319,7 +319,7 @@ export const badge = recipe({
 			variants: { variant: "subtle", intent: "neutral" },
 			style: {
 				backgroundColor: `${themeContract.color.neutral.surface}20`,
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				borderColor: "transparent",
 				boxShadow: "none",
 				margin: "0",
@@ -377,7 +377,7 @@ export const badge = recipe({
 			variants: { variant: "weak", intent: "neutral" },
 			style: {
 				backgroundColor: themeContract.color.neutral.weak,
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				borderColor: "transparent",
 				selectors: createThemeSelectors("neutral", "weak"),
 			},

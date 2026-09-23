@@ -518,7 +518,7 @@ export const button = recipe({
 		{
 			variants: { variant: "outline", intent: "neutral" },
 			style: {
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				borderColor: themeContract.color.neutral.border,
 				boxShadow: "none",
 				selectors: {
@@ -614,7 +614,7 @@ export const button = recipe({
 		{
 			variants: { variant: "ghost", intent: "neutral" },
 			style: {
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				selectors: {
 					"&:hover:not(:disabled)": {
 						backgroundColor: themeContract.color.neutral.weak,
@@ -732,7 +732,7 @@ export const button = recipe({
 			variants: { variant: "weak", intent: "neutral" },
 			style: {
 				backgroundColor: themeContract.color.neutral.weak,
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				borderColor: "transparent",
 				boxShadow: themeContract.shadow.small,
 				selectors: {
