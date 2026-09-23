@@ -4,6 +4,7 @@ import React, {
 	useMemo,
 	useCallback,
 	useRef,
+	useSyncExternalStore,
 } from "react";
 import {
 	ThemeContext,
@@ -94,14 +95,33 @@ export interface ThemeProviderProps {
 	applyGlobal?: boolean;
 }
 
-const getSystemTheme = (): Theme => {
-	if (typeof window === "undefined") {
-		return "light";
-	}
+/**
+ * `window.matchMedia` is an external, environment-dependent value: the server has no `window` at
+ * all, and the client's real OS preference is only knowable once `window` exists. Reading it
+ * directly inside a `useState` lazy initializer (the old approach) makes the client's very first
+ * render diverge from the server-rendered HTML whenever the two disagree, which React reports as
+ * a hydration mismatch.
+ *
+ * `useSyncExternalStore`'s `getServerSnapshot` is used only for the server render and for the
+ * client's hydration pass (kept in lockstep with the server on purpose), then React automatically
+ * re-renders with `getSnapshot`'s real value immediately after hydration completes. A pure
+ * client-only render (no `hydrateRoot` involved, e.g. Storybook) skips `getServerSnapshot`
+ * entirely and uses `getSnapshot` from the first render — so this doesn't reintroduce a flash for
+ * apps that never had one.
+ */
+function subscribeToSystemTheme(callback: () => void) {
+	const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+	mediaQuery.addEventListener("change", callback);
+	return () => mediaQuery.removeEventListener("change", callback);
+}
 
-	const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	return prefersDark ? "dark" : "light";
-};
+function getSystemThemeSnapshot(): Theme {
+	return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function getServerSystemThemeSnapshot(): Theme {
+	return "light";
+}
 
 export const ThemeProvider = ({
 	children,
@@ -117,56 +137,44 @@ export const ThemeProvider = ({
 	style,
 	applyGlobal = true,
 }: ThemeProviderProps) => {
-	const getInitialTheme = (): Theme => {
-		if (defaultTheme) {
-			return defaultTheme;
-		}
-		return syncWithSystem ? getSystemTheme() : "light";
-	};
+	// Subscribed unconditionally (Rules of Hooks); `subscribe`/`getSnapshot` only ever touch
+	// `window` when React actually calls them on the client — never during an SSR render.
+	const systemTheme = useSyncExternalStore(
+		subscribeToSystemTheme,
+		getSystemThemeSnapshot,
+		getServerSystemThemeSnapshot
+	);
 
-	const [internalTheme, setInternalTheme] = useState<Theme>(getInitialTheme);
+	const [manualTheme, setManualTheme] = useState<Theme | undefined>(undefined);
 	const [internalDesign, setInternalDesign] = useState<Design>(defaultDesign);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [cssLoading, setCssLoading] = useState(false);
 
-	useEffect(() => {
-		if (controlledTheme !== undefined) {
-			setInternalTheme(controlledTheme);
-		}
-	}, [controlledTheme]);
-
-	useEffect(() => {
-		if (!syncWithSystem || controlledTheme !== undefined) {
-			return;
-		}
-
-		if (typeof window === "undefined") {
-			return;
-		}
-
-		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-		const handleSystemThemeChange = (
-			e: MediaQueryListEvent | MediaQueryList
-		) => {
-			const newSystemTheme: Theme = e.matches ? "dark" : "light";
-			setInternalTheme(newSystemTheme);
-			onThemeChange?.(newSystemTheme);
-		};
-
-		handleSystemThemeChange(mediaQuery);
-
-		mediaQuery.addEventListener("change", handleSystemThemeChange);
-
-		return () => {
-			mediaQuery.removeEventListener("change", handleSystemThemeChange);
-		};
-	}, [syncWithSystem, controlledTheme, onThemeChange]);
-
 	const theme = useMemo(() => {
-		return controlledTheme ?? internalTheme;
-	}, [controlledTheme, internalTheme]);
+		if (controlledTheme !== undefined) {
+			return controlledTheme;
+		}
+		if (manualTheme !== undefined) {
+			return manualTheme;
+		}
+		if (syncWithSystem) {
+			return systemTheme;
+		}
+		return defaultTheme ?? "light";
+	}, [controlledTheme, manualTheme, syncWithSystem, systemTheme, defaultTheme]);
+
+	// Kept in a ref (rather than a dependency) so an un-memoized `onThemeChange` passed by the
+	// consumer can't retrigger this effect on every parent re-render.
+	const onThemeChangeRef = useRef(onThemeChange);
+	onThemeChangeRef.current = onThemeChange;
+
+	useEffect(() => {
+		if (!syncWithSystem || controlledTheme !== undefined || manualTheme !== undefined) {
+			return;
+		}
+		onThemeChangeRef.current?.(systemTheme);
+	}, [systemTheme, syncWithSystem, controlledTheme, manualTheme]);
 
 	const design = useMemo(() => {
 		return controlledDesign ?? internalDesign;
@@ -244,7 +252,7 @@ export const ThemeProvider = ({
 	const setTheme = useCallback(
 		(newTheme: Theme) => {
 			if (!controlledTheme) {
-				setInternalTheme(newTheme);
+				setManualTheme(newTheme);
 			}
 			onThemeChange?.(newTheme);
 		},

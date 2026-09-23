@@ -47,6 +47,30 @@ For that case — pure design token *values* (colors, radius, spacing, shadow, t
 import { radius, colors } from "pine-design-system/tokens";
 ```
 
+### Avoiding a theme flash under SSR
+
+`syncWithSystem` (default `true`) is SSR-safe: the server render and the client's first (hydration) render always agree, so there is no hydration mismatch. A real SSR app still gets one brief correction immediately after hydration, flipping from the fallback theme to the real OS preference — unavoidable without knowing the client's OS setting at request time.
+
+To eliminate that flash, inline `getThemeInitScript(options?: { design?: 'basic' | 'game' | 'crayon' })` (from `pine-design-system/tokens`) in the root `<head>`, before hydration. It reads `prefers-color-scheme` synchronously and paints the correct theme class on `document.documentElement` immediately:
+
+```tsx
+// app/layout.tsx (Server Component)
+import { getThemeInitScript } from "pine-design-system/tokens";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getThemeInitScript({ design: "game" }) }} />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+`suppressHydrationWarning` on `<html>` is required and must be added by the consumer — the package cannot add it on their behalf. Same pattern as `next-themes`.
+
 ### ThemeProvider props
 
 | Prop | Type | Default | Description |
