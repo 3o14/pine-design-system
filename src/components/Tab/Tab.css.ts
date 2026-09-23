@@ -172,7 +172,7 @@ export const tab = recipe({
 			style: {
 				selectors: {
 					"&[data-selected]": {
-						color: themeContract.color.neutral.surface,
+						color: themeContract.color.neutral.text,
 						fontWeight: themeContract.typography.fontWeight.bold,
 					},
 				},
@@ -210,7 +210,7 @@ export const tabSelected = recipe({
 				fontWeight: themeContract.typography.fontWeight.bold,
 			},
 			neutral: {
-				color: themeContract.color.neutral.surface,
+				color: themeContract.color.neutral.text,
 				fontWeight: themeContract.typography.fontWeight.bold,
 			},
 		},
