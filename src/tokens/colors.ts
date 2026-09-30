@@ -90,7 +90,7 @@ const darkPalette: Record<ColorIntent, ColorScale> = {
 		surfaceActive: "#7c3aed",
 		text: "#0b1120",
 		border: "#8b5cf6",
-		weak: getWeakColor("#a78bfa", 25),
+		weak: getWeakColor("#a78bfa", 35, "black"),
 	},
 	secondary: {
 		surface: "#64748b",
@@ -98,7 +98,7 @@ const darkPalette: Record<ColorIntent, ColorScale> = {
 		surfaceActive: "#334155",
 		text: "#0b1120",
 		border: "#475569",
-		weak: getWeakColor("#64748b", 25),
+		weak: getWeakColor("#64748b", 35, "black"),
 	},
 	success: {
 		surface: "#22c55e",
@@ -106,7 +106,7 @@ const darkPalette: Record<ColorIntent, ColorScale> = {
 		surfaceActive: "#15803d",
 		text: "#0b1120",
 		border: "#16a34a",
-		weak: getWeakColor("#22c55e", 25),
+		weak: getWeakColor("#22c55e", 35, "black"),
 	},
 	warning: {
 		surface: "#fde047",
@@ -114,7 +114,7 @@ const darkPalette: Record<ColorIntent, ColorScale> = {
 		surfaceActive: "#eab308",
 		text: "#0b1120",
 		border: "#facc15",
-		weak: getWeakColor("#fde047", 25),
+		weak: getWeakColor("#fde047", 35, "black"),
 	},
 	danger: {
 		surface: "#f87171",
@@ -122,7 +122,7 @@ const darkPalette: Record<ColorIntent, ColorScale> = {
 		surfaceActive: "#dc2626",
 		text: "#0b1120",
 		border: "#ef4444",
-		weak: getWeakColor("#f87171", 25),
+		weak: getWeakColor("#f87171", 35, "black"),
 	},
 	neutral: {
 		surface: "#1e293b",
@@ -130,7 +130,7 @@ const darkPalette: Record<ColorIntent, ColorScale> = {
 		surfaceActive: "#475569",
 		text: "#e2e8f0",
 		border: "#334155",
-		weak: getWeakColor("#1e293b", 25),
+		weak: getWeakColor("#1e293b", 35, "black"),
 	},
 };
 

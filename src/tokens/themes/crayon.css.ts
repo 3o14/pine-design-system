@@ -163,7 +163,7 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: pastelPink[600],
 			text: foundation.neutral.white,
 			border: pastelPink[500],
-			weak: getWeakColor(pastelPink[400], 25),
+			weak: getWeakColor(pastelPink[400], 35, "black"),
 		},
 		success: {
 			surface: pastelGreen[400],
@@ -171,7 +171,7 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: pastelGreen[600],
 			text: foundation.neutral.white,
 			border: pastelGreen[500],
-			weak: getWeakColor(pastelGreen[400], 25),
+			weak: getWeakColor(pastelGreen[400], 35, "black"),
 		},
 		warning: {
 			surface: pastelYellow[400],
@@ -179,7 +179,7 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: pastelYellow[600],
 			text: foundation.charcoal[500],
 			border: pastelYellow[500],
-			weak: getWeakColor(pastelYellow[400], 25),
+			weak: getWeakColor(pastelYellow[400], 35, "black"),
 		},
 		danger: {
 			surface: foundation.red[400],
@@ -187,7 +187,7 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: foundation.red[600],
 			text: foundation.neutral.white,
 			border: foundation.red[500],
-			weak: getWeakColor(foundation.red[400], 25),
+			weak: getWeakColor(foundation.red[400], 35, "black"),
 		},
 		neutral: {
 			surface: foundation.charcoal[500],
@@ -195,7 +195,7 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: foundation.charcoal[700],
 			text: foundation.cream[500],
 			border: foundation.charcoal[600],
-			weak: getWeakColor(foundation.charcoal[500], 25),
+			weak: getWeakColor(foundation.charcoal[500], 35, "black"),
 		},
 		surface: {
 			background: foundation.charcoal[900],

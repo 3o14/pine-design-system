@@ -1,6 +1,7 @@
 import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent } from "@/tokens";
+import { basicDarkTheme } from "@/tokens/themes/basic.css";
 import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
 import {
@@ -9,6 +10,8 @@ import {
 	createCrayonBeforeStyle,
 	createCrayonAfterStyle,
 } from "@/tokens/themes/crayonTexture.css";
+
+const basicDarkThemeClass = String(basicDarkTheme);
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
@@ -52,6 +55,14 @@ const trackBase = style({
 	overflow: "hidden",
 	backgroundColor: themeContract.color.neutral.weak,
 	selectors: {
+		// neutral.weak는 텍스트-위-weak 대비(Button/Badge)에 맞춰 다크 테마에서
+		// 검은색에 가깝게 섞이도록 튜닝되어 있어, 텍스트가 없는 이 트랙에서는
+		// 오히려 어두운 페이지 배경과 거의 구분되지 않는다. 트랙 위엔 텍스트가
+		// 없으므로 weak(텍스트 대비용) 토큰 대신, 이미 페이지와 구분되는
+		// 일반 neutral 단계를 써야 한다.
+		[`.${basicDarkThemeClass} &, .${gameDarkThemeClass} &`]: {
+			backgroundColor: themeContract.color.neutral.surfaceActive,
+		},
 		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
 			borderRadius: 0,
 			boxShadow: themeContract.shadow.pixelBox,
@@ -62,10 +73,18 @@ const trackBase = style({
 			overflow: "hidden",
 			backgroundColor: "transparent",
 		},
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]: {
+		[`.${crayonLightThemeClass} &::before`]: {
 			...createCrayonBeforeBaseStyle(),
 			...createCrayonBeforeStyle(
 				themeContract.color.neutral.weak,
+				themeContract.color.neutral.border,
+				false
+			),
+		},
+		[`.${crayonDarkThemeClass} &::before`]: {
+			...createCrayonBeforeBaseStyle(),
+			...createCrayonBeforeStyle(
+				themeContract.color.neutral.surface,
 				themeContract.color.neutral.border,
 				false
 			),
