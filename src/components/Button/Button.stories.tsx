@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
 import { ThemeProvider } from "@/providers";
-import type { Design } from "@/providers/ThemeContext";
-import type { ColorIntent } from "@/tokens";
 
 const meta = {
 	title: "Action/Button",
@@ -409,98 +407,6 @@ export const CustomPrimaryColor: Story = {
 			description: {
 				story:
 					"primaryColor prop을 사용하여 커스텀 primary 색상을 설정할 수 있습니다. 각 variant(solid, outline, ghost, weak)와 disabled 상태의 색상이 자동으로 계산됩니다.",
-			},
-		},
-	},
-};
-
-// Regression: dark theme weak/outline hover contrast
-// (https://github.com — pine-design-system Button outline hover 대비 버그)
-const REGRESSION_INTENTS: ColorIntent[] = [
-	"primary",
-	"secondary",
-	"success",
-	"warning",
-	"danger",
-	"neutral",
-];
-
-const REGRESSION_DESIGNS: { design: Design; label: string }[] = [
-	{ design: "basic", label: "Basic" },
-	{ design: "game", label: "Game" },
-	{ design: "crayon", label: "Crayon" },
-];
-
-export const DarkModeWeakContrast: Story = {
-	render: () => (
-		<div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-			{REGRESSION_DESIGNS.map(({ design, label }) => (
-				<ThemeProvider
-					key={design}
-					theme="dark"
-					design={design}
-					applyGlobal={false}
-					style={{
-						backgroundColor: "#0b1120",
-						padding: "1.5rem",
-						borderRadius: "8px",
-					}}
-				>
-					<h3 style={{ margin: 0, marginBottom: "0.75rem", color: "#e2e8f0" }}>
-						{label} · Dark
-					</h3>
-
-					<p
-						style={{
-							margin: 0,
-							marginBottom: "0.5rem",
-							color: "#94a3b8",
-							fontSize: "13px",
-						}}
-					>
-						weak variant (버튼 기본 배경 — 다크 테마에서 텍스트가 사라지면 회귀)
-					</p>
-					<div
-						style={{
-							display: "flex",
-							gap: "8px",
-							flexWrap: "wrap",
-							marginBottom: "1rem",
-						}}
-					>
-						{REGRESSION_INTENTS.map((intent) => (
-							<Button key={intent} variant="weak" intent={intent}>
-								{intent}
-							</Button>
-						))}
-					</div>
-
-					<p
-						style={{
-							margin: 0,
-							marginBottom: "0.5rem",
-							color: "#94a3b8",
-							fontSize: "13px",
-						}}
-					>
-						outline variant (마우스를 올려 hover 배경 대비를 확인하세요)
-					</p>
-					<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-						{REGRESSION_INTENTS.map((intent) => (
-							<Button key={intent} variant="outline" intent={intent}>
-								{intent}
-							</Button>
-						))}
-					</div>
-				</ThemeProvider>
-			))}
-		</div>
-	),
-	parameters: {
-		docs: {
-			description: {
-				story:
-					"다크 테마(basic/game/crayon)에서 outline hover 배경과 weak variant 배경이 흰색 혼합(`color-mix(..., white)`) 대신 검은색 혼합으로 계산되어, 밝은 텍스트와의 대비가 유지되는지 확인하는 회귀 스토리입니다.",
 			},
 		},
 	},
