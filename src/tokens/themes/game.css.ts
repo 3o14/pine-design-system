@@ -163,7 +163,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: neonBlue[600],
 			text: foundation.neutral.white,
 			border: neonBlue[500],
-			weak: getWeakColor(neonBlue[400], 25),
+			weak: getWeakColor(neonBlue[400], 35, "black"),
 		},
 		success: {
 			surface: neonGreen[400],
@@ -171,7 +171,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: neonGreen[600],
 			text: foundation.neutral.white,
 			border: neonGreen[500],
-			weak: getWeakColor(neonGreen[400], 25),
+			weak: getWeakColor(neonGreen[400], 35, "black"),
 		},
 		warning: {
 			surface: neonOrange[400],
@@ -179,7 +179,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: neonOrange[600],
 			text: foundation.neutral.white,
 			border: neonOrange[500],
-			weak: getWeakColor(neonOrange[400], 25),
+			weak: getWeakColor(neonOrange[400], 35, "black"),
 		},
 		danger: {
 			surface: foundation.red[400],
@@ -187,7 +187,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: foundation.red[600],
 			text: foundation.neutral.white,
 			border: foundation.red[500],
-			weak: getWeakColor(foundation.red[400], 25),
+			weak: getWeakColor(foundation.red[400], 35, "black"),
 		},
 		neutral: {
 			surface: foundation.slate[800],
@@ -195,7 +195,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 			surfaceActive: foundation.slate[600],
 			text: foundation.slate[200],
 			border: foundation.slate[700],
-			weak: getWeakColor(foundation.slate[800], 25),
+			weak: getWeakColor(foundation.slate[800], 35, "black"),
 		},
 		surface: {
 			background: foundation.slate[900],

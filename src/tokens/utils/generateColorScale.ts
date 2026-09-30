@@ -121,7 +121,11 @@ export function generateColorScale(
 	const border = surfaceHover;
 
 	// weak 색상은 getWeakColor 사용
-	const weak = getWeakColor(surface, 25);
+	// 다크 모드에서 흰색과 섞으면 배경이 거의 흰색이 되어 밝은 텍스트와의
+	// 대비가 무너지므로, 다크 모드는 검은색 방향으로 섞는다
+	const weak = isDark
+		? getWeakColor(surface, 35, "black")
+		: getWeakColor(surface, 25);
 
 	return {
 		surface,
