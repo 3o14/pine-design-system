@@ -5,8 +5,20 @@ import { getWeakColor } from "../utils/getWeakColor";
 import { toNeon } from "../utils/adaptColor";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
 
+// url()은 site-root 기준 절대경로("/font/...")가 아니라 이 CSS 파일 기준
+// 상대경로여야 한다. 소비 앱에 배포되는 dist/style-game.css는 같은 dist/
+// 디렉터리 밑에 있는 dist/font/DungGeunMo.woff2를 가리켜야 하는데,
+// 소비 앱의 사이트 루트에는 그 폰트가 없어 절대경로는 404가 난다.
+//
+// 이 경로는 이 파일(game.css.ts) 기준으로는 실제로 존재하지 않는다(진짜
+// 파일은 public/font/에 있다) — 의도적이다. vanilla-extract는 로컬에서
+// 실제로 resolve되는 상대경로를 만나면 파일을 base64로 강제 인라인해버리는데,
+// 이 폰트들(특히 온글잎-승훈체 3.4MB)에는 그게 치명적이다. resolve되지
+// 않는 문자열을 쓰면 vanilla-extract가 건드리지 않고 그대로 출력 CSS에
+// 남기고, 그 문자열이 실제 dist/ 배치(스타일시트와 font/ 폴더가 같은
+// 위치에 나란히 있음)와 정확히 맞아떨어진다.
 globalFontFace("DungGeunMo", {
-	src: 'url("/font/DungGeunMo.woff2") format("woff2")',
+	src: 'url("./font/DungGeunMo.woff2") format("woff2")',
 	fontWeight: "normal",
 	fontStyle: "normal",
 	fontDisplay: "swap",
