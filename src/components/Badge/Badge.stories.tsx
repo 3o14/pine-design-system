@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Badge } from "./Badge";
+import { ThemeProvider } from "@/providers";
+import type { Design } from "@/providers/ThemeContext";
+import type { ColorIntent } from "@/tokens";
 
 const meta = {
 	title: "Display & Feedback/Badge",
@@ -463,4 +466,59 @@ export const UseCases: Story = {
 			</div>
 		</div>
 	),
+};
+
+// Regression: dark theme weak variant contrast
+const REGRESSION_INTENTS: ColorIntent[] = [
+	"primary",
+	"secondary",
+	"success",
+	"warning",
+	"danger",
+	"neutral",
+];
+
+const REGRESSION_DESIGNS: { design: Design; label: string }[] = [
+	{ design: "basic", label: "Basic" },
+	{ design: "game", label: "Game" },
+	{ design: "crayon", label: "Crayon" },
+];
+
+export const DarkModeWeakContrast: Story = {
+	render: () => (
+		<div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+			{REGRESSION_DESIGNS.map(({ design, label }) => (
+				<ThemeProvider
+					key={design}
+					theme="dark"
+					design={design}
+					applyGlobal={false}
+					style={{
+						backgroundColor: "#0b1120",
+						padding: "1.5rem",
+						borderRadius: "8px",
+					}}
+				>
+					<h3 style={{ margin: 0, marginBottom: "0.75rem", color: "#e2e8f0" }}>
+						{label} · Dark
+					</h3>
+					<div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+						{REGRESSION_INTENTS.map((intent) => (
+							<Badge key={intent} variant="weak" intent={intent}>
+								{intent}
+							</Badge>
+						))}
+					</div>
+				</ThemeProvider>
+			))}
+		</div>
+	),
+	parameters: {
+		docs: {
+			description: {
+				story:
+					"다크 테마(basic/game/crayon)에서 weak variant 배경이 흰색 혼합 대신 검은색 혼합으로 계산되어, 텍스트가 사라지지 않는지 확인하는 회귀 스토리입니다.",
+			},
+		},
+	},
 };
