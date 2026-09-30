@@ -1,6 +1,7 @@
 import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent } from "@/tokens";
+import { basicDarkTheme } from "@/tokens/themes/basic.css";
 import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
 import {
@@ -9,6 +10,8 @@ import {
 	createCrayonBeforeStyle,
 	createCrayonAfterStyle,
 } from "@/tokens/themes/crayonTexture.css";
+
+const basicDarkThemeClass = String(basicDarkTheme);
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
@@ -52,6 +55,14 @@ const trackBase = style({
 	overflow: "hidden",
 	backgroundColor: themeContract.color.neutral.weak,
 	selectors: {
+		// neutral.weak is tuned for text-over-weak contrast (Button/Badge) and is
+		// mixed close to black in dark themes, which collapses into an almost
+		// invisible track against the equally-dark page background here. The
+		// track has no text on top, so it needs a plain, already page-distinct
+		// neutral step instead of the weak/text-contrast token.
+		[`.${basicDarkThemeClass} &, .${gameDarkThemeClass} &`]: {
+			backgroundColor: themeContract.color.neutral.surfaceActive,
+		},
 		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
 			borderRadius: 0,
 			boxShadow: themeContract.shadow.pixelBox,
@@ -62,10 +73,18 @@ const trackBase = style({
 			overflow: "hidden",
 			backgroundColor: "transparent",
 		},
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]: {
+		[`.${crayonLightThemeClass} &::before`]: {
 			...createCrayonBeforeBaseStyle(),
 			...createCrayonBeforeStyle(
 				themeContract.color.neutral.weak,
+				themeContract.color.neutral.border,
+				false
+			),
+		},
+		[`.${crayonDarkThemeClass} &::before`]: {
+			...createCrayonBeforeBaseStyle(),
+			...createCrayonBeforeStyle(
+				themeContract.color.neutral.surface,
 				themeContract.color.neutral.border,
 				false
 			),
