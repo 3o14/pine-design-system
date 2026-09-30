@@ -55,11 +55,11 @@ const trackBase = style({
 	overflow: "hidden",
 	backgroundColor: themeContract.color.neutral.weak,
 	selectors: {
-		// neutral.weak is tuned for text-over-weak contrast (Button/Badge) and is
-		// mixed close to black in dark themes, which collapses into an almost
-		// invisible track against the equally-dark page background here. The
-		// track has no text on top, so it needs a plain, already page-distinct
-		// neutral step instead of the weak/text-contrast token.
+		// neutral.weak는 텍스트-위-weak 대비(Button/Badge)에 맞춰 다크 테마에서
+		// 검은색에 가깝게 섞이도록 튜닝되어 있어, 텍스트가 없는 이 트랙에서는
+		// 오히려 어두운 페이지 배경과 거의 구분되지 않는다. 트랙 위엔 텍스트가
+		// 없으므로 weak(텍스트 대비용) 토큰 대신, 이미 페이지와 구분되는
+		// 일반 neutral 단계를 써야 한다.
 		[`.${basicDarkThemeClass} &, .${gameDarkThemeClass} &`]: {
 			backgroundColor: themeContract.color.neutral.surfaceActive,
 		},
