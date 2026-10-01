@@ -19,6 +19,7 @@ import {
   ThemeProvider,
   type Design,
 } from "pine-design-system";
+import { TokenCloud } from "./TokenCloud";
 
 type ThemeMode = "light" | "dark";
 
@@ -159,94 +160,121 @@ export function LandingPage() {
       <main
         style={{
           flex: 1,
+          position: "relative",
+          overflow: "hidden",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
           padding: "80px 24px",
-          textAlign: "center",
         }}
       >
-        <h1
+        <div
+          aria-hidden
+          className="opacity-20 md:opacity-100"
           style={{
-            fontSize: "clamp(32px, 5vw, 52px)",
-            fontWeight: 700,
-            letterSpacing: "-0.025em",
-            maxWidth: "720px",
-            marginBottom: "16px",
-            lineHeight: 1.15,
-            color: themeColors.textColor,
+            position: "absolute",
+            top: "50%",
+            right: "max(-160px, calc(50% - 760px))",
+            width: "clamp(360px, 48vw, 600px)",
+            aspectRatio: "1",
+            transform: "translateY(-50%)",
+            pointerEvents: "none",
           }}
         >
-          Token-driven themes, React UI components
-        </h1>
-        <p
-          style={{
-            fontSize: "clamp(16px, 2vw, 20px)",
-            color: themeColors.mutedTextColor,
-            maxWidth: "600px",
-            marginBottom: "40px",
-            lineHeight: 1.7,
-          }}
-        >
-          Pine Design System is a React UI library that lets you switch between{" "}
-          <strong>basic</strong>, <strong>game</strong>, and <strong>crayon</strong> looks in a
-          single codebase. Built on Base UI for accessibility, with light and dark mode support.
-        </p>
+          <TokenCloud mode={themeMode} />
+        </div>
         <div
           style={{
+            position: "relative",
+            width: "100%",
+            maxWidth: "960px",
+            margin: "0 auto",
             display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "16px",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            textAlign: "left",
           }}
         >
-          <Button
-            variant="solid"
-            intent="primary"
-            size="large"
-            onClick={() => router.push("/get-started")}
+          <h1
+            style={{
+              fontSize: "clamp(32px, 5vw, 52px)",
+              fontWeight: 700,
+              letterSpacing: "-0.025em",
+              maxWidth: "640px",
+              marginBottom: "16px",
+              lineHeight: 1.15,
+              color: themeColors.textColor,
+            }}
           >
-            Get Started
-          </Button>
+            Token-driven themes, React UI components
+          </h1>
+          <p
+            style={{
+              fontSize: "clamp(16px, 2vw, 20px)",
+              color: themeColors.mutedTextColor,
+              maxWidth: "600px",
+              marginBottom: "40px",
+              lineHeight: 1.7,
+            }}
+          >
+            Pine Design System is a React UI library that lets you switch between{" "}
+            <strong>basic</strong>, <strong>game</strong>, and <strong>crayon</strong> looks in a
+            single codebase. Built on Base UI for accessibility, with light and dark mode support.
+          </p>
           <div
             style={{
               display: "flex",
+              flexWrap: "wrap",
               alignItems: "center",
-              borderRadius: "8px",
-              border: `1px solid ${themeColors.borderColor}`,
-              backgroundColor: themeColors.codeBackgroundColor,
-              padding: "10px 16px",
-              fontFamily: "monospace",
-              fontSize: "14px",
-              gap: "8px",
+              justifyContent: "flex-start",
+              gap: "16px",
             }}
           >
-            <span style={{ color: themeColors.subtleTextColor, userSelect: "none" }}>$</span>
-            <span style={{ color: themeColors.codeTextColor }}>{INSTALL_CMD}</span>
-            <button
-              type="button"
-              onClick={handleCopy}
+            <Button
+              variant="solid"
+              intent="primary"
+              size="large"
+              onClick={() => router.push("/get-started")}
+            >
+              Get Started
+            </Button>
+            <div
               style={{
-                marginLeft: "4px",
-                padding: "4px",
-                borderRadius: "4px",
-                border: "none",
-                backgroundColor: "transparent",
-                cursor: "pointer",
-                color: themeColors.mutedTextColor,
                 display: "flex",
                 alignItems: "center",
+                borderRadius: "8px",
+                border: `1px solid ${themeColors.borderColor}`,
+                backgroundColor: themeColors.codeBackgroundColor,
+                padding: "10px 16px",
+                fontFamily: "monospace",
+                fontSize: "14px",
+                gap: "8px",
               }}
-              aria-label="Copy command"
             >
-              {copied ? (
-                <span style={{ fontSize: "12px", fontWeight: 500 }}>Copied!</span>
-              ) : (
-                <CopyIcon />
-              )}
-            </button>
+              <span style={{ color: themeColors.subtleTextColor, userSelect: "none" }}>$</span>
+              <span style={{ color: themeColors.codeTextColor }}>{INSTALL_CMD}</span>
+              <button
+                type="button"
+                onClick={handleCopy}
+                style={{
+                  marginLeft: "4px",
+                  padding: "4px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "transparent",
+                  cursor: "pointer",
+                  color: themeColors.mutedTextColor,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                aria-label="Copy command"
+              >
+                {copied ? (
+                  <span style={{ fontSize: "12px", fontWeight: 500 }}>Copied!</span>
+                ) : (
+                  <CopyIcon />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </main>
