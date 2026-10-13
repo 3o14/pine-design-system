@@ -24,16 +24,19 @@ export function CyclingWord({
       return;
     }
 
+    let swap: ReturnType<typeof setTimeout>;
     const interval = setInterval(() => {
       setVisible(false);
-      const swap = setTimeout(() => {
+      swap = setTimeout(() => {
         setIndex((current) => (current + 1) % words.length);
         setVisible(true);
       }, TRANSITION_MS);
-      return () => clearTimeout(swap);
     }, intervalMs);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(swap);
+    };
   }, [words, intervalMs]);
 
   return (
