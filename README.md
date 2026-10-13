@@ -47,13 +47,13 @@ import "pine-design-system/style.css";
 function App() {
 	return (
 		<ThemeProvider design="basic" defaultTheme="light">
-			<Button intent="primary" size="md">
+			<Button intent="primary" size="medium">
 				Get Started
 			</Button>
 			<Badge variant="solid" intent="success">
 				New
 			</Badge>
-			<Switch size="md" intent="primary" />
+			<Switch size="medium" intent="primary" />
 			<TextField
 				label="Email"
 				placeholder="you@example.com"

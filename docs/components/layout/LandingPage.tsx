@@ -19,8 +19,12 @@ import {
   ThemeProvider,
   type Design,
 } from "pine-design-system";
+import { TokenCloud } from "./TokenCloud";
+import { CyclingWord } from "./CyclingWord";
 
 type ThemeMode = "light" | "dark";
+
+const HEADLINE_WORDS = ["components", "primitives", "tokens", "themes"];
 
 const DESIGNS: Design[] = ["basic", "game", "crayon"];
 
@@ -71,10 +75,18 @@ export function LandingPage() {
   const [showcaseDialogOpen, setShowcaseDialogOpen] = useState(false);
   const { resolvedTheme } = useDocsTheme();
   const [mounted, setMounted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const themeMode: ThemeMode = mounted && resolvedTheme === "dark" ? "dark" : "light";
@@ -105,148 +117,244 @@ export function LandingPage() {
       }}
     >
       {/* Header */}
-      <header
+      <div
         style={{
-          borderBottom: `1px solid ${themeColors.borderColor}`,
-          padding: "16px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: themeColors.cardBackgroundColor,
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          padding: scrolled ? "12px 16px" : "0",
+          transition: "padding 0.25s ease",
         }}
       >
-        <strong style={{ fontSize: "18px", fontWeight: 600 }}>Pine Design System</strong>
-        <nav style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Link
-            href="/introduction"
-            style={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: themeColors.mutedTextColor,
-              textDecoration: "none",
-            }}
-          >
-            Docs
-          </Link>
-          <Link
-            href="/changelog"
-            style={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: themeColors.mutedTextColor,
-              textDecoration: "none",
-            }}
-          >
-            Changelog
-          </Link>
-          <a
-            href="https://github.com/3o14/pine-design-system"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: themeColors.mutedTextColor,
-              textDecoration: "none",
-            }}
-          >
-            GitHub
-          </a>
-        </nav>
-      </header>
+        <header
+          style={{
+            maxWidth: scrolled ? "1160px" : "100%",
+            margin: scrolled ? "0 auto" : "0",
+            borderRadius: scrolled ? "10px" : "0",
+            border: scrolled ? `1px solid ${themeColors.borderColor}` : "none",
+            borderBottom: scrolled ? undefined : `1px solid ${themeColors.borderColor}`,
+            boxShadow: scrolled ? "0 8px 30px rgba(0,0,0,0.12)" : "none",
+            padding: "16px 80px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            backgroundColor: scrolled
+              ? themeMode === "dark" ? "rgba(3,7,18,0.72)" : "rgba(255,255,255,0.72)"
+              : themeColors.cardBackgroundColor,
+            backdropFilter: scrolled ? "blur(12px)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+            transition: "max-width 0.25s ease, border-radius 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease",
+          }}
+        >
+          <strong style={{ fontSize: "18px", fontWeight: 600 }}>Pine Design System</strong>
+          <nav style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <Link
+              href="/introduction"
+              style={{
+                fontSize: "14px",
+                fontWeight: 500,
+                color: themeColors.mutedTextColor,
+                textDecoration: "none",
+              }}
+            >
+              Docs
+            </Link>
+            <Link
+              href="/changelog"
+              style={{
+                fontSize: "14px",
+                fontWeight: 500,
+                color: themeColors.mutedTextColor,
+                textDecoration: "none",
+              }}
+            >
+              Changelog
+            </Link>
+            <a
+              href="https://github.com/3o14/pine-design-system"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "14px",
+                fontWeight: 500,
+                color: themeColors.mutedTextColor,
+                textDecoration: "none",
+              }}
+            >
+              GitHub
+            </a>
+          </nav>
+        </header>
+      </div>
 
       {/* Hero */}
       <main
         style={{
           flex: 1,
+          minHeight: "88vh",
+          position: "relative",
+          overflow: "hidden",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          padding: "80px 24px",
-          textAlign: "center",
+          padding: "120px 80px",
         }}
       >
-        <h1
+        <div
+          aria-hidden
           style={{
-            fontSize: "clamp(32px, 5vw, 52px)",
-            fontWeight: 700,
-            letterSpacing: "-0.025em",
-            maxWidth: "720px",
-            marginBottom: "16px",
-            lineHeight: 1.15,
-            color: themeColors.textColor,
+            position: "absolute",
+            top: "-10%",
+            left: "50%",
+            width: "60%",
+            aspectRatio: "1",
+            transform: "translateX(-50%)",
+            pointerEvents: "none",
+            zIndex: 0,
+            background:
+              themeMode === "dark"
+                ? "radial-gradient(circle, rgba(168,85,247,0.16) 0%, rgba(168,85,247,0.05) 35%, transparent 70%)"
+                : "radial-gradient(circle, rgba(168,85,247,0.08) 0%, rgba(168,85,247,0.02) 35%, transparent 70%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="opacity-20 md:opacity-100"
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: "-150px",
+            height: "165vh",
+            aspectRatio: "1",
+            transform: "translateY(-50%)",
+            pointerEvents: "none",
+            zIndex: 0,
+            maskImage: "radial-gradient(circle, black 45%, transparent 75%)",
+            WebkitMaskImage: "radial-gradient(circle, black 45%, transparent 75%)",
+            opacity: 0.55,
           }}
         >
-          Token-driven themes, React UI components
-        </h1>
-        <p
-          style={{
-            fontSize: "clamp(16px, 2vw, 20px)",
-            color: themeColors.mutedTextColor,
-            maxWidth: "600px",
-            marginBottom: "40px",
-            lineHeight: 1.7,
-          }}
-        >
-          Pine Design System is a React UI library that lets you switch between{" "}
-          <strong>basic</strong>, <strong>game</strong>, and <strong>crayon</strong> looks in a
-          single codebase. Built on Base UI for accessibility, with light and dark mode support.
-        </p>
+          <TokenCloud mode={themeMode} />
+        </div>
         <div
           style={{
+            position: "relative",
+            zIndex: 1,
             display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "16px",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            textAlign: "left",
           }}
         >
-          <Button
-            variant="solid"
-            intent="primary"
-            size="large"
-            onClick={() => router.push("/get-started")}
-          >
-            Get Started
-          </Button>
-          <div
+          <span
             style={{
               display: "flex",
               alignItems: "center",
-              borderRadius: "8px",
-              border: `1px solid ${themeColors.borderColor}`,
-              backgroundColor: themeColors.codeBackgroundColor,
-              padding: "10px 16px",
-              fontFamily: "monospace",
-              fontSize: "14px",
               gap: "8px",
+              fontSize: "13px",
+              fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+              color: themeColors.subtleTextColor,
+              marginBottom: "20px",
             }}
           >
-            <span style={{ color: themeColors.subtleTextColor, userSelect: "none" }}>$</span>
-            <span style={{ color: themeColors.codeTextColor }}>{INSTALL_CMD}</span>
-            <button
-              type="button"
-              onClick={handleCopy}
+            <span style={{ width: "20px", height: "1px", backgroundColor: themeColors.subtleTextColor }} />
+            Design tokens for React
+          </span>
+          <h1
+            style={{
+              fontSize: "clamp(48px, 9vw, 108px)",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              maxWidth: "820px",
+              marginBottom: "16px",
+              lineHeight: 1.04,
+              color: themeColors.textColor,
+            }}
+          >
+            Token-driven
+            <br />
+            <span style={{ position: "relative", display: "inline-block" }}>
+              <CyclingWord words={HEADLINE_WORDS} />
+              <span
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: "-0.08em",
+                  height: "6px",
+                  borderRadius: "999px",
+                  backgroundColor: themeColors.borderColor,
+                }}
+              />
+            </span>
+          </h1>
+          <p
+            style={{
+              fontSize: "clamp(15px, 1.4vw, 17px)",
+              color: themeColors.mutedTextColor,
+              maxWidth: "520px",
+              marginBottom: "40px",
+              lineHeight: 1.7,
+            }}
+          >
+            Pine Design System is a React UI library that lets you switch between{" "}
+            <strong>basic</strong>, <strong>game</strong>, and <strong>crayon</strong> looks in a
+            single codebase. Built on Base UI for accessibility, with light and dark mode support.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "16px",
+            }}
+          >
+            <Button
+              variant="solid"
+              intent="primary"
+              size="medium"
+              onClick={() => router.push("/get-started")}
+            >
+              Get Started
+            </Button>
+            <div
               style={{
-                marginLeft: "4px",
-                padding: "4px",
-                borderRadius: "4px",
-                border: "none",
-                backgroundColor: "transparent",
-                cursor: "pointer",
-                color: themeColors.mutedTextColor,
                 display: "flex",
                 alignItems: "center",
+                borderRadius: "8px",
+                border: `1px solid ${themeColors.borderColor}`,
+                backgroundColor: themeColors.codeBackgroundColor,
+                padding: "10px 16px",
+                fontFamily: "monospace",
+                fontSize: "14px",
+                gap: "8px",
               }}
-              aria-label="Copy command"
             >
-              {copied ? (
-                <span style={{ fontSize: "12px", fontWeight: 500 }}>Copied!</span>
-              ) : (
-                <CopyIcon />
-              )}
-            </button>
+              <span style={{ color: themeColors.subtleTextColor, userSelect: "none" }}>$</span>
+              <span style={{ color: themeColors.codeTextColor }}>{INSTALL_CMD}</span>
+              <button
+                type="button"
+                onClick={handleCopy}
+                style={{
+                  marginLeft: "4px",
+                  padding: "4px",
+                  borderRadius: "4px",
+                  border: "none",
+                  backgroundColor: "transparent",
+                  cursor: "pointer",
+                  color: themeColors.mutedTextColor,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                aria-label="Copy command"
+              >
+                {copied ? (
+                  <span style={{ fontSize: "12px", fontWeight: 500 }}>Copied!</span>
+                ) : (
+                  <CopyIcon />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </main>

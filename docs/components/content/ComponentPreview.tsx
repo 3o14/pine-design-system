@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { useState, useCallback } from "react";
 import { Highlight, themes } from "prism-react-renderer";
+import { DesignSelector } from "../layout/DesignSelector";
 
 type ActiveTab = "preview" | "code";
 
@@ -56,6 +57,11 @@ export function ComponentPreview({
           >
             Code
           </button>
+        )}
+        {activeTab === "preview" && (
+          <div className="ml-auto">
+            <DesignSelector />
+          </div>
         )}
         {code && activeTab === "code" && (
           <button
