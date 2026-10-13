@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { generateStaticParamsFor, importPage } from "nextra/pages";
 import { useMDXComponents as getMDXComponents } from "../../mdx-components";
+import { SITE_NAME, baseOpenGraph } from "../../lib/site";
 
 /** Paths that are not MDX (e.g. favicon, assets) — skip importPage and 404. */
 function isNonMdxPath(segments: string[]): boolean {
@@ -24,7 +26,17 @@ export async function generateMetadata(props: { params: Promise<{ mdxPath: strin
   if (isNonMdxPath(pathSegments)) return {};
   try {
     const { metadata } = await importPage(pathSegments);
-    return metadata ?? {};
+    const path = `/${pathSegments.join("/")}`;
+    return {
+      ...metadata,
+      alternates: { canonical: path },
+      openGraph: {
+        ...baseOpenGraph,
+        title: `${metadata.title} – ${SITE_NAME}`,
+        description: metadata.description ?? undefined,
+        url: path,
+      },
+    } satisfies Metadata;
   } catch {
     return {};
   }
