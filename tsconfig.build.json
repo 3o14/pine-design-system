@@ -8,6 +8,6 @@
 		"noEmit": false
 	},
 	"include": ["src/**/*"],
-	"exclude": ["node_modules", "dist", "**/*.stories.tsx", "**/*.test.tsx", "**/*.spec.tsx"]
+	"exclude": ["node_modules", "dist", "**/*.stories.tsx", "**/*.test.tsx", "**/*.spec.tsx", "**/*.spec.ts"]
 }
 

@@ -5,8 +5,11 @@ import { getWeakColor } from "../utils/getWeakColor";
 import { toPastel } from "../utils/adaptColor";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
 
+// 상대경로를 쓰는 이유는 game.css.ts의 DungGeunMo와 동일하다.
+// 파일명은 OnGeulipSeunghun.woff2(영문)를 쓰지만 font-family 이름 자체는
+// 기존 소비 앱과의 호환을 위해 "온글잎-승훈체"를 그대로 유지한다.
 globalFontFace("온글잎-승훈체", {
-	src: 'url("/font/온글잎-승훈체.woff2") format("woff2")',
+	src: 'url("./font/OnGeulipSeunghun.woff2") format("woff2")',
 	fontWeight: "normal",
 	fontStyle: "normal",
 	fontDisplay: "swap",
