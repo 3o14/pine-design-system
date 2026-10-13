@@ -38,9 +38,8 @@ const DISPLAY_TOKENS = ["Aa", "Ag", "H1", "Body", "Pine"];
 // Foundation spacing scale in px (xxs → xl)
 const SPACING_LABELS = ["4", "8", "12", "16", "24", "32"];
 
-const PARTICLE_COUNT = 150;
-const INNER_SHELL_RATIO = 0.3;
-const ROTATION_SPEED = 0.0001;
+const PARTICLE_COUNT = 260;
+const ROTATION_SPEED = 0.00004;
 
 // Seeded so the cloud has the same shape on every render.
 const createRandom = (seed: number) => () => {
@@ -62,7 +61,7 @@ const createItem = (index: number, random: () => number): TokenItem => {
     case 3:
       return { kind: "spacing", steps: 3 + Math.floor(random() * 4), label: pick(SPACING_LABELS, random) };
     case 4:
-      return { kind: "radius", radius: 4 + Math.floor(random() * 10) };
+      return { kind: "radius", radius: 3 + Math.floor(random() * 6) };
     case 5:
       return { kind: "text", text: pick(DISPLAY_TOKENS, random), mono: false };
     default:
@@ -70,7 +69,7 @@ const createItem = (index: number, random: () => number): TokenItem => {
   }
 };
 
-// Fibonacci sphere with an inner shell and radial jitter so it reads as a dense cloud.
+// Fibonacci sphere, all particles hugging the outer surface so the silhouette reads as a hollow sphere.
 const createParticles = (): Particle[] => {
   const random = createRandom(711);
   const goldenAngle = Math.PI * (3 - Math.sqrt(5));
@@ -79,8 +78,7 @@ const createParticles = (): Particle[] => {
     const y = 1 - (index / (PARTICLE_COUNT - 1)) * 2;
     const ring = Math.sqrt(1 - y * y);
     const theta = goldenAngle * index;
-    const isInner = random() < INNER_SHELL_RATIO;
-    const radius = isInner ? 0.45 + random() * 0.25 : 0.82 + random() * 0.2;
+    const radius = 0.92 + random() * 0.08;
 
     return {
       ...createItem(index, random),
@@ -135,54 +133,54 @@ export function TokenCloud({ mode }: { mode: "light" | "dark" }) {
 
       switch (item.kind) {
         case "chip": {
-          const s = 16 * scale;
+          const s = 11 * scale;
           ctx.fillStyle = item.color;
           ctx.beginPath();
-          ctx.roundRect(-s / 2, -s / 2, s, s, 4 * scale);
+          ctx.roundRect(-s / 2, -s / 2, s, s, 3 * scale);
           ctx.fill();
           if (item.label) {
             ctx.fillStyle = muted;
-            ctx.font = `${9 * scale}px ${monoFont}`;
-            ctx.fillText(item.label, s / 2 + 5 * scale, 3 * scale);
+            ctx.font = `${7 * scale}px ${monoFont}`;
+            ctx.fillText(item.label, s / 2 + 4 * scale, 2.5 * scale);
           }
           break;
         }
         case "palette": {
-          const s = 9 * scale;
+          const s = 6.5 * scale;
           item.colors.forEach((color, i) => {
             const isEdge = i === 0 || i === item.colors.length - 1;
             ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.roundRect((i - item.colors.length / 2) * s, -s / 2, s, s, isEdge ? 2 * scale : 0);
+            ctx.roundRect((i - item.colors.length / 2) * s, -s / 2, s, s, isEdge ? 1.5 * scale : 0);
             ctx.fill();
           });
           break;
         }
         case "spacing": {
-          const unit = 6 * scale;
+          const unit = 4.5 * scale;
           const width = unit * item.steps;
           ctx.strokeStyle = ink;
-          ctx.lineWidth = Math.max(0.75, scale);
+          ctx.lineWidth = Math.max(0.6, 0.75 * scale);
           ctx.beginPath();
           ctx.moveTo(-width / 2, 0);
           ctx.lineTo(width / 2, 0);
           for (let i = 0; i <= item.steps; i++) {
             const tickX = -width / 2 + unit * i;
-            const tickHeight = i === 0 || i === item.steps ? 5 * scale : 2.5 * scale;
+            const tickHeight = i === 0 || i === item.steps ? 3.5 * scale : 1.75 * scale;
             ctx.moveTo(tickX, -tickHeight);
             ctx.lineTo(tickX, tickHeight);
           }
           ctx.stroke();
           ctx.fillStyle = muted;
-          ctx.font = `${8 * scale}px ${monoFont}`;
-          ctx.fillText(item.label, width / 2 + 4 * scale, 3 * scale);
+          ctx.font = `${6 * scale}px ${monoFont}`;
+          ctx.fillText(item.label, width / 2 + 3 * scale, 2.5 * scale);
           break;
         }
         case "radius": {
-          const s = 14 * scale;
+          const s = 10 * scale;
           const r = item.radius * scale;
           ctx.strokeStyle = ink;
-          ctx.lineWidth = Math.max(0.75, 1.25 * scale);
+          ctx.lineWidth = Math.max(0.6, scale);
           ctx.beginPath();
           ctx.moveTo(-s / 2, s / 2);
           ctx.lineTo(-s / 2, -s / 2 + r);
@@ -193,8 +191,8 @@ export function TokenCloud({ mode }: { mode: "light" | "dark" }) {
         }
         case "text": {
           ctx.fillStyle = item.mono ? muted : ink;
-          ctx.font = item.mono ? `${9.5 * scale}px ${monoFont}` : `700 ${17 * scale}px ${sansFont}`;
-          ctx.fillText(item.text, -ctx.measureText(item.text).width / 2, 4 * scale);
+          ctx.font = item.mono ? `${7.5 * scale}px ${monoFont}` : `700 ${13 * scale}px ${sansFont}`;
+          ctx.fillText(item.text, -ctx.measureText(item.text).width / 2, 3 * scale);
           break;
         }
       }
