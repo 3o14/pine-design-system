@@ -25,7 +25,7 @@ const neonGreen = toNeon(foundation.green);
 const neonBlue = toNeon(foundation.blue);
 const neonOrange = toNeon(foundation.orange);
 
-/** game light 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+/** Color tokens for the game light theme. Exported so contrast tests can check the values directly */
 export const gameLightColors = {
 	primary: primaryColorVars,
 	secondary: {
@@ -130,7 +130,7 @@ export const gameLightTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: `calc(-4px) 0 0 0 black, 4px 0 0 0 black, 0 4px 0 0 black, 0 calc(-4px) 0 0 black`,
-		// 픽셀 테두리 + 4px 아래·오른쪽으로 밀린 받침판 (spread 4px로 테두리 바깥까지 덮는다)
+		// Pixel border + a back plate offset 4px down-right (4px spread so it covers past the border)
 		pixelBoxRaised: `calc(-4px) 0 0 0 black, 4px 0 0 0 black, 0 4px 0 0 black, 0 calc(-4px) 0 0 black, 4px 4px 0 4px black`,
 		pixelBoxMargin: "0",
 	},
@@ -159,7 +159,7 @@ export const gameLightTheme = createTheme(semanticTokens, {
 	},
 });
 
-/** game dark 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+/** Color tokens for the game dark theme. Exported so contrast tests can check the values directly */
 export const gameDarkColors = {
 	primary: primaryColorVars,
 	secondary: {

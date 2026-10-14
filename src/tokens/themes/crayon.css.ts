@@ -25,7 +25,7 @@ const pastelPink = toPastel(foundation.pink);
 const pastelGreen = toPastel(foundation.green);
 const pastelYellow = toPastel(foundation.yellow);
 
-/** crayon light 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+/** Color tokens for the crayon light theme. Exported so contrast tests can check the values directly */
 export const crayonLightColors = {
 	primary: primaryColorVars,
 	secondary: {
@@ -158,7 +158,7 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 	},
 });
 
-/** crayon dark 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+/** Color tokens for the crayon dark theme. Exported so contrast tests can check the values directly */
 export const crayonDarkColors = {
 	primary: primaryColorVars,
 	secondary: {
