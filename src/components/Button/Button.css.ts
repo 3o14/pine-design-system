@@ -17,7 +17,7 @@ const crayonDarkThemeClass = String(crayonDarkTheme);
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
 
-/** game solid 버튼이 눌릴 때 이동하는 거리. shadow.pixelBoxRaised의 받침판 오프셋과 같아야 한다 */
+/** game 버튼이 눌릴 때 이동하는 거리. shadow.pixelBoxRaised의 받침판 오프셋과 같아야 한다 */
 const GAME_PRESS_OFFSET = "4px";
 const GAME_PRESS_DURATION = "0.08s";
 
