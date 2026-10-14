@@ -22,15 +22,6 @@ const GAME_PRESS_OFFSET = "4px";
 const GAME_PRESS_DURATION = "0.08s";
 
 /**
- * Creates game theme box shadow style
- */
-const createGameBoxShadow = (borderColor: string) => ({
-	borderColor: "transparent",
-	boxShadow: `calc(-4px) 0 0 0 ${borderColor}, 4px 0 0 0 ${borderColor}, 0 4px 0 0 ${borderColor}, 0 calc(-4px) 0 0 ${borderColor}`,
-	margin: themeContract.shadow.pixelBoxMargin,
-});
-
-/**
  * Creates crayon theme-specific selectors for a given intent and variant
  */
 const createCrayonThemeSelectors = (
@@ -144,39 +135,69 @@ const createGameThemeSelectors = (
 	intent: ColorIntent,
 	variant: ButtonVariant,
 ): SelectorMap => {
-	const color = themeContract.color[intent];
 	const selectors: SelectorMap = {};
-	const pixelBoxShadow = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
+	const pressable = getGamePressableShadows(intent, variant);
+	if (!pressable) return selectors;
 
-	if (variant === "solid") {
-		// 기본: 앞면 뒤로 받침판이 4px 밀려 있어 두 겹으로 보인다
-		selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
-			boxShadow: themeContract.shadow.pixelBoxRaised,
-			margin: themeContract.shadow.pixelBoxMargin,
-			transition: `transform ${GAME_PRESS_DURATION} ease-out, box-shadow ${GAME_PRESS_DURATION} ease-out, background-color ${GAME_PRESS_DURATION} ease-out`,
-		};
-		// hover/active: 앞면이 받침판 위치로 내려앉아 눌린 것처럼 보인다 (transform이라 레이아웃은 그대로)
-		selectors[
-			`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled), .${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
-		] = {
-			boxShadow: themeContract.shadow.pixelBox,
-			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
-		};
-	}
-
-	if (variant === "outline" || variant === "weak") {
-		selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] =
-			createGameBoxShadow(color.border);
-		if (variant === "weak") {
-			selectors[
-				`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
-			] = {
-				boxShadow: pixelBoxShadow,
-			};
-		}
-	}
+	// 기본: 앞면 뒤로 받침판이 4px 밀려 있어 두 겹으로 보인다
+	selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
+		...(variant === "solid" ? {} : { borderColor: "transparent" }),
+		boxShadow: pressable.raised,
+		margin: themeContract.shadow.pixelBoxMargin,
+		transition: `transform ${GAME_PRESS_DURATION} ease-out, box-shadow ${GAME_PRESS_DURATION} ease-out, background-color ${GAME_PRESS_DURATION} ease-out`,
+	};
+	// hover: 공통 hover 그림자(shadow.medium)가 픽셀 테두리를 덮지 않도록 기본 모양을 유지한다.
+	// 실제 눌림은 hover 가능한 기기에서만 createGameHoverMedia가 덮어쓴다 (터치 기기의 sticky hover 방지)
+	selectors[
+		`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
+	] = {
+		boxShadow: pressable.raised,
+	};
+	// active: 모든 기기에서 앞면이 받침판 위치로 내려앉는다 (transform이라 레이아웃은 그대로)
+	selectors[
+		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
+	] = pressable.pressed;
 
 	return selectors;
+};
+
+/**
+ * game 테마에서 눌림 효과가 적용되는 variant의 그림자 쌍.
+ * solid는 테마 공통 픽셀 테두리 색, outline/weak는 intent 테두리 색으로 받침판을 그린다
+ */
+const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) => {
+	if (variant === "ghost") return null;
+	const color = themeContract.color[intent];
+	const border = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
+	const flat = variant === "solid" ? themeContract.shadow.pixelBox : border;
+	const raised =
+		variant === "solid"
+			? themeContract.shadow.pixelBoxRaised
+			: `${border}, ${GAME_PRESS_OFFSET} ${GAME_PRESS_OFFSET} 0 4px ${color.border}`;
+	return {
+		raised,
+		pressed: {
+			boxShadow: flat,
+			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
+		},
+	};
+};
+
+/**
+ * hover 가능한 기기에서만 game 버튼의 hover를 눌린 상태로 만든다.
+ * vanilla-extract는 @media 규칙을 일반 규칙 뒤에 출력하므로 같은 우선순위의 기본 hover를 덮어쓴다
+ */
+const createGameHoverMedia = (intent: ColorIntent, variant: ButtonVariant) => {
+	const pressable = getGamePressableShadows(intent, variant);
+	if (!pressable) return {};
+	return {
+		"(hover: hover)": {
+			selectors: {
+				[`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`]:
+					pressable.pressed,
+			},
+		},
+	};
 };
 
 /**
@@ -336,6 +357,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("primary", "solid"),
 				},
+				"@media": createGameHoverMedia("primary", "solid"),
 			},
 		},
 		{
@@ -356,6 +378,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("secondary", "solid"),
 				},
+				"@media": createGameHoverMedia("secondary", "solid"),
 			},
 		},
 		{
@@ -376,6 +399,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("success", "solid"),
 				},
+				"@media": createGameHoverMedia("success", "solid"),
 			},
 		},
 		{
@@ -396,6 +420,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("warning", "solid"),
 				},
+				"@media": createGameHoverMedia("warning", "solid"),
 			},
 		},
 		{
@@ -416,6 +441,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("danger", "solid"),
 				},
+				"@media": createGameHoverMedia("danger", "solid"),
 			},
 		},
 		{
@@ -436,6 +462,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("neutral", "solid"),
 				},
+				"@media": createGameHoverMedia("neutral", "solid"),
 			},
 		},
 
@@ -457,6 +484,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("primary", "outline"),
 				},
+				"@media": createGameHoverMedia("primary", "outline"),
 			},
 		},
 		{
@@ -476,6 +504,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("secondary", "outline"),
 				},
+				"@media": createGameHoverMedia("secondary", "outline"),
 			},
 		},
 		{
@@ -495,6 +524,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("success", "outline"),
 				},
+				"@media": createGameHoverMedia("success", "outline"),
 			},
 		},
 		{
@@ -514,6 +544,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("warning", "outline"),
 				},
+				"@media": createGameHoverMedia("warning", "outline"),
 			},
 		},
 		{
@@ -533,6 +564,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("danger", "outline"),
 				},
+				"@media": createGameHoverMedia("danger", "outline"),
 			},
 		},
 		{
@@ -552,6 +584,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("neutral", "outline"),
 				},
+				"@media": createGameHoverMedia("neutral", "outline"),
 			},
 		},
 
@@ -666,6 +699,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("primary", "weak"),
 				},
+				"@media": createGameHoverMedia("primary", "weak"),
 			},
 		},
 		{
@@ -686,6 +720,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("secondary", "weak"),
 				},
+				"@media": createGameHoverMedia("secondary", "weak"),
 			},
 		},
 		{
@@ -706,6 +741,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("success", "weak"),
 				},
+				"@media": createGameHoverMedia("success", "weak"),
 			},
 		},
 		{
@@ -726,6 +762,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("warning", "weak"),
 				},
+				"@media": createGameHoverMedia("warning", "weak"),
 			},
 		},
 		{
@@ -746,6 +783,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("danger", "weak"),
 				},
+				"@media": createGameHoverMedia("danger", "weak"),
 			},
 		},
 		{
@@ -766,6 +804,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("neutral", "weak"),
 				},
+				"@media": createGameHoverMedia("neutral", "weak"),
 			},
 		},
 
