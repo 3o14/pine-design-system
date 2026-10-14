@@ -21,14 +21,17 @@ const gameDarkThemeClass = String(gameDarkTheme);
 const GAME_PRESS_OFFSET = "4px";
 const GAME_PRESS_DURATION = "0.08s";
 
+/** buttonBase의 테두리 두께. absolute 가상 요소는 테두리 안쪽 기준이라 히트 영역 계산에 더해야 한다 */
+const BUTTON_BORDER_WIDTH = "1px";
+
 /**
  * 눌린 상태의 히트 영역. 버튼이 오른쪽 아래로 이동하므로 위·왼쪽으로만 같은 거리만큼 넓혀
  * 원래 자리까지 덮는다. 히트 판정은 transform을 따르기 때문에, 이게 없으면 위·왼쪽 가장자리에서
  * hover가 풀렸다 걸렸다 반복하고 그 자리에서 누른 click이 버튼 밖에서 떼어져 누락된다
  */
 const gamePressedHitArea = {
-	top: `calc(-1 * ${GAME_PRESS_OFFSET})`,
-	left: `calc(-1 * ${GAME_PRESS_OFFSET})`,
+	top: `calc(-1 * (${GAME_PRESS_OFFSET} + ${BUTTON_BORDER_WIDTH}))`,
+	left: `calc(-1 * (${GAME_PRESS_OFFSET} + ${BUTTON_BORDER_WIDTH}))`,
 };
 
 /**
@@ -167,11 +170,11 @@ const createGameThemeSelectors = (
 	selectors[
 		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
 	] = pressable.pressed;
-	// 히트 영역 보정용 ::after. 평소에는 버튼과 같은 크기라 이웃 버튼의 클릭을 가로채지 않는다
+	// 히트 영역 보정용 ::after. 평소에는 테두리까지 포함한 버튼과 같은 크기라 이웃 버튼의 클릭을 가로채지 않는다
 	selectors[`.${gameLightThemeClass} &::after, .${gameDarkThemeClass} &::after`] = {
 		content: '""',
 		position: "absolute",
-		inset: 0,
+		inset: `calc(-1 * ${BUTTON_BORDER_WIDTH})`,
 	};
 	selectors[
 		`.${gameLightThemeClass} &:active:not(:disabled)::after, .${gameDarkThemeClass} &:active:not(:disabled)::after`
@@ -245,7 +248,7 @@ const buttonBase = style({
 	gap: themeContract.spacing.xs,
 	outline: "none",
 	position: "relative",
-	border: "1px solid transparent",
+	border: `${BUTTON_BORDER_WIDTH} solid transparent`,
 	boxSizing: "border-box",
 	selectors: {
 		"&:disabled": {
