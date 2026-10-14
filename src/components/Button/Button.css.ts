@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, type StyleRule } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent, type SelectorMap } from "@/tokens";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
@@ -17,14 +17,23 @@ const crayonDarkThemeClass = String(crayonDarkTheme);
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
 
+/** How far a game button moves when pressed. Must match the back-plate offset in shadow.pixelBoxRaised */
+const GAME_PRESS_OFFSET = "4px";
+const GAME_PRESS_DURATION = "0.08s";
+
+/** buttonBase border width. Absolutely positioned pseudo-elements are laid out from the padding box, so hit-area math must add it */
+const BUTTON_BORDER_WIDTH = "1px";
+
 /**
- * Creates game theme box shadow style
+ * Hit area while pressed. The button moves down-right, so extend it up-left by the same distance
+ * to keep covering the original footprint. Hit testing follows transform, so without this the
+ * top/left edge flickers between hover and not-hover, and clicks pressed there are released
+ * outside the button and get lost
  */
-const createGameBoxShadow = (borderColor: string) => ({
-	borderColor: "transparent",
-	boxShadow: `calc(-4px) 0 0 0 ${borderColor}, 4px 0 0 0 ${borderColor}, 0 4px 0 0 ${borderColor}, 0 calc(-4px) 0 0 ${borderColor}`,
-	margin: themeContract.shadow.pixelBoxMargin,
-});
+const gamePressedHitArea = {
+	top: `calc(-1 * (${GAME_PRESS_OFFSET} + ${BUTTON_BORDER_WIDTH}))`,
+	left: `calc(-1 * (${GAME_PRESS_OFFSET} + ${BUTTON_BORDER_WIDTH}))`,
+};
 
 /**
  * Creates crayon theme-specific selectors for a given intent and variant
@@ -140,35 +149,86 @@ const createGameThemeSelectors = (
 	intent: ColorIntent,
 	variant: ButtonVariant,
 ): SelectorMap => {
-	const color = themeContract.color[intent];
 	const selectors: SelectorMap = {};
-	const pixelBoxShadow = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
+	const pressable = getGamePressableShadows(intent, variant);
+	if (!pressable) return selectors;
 
-	if (variant === "solid") {
-		selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
-			boxShadow: themeContract.shadow.pixelBox,
-			margin: themeContract.shadow.pixelBoxMargin,
-		};
-		selectors[
-			`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
-		] = {
-			boxShadow: themeContract.shadow.pixelBox,
-		};
-	}
-
-	if (variant === "outline" || variant === "weak") {
-		selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] =
-			createGameBoxShadow(color.border);
-		if (variant === "weak") {
-			selectors[
-				`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
-			] = {
-				boxShadow: pixelBoxShadow,
-			};
-		}
-	}
+	// Rest: the back plate sits 4px behind the face, so the button reads as two layers
+	selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
+		...(variant === "solid" ? {} : { borderColor: "transparent" }),
+		boxShadow: pressable.raised,
+		margin: themeContract.shadow.pixelBoxMargin,
+		transition: `transform ${GAME_PRESS_DURATION} ease-out, box-shadow ${GAME_PRESS_DURATION} ease-out, background-color ${GAME_PRESS_DURATION} ease-out`,
+	};
+	// Hover: keep the rest look so the shared hover shadow (shadow.medium) doesn't cover the pixel border.
+	// createGameHoverMedia applies the actual press only on hover-capable devices (avoids sticky hover on touch)
+	selectors[
+		`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
+	] = {
+		...(variant === "solid" ? {} : { borderColor: "transparent" }),
+		boxShadow: pressable.raised,
+	};
+	// Active: on every device the face drops onto the back plate (transform, so layout doesn't shift)
+	selectors[
+		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
+	] = pressable.pressed;
+	// ::after corrects the hit area. At rest it matches the button including its border, so it doesn't steal clicks from neighbours
+	selectors[`.${gameLightThemeClass} &::after, .${gameDarkThemeClass} &::after`] = {
+		content: '""',
+		position: "absolute",
+		inset: `calc(-1 * ${BUTTON_BORDER_WIDTH})`,
+	};
+	selectors[
+		`.${gameLightThemeClass} &:active:not(:disabled)::after, .${gameDarkThemeClass} &:active:not(:disabled)::after`
+	] = gamePressedHitArea;
 
 	return selectors;
+};
+
+/**
+ * Shadow pair for variants that get the game theme press effect.
+ * solid draws the back plate in the theme's pixel-border color, outline/weak in the intent border color
+ */
+const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) => {
+	if (variant === "ghost") return null;
+	const color = themeContract.color[intent];
+	const border = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
+	const flat = variant === "solid" ? themeContract.shadow.pixelBox : border;
+	const raised =
+		variant === "solid"
+			? themeContract.shadow.pixelBoxRaised
+			: `${border}, ${GAME_PRESS_OFFSET} ${GAME_PRESS_OFFSET} 0 4px ${color.border}`;
+	return {
+		raised,
+		pressed: {
+			// Hide the 1px border so the shared outline hover/active color doesn't show inside the pixel border
+			...(variant === "solid" ? {} : { borderColor: "transparent" }),
+			boxShadow: flat,
+			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
+		},
+	};
+};
+
+/**
+ * Turns game button hover into the pressed state, only on hover-capable devices.
+ * vanilla-extract emits @media rules after plain rules, so this overrides the default hover at equal specificity
+ */
+const createGameHoverMedia = (
+	intent: ColorIntent,
+	variant: ButtonVariant,
+): NonNullable<StyleRule["@media"]> => {
+	const pressable = getGamePressableShadows(intent, variant);
+	if (!pressable) return {};
+	return {
+		"(hover: hover)": {
+			selectors: {
+				[`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`]:
+					pressable.pressed,
+				[`.${gameLightThemeClass} &:hover:not(:disabled)::after, .${gameDarkThemeClass} &:hover:not(:disabled)::after`]:
+					gamePressedHitArea,
+			},
+		},
+	};
 };
 
 /**
@@ -195,7 +255,7 @@ const buttonBase = style({
 	gap: themeContract.spacing.xs,
 	outline: "none",
 	position: "relative",
-	border: "1px solid transparent",
+	border: `${BUTTON_BORDER_WIDTH} solid transparent`,
 	boxSizing: "border-box",
 	selectors: {
 		"&:disabled": {
@@ -211,6 +271,18 @@ const buttonBase = style({
 			},
 		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
 			createCrayonAfterStyle(),
+	},
+	"@media": {
+		// With reduced motion, keep the pressed state change but turn off the transition.
+		// This isn't emitted after compoundVariants, so :not(:disabled) raises its specificity
+		"(prefers-reduced-motion: reduce)": {
+			selectors: {
+				[`.${gameLightThemeClass} &:not(:disabled), .${gameDarkThemeClass} &:not(:disabled)`]:
+					{
+						transition: "none",
+					},
+			},
+		},
 	},
 });
 
@@ -316,6 +388,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("primary", "solid"),
 				},
+				"@media": createGameHoverMedia("primary", "solid"),
 			},
 		},
 		{
@@ -336,6 +409,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("secondary", "solid"),
 				},
+				"@media": createGameHoverMedia("secondary", "solid"),
 			},
 		},
 		{
@@ -356,6 +430,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("success", "solid"),
 				},
+				"@media": createGameHoverMedia("success", "solid"),
 			},
 		},
 		{
@@ -376,6 +451,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("warning", "solid"),
 				},
+				"@media": createGameHoverMedia("warning", "solid"),
 			},
 		},
 		{
@@ -396,6 +472,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("danger", "solid"),
 				},
+				"@media": createGameHoverMedia("danger", "solid"),
 			},
 		},
 		{
@@ -416,6 +493,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("neutral", "solid"),
 				},
+				"@media": createGameHoverMedia("neutral", "solid"),
 			},
 		},
 
@@ -437,6 +515,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("primary", "outline"),
 				},
+				"@media": createGameHoverMedia("primary", "outline"),
 			},
 		},
 		{
@@ -456,6 +535,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("secondary", "outline"),
 				},
+				"@media": createGameHoverMedia("secondary", "outline"),
 			},
 		},
 		{
@@ -475,6 +555,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("success", "outline"),
 				},
+				"@media": createGameHoverMedia("success", "outline"),
 			},
 		},
 		{
@@ -494,6 +575,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("warning", "outline"),
 				},
+				"@media": createGameHoverMedia("warning", "outline"),
 			},
 		},
 		{
@@ -513,6 +595,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("danger", "outline"),
 				},
+				"@media": createGameHoverMedia("danger", "outline"),
 			},
 		},
 		{
@@ -532,6 +615,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("neutral", "outline"),
 				},
+				"@media": createGameHoverMedia("neutral", "outline"),
 			},
 		},
 
@@ -646,6 +730,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("primary", "weak"),
 				},
+				"@media": createGameHoverMedia("primary", "weak"),
 			},
 		},
 		{
@@ -666,6 +751,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("secondary", "weak"),
 				},
+				"@media": createGameHoverMedia("secondary", "weak"),
 			},
 		},
 		{
@@ -686,6 +772,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("success", "weak"),
 				},
+				"@media": createGameHoverMedia("success", "weak"),
 			},
 		},
 		{
@@ -706,6 +793,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("warning", "weak"),
 				},
+				"@media": createGameHoverMedia("warning", "weak"),
 			},
 		},
 		{
@@ -726,6 +814,7 @@ export const button = recipe({
 					},
 					...createThemeSelectors("danger", "weak"),
 				},
+				"@media": createGameHoverMedia("danger", "weak"),
 			},
 		},
 		{
@@ -746,10 +835,11 @@ export const button = recipe({
 					},
 					...createThemeSelectors("neutral", "weak"),
 				},
+				"@media": createGameHoverMedia("neutral", "weak"),
 			},
 		},
 
-		// Crayon theme: Badge와 동일 - outline/ghost는 테두리 숨기고 texture 제거
+		// Crayon theme: same as Badge - outline/ghost hide the border and drop the texture
 		{
 			variants: { variant: "outline" },
 			style: {
