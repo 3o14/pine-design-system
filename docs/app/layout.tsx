@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 	},
 	description: SITE_DESCRIPTION,
 	openGraph: baseOpenGraph,
+	twitter: { card: "summary_large_image" },
 	icons: { icon: "/favicon.png" },
 	verification: { google: "Xg4J667-CrGyRuLCUoOBehPLP1ukOTFHocojobS6XeE" },
 };

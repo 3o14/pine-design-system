@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
 
-/** 배포된 문서 사이트의 절대 URL. canonical, sitemap, OG URL의 기준이 된다. */
+/** Absolute URL of the deployed docs site. Base for canonical, sitemap, and OG URLs. */
 export const SITE_URL = "https://pine-design-system.vercel.app";
 
 export const SITE_NAME = "Pine Design System";
 
-/** 검색 결과 스니펫에 노출되는 기본 설명. 개별 페이지 description이 없을 때 사용된다. */
+/** Default description shown in search result snippets. Used when a page has no description of its own. */
 export const SITE_DESCRIPTION =
   "A multi-theme React component library. Switch between basic, game, and crayon designs with a single prop — token-driven theming with Vanilla Extract, accessible Base UI primitives, and light/dark mode.";
 
-/** 모든 페이지가 공유하는 Open Graph 기본값. 하위 페이지에서 openGraph를 지정하면 통째로 덮어써지므로 펼쳐서 사용한다. */
+/** Default social preview image (1200×630). Captured from real Pine components, so recapture it when their styles change. */
+export const OG_IMAGE = {
+  url: "/og/home.png",
+  width: 1200,
+  height: 630,
+  alt: "Pine Design System — the same Button in basic, game, and crayon designs",
+};
+
+/** Open Graph defaults shared by every page. A page that sets openGraph replaces it entirely, so spread this in. */
 export const baseOpenGraph = {
   type: "website",
   siteName: SITE_NAME,
   locale: "en_US",
+  images: [OG_IMAGE],
 } satisfies Metadata["openGraph"];
