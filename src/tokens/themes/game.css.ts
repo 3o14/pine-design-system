@@ -25,58 +25,61 @@ const neonGreen = toNeon(foundation.green);
 const neonBlue = toNeon(foundation.blue);
 const neonOrange = toNeon(foundation.orange);
 
-export const gameLightTheme = createTheme(semanticTokens, {
-	color: {
-		primary: primaryColorVars,
-		secondary: {
-			surface: neonBlue[500],
-			surfaceHover: neonBlue[600],
-			surfaceActive: neonBlue[700],
-			text: foundation.neutral.white,
-			border: neonBlue[600],
-			weak: getWeakColor(neonBlue[500], 25),
-		},
-		success: {
-			surface: neonGreen[500],
-			surfaceHover: neonGreen[600],
-			surfaceActive: neonGreen[700],
-			text: foundation.neutral.white,
-			border: neonGreen[600],
-			weak: getWeakColor(neonGreen[500], 25),
-		},
-		warning: {
-			surface: neonOrange[500],
-			surfaceHover: neonOrange[600],
-			surfaceActive: neonOrange[700],
-			text: foundation.neutral.white,
-			border: neonOrange[600],
-			weak: getWeakColor(neonOrange[500], 25),
-		},
-		danger: {
-			surface: foundation.red[500],
-			surfaceHover: foundation.red[600],
-			surfaceActive: foundation.red[700],
-			text: foundation.neutral.white,
-			border: foundation.red[600],
-			weak: getWeakColor(foundation.red[500], 25),
-		},
-		neutral: {
-			surface: foundation.slate[200],
-			surfaceHover: foundation.slate[300],
-			surfaceActive: foundation.slate[400],
-			text: foundation.slate[900],
-			border: foundation.slate[300],
-			weak: getWeakColor(foundation.slate[200], 25),
-		},
-		surface: {
-			background: foundation.neutral.white,
-			backgroundElevated: foundation.slate[50],
-			outline: foundation.slate[300],
-			text: foundation.slate[900],
-			textMuted: foundation.slate[500],
-			divider: "rgba(15, 23, 42, 0.08)",
-		},
+/** game light 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+export const gameLightColors = {
+	primary: primaryColorVars,
+	secondary: {
+		surface: neonBlue[500],
+		surfaceHover: neonBlue[600],
+		surfaceActive: neonBlue[700],
+		text: foundation.neutral.white,
+		border: neonBlue[600],
+		weak: getWeakColor(neonBlue[500], 25),
 	},
+	success: {
+		surface: neonGreen[500],
+		surfaceHover: neonGreen[600],
+		surfaceActive: neonGreen[700],
+		text: foundation.neutral.white,
+		border: neonGreen[600],
+		weak: getWeakColor(neonGreen[500], 25),
+	},
+	warning: {
+		surface: neonOrange[500],
+		surfaceHover: neonOrange[600],
+		surfaceActive: neonOrange[700],
+		text: foundation.neutral.white,
+		border: neonOrange[600],
+		weak: getWeakColor(neonOrange[500], 25),
+	},
+	danger: {
+		surface: foundation.red[500],
+		surfaceHover: foundation.red[600],
+		surfaceActive: foundation.red[700],
+		text: foundation.neutral.white,
+		border: foundation.red[600],
+		weak: getWeakColor(foundation.red[500], 25),
+	},
+	neutral: {
+		surface: foundation.slate[200],
+		surfaceHover: foundation.slate[300],
+		surfaceActive: foundation.slate[400],
+		text: foundation.slate[900],
+		border: foundation.slate[300],
+		weak: getWeakColor(foundation.slate[200], 25),
+	},
+	surface: {
+		background: foundation.neutral.white,
+		backgroundElevated: foundation.slate[50],
+		outline: foundation.slate[300],
+		text: foundation.slate[900],
+		textMuted: foundation.slate[500],
+		divider: "rgba(15, 23, 42, 0.08)",
+	},
+};
+
+export const gameLightTheme = createTheme(semanticTokens, {
+	color: gameLightColors,
 	spacing: foundation.spacing,
 	typography: {
 		fontFamily: {
@@ -154,58 +157,61 @@ export const gameLightTheme = createTheme(semanticTokens, {
 	},
 });
 
-export const gameDarkTheme = createTheme(semanticTokens, {
-	color: {
-		primary: primaryColorVars,
-		secondary: {
-			surface: neonBlue[400],
-			surfaceHover: neonBlue[500],
-			surfaceActive: neonBlue[600],
-			text: foundation.neutral.white,
-			border: neonBlue[500],
-			weak: getWeakColor(neonBlue[400], 35, "black"),
-		},
-		success: {
-			surface: neonGreen[400],
-			surfaceHover: neonGreen[500],
-			surfaceActive: neonGreen[600],
-			text: foundation.neutral.white,
-			border: neonGreen[500],
-			weak: getWeakColor(neonGreen[400], 35, "black"),
-		},
-		warning: {
-			surface: neonOrange[400],
-			surfaceHover: neonOrange[500],
-			surfaceActive: neonOrange[600],
-			text: foundation.neutral.white,
-			border: neonOrange[500],
-			weak: getWeakColor(neonOrange[400], 35, "black"),
-		},
-		danger: {
-			surface: foundation.red[400],
-			surfaceHover: foundation.red[500],
-			surfaceActive: foundation.red[600],
-			text: foundation.neutral.white,
-			border: foundation.red[500],
-			weak: getWeakColor(foundation.red[400], 35, "black"),
-		},
-		neutral: {
-			surface: foundation.slate[800],
-			surfaceHover: foundation.slate[700],
-			surfaceActive: foundation.slate[600],
-			text: foundation.slate[200],
-			border: foundation.slate[700],
-			weak: getWeakColor(foundation.slate[800], 35, "black"),
-		},
-		surface: {
-			background: foundation.slate[900],
-			backgroundElevated: foundation.slate[800],
-			outline: foundation.slate[800],
-			text: foundation.slate[200],
-			textMuted: foundation.slate[400],
-			divider: "rgba(148, 163, 184, 0.24)",
-		},
+/** game dark 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+export const gameDarkColors = {
+	primary: primaryColorVars,
+	secondary: {
+		surface: neonBlue[400],
+		surfaceHover: neonBlue[500],
+		surfaceActive: neonBlue[600],
+		text: foundation.neutral.white,
+		border: neonBlue[500],
+		weak: getWeakColor(neonBlue[400], 35, "black"),
 	},
+	success: {
+		surface: neonGreen[400],
+		surfaceHover: neonGreen[500],
+		surfaceActive: neonGreen[600],
+		text: foundation.neutral.white,
+		border: neonGreen[500],
+		weak: getWeakColor(neonGreen[400], 35, "black"),
+	},
+	warning: {
+		surface: neonOrange[400],
+		surfaceHover: neonOrange[500],
+		surfaceActive: neonOrange[600],
+		text: foundation.neutral.white,
+		border: neonOrange[500],
+		weak: getWeakColor(neonOrange[400], 35, "black"),
+	},
+	danger: {
+		surface: foundation.red[400],
+		surfaceHover: foundation.red[500],
+		surfaceActive: foundation.red[600],
+		text: foundation.neutral.white,
+		border: foundation.red[500],
+		weak: getWeakColor(foundation.red[400], 35, "black"),
+	},
+	neutral: {
+		surface: foundation.slate[800],
+		surfaceHover: foundation.slate[700],
+		surfaceActive: foundation.slate[600],
+		text: foundation.slate[200],
+		border: foundation.slate[700],
+		weak: getWeakColor(foundation.slate[800], 35, "black"),
+	},
+	surface: {
+		background: foundation.slate[900],
+		backgroundElevated: foundation.slate[800],
+		outline: foundation.slate[800],
+		text: foundation.slate[200],
+		textMuted: foundation.slate[400],
+		divider: "rgba(148, 163, 184, 0.24)",
+	},
+};
+
+export const gameDarkTheme = createTheme(semanticTokens, {
+	color: gameDarkColors,
 	spacing: foundation.spacing,
 	typography: {
 		fontFamily: {

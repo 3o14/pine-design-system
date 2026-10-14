@@ -25,58 +25,61 @@ const pastelPink = toPastel(foundation.pink);
 const pastelGreen = toPastel(foundation.green);
 const pastelYellow = toPastel(foundation.yellow);
 
-export const crayonLightTheme = createTheme(semanticTokens, {
-	color: {
-		primary: primaryColorVars,
-		secondary: {
-			surface: pastelPink[500],
-			surfaceHover: pastelPink[600],
-			surfaceActive: pastelPink[700],
-			text: foundation.neutral.white,
-			border: pastelPink[600],
-			weak: getWeakColor(pastelPink[500], 25),
-		},
-		success: {
-			surface: pastelGreen[500],
-			surfaceHover: pastelGreen[600],
-			surfaceActive: pastelGreen[700],
-			text: foundation.neutral.white,
-			border: pastelGreen[600],
-			weak: getWeakColor(pastelGreen[500], 25),
-		},
-		warning: {
-			surface: pastelYellow[500],
-			surfaceHover: pastelYellow[600],
-			surfaceActive: pastelYellow[700],
-			text: foundation.charcoal[500],
-			border: pastelYellow[600],
-			weak: getWeakColor(pastelYellow[500], 25),
-		},
-		danger: {
-			surface: foundation.red[400],
-			surfaceHover: foundation.red[500],
-			surfaceActive: foundation.red[600],
-			text: foundation.neutral.white,
-			border: foundation.red[500],
-			weak: getWeakColor(foundation.red[400], 25),
-		},
-		neutral: {
-			surface: foundation.cream[500],
-			surfaceHover: foundation.cream[600],
-			surfaceActive: foundation.cream[700],
-			text: foundation.charcoal[500],
-			border: foundation.cream[600],
-			weak: getWeakColor(foundation.cream[500], 25),
-		},
-		surface: {
-			background: foundation.cream[50],
-			backgroundElevated: foundation.neutral.white,
-			outline: foundation.cream[300],
-			text: foundation.charcoal[500],
-			textMuted: foundation.charcoal[400],
-			divider: "rgba(75, 75, 75, 0.08)",
-		},
+/** crayon light 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+export const crayonLightColors = {
+	primary: primaryColorVars,
+	secondary: {
+		surface: pastelPink[500],
+		surfaceHover: pastelPink[600],
+		surfaceActive: pastelPink[700],
+		text: foundation.neutral.white,
+		border: pastelPink[600],
+		weak: getWeakColor(pastelPink[500], 25),
 	},
+	success: {
+		surface: pastelGreen[500],
+		surfaceHover: pastelGreen[600],
+		surfaceActive: pastelGreen[700],
+		text: foundation.neutral.white,
+		border: pastelGreen[600],
+		weak: getWeakColor(pastelGreen[500], 25),
+	},
+	warning: {
+		surface: pastelYellow[500],
+		surfaceHover: pastelYellow[600],
+		surfaceActive: pastelYellow[700],
+		text: foundation.charcoal[500],
+		border: pastelYellow[600],
+		weak: getWeakColor(pastelYellow[500], 25),
+	},
+	danger: {
+		surface: foundation.red[400],
+		surfaceHover: foundation.red[500],
+		surfaceActive: foundation.red[600],
+		text: foundation.neutral.white,
+		border: foundation.red[500],
+		weak: getWeakColor(foundation.red[400], 25),
+	},
+	neutral: {
+		surface: foundation.cream[500],
+		surfaceHover: foundation.cream[600],
+		surfaceActive: foundation.cream[700],
+		text: foundation.charcoal[500],
+		border: foundation.cream[600],
+		weak: getWeakColor(foundation.cream[500], 25),
+	},
+	surface: {
+		background: foundation.cream[50],
+		backgroundElevated: foundation.neutral.white,
+		outline: foundation.cream[300],
+		text: foundation.charcoal[500],
+		textMuted: foundation.charcoal[400],
+		divider: "rgba(75, 75, 75, 0.08)",
+	},
+};
+
+export const crayonLightTheme = createTheme(semanticTokens, {
+	color: crayonLightColors,
 	spacing: foundation.spacing,
 	typography: {
 		fontFamily: {
@@ -154,58 +157,61 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 	},
 });
 
-export const crayonDarkTheme = createTheme(semanticTokens, {
-	color: {
-		primary: primaryColorVars,
-		secondary: {
-			surface: pastelPink[400],
-			surfaceHover: pastelPink[500],
-			surfaceActive: pastelPink[600],
-			text: foundation.neutral.white,
-			border: pastelPink[500],
-			weak: getWeakColor(pastelPink[400], 35, "black"),
-		},
-		success: {
-			surface: pastelGreen[400],
-			surfaceHover: pastelGreen[500],
-			surfaceActive: pastelGreen[600],
-			text: foundation.neutral.white,
-			border: pastelGreen[500],
-			weak: getWeakColor(pastelGreen[400], 35, "black"),
-		},
-		warning: {
-			surface: pastelYellow[400],
-			surfaceHover: pastelYellow[500],
-			surfaceActive: pastelYellow[600],
-			text: foundation.charcoal[500],
-			border: pastelYellow[500],
-			weak: getWeakColor(pastelYellow[400], 35, "black"),
-		},
-		danger: {
-			surface: foundation.red[400],
-			surfaceHover: foundation.red[500],
-			surfaceActive: foundation.red[600],
-			text: foundation.neutral.white,
-			border: foundation.red[500],
-			weak: getWeakColor(foundation.red[400], 35, "black"),
-		},
-		neutral: {
-			surface: foundation.charcoal[500],
-			surfaceHover: foundation.charcoal[600],
-			surfaceActive: foundation.charcoal[700],
-			text: foundation.cream[500],
-			border: foundation.charcoal[600],
-			weak: getWeakColor(foundation.charcoal[500], 35, "black"),
-		},
-		surface: {
-			background: foundation.charcoal[900],
-			backgroundElevated: foundation.charcoal[800],
-			outline: foundation.charcoal[700],
-			text: foundation.cream[500],
-			textMuted: foundation.charcoal[400],
-			divider: "rgba(250, 243, 236, 0.24)",
-		},
+/** crayon dark 테마의 색 토큰. 대비 테스트에서 값을 직접 검증할 수 있도록 export한다 */
+export const crayonDarkColors = {
+	primary: primaryColorVars,
+	secondary: {
+		surface: pastelPink[400],
+		surfaceHover: pastelPink[500],
+		surfaceActive: pastelPink[600],
+		text: foundation.neutral.white,
+		border: pastelPink[500],
+		weak: getWeakColor(pastelPink[400], 35, "black"),
 	},
+	success: {
+		surface: pastelGreen[400],
+		surfaceHover: pastelGreen[500],
+		surfaceActive: pastelGreen[600],
+		text: foundation.neutral.white,
+		border: pastelGreen[500],
+		weak: getWeakColor(pastelGreen[400], 35, "black"),
+	},
+	warning: {
+		surface: pastelYellow[400],
+		surfaceHover: pastelYellow[500],
+		surfaceActive: pastelYellow[600],
+		text: foundation.charcoal[500],
+		border: pastelYellow[500],
+		weak: getWeakColor(pastelYellow[400], 35, "black"),
+	},
+	danger: {
+		surface: foundation.red[400],
+		surfaceHover: foundation.red[500],
+		surfaceActive: foundation.red[600],
+		text: foundation.neutral.white,
+		border: foundation.red[500],
+		weak: getWeakColor(foundation.red[400], 35, "black"),
+	},
+	neutral: {
+		surface: foundation.charcoal[500],
+		surfaceHover: foundation.charcoal[600],
+		surfaceActive: foundation.charcoal[700],
+		text: foundation.cream[500],
+		border: foundation.charcoal[600],
+		weak: getWeakColor(foundation.charcoal[500], 35, "black"),
+	},
+	surface: {
+		background: foundation.charcoal[900],
+		backgroundElevated: foundation.charcoal[800],
+		outline: foundation.charcoal[700],
+		text: foundation.cream[500],
+		textMuted: foundation.charcoal[400],
+		divider: "rgba(250, 243, 236, 0.24)",
+	},
+};
+
+export const crayonDarkTheme = createTheme(semanticTokens, {
+	color: crayonDarkColors,
 	spacing: foundation.spacing,
 	typography: {
 		fontFamily: {
