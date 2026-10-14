@@ -17,6 +17,10 @@ const crayonDarkThemeClass = String(crayonDarkTheme);
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
 
+/** game solid 버튼이 눌릴 때 이동하는 거리. shadow.pixelBoxRaised의 받침판 오프셋과 같아야 한다 */
+const GAME_PRESS_OFFSET = "4px";
+const GAME_PRESS_DURATION = "0.08s";
+
 /**
  * Creates game theme box shadow style
  */
@@ -145,14 +149,18 @@ const createGameThemeSelectors = (
 	const pixelBoxShadow = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
 
 	if (variant === "solid") {
+		// 기본: 앞면 뒤로 받침판이 4px 밀려 있어 두 겹으로 보인다
 		selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
-			boxShadow: themeContract.shadow.pixelBox,
+			boxShadow: themeContract.shadow.pixelBoxRaised,
 			margin: themeContract.shadow.pixelBoxMargin,
+			transition: `transform ${GAME_PRESS_DURATION} ease-out, box-shadow ${GAME_PRESS_DURATION} ease-out, background-color ${GAME_PRESS_DURATION} ease-out`,
 		};
+		// hover/active: 앞면이 받침판 위치로 내려앉아 눌린 것처럼 보인다 (transform이라 레이아웃은 그대로)
 		selectors[
-			`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
+			`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled), .${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
 		] = {
 			boxShadow: themeContract.shadow.pixelBox,
+			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
 		};
 	}
 
@@ -211,6 +219,18 @@ const buttonBase = style({
 			},
 		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
 			createCrayonAfterStyle(),
+	},
+	"@media": {
+		// 움직임 줄이기 설정 시 눌림 상태 변화는 유지하고 전환 애니메이션만 끈다.
+		// compoundVariants보다 뒤에 오지 않으므로 :not(:disabled)로 우선순위를 높인다
+		"(prefers-reduced-motion: reduce)": {
+			selectors: {
+				[`.${gameLightThemeClass} &:not(:disabled), .${gameDarkThemeClass} &:not(:disabled)`]:
+					{
+						transition: "none",
+					},
+			},
+		},
 	},
 });
 
