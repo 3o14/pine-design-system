@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 			{ url: "/favicon-78.png", sizes: "78x78", type: "image/png" },
 			{ url: "/favicon.png", sizes: "202x202", type: "image/png" },
 		],
-		apple: { url: "/favicon.png", sizes: "202x202" },
+		apple: { url: "/favicon-radius0.png", sizes: "202x202" },
 	},
 	verification: { google: "Xg4J667-CrGyRuLCUoOBehPLP1ukOTFHocojobS6XeE" },
 };
