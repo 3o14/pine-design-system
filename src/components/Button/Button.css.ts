@@ -22,6 +22,16 @@ const GAME_PRESS_OFFSET = "4px";
 const GAME_PRESS_DURATION = "0.08s";
 
 /**
+ * 눌린 상태의 히트 영역. 버튼이 오른쪽 아래로 이동하므로 위·왼쪽으로만 같은 거리만큼 넓혀
+ * 원래 자리까지 덮는다. 히트 판정은 transform을 따르기 때문에, 이게 없으면 위·왼쪽 가장자리에서
+ * hover가 풀렸다 걸렸다 반복하고 그 자리에서 누른 click이 버튼 밖에서 떼어져 누락된다
+ */
+const gamePressedHitArea = {
+	top: `calc(-1 * ${GAME_PRESS_OFFSET})`,
+	left: `calc(-1 * ${GAME_PRESS_OFFSET})`,
+};
+
+/**
  * Creates crayon theme-specific selectors for a given intent and variant
  */
 const createCrayonThemeSelectors = (
@@ -157,13 +167,15 @@ const createGameThemeSelectors = (
 	selectors[
 		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
 	] = pressable.pressed;
-	// 히트 영역을 눌림 거리만큼 사방으로 넓힌다. 버튼이 이동해도 원래 자리가 계속 버튼으로 판정되어
-	// 가장자리 hover 떨림과, 누른 뒤 포인터가 버튼 밖에서 떼어져 click이 누락되는 문제를 막는다
+	// 히트 영역 보정용 ::after. 평소에는 버튼과 같은 크기라 이웃 버튼의 클릭을 가로채지 않는다
 	selectors[`.${gameLightThemeClass} &::after, .${gameDarkThemeClass} &::after`] = {
 		content: '""',
 		position: "absolute",
-		inset: `calc(-1 * ${GAME_PRESS_OFFSET})`,
+		inset: 0,
 	};
+	selectors[
+		`.${gameLightThemeClass} &:active:not(:disabled)::after, .${gameDarkThemeClass} &:active:not(:disabled)::after`
+	] = gamePressedHitArea;
 
 	return selectors;
 };
@@ -202,6 +214,8 @@ const createGameHoverMedia = (intent: ColorIntent, variant: ButtonVariant) => {
 			selectors: {
 				[`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`]:
 					pressable.pressed,
+				[`.${gameLightThemeClass} &:hover:not(:disabled)::after, .${gameDarkThemeClass} &:hover:not(:disabled)::after`]:
+					gamePressedHitArea,
 			},
 		},
 	};
