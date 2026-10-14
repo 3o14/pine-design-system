@@ -29,12 +29,13 @@ Standard shadow tokens map identically across all themes:
   align={["left", "left", "left", "left", "left", "left"]}
 />
 
-The **game** theme adds two extra tokens for a pixel-art outline effect:
+The **game** theme adds three extra tokens for a pixel-art outline effect:
 
 - **pixelBox** — 4px black/white outline drawn via `box-shadow` (used on Button, Badge, Checkbox, Switch, Tab, Dialog, Dropdown)
+- **pixelBoxRaised** — `pixelBox` plus a solid backing plate offset 4px down-right, giving a raised two-layer look. Solid Buttons use it at rest and drop back to `pixelBox` (shifted by the same 4px) when pressed
 - **pixelBoxMargin** — Layout offset for the outline (typically `0`)
 
-basic and crayon themes set both to `none` and `0`.
+basic and crayon themes set `pixelBox` and `pixelBoxRaised` to `none` and `pixelBoxMargin` to `0`.
 
 ## Guidelines
 
