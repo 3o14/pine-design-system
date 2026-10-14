@@ -17,17 +17,18 @@ const crayonDarkThemeClass = String(crayonDarkTheme);
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
 
-/** game 버튼이 눌릴 때 이동하는 거리. shadow.pixelBoxRaised의 받침판 오프셋과 같아야 한다 */
+/** How far a game button moves when pressed. Must match the back-plate offset in shadow.pixelBoxRaised */
 const GAME_PRESS_OFFSET = "4px";
 const GAME_PRESS_DURATION = "0.08s";
 
-/** buttonBase의 테두리 두께. absolute 가상 요소는 테두리 안쪽 기준이라 히트 영역 계산에 더해야 한다 */
+/** buttonBase border width. Absolutely positioned pseudo-elements are laid out from the padding box, so hit-area math must add it */
 const BUTTON_BORDER_WIDTH = "1px";
 
 /**
- * 눌린 상태의 히트 영역. 버튼이 오른쪽 아래로 이동하므로 위·왼쪽으로만 같은 거리만큼 넓혀
- * 원래 자리까지 덮는다. 히트 판정은 transform을 따르기 때문에, 이게 없으면 위·왼쪽 가장자리에서
- * hover가 풀렸다 걸렸다 반복하고 그 자리에서 누른 click이 버튼 밖에서 떼어져 누락된다
+ * Hit area while pressed. The button moves down-right, so extend it up-left by the same distance
+ * to keep covering the original footprint. Hit testing follows transform, so without this the
+ * top/left edge flickers between hover and not-hover, and clicks pressed there are released
+ * outside the button and get lost
  */
 const gamePressedHitArea = {
 	top: `calc(-1 * (${GAME_PRESS_OFFSET} + ${BUTTON_BORDER_WIDTH}))`,
@@ -152,26 +153,26 @@ const createGameThemeSelectors = (
 	const pressable = getGamePressableShadows(intent, variant);
 	if (!pressable) return selectors;
 
-	// 기본: 앞면 뒤로 받침판이 4px 밀려 있어 두 겹으로 보인다
+	// Rest: the back plate sits 4px behind the face, so the button reads as two layers
 	selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
 		...(variant === "solid" ? {} : { borderColor: "transparent" }),
 		boxShadow: pressable.raised,
 		margin: themeContract.shadow.pixelBoxMargin,
 		transition: `transform ${GAME_PRESS_DURATION} ease-out, box-shadow ${GAME_PRESS_DURATION} ease-out, background-color ${GAME_PRESS_DURATION} ease-out`,
 	};
-	// hover: 공통 hover 그림자(shadow.medium)가 픽셀 테두리를 덮지 않도록 기본 모양을 유지한다.
-	// 실제 눌림은 hover 가능한 기기에서만 createGameHoverMedia가 덮어쓴다 (터치 기기의 sticky hover 방지)
+	// Hover: keep the rest look so the shared hover shadow (shadow.medium) doesn't cover the pixel border.
+	// createGameHoverMedia applies the actual press only on hover-capable devices (avoids sticky hover on touch)
 	selectors[
 		`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
 	] = {
 		...(variant === "solid" ? {} : { borderColor: "transparent" }),
 		boxShadow: pressable.raised,
 	};
-	// active: 모든 기기에서 앞면이 받침판 위치로 내려앉는다 (transform이라 레이아웃은 그대로)
+	// Active: on every device the face drops onto the back plate (transform, so layout doesn't shift)
 	selectors[
 		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
 	] = pressable.pressed;
-	// 히트 영역 보정용 ::after. 평소에는 테두리까지 포함한 버튼과 같은 크기라 이웃 버튼의 클릭을 가로채지 않는다
+	// ::after corrects the hit area. At rest it matches the button including its border, so it doesn't steal clicks from neighbours
 	selectors[`.${gameLightThemeClass} &::after, .${gameDarkThemeClass} &::after`] = {
 		content: '""',
 		position: "absolute",
@@ -185,8 +186,8 @@ const createGameThemeSelectors = (
 };
 
 /**
- * game 테마에서 눌림 효과가 적용되는 variant의 그림자 쌍.
- * solid는 테마 공통 픽셀 테두리 색, outline/weak는 intent 테두리 색으로 받침판을 그린다
+ * Shadow pair for variants that get the game theme press effect.
+ * solid draws the back plate in the theme's pixel-border color, outline/weak in the intent border color
  */
 const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) => {
 	if (variant === "ghost") return null;
@@ -200,7 +201,7 @@ const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) =>
 	return {
 		raised,
 		pressed: {
-			// outline 공통 hover/active의 1px 테두리 색이 픽셀 테두리 안쪽에 비치지 않도록 숨긴다
+			// Hide the 1px border so the shared outline hover/active color doesn't show inside the pixel border
 			...(variant === "solid" ? {} : { borderColor: "transparent" }),
 			boxShadow: flat,
 			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
@@ -209,8 +210,8 @@ const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) =>
 };
 
 /**
- * hover 가능한 기기에서만 game 버튼의 hover를 눌린 상태로 만든다.
- * vanilla-extract는 @media 규칙을 일반 규칙 뒤에 출력하므로 같은 우선순위의 기본 hover를 덮어쓴다
+ * Turns game button hover into the pressed state, only on hover-capable devices.
+ * vanilla-extract emits @media rules after plain rules, so this overrides the default hover at equal specificity
  */
 const createGameHoverMedia = (
 	intent: ColorIntent,
@@ -272,8 +273,8 @@ const buttonBase = style({
 			createCrayonAfterStyle(),
 	},
 	"@media": {
-		// 움직임 줄이기 설정 시 눌림 상태 변화는 유지하고 전환 애니메이션만 끈다.
-		// compoundVariants보다 뒤에 오지 않으므로 :not(:disabled)로 우선순위를 높인다
+		// With reduced motion, keep the pressed state change but turn off the transition.
+		// This isn't emitted after compoundVariants, so :not(:disabled) raises its specificity
 		"(prefers-reduced-motion: reduce)": {
 			selectors: {
 				[`.${gameLightThemeClass} &:not(:disabled), .${gameDarkThemeClass} &:not(:disabled)`]:
@@ -838,7 +839,7 @@ export const button = recipe({
 			},
 		},
 
-		// Crayon theme: Badge와 동일 - outline/ghost는 테두리 숨기고 texture 제거
+		// Crayon theme: same as Badge - outline/ghost hide the border and drop the texture
 		{
 			variants: { variant: "outline" },
 			style: {
