@@ -157,6 +157,13 @@ const createGameThemeSelectors = (
 	selectors[
 		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
 	] = pressable.pressed;
+	// 히트 영역을 눌림 거리만큼 사방으로 넓힌다. 버튼이 이동해도 원래 자리가 계속 버튼으로 판정되어
+	// 가장자리 hover 떨림과, 누른 뒤 포인터가 버튼 밖에서 떼어져 click이 누락되는 문제를 막는다
+	selectors[`.${gameLightThemeClass} &::after, .${gameDarkThemeClass} &::after`] = {
+		content: '""',
+		position: "absolute",
+		inset: `calc(-1 * ${GAME_PRESS_OFFSET})`,
+	};
 
 	return selectors;
 };
