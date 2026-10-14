@@ -16,7 +16,14 @@ export const metadata: Metadata = {
 	description: SITE_DESCRIPTION,
 	openGraph: baseOpenGraph,
 	twitter: { card: "summary_large_image" },
-	icons: { icon: "/favicon.png" },
+	icons: {
+		icon: [
+			{ url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+			{ url: "/favicon-78.png", sizes: "78x78", type: "image/png" },
+			{ url: "/favicon.png", sizes: "202x202", type: "image/png" },
+		],
+		apple: { url: "/favicon.png", sizes: "202x202" },
+	},
 	verification: { google: "Xg4J667-CrGyRuLCUoOBehPLP1ukOTFHocojobS6XeE" },
 };
 
