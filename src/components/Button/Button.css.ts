@@ -164,6 +164,7 @@ const createGameThemeSelectors = (
 	selectors[
 		`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
 	] = {
+		...(variant === "solid" ? {} : { borderColor: "transparent" }),
 		boxShadow: pressable.raised,
 	};
 	// active: 모든 기기에서 앞면이 받침판 위치로 내려앉는다 (transform이라 레이아웃은 그대로)
@@ -199,6 +200,8 @@ const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) =>
 	return {
 		raised,
 		pressed: {
+			// outline 공통 hover/active의 1px 테두리 색이 픽셀 테두리 안쪽에 비치지 않도록 숨긴다
+			...(variant === "solid" ? {} : { borderColor: "transparent" }),
 			boxShadow: flat,
 			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
 		},
