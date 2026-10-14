@@ -9,7 +9,7 @@ export const SITE_NAME = "Pine Design System";
 export const SITE_DESCRIPTION =
   "A multi-theme React component library. Switch between basic, game, and crayon designs with a single prop — token-driven theming with Vanilla Extract, accessible Base UI primitives, and light/dark mode.";
 
-/** Default social preview image (1200×630). Captured from real Pine components, so recapture it when their styles change. */
+/** Default social preview image (1200×630). Captured from real Pine components and the logo, so recapture it when either changes. */
 export const OG_IMAGE = {
   url: "/og/home.png",
   width: 1200,
