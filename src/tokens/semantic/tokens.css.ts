@@ -120,6 +120,7 @@ export const semanticTokens = createThemeContract({
 		large: null,
 		xlarge: null,
 		pixelBox: null,
+		pixelBoxRaised: null,
 		pixelBoxMargin: null,
 	},
 	component: {

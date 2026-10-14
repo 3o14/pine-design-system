@@ -130,6 +130,8 @@ export const gameLightTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: `calc(-4px) 0 0 0 black, 4px 0 0 0 black, 0 4px 0 0 black, 0 calc(-4px) 0 0 black`,
+		// 픽셀 테두리 + 4px 아래·오른쪽으로 밀린 받침판 (spread 4px로 테두리 바깥까지 덮는다)
+		pixelBoxRaised: `calc(-4px) 0 0 0 black, 4px 0 0 0 black, 0 4px 0 0 black, 0 calc(-4px) 0 0 black, 4px 4px 0 4px black`,
 		pixelBoxMargin: "0",
 	},
 	component: {
@@ -262,6 +264,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: `calc(-4px) 0 0 0 ${foundation.neutral.white}, 4px 0 0 0 ${foundation.neutral.white}, 0 4px 0 0 ${foundation.neutral.white}, 0 calc(-4px) 0 0 ${foundation.neutral.white}`,
+		pixelBoxRaised: `calc(-4px) 0 0 0 ${foundation.neutral.white}, 4px 0 0 0 ${foundation.neutral.white}, 0 4px 0 0 ${foundation.neutral.white}, 0 calc(-4px) 0 0 ${foundation.neutral.white}, 4px 4px 0 4px ${foundation.neutral.white}`,
 		pixelBoxMargin: "0",
 	},
 	component: {

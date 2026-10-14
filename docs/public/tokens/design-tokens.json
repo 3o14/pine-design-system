@@ -1,5 +1,5 @@
 {
-	"$description": "Pine Design System tokens in W3C Design Tokens Community Group (DTCG) format ($value/$type). 'foundation' holds theme-agnostic raw values (source of truth: src/tokens/foundation/*.ts). 'semantic' holds the tokens components actually consume (source of truth: src/tokens/semantic/tokens.css.ts + src/tokens/themes/*.css.ts), grouped by design ('basic' | 'game' | 'crayon'). Within each design, 'typography', 'radius', 'shadow.xsmall..xlarge', and 'component' are identical between light and dark mode — only 'color' and 'shadow.pixelBox' vary by mode, so those are the only groups nested under light/dark.",
+	"$description": "Pine Design System tokens in W3C Design Tokens Community Group (DTCG) format ($value/$type). 'foundation' holds theme-agnostic raw values (source of truth: src/tokens/foundation/*.ts). 'semantic' holds the tokens components actually consume (source of truth: src/tokens/semantic/tokens.css.ts + src/tokens/themes/*.css.ts), grouped by design ('basic' | 'game' | 'crayon'). Within each design, 'typography', 'radius', 'shadow.xsmall..xlarge', and 'component' are identical between light and dark mode — only 'color', 'shadow.pixelBox', and 'shadow.pixelBoxRaised' vary by mode, so those are the only groups nested under light/dark.",
 	"foundation": {
 		"color": {
 			"$description": "Raw color scales. Theme-agnostic — the basic theme's semantic colors reference these directly; the game theme derives its palette via a toNeon() adapter and crayon via a toPastel() adapter (see semantic.game / semantic.crayon).",
@@ -91,6 +91,7 @@
 			"shadow": {
 				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
 				"pixelBox": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Basic theme does not use the pixel-art hard-edge shadow (game theme only)." },
+				"pixelBoxRaised": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Basic theme does not use the pressable pixel-button shadow (game theme only)." },
 				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
 			},
 			"component": {
@@ -139,6 +140,11 @@
 					"light": { "$value": "calc(-4px) 0 0 0 #000000, 4px 0 0 0 #000000, 0 4px 0 0 #000000, 0 calc(-4px) 0 0 #000000", "$type": "shadow" },
 					"dark": { "$value": "calc(-4px) 0 0 0 #ffffff, 4px 0 0 0 #ffffff, 0 4px 0 0 #ffffff, 0 calc(-4px) 0 0 #ffffff", "$type": "shadow" }
 				},
+				"pixelBoxRaised": {
+					"light": { "$value": "calc(-4px) 0 0 0 #000000, 4px 0 0 0 #000000, 0 4px 0 0 #000000, 0 calc(-4px) 0 0 #000000, 4px 4px 0 4px #000000", "$type": "shadow" },
+					"dark": { "$value": "calc(-4px) 0 0 0 #ffffff, 4px 0 0 0 #ffffff, 0 4px 0 0 #ffffff, 0 calc(-4px) 0 0 #ffffff, 4px 4px 0 4px #ffffff", "$type": "shadow" },
+					"$description": "pixelBox plus a back plate offset 4px down-right. Used by the solid Button's resting state; on hover/active the face translates 4px onto the plate and the shadow falls back to pixelBox."
+				},
 				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
 			},
 			"component": {
@@ -184,6 +190,7 @@
 			"shadow": {
 				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
 				"pixelBox": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Crayon theme does not use the pixel-art hard-edge shadow (game theme only)." },
+				"pixelBoxRaised": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Crayon theme does not use the pressable pixel-button shadow (game theme only)." },
 				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
 			},
 			"component": {

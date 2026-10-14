@@ -130,6 +130,7 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: "none",
+		pixelBoxRaised: "none",
 		pixelBoxMargin: "0",
 	},
 	component: {
@@ -262,6 +263,7 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: "none",
+		pixelBoxRaised: "none",
 		pixelBoxMargin: "0",
 	},
 	component: {
