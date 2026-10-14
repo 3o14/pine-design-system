@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, type StyleRule } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent, type SelectorMap } from "@/tokens";
 import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
@@ -212,7 +212,10 @@ const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) =>
  * hover 가능한 기기에서만 game 버튼의 hover를 눌린 상태로 만든다.
  * vanilla-extract는 @media 규칙을 일반 규칙 뒤에 출력하므로 같은 우선순위의 기본 hover를 덮어쓴다
  */
-const createGameHoverMedia = (intent: ColorIntent, variant: ButtonVariant) => {
+const createGameHoverMedia = (
+	intent: ColorIntent,
+	variant: ButtonVariant,
+): NonNullable<StyleRule["@media"]> => {
 	const pressable = getGamePressableShadows(intent, variant);
 	if (!pressable) return {};
 	return {
