@@ -1,5 +1,32 @@
 # pine-design-system
 
+## 1.2.0
+
+### Minor Changes
+
+- 8288d75: Fix `Dropdown` popup rendering off-screen. Base UI Select's default trigger-alignment positioning stretches its internal positioner from the trigger to the viewport edge, so the popup's hardcoded `top: calc(100% + 4px)` offset was computed against that stretched box instead of the trigger, pushing the popup out of the viewport. The popup now uses standard anchored positioning (matching `Tooltip`), and `side`, `align`, and `sideOffset` props are exposed for customizing placement.
+- b84d9da: Give the game theme's `solid`, `outline`, and `weak` `Button` variants a layered, pressable arcade look. At rest, a back plate sits 4px down and to the right of the face, so the button reads as two stacked layers. `solid` uses the pixel-border color for the plate, and `outline`/`weak` use their intent border color. When pressed, the face translates 4px onto the plate and the layers merge. Pressing happens on `:active` everywhere, and on `:hover` only on hover-capable devices (`@media (hover: hover)`), so touch devices don't get a stuck "pressed" look after a tap. Layout doesn't shift, because the movement uses `transform`. Disabled buttons keep the layered look but don't move, and `prefers-reduced-motion` removes the transition while keeping the state change. Adds a `shadow.pixelBoxRaised` theme token (game only; `none` in basic and crayon).
+- 94a9d9c: Fix a crash in React Server Components: importing anything from `pine-design-system` inside a Server Component (no `"use client"`) failed the build with `TypeError: createContext is not a function`, because the single bundled entry had no `"use client"` directive and `ThemeContext`'s module-scope `createContext` call got evaluated under React's server condition.
+
+  The library now builds as two entries. The main `pine-design-system` entry (all components + providers, still the same exports as before) is correctly marked `"use client"`. A new `pine-design-system/tokens` subpath exports only the pure design token values (colors, radius, spacing, shadow, typography, theme class names) with zero React/DOM dependency, safe to evaluate in server-only logic (Server Components, Route Handlers, `generateMetadata`).
+
+  Existing `import { ... } from "pine-design-system"` usage from Client Components is unaffected.
+
+### Patch Changes
+
+- 945284c: Fix dark theme contrast regressions in the `weak` color token. `getWeakColor()` always mixed toward white, so in dark themes (basic/game/crayon) the `Button` outline/ghost hover background and the `Button`/`Badge` `weak` variant background collapsed to near-white, making the accent-colored text on top unreadable (e.g. `<Button intent="secondary" variant="outline">` on the game dark theme). Dark-theme `weak` tokens — including the `--pie-primary-weak` CSS variable — now mix toward black instead, restoring WCAG-acceptable contrast. Also fixes `ProgressBar`'s track background, which relied on the same token and had become nearly invisible against the dark page background as a side effect of the above fix.
+- e3a78de: Fix `intent="neutral"` using the neutral surface (background-fill) token as its
+  foreground color instead of the neutral text token, making it unreadable in dark
+  themes. Affected `Text`, and the same pattern in `Button` (outline/ghost/weak),
+  `Badge` (outline/subtle/weak), `Tab` (selected-tab text), and `Dropdown`
+  (hover/focus-ring text).
+- 9e33c32: Fix unreadable text on `solid` `Badge` and `Button` in the game and crayon themes. The `secondary`, `success`, and `warning` intent `text` tokens were white on very light neon/pastel surfaces (as low as 1.13:1). They now use the theme's dark ink (`slate[900]` for game, `charcoal[500]` for crayon), and dark-mode `danger` uses `slate[900]` to match the basic dark theme. Every affected pair now meets WCAG AA (4.5:1). Light-mode `danger` is unchanged and tracked separately.
+- cd8236d: Fix a React hydration mismatch in `ThemeProvider` when `syncWithSystem` is on (the default): the initial theme was computed by reading `window.matchMedia` directly inside a `useState` lazy initializer, so the server (no `window`) and the client's first render (real OS preference) could disagree, producing a mismatch on every themed element. The system-theme detection now goes through `useSyncExternalStore`, which keeps the server and the client's hydration render in lockstep (falling back to `light`) and only picks up the real OS value immediately after hydration — with no regression for pure client-rendered apps (Storybook, etc.), which still get the correct theme from their very first render.
+
+  Also adds `getThemeInitScript()` to the `pine-design-system/tokens` entry: an opt-in helper for consumers who want to inline a blocking script in their document `<head>` and eliminate even that post-hydration flash, following the same pattern as `next-themes`.
+
+  Minor behavior refinement as part of this fix: a manual `setTheme()` call now persists even when `syncWithSystem` is on — previously, the next OS theme change would silently overwrite a manual choice. Manual selections are now sticky until you call `setTheme()` again, matching how a theme toggle button is normally expected to behave.
+
 ## 1.1.1
 
 ### Patch Changes
