@@ -92,14 +92,16 @@ Expresses the semantic purpose of the button through color. Choose based on the 
 
 ### Rounded
 
-Controls the corner radius of the button.
+Controls the corner radius of the button. Each step stays visibly distinct at every size.
+
+In the game theme, `rounded` steps the corners of the pixel frame instead of curving them: `small` is square, `medium` cuts a one-step notch, and `large` cuts a two-step corner.
 
 <DocTable
   headers={["Value", "Default", "Description"]}
   rows={[
     ["`small`", "", "Small corner radius"],
     ["`medium`", "✓", "Default corner radius"],
-    ["`large`", "", "Large corner radius (pill-like)"],
+    ["`large`", "", "Fully rounded (pill)"],
   ]}
   align={["left", "center", "left"]}
 />

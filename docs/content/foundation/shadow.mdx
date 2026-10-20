@@ -31,11 +31,11 @@ Standard shadow tokens map identically across all themes:
 
 The **game** theme adds three extra tokens for a pixel-art outline effect:
 
-- **pixelBox** — 4px black/white outline drawn via `box-shadow` (used on Button, Badge, Checkbox, Switch, Tab, Dialog, Dropdown)
-- **pixelBoxRaised** — `pixelBox` plus a solid backing plate offset 4px down-right, giving a raised two-layer look. Solid Buttons use it at rest and drop back to `pixelBox` (shifted by the same 4px) when pressed
+- **pixelBox** — 4px black/white outline drawn via `box-shadow` (used on Checkbox, Switch, Tab, Dialog, Tooltip, ProgressBar)
 - **pixelBoxMargin** — Layout offset for the outline (typically `0`)
+- **pixelColor** — The black/white color of that outline on its own. Button, Badge, TextField, and Dropdown build their pixel frame from it so the frame can follow the `rounded` prop: the corners are stepped (square, one-step notch, two-step) instead of curved. Solid Buttons also draw a backing plate of the same shape offset 4px down-right, and drop onto it when pressed
 
-basic and crayon themes set `pixelBox` and `pixelBoxRaised` to `none` and `pixelBoxMargin` to `0`.
+basic and crayon themes set `pixelBox` to `none`, `pixelBoxMargin` to `0`, and `pixelColor` to `transparent`.
 
 ## Guidelines
 

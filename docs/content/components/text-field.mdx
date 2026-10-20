@@ -71,14 +71,16 @@ Controls the input field size.
 
 ### Rounded
 
-Controls the corner radius.
+Controls the corner radius. Each step stays visibly distinct at every size.
+
+In the game theme, `rounded` steps the corners of the pixel frame instead of curving them: `small` is square, `medium` cuts a one-step notch, and `large` cuts a two-step corner. With `variant="filled"`, only the top corners are rounded. The game theme's filled field has no pixel frame, so `rounded` doesn't change it.
 
 <DocTable
   headers={["Value", "Default", "Description"]}
   rows={[
     ["`small`", "", "Small corner radius"],
     ["`medium`", "✓", "Default corner radius"],
-    ["`large`", "", "Large corner radius"],
+    ["`large`", "", "Fully rounded (pill)"],
   ]}
   align={["left", "center", "left"]}
 />
