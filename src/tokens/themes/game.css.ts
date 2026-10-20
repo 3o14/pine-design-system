@@ -133,6 +133,7 @@ export const gameLightTheme = createTheme(semanticTokens, {
 		// Pixel border + a back plate offset 4px down-right (4px spread so it covers past the border)
 		pixelBoxRaised: `calc(-4px) 0 0 0 black, 4px 0 0 0 black, 0 4px 0 0 black, 0 calc(-4px) 0 0 black, 4px 4px 0 4px black`,
 		pixelBoxMargin: "0",
+		pixelColor: "black",
 	},
 	component: {
 		button: {
@@ -152,8 +153,19 @@ export const gameLightTheme = createTheme(semanticTokens, {
 			radius: foundation.radius.none,
 			padding: foundation.spacing.sm,
 		},
+		badge: {
+			radius: {
+				small: foundation.radius.none,
+				medium: foundation.radius.none,
+				large: foundation.radius.none,
+			},
+		},
 		input: {
-			radius: foundation.radius.none,
+			radius: {
+				small: foundation.radius.none,
+				medium: foundation.radius.none,
+				large: foundation.radius.none,
+			},
 			padding: foundation.spacing.xs,
 		},
 	},
@@ -266,6 +278,7 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 		pixelBox: `calc(-4px) 0 0 0 ${foundation.neutral.white}, 4px 0 0 0 ${foundation.neutral.white}, 0 4px 0 0 ${foundation.neutral.white}, 0 calc(-4px) 0 0 ${foundation.neutral.white}`,
 		pixelBoxRaised: `calc(-4px) 0 0 0 ${foundation.neutral.white}, 4px 0 0 0 ${foundation.neutral.white}, 0 4px 0 0 ${foundation.neutral.white}, 0 calc(-4px) 0 0 ${foundation.neutral.white}, 4px 4px 0 4px ${foundation.neutral.white}`,
 		pixelBoxMargin: "0",
+		pixelColor: foundation.neutral.white,
 	},
 	component: {
 		button: {
@@ -285,8 +298,19 @@ export const gameDarkTheme = createTheme(semanticTokens, {
 			radius: foundation.radius.none,
 			padding: foundation.spacing.sm,
 		},
+		badge: {
+			radius: {
+				small: foundation.radius.none,
+				medium: foundation.radius.none,
+				large: foundation.radius.none,
+			},
+		},
 		input: {
-			radius: foundation.radius.none,
+			radius: {
+				small: foundation.radius.none,
+				medium: foundation.radius.none,
+				large: foundation.radius.none,
+			},
 			padding: foundation.spacing.xs,
 		},
 	},

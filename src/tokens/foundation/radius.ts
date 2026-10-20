@@ -9,6 +9,7 @@ export const radius = {
 	xxl: "24px",
 	xxxl: "32px",
 	full: "100%",
+	pill: "9999px",
 } as const;
 
 export type FoundationRadiusToken = keyof typeof radius;
