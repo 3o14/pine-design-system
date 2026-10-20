@@ -15,7 +15,10 @@ export type TextFieldStatus = "default" | "error" | "success";
 type BaseTextFieldProps = {
 	/** Size of the input field. Default: 'medium'. */
 	size?: TextFieldSize;
-	/** Corner radius (small, medium, large). Default: 'medium'. */
+	/**
+	 * Corner radius (small, medium, large — 'large' is a full pill). In the game theme the
+	 * pixel frame's corners are stepped instead: square, one-step notch, two-step. Default: 'medium'.
+	 */
 	rounded?: TextFieldRounded;
 	/**
 	 * Visual style. 'outline' is the default bordered input; 'filled' uses a filled background,
