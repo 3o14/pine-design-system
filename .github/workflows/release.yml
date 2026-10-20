@@ -31,12 +31,14 @@ jobs:
         with:
           # Trusted publishing needs Node 22.14+
           node-version: "24"
-          registry-url: "https://registry.npmjs.org"
+          # No registry-url: it makes setup-node write a placeholder auth token, which npm
+          # falls back to when OIDC fails, hiding the cause behind a misleading 404 on publish
           cache: "pnpm"
 
-      # Trusted publishing needs npm CLI 11.5.1+. pnpm publish hands the upload to this npm
+      # Trusted publishing needs npm CLI 11.5.1+. pnpm 9's publish hands the upload to this npm
+      # (newer pnpm versions may publish natively). Pinned so every release runs the same CLI
       - name: Update npm
-        run: npm install -g npm@^11.5.1
+        run: npm install -g npm@11.21.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
