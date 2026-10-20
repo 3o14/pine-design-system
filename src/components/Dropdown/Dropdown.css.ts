@@ -8,9 +8,15 @@ import {
 	crayonTextureBackgroundImage,
 	crayonGrainBackgroundImage,
 } from "@/tokens/themes/crayonTexture.css";
+import {
+	createPixelCornerFill,
+	createPixelFrame,
+	pixelRoundedVars,
+} from "@/tokens/themes/gamePixel.css";
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
+const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
 
 const crayonLightThemeClass = String(crayonLightTheme);
 const crayonDarkThemeClass = String(crayonDarkTheme);
@@ -81,7 +87,6 @@ const createCrayonMenuSelectors = () => createCrayonSelectors(false);
  */
 const createTriggerIntentSelectors = (intent: ColorIntent): SelectorMap => {
 	const color = themeContract.color[intent];
-	const pixelBoxShadow = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
 
 	const selectors: SelectorMap = {};
 
@@ -95,10 +100,11 @@ const createTriggerIntentSelectors = (intent: ColorIntent): SelectorMap => {
 	};
 
 	// Game theme: pixel-box shadow with intent color
-	selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
+	selectors[gameThemeSelector] = {
 		border: "1px solid transparent",
-		boxShadow: pixelBoxShadow,
+		boxShadow: createPixelFrame(color.border),
 		margin: themeContract.shadow.pixelBoxMargin,
+		...createPixelCornerFill(color.border),
 	};
 
 	// Crayon theme: bumpy border with intent color
@@ -244,15 +250,19 @@ export const trigger = recipe({
 			},
 		},
 
+		// The game theme steps the pixel frame instead of rounding it
 		rounded: {
 			small: {
-				borderRadius: themeContract.radius.small,
+				borderRadius: themeContract.component.input.radius.small,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.small },
 			},
 			medium: {
-				borderRadius: themeContract.radius.medium,
+				borderRadius: themeContract.component.input.radius.medium,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.medium },
 			},
 			large: {
-				borderRadius: themeContract.radius.large,
+				borderRadius: themeContract.component.input.radius.large,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.large },
 			},
 		},
 

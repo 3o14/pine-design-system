@@ -42,7 +42,10 @@ export interface DropdownProps
 	placeholder?: string;
 	/** Size of the dropdown trigger. Default: 'medium'. */
 	size?: DropdownSize;
-	/** Corner radius of the dropdown trigger (small, medium, large). Default: 'medium'. */
+	/**
+	 * Corner radius of the dropdown trigger (small, medium, large — 'large' is a full pill). In the game theme the
+	 * pixel frame's corners are stepped instead: square, one-step notch, two-step. Default: 'medium'.
+	 */
 	rounded?: DropdownRounded;
 	/** Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
 	intent?: DropdownIntent;
