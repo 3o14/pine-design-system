@@ -12,8 +12,8 @@ import { createVar, fallbackVar } from "@vanilla-extract/css";
  * pressed-state hit area that Button extends past its box.
  */
 
-/** Size of one pixel step */
-const PIXEL = "4px";
+/** Size of one pixel step. Also the back plate's offset, so pressable components move by this much when pressed */
+export const PIXEL = "4px";
 
 /** How far each side is shortened at both ends: -4px fills the corners, 0 leaves a one-cell notch, 4px steps twice */
 const pixelTrimVar = createVar();

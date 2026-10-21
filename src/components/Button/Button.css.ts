@@ -13,6 +13,7 @@ import {
 	createPixelCornerFill,
 	createPixelFrame,
 	createPixelFrameRaised,
+	PIXEL,
 	pixelRoundedVars,
 } from "@/tokens/themes/gamePixel.css";
 import type { ButtonVariant } from "./Button";
@@ -24,8 +25,8 @@ const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
 const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
 
-/** How far a game button moves when pressed. Must match the back-plate offset in createPixelFrameRaised */
-const GAME_PRESS_OFFSET = "4px";
+/** How far a game button moves when pressed. Same as the back-plate offset in createPixelFrameRaised, so the face lands on the plate */
+const GAME_PRESS_OFFSET = PIXEL;
 const GAME_PRESS_DURATION = "0.08s";
 
 /** buttonBase border width. Absolutely positioned pseudo-elements are laid out from the padding box, so hit-area math must add it */
