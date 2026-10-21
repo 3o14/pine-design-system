@@ -12,14 +12,14 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write # PR 생성을 위해 필요
-      pull-requests: write # PR 생성을 위해 필요
-      id-token: write # npm provenance를 위해 필요
+      contents: write # Create the Version Packages PR
+      pull-requests: write # Create the Version Packages PR
+      id-token: write # npm trusted publishing (OIDC) and provenance
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # CHANGELOG 생성을 위해 전체 히스토리 필요
+          fetch-depth: 0 # Full history for CHANGELOG generation
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -29,34 +29,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org"
-          always-auth: true
+          # Trusted publishing needs Node 22.14+
+          node-version: "24"
+          # No registry-url: it makes setup-node write a placeholder auth token, which npm
+          # falls back to when OIDC fails, hiding the cause behind a misleading 404 on publish
           cache: "pnpm"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Trusted publishing needs npm CLI 11.5.1+. pnpm 9's publish hands the upload to this npm
+      # (newer pnpm versions may publish natively). Pinned so every release runs the same CLI
+      - name: Update npm
+        run: npm install -g npm@11.21.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Setup .npmrc for npm publish
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > $HOME/.npmrc
-          echo "always-auth=true" >> $HOME/.npmrc
-
+      # No NPM_TOKEN: without it, changesets/action leaves .npmrc alone and npm
+      # authenticates through the trusted publisher configured on npmjs.com
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          # Version Packages PR을 생성하거나 배포
           version: pnpm run version
           publish: pnpm run ci:publish
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          npm_config_registry: "https://registry.npmjs.org"
-          npm_config_always_auth: "true"
-          npm_config__authToken: ${{ secrets.NPM_TOKEN }}
