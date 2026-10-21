@@ -53,5 +53,5 @@ pnpm run build     # Library build
 pnpm run test      # Vitest
 pnpm run storybook # Storybook
 pnpm run docs      # Docs dev server
-pnpm run release   # Publish
+pnpm changeset     # Record a release note; CI publishes to npm after merge
 ```
