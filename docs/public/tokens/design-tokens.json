@@ -145,7 +145,7 @@
 				"pixelColor": {
 					"light": { "$value": "#000000", "$type": "color" },
 					"dark": { "$value": "#ffffff", "$type": "color" },
-					"$description": "Color of the pixel frame on its own. Button, Badge, TextField, and Dropdown build their frame from it so the corners can step with the rounded prop. Solid Buttons also draw a back plate of the same shape offset 4px down-right."
+					"$description": "Color of the pixel frame on its own. Button, Badge, TextField, and Dropdown build their frame from it so the corners can step with the rounded prop. Buttons other than ghost also draw a back plate of the same shape offset 4px down-right."
 				}
 			},
 			"component": {
