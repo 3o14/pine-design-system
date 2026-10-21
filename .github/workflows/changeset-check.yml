@@ -18,20 +18,20 @@ jobs:
       - name: Check if changeset is required
         id: check-skip
         run: |
-          # PR에 'skip-changeset' 라벨이 있는지 확인
+          # Check whether the PR has the 'skip-changeset' label
           if [[ "${{ contains(github.event.pull_request.labels.*.name, 'skip-changeset') }}" == "true" ]]; then
             echo "skip=true" >> $GITHUB_OUTPUT
             echo "⏭️  Skipping changeset check due to 'skip-changeset' label"
             exit 0
           fi
 
-          # 변경된 파일 목록 가져오기
+          # Get the list of changed files
           git fetch origin ${{ github.base_ref }}
-          # main 브랜치를 로컬에 명시적으로 생성 (changeset status를 위해 필요)
+          # Create the main branch locally (changeset status needs it)
           git fetch origin ${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
           CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
 
-          # 문서, CI, 설정 파일만 변경된 경우 체크
+          # Check whether only docs, CI, or config files changed
           if echo "$CHANGED_FILES" | grep -qvE '^(\.github/|\.changeset/|\.vscode/|docs/|README\.md|LICENSE|\.gitignore|\.prettierrc|\.eslintrc|package\.json|tsconfig\.json|vite\.config\.ts)'; then
             echo "skip=false" >> $GITHUB_OUTPUT
             echo "📦 Source code changes detected - changeset required"
@@ -50,7 +50,7 @@ jobs:
         if: steps.check-skip.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "pnpm"
 
       - name: Install dependencies
@@ -60,7 +60,7 @@ jobs:
       - name: Check for changesets
         if: steps.check-skip.outputs.skip != 'true'
         run: |
-          # .changeset 디렉토리에 있는 .md 파일 개수 확인 (config.json, README.md 제외)
+          # Count .md files in .changeset (excluding config.json and README.md)
           CHANGESET_COUNT=$(find .changeset -name "*.md" ! -name "README.md" | wc -l)
 
           echo "Found $CHANGESET_COUNT changeset(s)"
