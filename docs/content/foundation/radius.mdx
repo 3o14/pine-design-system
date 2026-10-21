@@ -9,7 +9,9 @@ Radius tokens define consistent corner curvature for buttons, cards, input field
 
 ## Overview
 
-Pine provides 10 foundation radius tokens from `none` to `full`. These map to semantic tokens (small, medium, large, xlarge, full) that components use via `button.radius`, `card.radius`, `input.radius`, and similar. Each theme (basic, game, crayon) maps semantic tokens to different foundation values, so the same component can look sharp in the game theme and rounded in the crayon theme.
+Pine provides 11 foundation radius tokens from `none` to `pill`. These map to semantic tokens (small, medium, large, xlarge, full) and to component tokens (`button.radius`, `badge.radius`, `input.radius`, `card.radius`). Each theme (basic, game, crayon) maps them to different foundation values, so the same component can look sharp in the game theme and rounded in the crayon theme.
+
+`full` (`100%`) turns a square element into a circle, such as a status dot. `pill` (`9999px`) rounds the short sides of a wide element into half-circles, so use it for pill-shaped buttons and badges.
 
 ## Foundation Radius Tokens
 
@@ -35,7 +37,21 @@ Semantic tokens (small, medium, large, xlarge) map to foundation tokens per them
 
 ## Component Mapping
 
-The `ThemeProvider`'s `design` prop selects the theme. Semantic radius tokens (`button.radius.small`, `card.radius`, `input.radius`, etc.) are then resolved to the foundation values above.
+Components with a `rounded` prop (`small`, `medium`, `large`) read component radius tokens instead of the semantic ones. A radius at or above half an element's height already renders as a pill, so each component gets values sized for its own height. That keeps the three steps visibly distinct at every size, and `large` is always a full pill.
+
+<DocTable
+  headers={["Token", "Used by", "basic", "crayon"]}
+  rows={[
+    ["`button.radius`", "Button", "sm (6px) / xl (16px) / pill", "md (8px) / xl (16px) / pill"],
+    ["`badge.radius`", "Badge", "xs (4px) / md (8px) / pill", "xs (4px) / md (8px) / pill"],
+    ["`input.radius`", "TextField, Dropdown", "xs (4px) / lg (12px) / pill", "xs (4px) / lg (12px) / pill"],
+  ]}
+  align={["left", "left", "left", "left"]}
+/>
+
+The game theme sets every component radius to `none` (0px). Its pixel frame is drawn with `box-shadow`, which `border-radius` can't round, so `rounded` steps the frame's corners instead: `small` is square, `medium` cuts a one-step notch, and `large` cuts a two-step corner. See [Shadow](/foundation/shadow) for the `pixelColor` token behind the frame.
+
+The `ThemeProvider`'s `design` prop selects the theme.
 
 ## Guidelines
 

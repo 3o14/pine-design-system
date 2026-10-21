@@ -120,8 +120,8 @@ export const semanticTokens = createThemeContract({
 		large: null,
 		xlarge: null,
 		pixelBox: null,
-		pixelBoxRaised: null,
 		pixelBoxMargin: null,
+		pixelColor: null,
 	},
 	component: {
 		button: {
@@ -141,8 +141,19 @@ export const semanticTokens = createThemeContract({
 			radius: null,
 			padding: null,
 		},
+		badge: {
+			radius: {
+				small: null,
+				medium: null,
+				large: null,
+			},
+		},
 		input: {
-			radius: null,
+			radius: {
+				small: null,
+				medium: null,
+				large: null,
+			},
 			padding: null,
 		},
 	},

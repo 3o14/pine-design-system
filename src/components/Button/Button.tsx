@@ -28,7 +28,10 @@ export interface ButtonProps extends Omit<
 	 * reset), always use 'danger' to clearly warn the user. Default: 'primary'.
 	 */
 	intent?: ButtonIntent;
-	/** Corner radius (small, medium, large — 'large' is pill-like). Default: 'medium'. */
+	/**
+	 * Corner radius (small, medium, large — 'large' is a full pill). In the game theme the
+	 * pixel frame's corners are stepped instead: square, one-step notch, two-step. Default: 'medium'.
+	 */
 	rounded?: ButtonRounded;
 	/** Whether the button fills the full width of its parent container. Default: false. */
 	fullWidth?: boolean;

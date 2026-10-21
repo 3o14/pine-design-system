@@ -21,7 +21,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	variant?: BadgeVariant;
 	/** Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
 	intent?: BadgeIntent;
-	/** Corner radius (small, medium, large — 'large' is pill-like). Default: 'medium'. */
+	/**
+	 * Corner radius (small, medium, large — 'large' is a full pill). In the game theme the
+	 * pixel frame's corners are stepped instead: square, one-step notch, two-step. Default: 'medium'.
+	 */
 	rounded?: BadgeRounded;
 	/**
 	 * Shows a status dot before the badge content. Use to indicate real-time status changes or

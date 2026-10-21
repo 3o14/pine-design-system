@@ -9,6 +9,11 @@ import {
 	createCrayonBeforeStyle,
 	createCrayonAfterStyle,
 } from "@/tokens/themes/crayonTexture.css";
+import {
+	createPixelCornerFill,
+	createPixelFrame,
+	pixelRoundedVars,
+} from "@/tokens/themes/gamePixel.css";
 import type { BadgeVariant } from "./Badge";
 
 const gameLightThemeClass = String(gameLightTheme);
@@ -17,13 +22,16 @@ const gameDarkThemeClass = String(gameDarkTheme);
 const crayonLightThemeClass = String(crayonLightTheme);
 const crayonDarkThemeClass = String(crayonDarkTheme);
 
+const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
+
 /**
- * Creates game theme box shadow style
+ * Creates game theme pixel frame style
  */
-const createGameBoxShadow = (borderColor: string) => ({
+const createGamePixelFrame = (borderColor: string) => ({
 	borderColor: "transparent",
-	boxShadow: `calc(-4px) 0 0 0 ${borderColor}, 4px 0 0 0 ${borderColor}, 0 4px 0 0 ${borderColor}, 0 calc(-4px) 0 0 ${borderColor}`,
+	boxShadow: createPixelFrame(borderColor),
 	margin: themeContract.shadow.pixelBoxMargin,
+	...createPixelCornerFill(borderColor),
 });
 
 /**
@@ -33,10 +41,12 @@ const createThemeSelectors = (intent: ColorIntent, variant: BadgeVariant): Selec
 	const color = themeContract.color[intent];
 	const selectors: SelectorMap = {};
 
-	// Game theme styles
+	// Game theme styles: solid uses the theme's pixel color, subtle has no frame
+	if (variant === "solid") {
+		selectors[gameThemeSelector] = createGamePixelFrame(themeContract.shadow.pixelColor);
+	}
 	if (variant === "outline" || variant === "weak") {
-		selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] =
-			createGameBoxShadow(color.border);
+		selectors[gameThemeSelector] = createGamePixelFrame(color.border);
 	}
 
 	// Crayon theme styles
@@ -77,7 +87,6 @@ const badgeBase = style({
 	transition: "all 0.2s ease-in-out",
 	whiteSpace: "nowrap",
 	verticalAlign: "middle",
-	boxShadow: themeContract.shadow.pixelBox,
 	margin: themeContract.shadow.pixelBoxMargin,
 	position: "relative",
 	selectors: {
@@ -139,15 +148,19 @@ export const badge = recipe({
 			neutral: {},
 		},
 
+		// Sized for Badge height so the three steps stay distinct. The game theme steps the pixel frame instead
 		rounded: {
 			small: {
-				borderRadius: themeContract.radius.small,
+				borderRadius: themeContract.component.badge.radius.small,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.small },
 			},
 			medium: {
-				borderRadius: themeContract.radius.medium,
+				borderRadius: themeContract.component.badge.radius.medium,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.medium },
 			},
 			large: {
-				borderRadius: themeContract.radius.large,
+				borderRadius: themeContract.component.badge.radius.large,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.large },
 			},
 		},
 	},

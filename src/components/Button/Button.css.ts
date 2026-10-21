@@ -9,6 +9,13 @@ import {
 	createCrayonBeforeStyle,
 	createCrayonAfterStyle,
 } from "@/tokens/themes/crayonTexture.css";
+import {
+	createPixelCornerFill,
+	createPixelFrame,
+	createPixelFrameRaised,
+	PIXEL,
+	pixelRoundedVars,
+} from "@/tokens/themes/gamePixel.css";
 import type { ButtonVariant } from "./Button";
 
 const crayonLightThemeClass = String(crayonLightTheme);
@@ -16,9 +23,10 @@ const crayonDarkThemeClass = String(crayonDarkTheme);
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
+const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
 
-/** How far a game button moves when pressed. Must match the back-plate offset in shadow.pixelBoxRaised */
-const GAME_PRESS_OFFSET = "4px";
+/** How far a game button moves when pressed. Same as the back-plate offset in createPixelFrameRaised, so the face lands on the plate */
+const GAME_PRESS_OFFSET = PIXEL;
 const GAME_PRESS_DURATION = "0.08s";
 
 /** buttonBase border width. Absolutely positioned pseudo-elements are laid out from the padding box, so hit-area math must add it */
@@ -158,6 +166,7 @@ const createGameThemeSelectors = (
 		...(variant === "solid" ? {} : { borderColor: "transparent" }),
 		boxShadow: pressable.raised,
 		margin: themeContract.shadow.pixelBoxMargin,
+		...createPixelCornerFill(pressable.color),
 		transition: `transform ${GAME_PRESS_DURATION} ease-out, box-shadow ${GAME_PRESS_DURATION} ease-out, background-color ${GAME_PRESS_DURATION} ease-out`,
 	};
 	// Hover: keep the rest look so the shared hover shadow (shadow.medium) doesn't cover the pixel border.
@@ -191,19 +200,15 @@ const createGameThemeSelectors = (
  */
 const getGamePressableShadows = (intent: ColorIntent, variant: ButtonVariant) => {
 	if (variant === "ghost") return null;
-	const color = themeContract.color[intent];
-	const border = `calc(-4px) 0 0 0 ${color.border}, 4px 0 0 0 ${color.border}, 0 4px 0 0 ${color.border}, 0 calc(-4px) 0 0 ${color.border}`;
-	const flat = variant === "solid" ? themeContract.shadow.pixelBox : border;
-	const raised =
-		variant === "solid"
-			? themeContract.shadow.pixelBoxRaised
-			: `${border}, ${GAME_PRESS_OFFSET} ${GAME_PRESS_OFFSET} 0 4px ${color.border}`;
+	const color =
+		variant === "solid" ? themeContract.shadow.pixelColor : themeContract.color[intent].border;
 	return {
-		raised,
+		color,
+		raised: createPixelFrameRaised(color),
 		pressed: {
 			// Hide the 1px border so the shared outline hover/active color doesn't show inside the pixel border
 			...(variant === "solid" ? {} : { borderColor: "transparent" }),
-			boxShadow: flat,
+			boxShadow: createPixelFrame(color),
 			transform: `translate(${GAME_PRESS_OFFSET}, ${GAME_PRESS_OFFSET})`,
 		},
 	};
@@ -355,15 +360,19 @@ export const button = recipe({
 			neutral: {},
 		},
 
+		// The game theme steps the pixel frame instead of rounding it
 		rounded: {
 			small: {
-				borderRadius: themeContract.radius.small,
+				borderRadius: themeContract.component.button.radius.small,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.small },
 			},
 			medium: {
-				borderRadius: themeContract.radius.medium,
+				borderRadius: themeContract.component.button.radius.medium,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.medium },
 			},
 			large: {
-				borderRadius: themeContract.radius.large,
+				borderRadius: themeContract.component.button.radius.large,
+				selectors: { [gameThemeSelector]: pixelRoundedVars.large },
 			},
 		},
 	},

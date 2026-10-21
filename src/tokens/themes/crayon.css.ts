@@ -130,8 +130,8 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: "none",
-		pixelBoxRaised: "none",
 		pixelBoxMargin: "0",
+		pixelColor: "transparent",
 	},
 	component: {
 		button: {
@@ -142,17 +142,28 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 				xlarge: `${foundation.spacing.lg} ${foundation.spacing.xl}`,
 			},
 			radius: {
-				small: foundation.radius.xxl,
-				medium: foundation.radius.xxxl,
-				large: foundation.radius.xxxl,
+				small: foundation.radius.md,
+				medium: foundation.radius.xl,
+				large: foundation.radius.pill,
 			},
 		},
 		card: {
 			radius: foundation.radius.xxxl,
 			padding: foundation.spacing.md,
 		},
+		badge: {
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.md,
+				large: foundation.radius.pill,
+			},
+		},
 		input: {
-			radius: foundation.radius.xxl,
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.lg,
+				large: foundation.radius.pill,
+			},
 			padding: foundation.spacing.sm,
 		},
 	},
@@ -263,8 +274,8 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: "none",
-		pixelBoxRaised: "none",
 		pixelBoxMargin: "0",
+		pixelColor: "transparent",
 	},
 	component: {
 		button: {
@@ -275,17 +286,28 @@ export const crayonDarkTheme = createTheme(semanticTokens, {
 				xlarge: `${foundation.spacing.lg} ${foundation.spacing.xl}`,
 			},
 			radius: {
-				small: foundation.radius.xxl,
-				medium: foundation.radius.xxxl,
-				large: foundation.radius.xxxl,
+				small: foundation.radius.md,
+				medium: foundation.radius.xl,
+				large: foundation.radius.pill,
 			},
 		},
 		card: {
 			radius: foundation.radius.xxxl,
 			padding: foundation.spacing.md,
 		},
+		badge: {
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.md,
+				large: foundation.radius.pill,
+			},
+		},
 		input: {
-			radius: foundation.radius.xxl,
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.lg,
+				large: foundation.radius.pill,
+			},
 			padding: foundation.spacing.sm,
 		},
 	},

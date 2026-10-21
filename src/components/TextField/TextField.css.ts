@@ -8,9 +8,15 @@ import {
 	crayonTextureBackgroundImage,
 	crayonGrainBackgroundImage,
 } from "@/tokens/themes/crayonTexture.css";
+import {
+	createPixelCornerFill,
+	createPixelFrame,
+	pixelRoundedVars,
+} from "@/tokens/themes/gamePixel.css";
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
+const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
 
 const crayonLightThemeClass = String(crayonLightTheme);
 const crayonDarkThemeClass = String(crayonDarkTheme);
@@ -67,15 +73,23 @@ const createCrayonInputWrapperSelectors = (borderColor: string): SelectorMap => 
 };
 
 /**
+ * Rounds only the top corners. The bottom corners keep a zero horizontal radius (so they stay square)
+ * but share the vertical radius, which makes the browser scale a pill value down to half the height
+ * instead of the full height
+ */
+const createTopRadius = (radius: string) => `${radius} ${radius} 0 0 / ${radius}`;
+
+/**
  * Creates game theme outline selectors for input
  */
 const createGameThemeInputSelectors = (borderColor: string): SelectorMap => {
 	const selectors: SelectorMap = {};
 
-	selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
+	selectors[gameThemeSelector] = {
 		border: "1px solid transparent",
-		boxShadow: `calc(-4px) 0 0 0 ${borderColor}, 4px 0 0 0 ${borderColor}, 0 4px 0 0 ${borderColor}, 0 calc(-4px) 0 0 ${borderColor}`,
+		boxShadow: createPixelFrame(borderColor),
 		margin: themeContract.shadow.pixelBoxMargin,
+		...createPixelCornerFill(borderColor),
 	};
 
 	selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
@@ -226,38 +240,38 @@ export const inputWrapper = recipe({
 		{
 			variants: { variant: "outline", rounded: "small" },
 			style: {
-				borderRadius: themeContract.radius.small,
+				borderRadius: themeContract.component.input.radius.small,
 			},
 		},
 		{
 			variants: { variant: "outline", rounded: "medium" },
 			style: {
-				borderRadius: themeContract.radius.medium,
+				borderRadius: themeContract.component.input.radius.medium,
 			},
 		},
 		{
 			variants: { variant: "outline", rounded: "large" },
 			style: {
-				borderRadius: themeContract.radius.large,
+				borderRadius: themeContract.component.input.radius.large,
 			},
 		},
 
 		{
 			variants: { variant: "filled", rounded: "small" },
 			style: {
-				borderRadius: `${themeContract.radius.small} ${themeContract.radius.small} 0 0`,
+				borderRadius: createTopRadius(themeContract.component.input.radius.small),
 			},
 		},
 		{
 			variants: { variant: "filled", rounded: "medium" },
 			style: {
-				borderRadius: `${themeContract.radius.medium} ${themeContract.radius.medium} 0 0`,
+				borderRadius: createTopRadius(themeContract.component.input.radius.medium),
 			},
 		},
 		{
 			variants: { variant: "filled", rounded: "large" },
 			style: {
-				borderRadius: `${themeContract.radius.large} ${themeContract.radius.large} 0 0`,
+				borderRadius: createTopRadius(themeContract.component.input.radius.large),
 			},
 		},
 	],
@@ -336,10 +350,11 @@ export const input = recipe({
 			},
 		},
 
+		// The game theme steps the outline's pixel frame instead of rounding it
 		rounded: {
-			small: {},
-			medium: {},
-			large: {},
+			small: { selectors: { [gameThemeSelector]: pixelRoundedVars.small } },
+			medium: { selectors: { [gameThemeSelector]: pixelRoundedVars.medium } },
+			large: { selectors: { [gameThemeSelector]: pixelRoundedVars.large } },
 		},
 
 		variant: {
@@ -430,38 +445,38 @@ export const input = recipe({
 		{
 			variants: { variant: "outline", rounded: "small" },
 			style: {
-				borderRadius: themeContract.radius.small,
+				borderRadius: themeContract.component.input.radius.small,
 			},
 		},
 		{
 			variants: { variant: "outline", rounded: "medium" },
 			style: {
-				borderRadius: themeContract.radius.medium,
+				borderRadius: themeContract.component.input.radius.medium,
 			},
 		},
 		{
 			variants: { variant: "outline", rounded: "large" },
 			style: {
-				borderRadius: themeContract.radius.large,
+				borderRadius: themeContract.component.input.radius.large,
 			},
 		},
 
 		{
 			variants: { variant: "filled", rounded: "small" },
 			style: {
-				borderRadius: `${themeContract.radius.small} ${themeContract.radius.small} 0 0`,
+				borderRadius: createTopRadius(themeContract.component.input.radius.small),
 			},
 		},
 		{
 			variants: { variant: "filled", rounded: "medium" },
 			style: {
-				borderRadius: `${themeContract.radius.medium} ${themeContract.radius.medium} 0 0`,
+				borderRadius: createTopRadius(themeContract.component.input.radius.medium),
 			},
 		},
 		{
 			variants: { variant: "filled", rounded: "large" },
 			style: {
-				borderRadius: `${themeContract.radius.large} ${themeContract.radius.large} 0 0`,
+				borderRadius: createTopRadius(themeContract.component.input.radius.large),
 			},
 		},
 	],

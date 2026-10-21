@@ -97,8 +97,8 @@ export const basicLightTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: "none",
-		pixelBoxRaised: "none",
 		pixelBoxMargin: "0",
+		pixelColor: "transparent",
 	},
 	component: {
 		button: {
@@ -111,15 +111,26 @@ export const basicLightTheme = createTheme(semanticTokens, {
 			radius: {
 				small: foundation.radius.sm,
 				medium: foundation.radius.xl,
-				large: foundation.radius.xxl,
+				large: foundation.radius.pill,
 			},
 		},
 		card: {
 			radius: foundation.radius.xl,
 			padding: foundation.spacing.md,
 		},
+		badge: {
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.md,
+				large: foundation.radius.pill,
+			},
+		},
 		input: {
-			radius: foundation.radius.md,
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.lg,
+				large: foundation.radius.pill,
+			},
 			padding: foundation.spacing.sm,
 		},
 	},
@@ -209,8 +220,8 @@ export const basicDarkTheme = createTheme(semanticTokens, {
 		large: foundation.shadow.lg,
 		xlarge: foundation.shadow.xl,
 		pixelBox: "none",
-		pixelBoxRaised: "none",
 		pixelBoxMargin: "0",
+		pixelColor: "transparent",
 	},
 	component: {
 		button: {
@@ -223,15 +234,26 @@ export const basicDarkTheme = createTheme(semanticTokens, {
 			radius: {
 				small: foundation.radius.sm,
 				medium: foundation.radius.xl,
-				large: foundation.radius.xxl,
+				large: foundation.radius.pill,
 			},
 		},
 		card: {
 			radius: foundation.radius.xl,
 			padding: foundation.spacing.md,
 		},
+		badge: {
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.md,
+				large: foundation.radius.pill,
+			},
+		},
 		input: {
-			radius: foundation.radius.md,
+			radius: {
+				small: foundation.radius.xs,
+				medium: foundation.radius.lg,
+				large: foundation.radius.pill,
+			},
 			padding: foundation.spacing.sm,
 		},
 	},

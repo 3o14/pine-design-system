@@ -1,5 +1,5 @@
 {
-	"$description": "Pine Design System tokens in W3C Design Tokens Community Group (DTCG) format ($value/$type). 'foundation' holds theme-agnostic raw values (source of truth: src/tokens/foundation/*.ts). 'semantic' holds the tokens components actually consume (source of truth: src/tokens/semantic/tokens.css.ts + src/tokens/themes/*.css.ts), grouped by design ('basic' | 'game' | 'crayon'). Within each design, 'typography', 'radius', 'shadow.xsmall..xlarge', and 'component' are identical between light and dark mode — only 'color', 'shadow.pixelBox', and 'shadow.pixelBoxRaised' vary by mode, so those are the only groups nested under light/dark.",
+	"$description": "Pine Design System tokens in W3C Design Tokens Community Group (DTCG) format ($value/$type). 'foundation' holds theme-agnostic raw values (source of truth: src/tokens/foundation/*.ts). 'semantic' holds the tokens components actually consume (source of truth: src/tokens/semantic/tokens.css.ts + src/tokens/themes/*.css.ts), grouped by design ('basic' | 'game' | 'crayon'). Within each design, 'typography', 'radius', 'shadow.xsmall..xlarge', and 'component' are identical between light and dark mode — only 'color', 'shadow.pixelBox', and 'shadow.pixelColor' vary by mode, so those are the only groups nested under light/dark.",
 	"foundation": {
 		"color": {
 			"$description": "Raw color scales. Theme-agnostic — the basic theme's semantic colors reference these directly; the game theme derives its palette via a toNeon() adapter and crayon via a toPastel() adapter (see semantic.game / semantic.crayon).",
@@ -44,7 +44,7 @@
 			"none": { "$value": "0px", "$type": "dimension" }, "xxxs": { "$value": "2px", "$type": "dimension" }, "xxs": { "$value": "4px", "$type": "dimension" }, "xs": { "$value": "8px", "$type": "dimension" }, "sm": { "$value": "12px", "$type": "dimension" }, "md": { "$value": "16px", "$type": "dimension" }, "lg": { "$value": "24px", "$type": "dimension" }, "xl": { "$value": "32px", "$type": "dimension" }, "xxl": { "$value": "40px", "$type": "dimension" }, "xxxl": { "$value": "64px", "$type": "dimension" }
 		},
 		"radius": {
-			"none": { "$value": "0px", "$type": "dimension" }, "xxs": { "$value": "2px", "$type": "dimension" }, "xs": { "$value": "4px", "$type": "dimension" }, "sm": { "$value": "6px", "$type": "dimension" }, "md": { "$value": "8px", "$type": "dimension" }, "lg": { "$value": "12px", "$type": "dimension" }, "xl": { "$value": "16px", "$type": "dimension" }, "xxl": { "$value": "24px", "$type": "dimension" }, "xxxl": { "$value": "32px", "$type": "dimension" }, "full": { "$value": "100%", "$type": "dimension" }
+			"none": { "$value": "0px", "$type": "dimension" }, "xxs": { "$value": "2px", "$type": "dimension" }, "xs": { "$value": "4px", "$type": "dimension" }, "sm": { "$value": "6px", "$type": "dimension" }, "md": { "$value": "8px", "$type": "dimension" }, "lg": { "$value": "12px", "$type": "dimension" }, "xl": { "$value": "16px", "$type": "dimension" }, "xxl": { "$value": "24px", "$type": "dimension" }, "xxxl": { "$value": "32px", "$type": "dimension" }, "full": { "$value": "100%", "$type": "dimension" }, "pill": { "$value": "9999px", "$type": "dimension" }
 		},
 		"shadow": {
 			"$description": "Soft elevation shadows. Identical across all designs — see 'semantic.<design>.shadow' for the 'xsmall'..'xlarge' aliases and the design-specific 'pixelBox' hard-edge shadow used by the game theme.",
@@ -91,16 +91,17 @@
 			"shadow": {
 				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
 				"pixelBox": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Basic theme does not use the pixel-art hard-edge shadow (game theme only)." },
-				"pixelBoxRaised": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Basic theme does not use the pressable pixel-button shadow (game theme only)." },
-				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
+				"pixelBoxMargin": { "$value": "0", "$type": "dimension" },
+				"pixelColor": { "light": { "$value": "transparent", "$type": "color" }, "dark": { "$value": "transparent", "$type": "color" }, "$description": "Basic theme does not draw a pixel frame (game theme only)." }
 			},
 			"component": {
 				"button": {
 					"padding": { "small": { "$value": "8px 12px", "$type": "dimension" }, "medium": { "$value": "12px 16px", "$type": "dimension" }, "large": { "$value": "16px 24px", "$type": "dimension" }, "xlarge": { "$value": "24px 32px", "$type": "dimension" } },
-					"radius": { "small": { "$value": "6px", "$type": "dimension" }, "medium": { "$value": "16px", "$type": "dimension" }, "large": { "$value": "24px", "$type": "dimension" } }
+					"radius": { "small": { "$value": "6px", "$type": "dimension" }, "medium": { "$value": "16px", "$type": "dimension" }, "large": { "$value": "9999px", "$type": "dimension" } }
 				},
 				"card": { "radius": { "$value": "16px", "$type": "dimension" }, "padding": { "$value": "16px", "$type": "dimension" } },
-				"input": { "radius": { "$value": "8px", "$type": "dimension" }, "padding": { "$value": "12px", "$type": "dimension" } }
+				"badge": { "radius": { "small": { "$value": "4px", "$type": "dimension" }, "medium": { "$value": "8px", "$type": "dimension" }, "large": { "$value": "9999px", "$type": "dimension" } } },
+				"input": { "radius": { "small": { "$value": "4px", "$type": "dimension" }, "medium": { "$value": "12px", "$type": "dimension" }, "large": { "$value": "9999px", "$type": "dimension" } }, "padding": { "$value": "12px", "$type": "dimension" } }
 			},
 			"color": {
 				"light": {
@@ -124,7 +125,7 @@
 			}
 		},
 		"game": {
-			"$description": "Pixel-art design. secondary/success/warning colors are derived from foundation blue/green/orange via a toNeon() adapter (saturation +30%, mid-scale lightness boosted). danger reuses foundation.red directly (not neon-adapted). Corners are square (radius 0) except 'full' (pill). Uses a hard-edge 'pixelBox' shadow instead of soft shadows for card/button elevation, and the pixel-font family for 'sans'.",
+			"$description": "Pixel-art design. secondary/success/warning colors are derived from foundation blue/green/orange via a toNeon() adapter (saturation +30%, mid-scale lightness boosted). danger reuses foundation.red directly (not neon-adapted). Radius tokens are 0, so the rounded prop steps the corners of the pixel frame (square, one-step notch, two-step) instead of curving them. Uses a hard-edge 'pixelBox' shadow instead of soft shadows for card/button elevation, and the pixel-font family for 'sans'.",
 			"typography": {
 				"fontFamily": { "sans": { "$value": "{foundation.typography.fontFamily.pixel}", "$type": "fontFamily" }, "mono": { "$value": "{foundation.typography.fontFamily.mono}", "$type": "fontFamily" }, "crayon": { "$value": "{foundation.typography.fontFamily.crayon}", "$type": "fontFamily" } },
 				"fontSize": { "xsmall": { "$value": "0.75rem", "$type": "dimension" }, "small": { "$value": "0.875rem", "$type": "dimension" }, "medium": { "$value": "1rem", "$type": "dimension" }, "large": { "$value": "1.125rem", "$type": "dimension" }, "xlarge": { "$value": "1.25rem", "$type": "dimension" }, "display-small": { "$value": "0.625rem", "$type": "dimension", "$description": "Intentionally smaller than 'xsmall' in the source theme file — verify against src/tokens/themes/game.css.ts before relying on this for a display heading." }, "display-medium": { "$value": "1.875rem", "$type": "dimension" }, "display-large": { "$value": "2.25rem", "$type": "dimension" } },
@@ -140,12 +141,12 @@
 					"light": { "$value": "calc(-4px) 0 0 0 #000000, 4px 0 0 0 #000000, 0 4px 0 0 #000000, 0 calc(-4px) 0 0 #000000", "$type": "shadow" },
 					"dark": { "$value": "calc(-4px) 0 0 0 #ffffff, 4px 0 0 0 #ffffff, 0 4px 0 0 #ffffff, 0 calc(-4px) 0 0 #ffffff", "$type": "shadow" }
 				},
-				"pixelBoxRaised": {
-					"light": { "$value": "calc(-4px) 0 0 0 #000000, 4px 0 0 0 #000000, 0 4px 0 0 #000000, 0 calc(-4px) 0 0 #000000, 4px 4px 0 4px #000000", "$type": "shadow" },
-					"dark": { "$value": "calc(-4px) 0 0 0 #ffffff, 4px 0 0 0 #ffffff, 0 4px 0 0 #ffffff, 0 calc(-4px) 0 0 #ffffff, 4px 4px 0 4px #ffffff", "$type": "shadow" },
-					"$description": "pixelBox plus a back plate offset 4px down-right. Used by the solid Button's resting state; on hover/active the face translates 4px onto the plate and the shadow falls back to pixelBox."
-				},
-				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
+				"pixelBoxMargin": { "$value": "0", "$type": "dimension" },
+				"pixelColor": {
+					"light": { "$value": "#000000", "$type": "color" },
+					"dark": { "$value": "#ffffff", "$type": "color" },
+					"$description": "Color of the pixel frame on its own. Button, Badge, TextField, and Dropdown build their frame from it so the corners can step with the rounded prop. Buttons other than ghost also draw a back plate of the same shape offset 4px down-right."
+				}
 			},
 			"component": {
 				"button": {
@@ -153,7 +154,8 @@
 					"radius": { "small": { "$value": "0px", "$type": "dimension" }, "medium": { "$value": "0px", "$type": "dimension" }, "large": { "$value": "0px", "$type": "dimension" } }
 				},
 				"card": { "radius": { "$value": "0px", "$type": "dimension" }, "padding": { "$value": "12px", "$type": "dimension" } },
-				"input": { "radius": { "$value": "0px", "$type": "dimension" }, "padding": { "$value": "8px", "$type": "dimension" } }
+				"badge": { "radius": { "small": { "$value": "0px", "$type": "dimension" }, "medium": { "$value": "0px", "$type": "dimension" }, "large": { "$value": "0px", "$type": "dimension" } } },
+				"input": { "radius": { "small": { "$value": "0px", "$type": "dimension" }, "medium": { "$value": "0px", "$type": "dimension" }, "large": { "$value": "0px", "$type": "dimension" } }, "padding": { "$value": "8px", "$type": "dimension" } }
 			},
 			"color": {
 				"light": {
@@ -190,16 +192,17 @@
 			"shadow": {
 				"none": { "$value": "none", "$type": "shadow" }, "xsmall": { "$value": "{foundation.shadow.xs}", "$type": "shadow" }, "small": { "$value": "{foundation.shadow.sm}", "$type": "shadow" }, "medium": { "$value": "{foundation.shadow.md}", "$type": "shadow" }, "large": { "$value": "{foundation.shadow.lg}", "$type": "shadow" }, "xlarge": { "$value": "{foundation.shadow.xl}", "$type": "shadow" },
 				"pixelBox": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Crayon theme does not use the pixel-art hard-edge shadow (game theme only)." },
-				"pixelBoxRaised": { "light": { "$value": "none", "$type": "shadow" }, "dark": { "$value": "none", "$type": "shadow" }, "$description": "Crayon theme does not use the pressable pixel-button shadow (game theme only)." },
-				"pixelBoxMargin": { "$value": "0", "$type": "dimension" }
+				"pixelBoxMargin": { "$value": "0", "$type": "dimension" },
+				"pixelColor": { "light": { "$value": "transparent", "$type": "color" }, "dark": { "$value": "transparent", "$type": "color" }, "$description": "Crayon theme does not draw a pixel frame (game theme only)." }
 			},
 			"component": {
 				"button": {
 					"padding": { "small": { "$value": "8px 12px", "$type": "dimension" }, "medium": { "$value": "12px 16px", "$type": "dimension" }, "large": { "$value": "16px 24px", "$type": "dimension" }, "xlarge": { "$value": "24px 32px", "$type": "dimension" } },
-					"radius": { "small": { "$value": "24px", "$type": "dimension" }, "medium": { "$value": "32px", "$type": "dimension" }, "large": { "$value": "32px", "$type": "dimension" } }
+					"radius": { "small": { "$value": "8px", "$type": "dimension" }, "medium": { "$value": "16px", "$type": "dimension" }, "large": { "$value": "9999px", "$type": "dimension" } }
 				},
 				"card": { "radius": { "$value": "32px", "$type": "dimension" }, "padding": { "$value": "16px", "$type": "dimension" } },
-				"input": { "radius": { "$value": "24px", "$type": "dimension" }, "padding": { "$value": "12px", "$type": "dimension" } }
+				"badge": { "radius": { "small": { "$value": "4px", "$type": "dimension" }, "medium": { "$value": "8px", "$type": "dimension" }, "large": { "$value": "9999px", "$type": "dimension" } } },
+				"input": { "radius": { "small": { "$value": "4px", "$type": "dimension" }, "medium": { "$value": "12px", "$type": "dimension" }, "large": { "$value": "9999px", "$type": "dimension" } }, "padding": { "$value": "12px", "$type": "dimension" } }
 			},
 			"color": {
 				"light": {
