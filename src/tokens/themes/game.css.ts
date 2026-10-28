@@ -5,8 +5,19 @@ import { getWeakColor } from "../utils/getWeakColor";
 import { toNeon } from "../utils/adaptColor";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
 
+// The url() must be relative to this CSS file, not a site-root absolute path
+// ("/font/..."). The shipped dist/style-game.css has to point at
+// dist/font/DungGeunMo.woff2 in the same dist/ directory, and a consumer app's
+// site root has no such font, so an absolute path 404s.
+//
+// This path does not exist relative to this file (the real file is in public/font/).
+// That is intentional. When vanilla-extract sees a relative path that resolves
+// locally, it force-inlines the file as base64, which is fatal for these fonts
+// (especially the 3.4MB crayon font). A string that does not resolve is left
+// untouched and copied into the output CSS as is, and it matches the real dist/
+// layout exactly (the stylesheet and the font/ folder sit side by side).
 globalFontFace("DungGeunMo", {
-	src: 'url("/font/DungGeunMo.woff2") format("woff2")',
+	src: 'url("./font/DungGeunMo.woff2") format("woff2")',
 	fontWeight: "normal",
 	fontStyle: "normal",
 	fontDisplay: "swap",

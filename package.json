@@ -50,7 +50,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "vite build && tsx scripts/split-css.ts && tsc --project tsconfig.build.json && pnpm run sync-llms && node scripts/verify-build-output.mjs",
+		"build": "vite build && tsx scripts/split-css.ts && tsc --project tsconfig.build.json && pnpm run sync-llms && node scripts/verify-build-output.mjs && node scripts/check-font-urls.mjs",
 		"build:lib": "pnpm run build",
 		"lint": "eslint .",
 		"knip": "knip",
