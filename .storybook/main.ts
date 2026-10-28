@@ -51,6 +51,10 @@ const config: StorybookConfig = {
 			config.resolve.alias = {};
 		}
 		config.resolve.alias["@"] = resolve(__dirname, "../src");
+		// ThemeProvider lazy-loads the split theme stylesheets from the built package.
+		// Storybook compiles the theme CSS from source, so these resolve to an empty file.
+		config.resolve.alias["pine-design-system/style-game.css"] = resolve(__dirname, "../src/__mocks__/empty.css");
+		config.resolve.alias["pine-design-system/style-crayon.css"] = resolve(__dirname, "../src/__mocks__/empty.css");
 
 		return config;
 	},

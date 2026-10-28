@@ -33,6 +33,16 @@ check(!tokensCjs.includes('"use client"'), 'tokens CJS entry (pine-design-system
 check(!REACT_REFERENCE.test(tokensEs), "tokens ES entry has no react import/require");
 check(!REACT_REFERENCE.test(tokensCjs), "tokens CJS entry has no react import/require");
 
+// ThemeProvider must lazy-load the split theme stylesheets through static import specifiers,
+// so consumer bundlers process them (including the @font-face url()s). A <link> built from
+// import.meta.url bypasses the bundler and the fonts 404 in consumer apps.
+for (const design of ["game", "crayon"]) {
+	const specifier = `pine-design-system/style-${design}.css`;
+	check(mainEs.includes(`import("${specifier}")`), `main ES entry lazy-loads ${specifier} via a static import()`);
+	check(mainCjs.includes(`import("${specifier}")`), `main CJS entry lazy-loads ${specifier} via a static import()`);
+}
+check(!mainEs.includes("import.meta.url"), "main ES entry does not build theme CSS URLs from import.meta.url");
+
 if (failed) {
 	console.error("\nBuild output verification failed — see ✗ lines above.");
 	process.exit(1);

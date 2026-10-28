@@ -50,23 +50,18 @@ async function loadThemeCSS(design: 'game' | 'crayon'): Promise<void> {
 
 	loadedThemes.add(design);
 	try {
-		// Static string literals required — Rollup rewrites template literals here to Object.assign({}) → dist/undefined.
-		const cssUrl = design === 'game'
-			? new URL('./style-game.css', import.meta.url).href
-			: new URL('./style-crayon.css', import.meta.url).href;
-
-		await new Promise<void>((resolve, reject) => {
-			if (document.head.querySelector(`link[href="${cssUrl}"]`)) {
-				resolve();
-				return;
-			}
-			const link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = cssUrl;
-			link.onload = () => resolve();
-			link.onerror = (e) => reject(e);
-			document.head.appendChild(link);
-		});
+		// Each specifier must be a static string literal so the consumer's bundler sees it
+		// and processes the stylesheet like any other CSS import, which also resolves the
+		// @font-face url()s to the packaged font files. A <link> to a URL built from
+		// import.meta.url bypasses the bundler, so the fonts 404, and a variable specifier
+		// with @vite-ignore leaves a bare specifier the browser cannot resolve.
+		// The specifiers are externalized in vite.config.ts and aliased to an empty
+		// stylesheet in vitest and Storybook, where the theme CSS is already loaded from source.
+		if (design === 'game') {
+			await import('pine-design-system/style-game.css');
+		} else {
+			await import('pine-design-system/style-crayon.css');
+		}
 	} catch (err) {
 		loadedThemes.delete(design);
 		console.warn(`[pine-ui-kit] Failed to load CSS for "${design}" theme.`, err);
