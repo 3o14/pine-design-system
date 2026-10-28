@@ -193,23 +193,32 @@ export const ThemeProvider = ({
 		return theme === "dark" ? basicDarkTheme : basicLightTheme;
 	}, [design, theme]);
 
-	// The themes read the primary scale from `--pie-primary-*` custom properties, which only
-	// exist where they are set. They go on the container and, through context, on every
-	// portaled popup, since those render in <body> outside the container.
-	const primaryColorStyle = useMemo((): React.CSSProperties => {
+	// The themes read the primary scale from `--pie-primary-*` custom properties (falling back
+	// to the default scale). They are set on the container, on <html> with applyGlobal so
+	// content portaled outside the provider gets them, and through context on the library's
+	// own portaled popups, which also cover applyGlobal={false}.
+	const { primaryColorVars, primaryColorError } = useMemo(() => {
 		const isDark = theme === "dark";
 		let scale = isDark ? darkColors.palette.primary : lightColors.palette.primary;
+		let error: unknown;
 
 		if (primaryColor) {
 			try {
 				scale = generateColorScale(primaryColor, isDark);
-			} catch (error) {
-				console.warn("Failed to generate color scale from primaryColor:", error);
+			} catch (e) {
+				error = e;
 			}
 		}
 
-		return getPrimaryColorVars(scale);
+		return { primaryColorVars: getPrimaryColorVars(scale), primaryColorError: error };
 	}, [primaryColor, theme]);
+	const primaryColorStyle = primaryColorVars as React.CSSProperties;
+
+	useEffect(() => {
+		if (primaryColorError) {
+			console.warn("Failed to generate color scale from primaryColor:", primaryColorError);
+		}
+	}, [primaryColorError]);
 
 	useEffect(() => {
 		if (typeof document === "undefined") {
@@ -225,11 +234,17 @@ export const ThemeProvider = ({
 
 		stripDocumentThemeClasses(root);
 		root.classList.add(themeClass);
+		for (const [name, value] of Object.entries(primaryColorVars)) {
+			root.style.setProperty(name, value);
+		}
 
 		return () => {
 			stripDocumentThemeClasses(root);
+			for (const name of Object.keys(primaryColorVars)) {
+				root.style.removeProperty(name);
+			}
 		};
-	}, [theme, design, themeClass, applyGlobal]);
+	}, [theme, design, themeClass, applyGlobal, primaryColorVars]);
 
 	const setTheme = useCallback(
 		(newTheme: Theme) => {
@@ -267,7 +282,8 @@ export const ThemeProvider = ({
 		<ThemeContext.Provider value={value}>
 			<div
 				className={clsx(themeClass, className)}
-				style={{ ...primaryColorStyle, ...style }}
+				// The computed primary vars win over `style`, as they did when an effect set them.
+				style={{ ...style, ...primaryColorStyle }}
 			>
 				{design === "crayon" && <CrayonThemeFilters />}
 				{children}

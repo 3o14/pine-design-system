@@ -205,6 +205,75 @@ describe("ThemeProvider", () => {
 			).toBe(expected);
 		});
 
+		it("sets the vars on <html> with applyGlobal and removes them on unmount", () => {
+			const expected = generateColorScale("#e11d48", false).surface;
+			const root = document.documentElement;
+
+			const { unmount } = render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="#e11d48">
+					<span />
+				</ThemeProvider>
+			);
+			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe(expected);
+
+			unmount();
+			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe("");
+		});
+
+		it("does not set the vars on <html> when applyGlobal is false", () => {
+			render(
+				<ThemeProvider
+					design="basic"
+					syncWithSystem={false}
+					applyGlobal={false}
+					primaryColor="#e11d48"
+				>
+					<span />
+				</ThemeProvider>
+			);
+
+			expect(
+				document.documentElement.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)
+			).toBe("");
+		});
+
+		it("keeps the computed vars over the same vars passed in style", () => {
+			const { container } = render(
+				<ThemeProvider
+					design="basic"
+					syncWithSystem={false}
+					primaryColor="#e11d48"
+					style={{ [PRIMARY_COLOR_CSS_VAR_NAMES.surface]: "#000000" } as React.CSSProperties}
+				>
+					<span />
+				</ThemeProvider>
+			);
+
+			expect(
+				(container.firstElementChild as HTMLElement).style.getPropertyValue(
+					PRIMARY_COLOR_CSS_VAR_NAMES.surface
+				)
+			).toBe(generateColorScale("#e11d48", false).surface);
+		});
+
+		it("warns and falls back to the default scale for an invalid primaryColor", () => {
+			const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+			let captured: ReturnType<typeof useTheme>;
+			render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="not-a-color">
+					<Probe onValue={(ctx) => (captured = ctx)} />
+				</ThemeProvider>
+			);
+
+			const style = captured?.primaryColorStyle as Record<string, string>;
+			expect(style[PRIMARY_COLOR_CSS_VAR_NAMES.surface]).toBe(
+				lightColors.palette.primary.surface
+			);
+			expect(warn).toHaveBeenCalledTimes(1);
+			warn.mockRestore();
+		});
+
 		it("falls back to the default primary scale without primaryColor", () => {
 			mockMatchMedia(false);
 
