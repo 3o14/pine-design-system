@@ -172,6 +172,18 @@ describe("ThemeProvider", () => {
 		});
 	});
 
+	it("renders with light when window.matchMedia is unavailable", () => {
+		// No mockMatchMedia: jsdom has none, like some embedded webviews.
+		let captured: ReturnType<typeof useTheme>;
+		render(
+			<ThemeProvider design="basic">
+				<Probe onValue={(ctx) => (captured = ctx)} />
+			</ThemeProvider>
+		);
+
+		expect(captured?.theme).toBe("light");
+	});
+
 	describe("primary color vars", () => {
 		it("exposes the primaryColor scale through context and sets it on the container", () => {
 			mockMatchMedia(false);

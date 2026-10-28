@@ -14,7 +14,7 @@ export interface ThemeContextValue {
 	 * `primaryColor`. Components that portal content outside the provider apply this as
 	 * `style` on the portaled root, together with `themeClass`.
 	 */
-	primaryColorStyle: CSSProperties;
+	primaryColorStyle?: CSSProperties;
 	cssLoading: boolean;
 }
 

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { type ColorScale } from "../colors";
 import { PRIMARY_COLOR_CSS_VAR_NAMES } from "./constants";
 import { generateColorScale } from "./generateColorScale";
@@ -8,7 +9,7 @@ import { generateColorScale } from "./generateColorScale";
  *
  * @param colorScale - The color scale to map
  */
-export function getPrimaryColorVars(colorScale: ColorScale): Record<string, string> {
+export function getPrimaryColorVars(colorScale: ColorScale): CSSProperties & Record<string, string> {
 	return {
 		[PRIMARY_COLOR_CSS_VAR_NAMES.surface]: colorScale.surface,
 		[PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover]: colorScale.surfaceHover,

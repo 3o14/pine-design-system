@@ -102,12 +102,15 @@ export interface ThemeProviderProps {
  * apps that never had one.
  */
 function subscribeToSystemTheme(callback: () => void) {
+	// Some environments (jsdom, older embedded webviews) have no matchMedia; treat them as light.
+	if (typeof window.matchMedia !== "function") return () => {};
 	const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 	mediaQuery.addEventListener("change", callback);
 	return () => mediaQuery.removeEventListener("change", callback);
 }
 
 function getSystemThemeSnapshot(): Theme {
+	if (typeof window.matchMedia !== "function") return "light";
 	return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
@@ -193,24 +196,19 @@ export const ThemeProvider = ({
 	// The themes read the primary scale from `--pie-primary-*` custom properties, which only
 	// exist where they are set. They go on the container and, through context, on every
 	// portaled popup, since those render in <body> outside the container.
-	const primaryColorStyle = useMemo(() => {
+	const primaryColorStyle = useMemo((): React.CSSProperties => {
 		const isDark = theme === "dark";
-		const defaultColors = isDark
-			? darkColors.palette.primary
-			: lightColors.palette.primary;
+		let scale = isDark ? darkColors.palette.primary : lightColors.palette.primary;
 
-		if (!primaryColor) {
-			return getPrimaryColorVars(defaultColors) as React.CSSProperties;
+		if (primaryColor) {
+			try {
+				scale = generateColorScale(primaryColor, isDark);
+			} catch (error) {
+				console.warn("Failed to generate color scale from primaryColor:", error);
+			}
 		}
 
-		try {
-			return getPrimaryColorVars(
-				generateColorScale(primaryColor, isDark)
-			) as React.CSSProperties;
-		} catch (error) {
-			console.warn("Failed to generate color scale from primaryColor:", error);
-			return getPrimaryColorVars(defaultColors) as React.CSSProperties;
-		}
+		return getPrimaryColorVars(scale);
 	}, [primaryColor, theme]);
 
 	useEffect(() => {
