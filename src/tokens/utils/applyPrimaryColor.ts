@@ -1,23 +1,21 @@
-import type { CSSProperties } from "react";
 import { type ColorScale } from "../colors";
-import { PRIMARY_COLOR_CSS_VAR_NAMES } from "./constants";
+import { PRIMARY_COLOR_CSS_VAR_NAMES, PRIMARY_COLOR_STATES } from "./constants";
 import { generateColorScale } from "./generateColorScale";
 
 /**
  * Maps a primary color scale to the primary CSS custom properties the themes read
- * (`--pie-primary-*`), as an object usable as a React `style` value.
+ * (`--pie-primary-*`). Usable as a React `style` value. Typed without React on purpose:
+ * this module is part of the React-free `pine-design-system/tokens` graph.
  *
  * @param colorScale - The color scale to map
  */
-export function getPrimaryColorVars(colorScale: ColorScale): CSSProperties & Record<string, string> {
-	return {
-		[PRIMARY_COLOR_CSS_VAR_NAMES.surface]: colorScale.surface,
-		[PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover]: colorScale.surfaceHover,
-		[PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive]: colorScale.surfaceActive,
-		[PRIMARY_COLOR_CSS_VAR_NAMES.text]: colorScale.text,
-		[PRIMARY_COLOR_CSS_VAR_NAMES.border]: colorScale.border,
-		[PRIMARY_COLOR_CSS_VAR_NAMES.weak]: colorScale.weak,
-	};
+export function getPrimaryColorVars(colorScale: ColorScale): Record<string, string> {
+	return Object.fromEntries(
+		PRIMARY_COLOR_STATES.map((state) => [
+			PRIMARY_COLOR_CSS_VAR_NAMES[state],
+			colorScale[state],
+		])
+	);
 }
 
 /**

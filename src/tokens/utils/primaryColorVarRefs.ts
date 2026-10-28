@@ -1,5 +1,9 @@
 import type { ColorScale } from "../colors";
-import { PRIMARY_COLOR_CSS_VAR_NAMES } from "./constants";
+import {
+	PRIMARY_COLOR_CSS_VAR_NAMES,
+	PRIMARY_COLOR_STATES,
+	type PrimaryColorState,
+} from "./constants";
 
 /**
  * The primary color tokens a theme assigns: references to the `--pie-primary-*` custom
@@ -8,13 +12,13 @@ import { PRIMARY_COLOR_CSS_VAR_NAMES } from "./constants";
  *
  * @param fallback - The default primary scale for the theme's color mode
  */
-export function primaryColorVarRefs(fallback: ColorScale) {
-	return {
-		surface: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surface}, ${fallback.surface})`,
-		surfaceHover: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover}, ${fallback.surfaceHover})`,
-		surfaceActive: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive}, ${fallback.surfaceActive})`,
-		text: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.text}, ${fallback.text})`,
-		border: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.border}, ${fallback.border})`,
-		weak: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.weak}, ${fallback.weak})`,
-	};
+export function primaryColorVarRefs(
+	fallback: ColorScale
+): Record<PrimaryColorState, string> {
+	return Object.fromEntries(
+		PRIMARY_COLOR_STATES.map((state) => [
+			state,
+			`var(${PRIMARY_COLOR_CSS_VAR_NAMES[state]}, ${fallback[state]})`,
+		])
+	) as Record<PrimaryColorState, string>;
 }
