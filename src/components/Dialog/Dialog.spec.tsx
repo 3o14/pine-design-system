@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { Dialog } from "./Dialog";
 import { ThemeProvider } from "@/providers";
 import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
+import { crayonLightTheme } from "@/tokens/themes";
 import React from "react";
 
 describe("Dialog", () => {
@@ -17,9 +18,28 @@ describe("Dialog", () => {
 				</ThemeProvider>
 			);
 
+			const themedRoot = screen
+				.getByRole("dialog")
+				.closest<HTMLElement>(`[style*="${PRIMARY_COLOR_CSS_VAR_NAMES.surface}"]`);
+			expect(themedRoot?.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe(
+				generateColorScale("#e11d48", false).surface
+			);
+		});
+
+		it("puts the theme class on an ancestor of the popup when applyGlobal is false", () => {
+			render(
+				<ThemeProvider design="crayon" theme="light" applyGlobal={false} syncWithSystem={false}>
+					<Dialog open={true} onOpenChange={() => {}}>
+						<p>Dialog content</p>
+					</Dialog>
+				</ThemeProvider>
+			);
+
+			// The crayon container styles use `.${crayonLightTheme} &`, which needs an ancestor,
+			// so the popup itself carrying the class is not enough.
 			expect(
-				screen.getByRole("dialog").style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)
-			).toBe(generateColorScale("#e11d48", false).surface);
+				screen.getByRole("dialog").parentElement?.closest(`.${crayonLightTheme}`)
+			).not.toBeNull();
 		});
 	});
 

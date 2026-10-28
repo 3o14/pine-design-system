@@ -1,8 +1,7 @@
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import clsx from "clsx";
 import * as styles from "./Dialog.css";
-import { lightTheme } from "@/tokens";
-import { useTheme } from "@/providers";
+import { usePortalThemeProps } from "@/providers/usePortalThemeProps";
 import { Button } from "../Button";
 import type { ButtonVariant, ButtonIntent } from "../Button";
 
@@ -83,8 +82,7 @@ export const Dialog = ({
 	closeOnEscape = true,
 	className,
 }: DialogProps) => {
-	const themeContext = useTheme();
-	const themeClass = themeContext?.themeClass ?? lightTheme;
+	const portalThemeProps = usePortalThemeProps();
 	const handleOpenChange = (newOpen: boolean) => {
 		onOpenChange?.(newOpen);
 		if (!newOpen) {
@@ -99,19 +97,15 @@ export const Dialog = ({
 			disablePointerDismissal={!closeOnOverlayClick}
 			modal={closeOnEscape}
 		>
-			<BaseDialog.Portal>
+			<BaseDialog.Portal {...portalThemeProps}>
 				<BaseDialog.Backdrop className={styles.overlay} />
 				<BaseDialog.Popup
 					className={clsx(
-						themeClass,
 						styles.container,
 						styles.sizeVariants[size],
 						styles.roundedVariants[rounded],
 						className
 					)}
-					// Portaled to <body>, outside the provider, so the primary color vars that
-					// the action buttons read have to be set here too.
-					style={themeContext?.primaryColorStyle}
 				>
 					{(title || showCloseButton) && (
 						<div className={styles.header}>
