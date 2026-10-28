@@ -2,42 +2,42 @@
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Size of the badge (small, medium, large, xlarge)",
+    "description": "Size of the badge. Choose based on the size of adjacent text or components. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "variant",
     "type": "\"solid\" | \"outline\" | \"subtle\" | \"weak\"",
-    "description": "Visual style variant (solid, outline, subtle, weak)",
+    "description": "Visual emphasis level. 'solid' (filled background) is for states needing the most emphasis — use for list status indicators or count badges near CTAs. 'outline' (border only) is medium emphasis. 'subtle' (light background) and 'weak' (lightest background) are for lightweight tags or category labels next to text; avoid over-emphasizing multiple badges on the same screen. Default: 'solid'.",
     "default": "\"solid\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
+    "description": "Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Border radius size (small, medium, large)",
+    "description": "Corner radius (small, medium, large — 'large' is a full pill). In the game theme the pixel frame's corners are stepped instead: square, one-step notch, two-step. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "showDot",
     "type": "boolean",
-    "description": "Whether to show a dot indicator",
+    "description": "Shows a status dot before the badge content. Use to indicate real-time status changes or notifications. Recommended pairing: 'success' for online/normal, 'danger' for error/offline, 'warning' for pending/caution. Default: false.",
     "default": "false",
     "required": false
   },
   {
     "name": "children",
     "type": "ReactNode",
-    "description": "Badge content",
+    "description": "Badge content. Required.",
     "required": true
   }
 ]

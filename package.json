@@ -62,7 +62,7 @@
 		"sync-readme": "node scripts/sync-readme.js",
 		"sync-llms": "node scripts/sync-llms.js",
 		"docs": "cd docs && pnpm run dev",
-		"docs:build": "cd docs && next build",
+		"docs:build": "cd docs && pnpm run build",
 		"prepublishOnly": "pnpm run build:lib",
 		"changeset": "changeset",
 		"changeset:auto": "./scripts/auto-changeset.sh",

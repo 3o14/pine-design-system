@@ -2,49 +2,58 @@
   {
     "name": "content",
     "type": "ReactNode",
+    "description": "Content rendered inside the tooltip popup. Accepts any `ReactNode`. Use Tooltip only for supplementary information that is helpful but not required — touch and keyboard users may not reliably reach it, so do not rely on it for anything essential (use `TextField`'s `helperText`/`status` for field hints and validation, and `Dialog` to confirm destructive actions). Do not place interactive elements (links, buttons) inside the content.",
     "required": true
   },
   {
     "name": "children",
     "type": "ReactElement",
+    "description": "Trigger element. Must accept a `ref`, which Tooltip forwards to it.",
     "required": true
   },
   {
     "name": "side",
     "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+    "description": "Side of the trigger the tooltip appears on. Automatically flips to the opposite side when there is not enough space. Default: 'top'.",
     "default": "\"top\"",
     "required": false
   },
   {
     "name": "align",
     "type": "\"start\" | \"center\" | \"end\"",
+    "description": "Alignment along the chosen side. Default: 'center'.",
     "default": "\"center\"",
     "required": false
   },
   {
     "name": "showArrow",
     "type": "boolean",
+    "description": "Whether to render the directional arrow. Not shown in the game theme regardless of this value, since its pixel-art aesthetic omits directional arrows. Default: true.",
     "default": "true",
     "required": false
   },
   {
     "name": "open",
     "type": "boolean",
+    "description": "Controlled open state. Use together with `onOpenChange`.",
     "required": false
   },
   {
     "name": "defaultOpen",
     "type": "boolean",
+    "description": "Initial open state for uncontrolled usage.",
     "required": false
   },
   {
     "name": "onOpenChange",
     "type": "(open: boolean) => void",
+    "description": "Callback fired when the open state changes. Pair with `open` for controlled usage.",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
+    "description": "Disables the tooltip entirely — it will not render. Default: false.",
     "default": "false",
     "required": false
   },

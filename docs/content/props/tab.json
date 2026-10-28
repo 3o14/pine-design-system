@@ -2,32 +2,38 @@
   {
     "name": "tabs",
     "type": "TabItem[]",
+    "description": "Tabs to render. Keep the count between 2 and 6 where possible — too many tabs make it harder to grasp the content; for more options, consider a Dropdown or sidebar navigation instead.",
     "required": true
   },
   {
     "name": "value",
     "type": "string",
+    "description": "Controlled selected tab value. Use together with `onChange` when syncing tab state with URL params or when tab changes trigger external actions (e.g. data fetch). For simple UI switching, `defaultValue` alone is enough.",
     "required": false
   },
   {
     "name": "defaultValue",
     "type": "string",
+    "description": "Initial selected tab value for uncontrolled usage. Defaults to the first tab's value.",
     "required": false
   },
   {
     "name": "onChange",
     "type": "(value: string) => void",
+    "description": "Callback fired when the selected tab changes. Pair with `value` for controlled usage.",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Semantic color intent (primary, secondary, success, warning, danger, neutral). Default: 'primary'.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "orientation",
     "type": "\"horizontal\" | \"vertical\"",
+    "description": "Layout direction of the tab list. 'horizontal' suits typical in-page tabs; 'vertical' suits sidebar-style navigation. Default: 'horizontal'.",
     "default": "\"horizontal\"",
     "required": false
   }
