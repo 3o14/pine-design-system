@@ -2,44 +2,45 @@
   {
     "name": "open",
     "type": "boolean",
-    "description": "Whether the dialog is open",
+    "description": "Whether the dialog is open. Required — Dialog is always controlled.",
     "required": true
   },
   {
     "name": "onOpenChange",
     "type": "(open: boolean) => void",
-    "description": "Callback when open state changes",
+    "description": "Callback fired when the open state changes (e.g. overlay click, Escape, close button).",
     "required": false
   },
   {
     "name": "onClose",
     "type": "() => void",
+    "description": "Callback fired specifically when the dialog closes (after `onOpenChange(false)`).",
     "required": false
   },
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\" | \"full\"",
-    "description": "Size of the dialog (small, medium, large, xlarge, full)",
+    "description": "Maximum width of the dialog. 'small' suits simple confirmation dialogs; 'medium' fits general forms or information; 'large' suits complex forms or detailed content; 'xlarge' suits dialogs with a lot of content; 'full' is a full-screen dialog. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Border radius size (small, medium, large)",
+    "description": "Corner radius of the dialog (small, medium, large). Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "title",
     "type": "string",
-    "description": "Dialog title",
+    "description": "Dialog title, rendered as the accessible name.",
     "required": false
   },
   {
     "name": "description",
     "type": "string",
-    "description": "Dialog description text",
+    "description": "Dialog description text, rendered below the title.",
     "required": false
   },
   {
@@ -50,30 +51,33 @@
   {
     "name": "actions",
     "type": "DialogAction[]",
-    "description": "Array of action buttons to display",
+    "description": "Action buttons rendered in the footer. For irreversible actions (delete, reset), include a 'danger' intent action and set `closeOnOverlayClick: false` so the confirmation can't be dismissed accidentally. Takes precedence over `footer` when both are provided.",
     "required": false
   },
   {
     "name": "footer",
     "type": "ReactNode",
+    "description": "Custom footer content, used instead of `actions` for non-button footers.",
     "required": false
   },
   {
     "name": "showCloseButton",
     "type": "boolean",
+    "description": "Whether to show the close (X) button in the header. Default: true.",
     "default": "true",
     "required": false
   },
   {
     "name": "closeOnOverlayClick",
     "type": "boolean",
+    "description": "Whether clicking the overlay closes the dialog. Set to `false` for confirmation dialogs on irreversible actions, or when the dialog contains a form, to prevent users from accidentally losing their input or bypassing a decision. Default: true.",
     "default": "true",
     "required": false
   },
   {
     "name": "closeOnEscape",
     "type": "boolean",
-    "description": "Whether to close on Escape key press",
+    "description": "Whether pressing Escape closes the dialog. Default: true.",
     "default": "true",
     "required": false
   }

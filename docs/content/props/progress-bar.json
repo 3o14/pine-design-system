@@ -2,7 +2,7 @@
   {
     "name": "value",
     "type": "number | null",
-    "description": "Current value. Pass `null` for an indeterminate (unknown-progress) bar.",
+    "description": "Current value. Use a number (determinate) when progress can be measured, such as upload byte counts or completed steps. Pass `null` for an indeterminate bar when progress cannot be measured — avoid leaving it indeterminate indefinitely; switch to determinate or a result state as soon as possible.",
     "default": "null",
     "required": false
   },

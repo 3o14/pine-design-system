@@ -40,7 +40,7 @@
   {
     "name": "rounded",
     "type": "\"small\" | \"medium\" | \"large\"",
-    "description": "Corner radius of the dropdown trigger (small, medium, large). Default: 'medium'.",
+    "description": "Corner radius of the dropdown trigger (small, medium, large — 'large' is a full pill). In the game theme the pixel frame's corners are stepped instead: square, one-step notch, two-step. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },

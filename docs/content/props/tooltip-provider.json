@@ -2,18 +2,19 @@
   {
     "name": "children",
     "type": "ReactNode",
+    "description": "One or more `Tooltip` components that should share a single hover-delay timer.",
     "required": true
   },
   {
     "name": "delay",
     "type": "number",
-    "description": "Hover-open delay in ms.",
+    "description": "Hover-open delay in ms for all wrapped tooltips.",
     "required": false
   },
   {
     "name": "closeDelay",
     "type": "number",
-    "description": "Close delay in ms after the cursor leaves.",
+    "description": "Close delay in ms after the cursor leaves, for all wrapped tooltips.",
     "required": false
   }
 ]

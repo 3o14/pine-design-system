@@ -2,42 +2,42 @@
   {
     "name": "as",
     "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\" | \"p\" | \"span\" | \"div\" | \"label\" | \"li\" | \"ul\" | \"ol\"",
-    "description": "HTML element to render (h1-h6, p, span, div, label, li, ul, ol)",
+    "description": "HTML element to render (h1-h6, p, span, div, label, li, ul, ol). Independent from `size` — you can keep good semantic structure for SEO/accessibility (e.g. `as=\"h2\"`) while applying any visual size, or the reverse (e.g. `as=\"label\" size=\"small\"`). Default: 'p'.",
     "default": "\"p\"",
     "required": false
   },
   {
     "name": "size",
     "type": "\"xsmall\" | \"small\" | \"medium\" | \"large\" | \"xlarge\" | \"display-small\" | \"display-medium\" | \"display-large\"",
-    "description": "Font size token (xsmall, small, medium, large, xlarge, xxlarge, xxxlarge)",
+    "description": "Font size token following the typography scale. 'medium' is the default body text size; 'small'/'xsmall' suit secondary text, descriptions, captions, and hints; 'large'/'xlarge' suit subheadings and section titles; the 'display-*' tokens are for hero and page-level headings. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "weight",
     "type": "\"regular\" | \"medium\" | \"semibold\" | \"bold\"",
-    "description": "Font weight (regular, medium, semibold, bold)",
+    "description": "Font weight. 'regular' for body/descriptive text, 'medium' for body text needing emphasis, 'semibold' for subheadings/labels, 'bold' for primary headings/strong emphasis. Default: 'regular'.",
     "default": "\"regular\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\" | \"inherit\"",
-    "description": "Text color intent (inherit, primary, secondary, success, warning, danger, neutral, muted, subdued, disabled)",
+    "description": "Text color intent. 'inherit' inherits color from the parent element; the semantic intents (primary, secondary, success, warning, danger, neutral) apply the corresponding token color. Default: 'inherit'.",
     "default": "\"inherit\"",
     "required": false
   },
   {
     "name": "align",
     "type": "\"left\" | \"center\" | \"right\"",
-    "description": "Text alignment (left, center, right)",
+    "description": "Text alignment (left, center, right). Default: 'left'.",
     "default": "\"left\"",
     "required": false
   },
   {
     "name": "truncate",
     "type": "boolean",
-    "description": "Whether to truncate text with ellipsis",
+    "description": "Whether to truncate overflowing text with an ellipsis. Default: false.",
     "default": "false",
     "required": false
   },

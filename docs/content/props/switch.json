@@ -2,45 +2,46 @@
   {
     "name": "size",
     "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
-    "description": "Size of the switch (small, medium, large, xlarge)",
+    "description": "Size of the switch. Default: 'medium'.",
     "default": "\"medium\"",
     "required": false
   },
   {
     "name": "intent",
     "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent (primary, secondary, success, warning, danger, neutral)",
+    "description": "Semantic color intent of the track, shown when the switch is on (primary, secondary, success, warning, danger, neutral). Default: 'primary'.",
     "default": "\"primary\"",
     "required": false
   },
   {
     "name": "label",
     "type": "string",
-    "description": "Label text for the switch",
+    "description": "Label text rendered next to the switch. Always provide a label — either via this prop or by connecting the switch to a `<label>` element — so screen readers can identify its purpose.",
     "required": false
   },
   {
     "name": "checked",
     "type": "boolean",
-    "description": "Controlled checked state",
+    "description": "Controlled checked state. Use Switch (not Checkbox) when the on/off change takes effect immediately with no separate save action. Use together with `onCheckedChange`; for uncontrolled usage, use `defaultChecked` instead.",
     "required": false
   },
   {
     "name": "defaultChecked",
     "type": "boolean",
+    "description": "Initial checked state for uncontrolled usage.",
     "required": false
   },
   {
     "name": "disabled",
     "type": "boolean",
-    "description": "Whether the switch is disabled",
+    "description": "Whether the switch is disabled. Default: false.",
     "default": "false",
     "required": false
   },
   {
     "name": "onCheckedChange",
     "type": "(checked: boolean) => void",
-    "description": "Callback when checked state changes",
+    "description": "Callback fired when the checked state changes. Pair with `checked` for controlled usage.",
     "required": false
   },
   {
