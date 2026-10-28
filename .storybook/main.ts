@@ -1,6 +1,22 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import { resolve } from "path";
+import type { Plugin } from "vite";
+
+/**
+ * The theme @font-face rules use `./font/...`, which matches the shipped dist/ layout
+ * (the stylesheet sits next to dist/font/). Storybook compiles the CSS from source
+ * instead, so the built stylesheet lands in assets/ with no font/ folder next to it.
+ * Point the fonts at /font/, where Storybook serves public/font.
+ */
+const rootFontUrls = (): Plugin => ({
+	name: "pine-storybook-root-font-urls",
+	enforce: "pre",
+	transform(code, id) {
+		if (!id.includes(".vanilla.css")) return null;
+		return code.replace(/url\((["']?)\.\/font\//g, "url($1/font/");
+	},
+});
 
 const config: StorybookConfig = {
 	stories: [
@@ -55,6 +71,8 @@ const config: StorybookConfig = {
 		// Storybook compiles the theme CSS from source, so these resolve to an empty file.
 		config.resolve.alias["pine-design-system/style-game.css"] = resolve(__dirname, "../src/__mocks__/empty.css");
 		config.resolve.alias["pine-design-system/style-crayon.css"] = resolve(__dirname, "../src/__mocks__/empty.css");
+
+		config.plugins = [...(config.plugins ?? []), rootFontUrls()];
 
 		return config;
 	},
