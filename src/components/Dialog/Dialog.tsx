@@ -109,6 +109,9 @@ export const Dialog = ({
 						styles.roundedVariants[rounded],
 						className
 					)}
+					// Portaled to <body>, outside the provider, so the primary color vars that
+					// the action buttons read have to be set here too.
+					style={themeContext?.primaryColorStyle}
 				>
 					{(title || showCloseButton) && (
 						<div className={styles.header}>

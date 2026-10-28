@@ -1,10 +1,42 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dialog } from "./Dialog";
+import { ThemeProvider } from "@/providers";
+import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
 import React from "react";
 
 describe("Dialog", () => {
+	describe("Theming", () => {
+		// ThemeProvider subscribes to `window.matchMedia` even with `syncWithSystem={false}`,
+		// and jsdom doesn't implement it.
+		beforeEach(() => {
+			window.matchMedia = (() => ({
+				matches: false,
+				addEventListener: () => {},
+				removeEventListener: () => {},
+			})) as unknown as typeof window.matchMedia;
+		});
+		afterEach(() => {
+			// @ts-expect-error test cleanup — matchMedia isn't implemented by jsdom by default
+			delete window.matchMedia;
+		});
+
+		it("sets the provider's primary color vars on the portaled popup", () => {
+			render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="#e11d48">
+					<Dialog open={true} onOpenChange={() => {}}>
+						<p>Dialog content</p>
+					</Dialog>
+				</ThemeProvider>
+			);
+
+			expect(
+				screen.getByRole("dialog").style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)
+			).toBe(generateColorScale("#e11d48", false).surface);
+		});
+	});
+
 	describe("Rendering", () => {
 		it("renders when open", () => {
 			render(
