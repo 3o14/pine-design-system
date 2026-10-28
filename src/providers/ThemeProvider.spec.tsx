@@ -205,36 +205,20 @@ describe("ThemeProvider", () => {
 			).toBe(expected);
 		});
 
-		it("sets the vars on <html> with applyGlobal and removes them on unmount", () => {
-			const expected = generateColorScale("#e11d48", false).surface;
+		it("leaves a primary var set on <html> by the consumer alone", () => {
 			const root = document.documentElement;
+			root.style.setProperty(PRIMARY_COLOR_CSS_VAR_NAMES.surface, "#16a34a");
 
 			const { unmount } = render(
 				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="#e11d48">
 					<span />
 				</ThemeProvider>
 			);
-			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe(expected);
+			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe("#16a34a");
 
 			unmount();
-			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe("");
-		});
-
-		it("does not set the vars on <html> when applyGlobal is false", () => {
-			render(
-				<ThemeProvider
-					design="basic"
-					syncWithSystem={false}
-					applyGlobal={false}
-					primaryColor="#e11d48"
-				>
-					<span />
-				</ThemeProvider>
-			);
-
-			expect(
-				document.documentElement.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)
-			).toBe("");
+			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe("#16a34a");
+			root.style.removeProperty(PRIMARY_COLOR_CSS_VAR_NAMES.surface);
 		});
 
 		it("keeps the computed vars over the same vars passed in style", () => {

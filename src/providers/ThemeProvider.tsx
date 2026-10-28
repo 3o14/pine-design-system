@@ -193,10 +193,11 @@ export const ThemeProvider = ({
 		return theme === "dark" ? basicDarkTheme : basicLightTheme;
 	}, [design, theme]);
 
-	// The themes read the primary scale from `--pie-primary-*` custom properties (falling back
-	// to the default scale). They are set on the container, on <html> with applyGlobal so
-	// content portaled outside the provider gets them, and through context on the library's
-	// own portaled popups, which also cover applyGlobal={false}.
+	// The themes read the primary scale from `--pie-primary-*` custom properties, falling back
+	// to the default scale. They are set on the container and, through context, on the portal
+	// element of the library's popups (see usePortalThemeProps). They are deliberately not set
+	// on <html>: that would override a consumer's own :root values and applyPrimaryColorVars(),
+	// and nested providers would remove each other's values on unmount.
 	const { primaryColorVars, primaryColorError } = useMemo(() => {
 		const isDark = theme === "dark";
 		let scale = isDark ? darkColors.palette.primary : lightColors.palette.primary;
@@ -234,17 +235,17 @@ export const ThemeProvider = ({
 
 		stripDocumentThemeClasses(root);
 		root.classList.add(themeClass);
-		for (const [name, value] of Object.entries(primaryColorVars)) {
-			root.style.setProperty(name, value);
-		}
 
 		return () => {
 			stripDocumentThemeClasses(root);
-			for (const name of Object.keys(primaryColorVars)) {
-				root.style.removeProperty(name);
-			}
 		};
-	}, [theme, design, themeClass, applyGlobal, primaryColorVars]);
+	}, [theme, design, themeClass, applyGlobal]);
+
+	// The computed primary vars win over `style`, as they did when an effect set them.
+	const containerStyle = useMemo(
+		() => ({ ...style, ...primaryColorStyle }),
+		[style, primaryColorStyle]
+	);
 
 	const setTheme = useCallback(
 		(newTheme: Theme) => {
@@ -282,8 +283,7 @@ export const ThemeProvider = ({
 		<ThemeContext.Provider value={value}>
 			<div
 				className={clsx(themeClass, className)}
-				// The computed primary vars win over `style`, as they did when an effect set them.
-				style={{ ...style, ...primaryColorStyle }}
+				style={containerStyle}
 			>
 				{design === "crayon" && <CrayonThemeFilters />}
 				{children}
