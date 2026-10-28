@@ -102,7 +102,7 @@ export interface ThemeProviderProps {
  * apps that never had one.
  */
 function subscribeToSystemTheme(callback: () => void) {
-	// Some environments (jsdom, older embedded webviews) have no matchMedia; treat them as light.
+	// Environments without matchMedia (e.g. jsdom) resolve to light.
 	if (typeof window.matchMedia !== "function") return () => {};
 	const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 	mediaQuery.addEventListener("change", callback);
@@ -241,11 +241,6 @@ export const ThemeProvider = ({
 		};
 	}, [theme, design, themeClass, applyGlobal]);
 
-	// The computed primary vars win over `style`, as they did when an effect set them.
-	const containerStyle = useMemo(
-		() => ({ ...style, ...primaryColorStyle }),
-		[style, primaryColorStyle]
-	);
 
 	const setTheme = useCallback(
 		(newTheme: Theme) => {
@@ -283,7 +278,8 @@ export const ThemeProvider = ({
 		<ThemeContext.Provider value={value}>
 			<div
 				className={clsx(themeClass, className)}
-				style={containerStyle}
+				// The computed primary vars win over `style`, as they did when an effect set them.
+				style={{ ...style, ...primaryColorStyle }}
 			>
 				{design === "crayon" && <CrayonThemeFilters />}
 				{children}
