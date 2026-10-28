@@ -143,7 +143,11 @@ export const Dropdown = ({
 				</BaseSelect.Trigger>
 
 				<BaseSelect.Portal>
+					{/* The popup is portaled to <body>, outside the trigger's themed wrapper, so it
+					    needs the theme class itself. The class goes on the Positioner (an ancestor
+					    of the Popup) so the `.${themeClass} &` selectors in Dropdown.css.ts still match. */}
 					<BaseSelect.Positioner
+						className={themeClass}
 						side={side}
 						align={align}
 						sideOffset={sideOffset}

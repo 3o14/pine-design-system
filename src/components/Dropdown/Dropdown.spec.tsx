@@ -1,7 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dropdown, type DropdownOption } from "./Dropdown";
+import { ThemeProvider } from "@/providers";
+import { lightTheme } from "@/tokens";
+import { gameDarkTheme } from "@/tokens/themes";
 import React from "react";
 
 const mockOptions: DropdownOption[] = [
@@ -341,6 +344,63 @@ describe("Dropdown", () => {
 				expect(trigger).toHaveAttribute("aria-expanded", "true");
 			});
 			expect(await screen.findAllByRole("option")).toHaveLength(mockOptions.length);
+		});
+	});
+
+	describe("Theming", () => {
+		// ThemeProvider subscribes to `window.matchMedia` even with `syncWithSystem={false}`,
+		// and jsdom doesn't implement it.
+		beforeEach(() => {
+			window.matchMedia = (() => ({
+				matches: false,
+				addEventListener: () => {},
+				removeEventListener: () => {},
+			})) as unknown as typeof window.matchMedia;
+		});
+		afterEach(() => {
+			// @ts-expect-error test cleanup — matchMedia isn't implemented by jsdom by default
+			delete window.matchMedia;
+		});
+
+		it("applies the provider's theme class to the portaled popup when applyGlobal is false", async () => {
+			const user = userEvent.setup();
+
+			render(
+				<ThemeProvider design="game" theme="dark" applyGlobal={false} syncWithSystem={false}>
+					<Dropdown options={mockOptions} />
+				</ThemeProvider>,
+			);
+			await user.click(screen.getByRole("combobox"));
+
+			const listbox = await screen.findByRole("listbox");
+			expect(document.documentElement).not.toHaveClass(gameDarkTheme);
+			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
+		});
+
+		it("uses the nearest provider's theme, not the global one, inside a nested ThemeProvider", async () => {
+			const user = userEvent.setup();
+
+			render(
+				<ThemeProvider design="basic" theme="light" syncWithSystem={false}>
+					<ThemeProvider design="game" theme="dark" applyGlobal={false} syncWithSystem={false}>
+						<Dropdown options={mockOptions} />
+					</ThemeProvider>
+				</ThemeProvider>,
+			);
+			await user.click(screen.getByRole("combobox"));
+
+			const listbox = await screen.findByRole("listbox");
+			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
+		});
+
+		it("applies the fallback light theme class to the popup outside a ThemeProvider", async () => {
+			const user = userEvent.setup();
+
+			render(<Dropdown options={mockOptions} />);
+			await user.click(screen.getByRole("combobox"));
+
+			const listbox = await screen.findByRole("listbox");
+			expect(listbox.closest(`.${lightTheme}`)).not.toBeNull();
 		});
 	});
 
