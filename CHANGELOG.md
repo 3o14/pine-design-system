@@ -1,5 +1,24 @@
 # pine-design-system
 
+## 1.3.0
+
+### Minor Changes
+
+- 5023089: Make the `rounded` prop's `small`, `medium`, and `large` steps visibly distinct on `Button`, `Badge`, `TextField`, and `Dropdown` in every theme. Before this change, `medium` and `large` looked the same on smaller components, and every step looked the same in the game theme.
+  - **basic and crayon:** Each component now has its own radius tokens sized for its height, and `large` is always a full pill. Some defaults change as a result. The basic `Badge` is no longer a pill at the default `medium`. crayon components are less rounded at `small` and `medium`. basic `TextField`/`Dropdown` default to 12px instead of 16px.
+  - **game:** `rounded` steps the corners of the pixel frame: `small` is square, `medium` keeps the existing one-step notch, and `large` cuts a two-step corner. The `Button`'s back plate (every variant except `ghost`) follows the same shape, so it now has a one-step notch at the default `medium`.
+  - **`TextField` with `variant="filled"`:** A `large` radius rounds the top corners into a half-circle instead of a dome.
+
+  Token changes: adds the `pill` foundation radius (`9999px`), plus `component.badge.radius`, a `small`/`medium`/`large` `component.input.radius`, and the `shadow.pixelColor` theme tokens. Removes `shadow.pixelBoxRaised`.
+
+### Patch Changes
+
+- 2dd56f0: Fix the game and crayon theme fonts returning 404 in apps that install the package. The `@font-face` rules pointed at a site-root path (`/font/...`), but the font files ship inside the package, so consumer apps had nothing at that path and fell back to a default font. They now use a path relative to the stylesheet (`./font/...`), which bundlers resolve to the packaged files.
+
+  `ThemeProvider` now lazy-loads the game and crayon stylesheets with `import()` instead of injecting a `<link>` to a URL built from `import.meta.url`. The `<link>` bypassed the consumer's bundler, so the fonts still 404'd when the theme CSS was loaded by `ThemeProvider` rather than imported directly, and in Vite dev the stylesheet itself 404'd.
+
+  The crayon font file is renamed from `온글잎-승훈체.woff2` to `OnGeulipSeunghun.woff2` to avoid non-ASCII filename issues. The `font-family` name is unchanged. The build now fails if the shipped CSS contains a site-root `url()` or an inlined font.
+
 ## 1.2.0
 
 ### Minor Changes
