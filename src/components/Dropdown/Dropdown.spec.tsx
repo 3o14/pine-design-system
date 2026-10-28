@@ -5,6 +5,7 @@ import { Dropdown, type DropdownOption } from "./Dropdown";
 import { ThemeProvider } from "@/providers";
 import { lightTheme } from "@/tokens";
 import { gameDarkTheme } from "@/tokens/themes";
+import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
 import React from "react";
 
 const mockOptions: DropdownOption[] = [
@@ -373,6 +374,8 @@ describe("Dropdown", () => {
 			await user.click(screen.getByRole("combobox"));
 
 			const listbox = await screen.findByRole("listbox");
+			// Precondition: with the class on <html>, closest() below would match <html> and
+			// pass without the fix.
 			expect(document.documentElement).not.toHaveClass(gameDarkTheme);
 			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
 		});
@@ -391,6 +394,23 @@ describe("Dropdown", () => {
 
 			const listbox = await screen.findByRole("listbox");
 			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
+		});
+
+		it("sets the provider's primary color vars on the portaled popup", async () => {
+			const user = userEvent.setup();
+
+			render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="#e11d48">
+					<Dropdown options={mockOptions} />
+				</ThemeProvider>,
+			);
+			await user.click(screen.getByRole("combobox"));
+
+			const listbox = await screen.findByRole("listbox");
+			const themedRoot = listbox.closest<HTMLElement>(`[style*="${PRIMARY_COLOR_CSS_VAR_NAMES.surface}"]`);
+			expect(themedRoot?.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe(
+				generateColorScale("#e11d48", false).surface,
+			);
 		});
 
 		it("applies the fallback light theme class to the popup outside a ThemeProvider", async () => {
