@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dropdown, type DropdownOption } from "./Dropdown";
@@ -349,20 +349,6 @@ describe("Dropdown", () => {
 	});
 
 	describe("Theming", () => {
-		// ThemeProvider subscribes to `window.matchMedia` even with `syncWithSystem={false}`,
-		// and jsdom doesn't implement it.
-		beforeEach(() => {
-			window.matchMedia = (() => ({
-				matches: false,
-				addEventListener: () => {},
-				removeEventListener: () => {},
-			})) as unknown as typeof window.matchMedia;
-		});
-		afterEach(() => {
-			// @ts-expect-error test cleanup — matchMedia isn't implemented by jsdom by default
-			delete window.matchMedia;
-		});
-
 		it("applies the provider's theme class to the portaled popup when applyGlobal is false", async () => {
 			const user = userEvent.setup();
 
