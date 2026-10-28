@@ -77,6 +77,8 @@ export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 					<BaseTooltip.Popup
 						role="tooltip"
 						className={clsx(themeClass, styles.popup, className)}
+						// Portaled to <body>, outside the provider, so the primary color vars are set here too.
+						style={themeContext?.primaryColorStyle}
 					>
 						{content}
 						{showArrow && <BaseTooltip.Arrow className={styles.arrow} />}
