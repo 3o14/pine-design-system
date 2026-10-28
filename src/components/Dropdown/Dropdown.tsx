@@ -1,8 +1,8 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import clsx from "clsx";
 import * as styles from "./Dropdown.css";
-import { lightTheme, type ColorIntent } from "@/tokens";
-import { useTheme } from "@/providers";
+import type { ColorIntent } from "@/tokens";
+import { usePortalThemeProps } from "@/providers/usePortalThemeProps";
 import type { Side, Align } from "@/utils/position";
 
 export type DropdownSize = "small" | "medium" | "large";
@@ -86,8 +86,7 @@ export const Dropdown = ({
 	align = "start",
 	sideOffset = 4,
 }: DropdownProps) => {
-	const themeContext = useTheme();
-	const themeClass = themeContext?.themeClass ?? lightTheme;
+	const portalThemeProps = usePortalThemeProps();
 	return (
 		<BaseSelect.Root
 			value={value}
@@ -99,7 +98,7 @@ export const Dropdown = ({
 		>
 			<div
 				className={clsx(
-					themeClass,
+					portalThemeProps.className,
 					styles.container,
 					fullWidth && styles.triggerFullWidth,
 					className
@@ -142,7 +141,7 @@ export const Dropdown = ({
 					</BaseSelect.Icon>
 				</BaseSelect.Trigger>
 
-				<BaseSelect.Portal>
+				<BaseSelect.Portal {...portalThemeProps}>
 					<BaseSelect.Positioner
 						side={side}
 						align={align}

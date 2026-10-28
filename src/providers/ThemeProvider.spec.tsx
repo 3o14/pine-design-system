@@ -5,6 +5,8 @@ import { hydrateRoot } from "react-dom/client";
 import { render, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "./ThemeProvider";
 import { useTheme } from "./useTheme";
+import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
+import { lightColors } from "@/tokens/colors";
 
 function mockMatchMedia(initialMatches: boolean) {
 	const listeners = new Set<(e: MediaQueryListEvent) => void>();
@@ -167,6 +169,109 @@ describe("ThemeProvider", () => {
 				fireChange(false);
 			});
 			expect(captured?.theme).toBe("dark");
+		});
+	});
+
+	it("renders with light when window.matchMedia is unavailable", () => {
+		// No mockMatchMedia: jsdom has none, like some embedded webviews.
+		let captured: ReturnType<typeof useTheme>;
+		render(
+			<ThemeProvider design="basic">
+				<Probe onValue={(ctx) => (captured = ctx)} />
+			</ThemeProvider>
+		);
+
+		expect(captured?.theme).toBe("light");
+	});
+
+	describe("primary color vars", () => {
+		it("exposes the primaryColor scale through context and sets it on the container", () => {
+			mockMatchMedia(false);
+			const expected = generateColorScale("#e11d48", false).surface;
+
+			let captured: ReturnType<typeof useTheme>;
+			const { container } = render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="#e11d48">
+					<Probe onValue={(ctx) => (captured = ctx)} />
+				</ThemeProvider>
+			);
+
+			const style = captured?.primaryColorStyle as Record<string, string>;
+			expect(style[PRIMARY_COLOR_CSS_VAR_NAMES.surface]).toBe(expected);
+			expect(
+				(container.firstElementChild as HTMLElement).style.getPropertyValue(
+					PRIMARY_COLOR_CSS_VAR_NAMES.surface
+				)
+			).toBe(expected);
+		});
+
+		it("leaves a primary var set on <html> by the consumer alone", () => {
+			const root = document.documentElement;
+			root.style.setProperty(PRIMARY_COLOR_CSS_VAR_NAMES.surface, "#16a34a");
+
+			const { unmount } = render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="#e11d48">
+					<span />
+				</ThemeProvider>
+			);
+			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe("#16a34a");
+
+			unmount();
+			expect(root.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe("#16a34a");
+			root.style.removeProperty(PRIMARY_COLOR_CSS_VAR_NAMES.surface);
+		});
+
+		it("keeps the computed vars over the same vars passed in style", () => {
+			const { container } = render(
+				<ThemeProvider
+					design="basic"
+					syncWithSystem={false}
+					primaryColor="#e11d48"
+					style={{ [PRIMARY_COLOR_CSS_VAR_NAMES.surface]: "#000000" } as React.CSSProperties}
+				>
+					<span />
+				</ThemeProvider>
+			);
+
+			expect(
+				(container.firstElementChild as HTMLElement).style.getPropertyValue(
+					PRIMARY_COLOR_CSS_VAR_NAMES.surface
+				)
+			).toBe(generateColorScale("#e11d48", false).surface);
+		});
+
+		it("warns and falls back to the default scale for an invalid primaryColor", () => {
+			const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+			let captured: ReturnType<typeof useTheme>;
+			render(
+				<ThemeProvider design="basic" syncWithSystem={false} primaryColor="not-a-color">
+					<Probe onValue={(ctx) => (captured = ctx)} />
+				</ThemeProvider>
+			);
+
+			const style = captured?.primaryColorStyle as Record<string, string>;
+			expect(style[PRIMARY_COLOR_CSS_VAR_NAMES.surface]).toBe(
+				lightColors.palette.primary.surface
+			);
+			expect(warn).toHaveBeenCalledTimes(1);
+			warn.mockRestore();
+		});
+
+		it("falls back to the default primary scale without primaryColor", () => {
+			mockMatchMedia(false);
+
+			let captured: ReturnType<typeof useTheme>;
+			render(
+				<ThemeProvider design="basic" syncWithSystem={false}>
+					<Probe onValue={(ctx) => (captured = ctx)} />
+				</ThemeProvider>
+			);
+
+			const style = captured?.primaryColorStyle as Record<string, string>;
+			expect(style[PRIMARY_COLOR_CSS_VAR_NAMES.surface]).toBe(
+				lightColors.palette.primary.surface
+			);
 		});
 	});
 });

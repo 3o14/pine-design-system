@@ -452,11 +452,11 @@ export const menuItem = recipe({
 					boxShadow: `inset 0 0 0 2px ${themeContract.color.primary.surface}`,
 				},
 				selectors: {
-					"&[data-selected='true']": {
+					"&[data-selected]": {
 						backgroundColor: themeContract.color.primary.surface,
 						color: "white",
 					},
-					"&[data-selected='true']:hover": {
+					"&[data-selected]:hover": {
 						backgroundColor: themeContract.color.primary.surfaceHover,
 					},
 				},
@@ -475,11 +475,11 @@ export const menuItem = recipe({
 					boxShadow: `inset 0 0 0 2px ${themeContract.color.secondary.surface}`,
 				},
 				selectors: {
-					"&[data-selected='true']": {
+					"&[data-selected]": {
 						backgroundColor: themeContract.color.secondary.surface,
 						color: "white",
 					},
-					"&[data-selected='true']:hover": {
+					"&[data-selected]:hover": {
 						backgroundColor: themeContract.color.secondary.surfaceHover,
 					},
 				},
@@ -498,11 +498,11 @@ export const menuItem = recipe({
 					boxShadow: `inset 0 0 0 2px ${themeContract.color.success.surface}`,
 				},
 				selectors: {
-					"&[data-selected='true']": {
+					"&[data-selected]": {
 						backgroundColor: themeContract.color.success.surface,
 						color: "white",
 					},
-					"&[data-selected='true']:hover": {
+					"&[data-selected]:hover": {
 						backgroundColor: themeContract.color.success.surfaceHover,
 					},
 				},
@@ -521,11 +521,11 @@ export const menuItem = recipe({
 					boxShadow: `inset 0 0 0 2px ${themeContract.color.warning.surface}`,
 				},
 				selectors: {
-					"&[data-selected='true']": {
+					"&[data-selected]": {
 						backgroundColor: themeContract.color.warning.surface,
 						color: "white",
 					},
-					"&[data-selected='true']:hover": {
+					"&[data-selected]:hover": {
 						backgroundColor: themeContract.color.warning.surfaceHover,
 					},
 				},
@@ -544,11 +544,11 @@ export const menuItem = recipe({
 					boxShadow: `inset 0 0 0 2px ${themeContract.color.danger.surface}`,
 				},
 				selectors: {
-					"&[data-selected='true']": {
+					"&[data-selected]": {
 						backgroundColor: themeContract.color.danger.surface,
 						color: "white",
 					},
-					"&[data-selected='true']:hover": {
+					"&[data-selected]:hover": {
 						backgroundColor: themeContract.color.danger.surfaceHover,
 					},
 				},
@@ -567,11 +567,11 @@ export const menuItem = recipe({
 					boxShadow: `inset 0 0 0 2px ${themeContract.color.neutral.text}`,
 				},
 				selectors: {
-					"&[data-selected='true']": {
+					"&[data-selected]": {
 						backgroundColor: themeContract.color.neutral.surface,
 						color: "white",
 					},
-					"&[data-selected='true']:hover": {
+					"&[data-selected]:hover": {
 						backgroundColor: themeContract.color.neutral.surfaceHover,
 					},
 				},

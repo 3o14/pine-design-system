@@ -3,7 +3,8 @@ import { semanticTokens } from "../semantic";
 import * as foundation from "../foundation";
 import { getWeakColor } from "../utils/getWeakColor";
 import { toNeon } from "../utils/adaptColor";
-import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
+import { primaryColorVarRefs } from "../utils/primaryColorVarRefs";
+import { lightColors, darkColors } from "../colors";
 
 // The url() must be relative to this CSS file, not a site-root absolute path
 // ("/font/..."). The shipped dist/style-game.css has to point at
@@ -23,22 +24,13 @@ globalFontFace("DungGeunMo", {
 	fontDisplay: "swap",
 });
 
-const primaryColorVars = {
-	surface: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surface})`,
-	surfaceHover: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover})`,
-	surfaceActive: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive})`,
-	text: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.text})`,
-	border: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.border})`,
-	weak: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.weak})`,
-} as const;
-
 const neonGreen = toNeon(foundation.green);
 const neonBlue = toNeon(foundation.blue);
 const neonOrange = toNeon(foundation.orange);
 
 /** Color tokens for the game light theme. Exported so contrast tests can check the values directly */
 export const gameLightColors = {
-	primary: primaryColorVars,
+	primary: primaryColorVarRefs(lightColors.palette.primary),
 	secondary: {
 		surface: neonBlue[500],
 		surfaceHover: neonBlue[600],
@@ -182,7 +174,7 @@ export const gameLightTheme = createTheme(semanticTokens, {
 
 /** Color tokens for the game dark theme. Exported so contrast tests can check the values directly */
 export const gameDarkColors = {
-	primary: primaryColorVars,
+	primary: primaryColorVarRefs(darkColors.palette.primary),
 	secondary: {
 		surface: neonBlue[400],
 		surfaceHover: neonBlue[500],

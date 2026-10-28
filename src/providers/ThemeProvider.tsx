@@ -12,10 +12,7 @@ import {
 	type Design,
 	type ThemeContextValue,
 } from "./ThemeContext";
-import {
-	applyPrimaryColorFromHex,
-	applyPrimaryColorVars,
-} from "@/tokens/utils";
+import { generateColorScale, getPrimaryColorVars } from "@/tokens/utils";
 import { lightColors, darkColors } from "@/tokens/colors";
 import {
 	basicLightTheme,
@@ -105,12 +102,15 @@ export interface ThemeProviderProps {
  * apps that never had one.
  */
 function subscribeToSystemTheme(callback: () => void) {
+	// Environments without matchMedia (e.g. jsdom) resolve to light.
+	if (typeof window.matchMedia !== "function") return () => {};
 	const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 	mediaQuery.addEventListener("change", callback);
 	return () => mediaQuery.removeEventListener("change", callback);
 }
 
 function getSystemThemeSnapshot(): Theme {
+	if (typeof window.matchMedia !== "function") return "light";
 	return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
@@ -142,7 +142,6 @@ export const ThemeProvider = ({
 
 	const [manualTheme, setManualTheme] = useState<Theme | undefined>(undefined);
 	const [internalDesign, setInternalDesign] = useState<Design>(defaultDesign);
-	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [cssLoading, setCssLoading] = useState(false);
 
@@ -194,35 +193,33 @@ export const ThemeProvider = ({
 		return theme === "dark" ? basicDarkTheme : basicLightTheme;
 	}, [design, theme]);
 
-	useEffect(() => {
-		if (!containerRef.current) {
-			return;
-		}
-
-		const container = containerRef.current;
+	// The themes read the primary scale from `--pie-primary-*` custom properties, falling back
+	// to the default scale. They are set on the container and, through context, on the portal
+	// element of the library's popups (see usePortalThemeProps). They are deliberately not set
+	// on <html>: that would override a consumer's own :root values and applyPrimaryColorVars(),
+	// and nested providers would remove each other's values on unmount.
+	const { primaryColorVars, primaryColorError } = useMemo(() => {
 		const isDark = theme === "dark";
+		let scale = isDark ? darkColors.palette.primary : lightColors.palette.primary;
+		let error: unknown;
 
 		if (primaryColor) {
 			try {
-				applyPrimaryColorFromHex(primaryColor, isDark, container);
-			} catch (error) {
-				console.warn(
-					"Failed to generate color scale from primaryColor:",
-					error
-				);
-				const defaultColors = isDark
-					? darkColors.palette.primary
-					: lightColors.palette.primary;
-				applyPrimaryColorVars(defaultColors, container);
+				scale = generateColorScale(primaryColor, isDark);
+			} catch (e) {
+				error = e;
 			}
-		} else {
-			const defaultColors = isDark
-				? darkColors.palette.primary
-				: lightColors.palette.primary;
-
-			applyPrimaryColorVars(defaultColors, container);
 		}
+
+		return { primaryColorVars: getPrimaryColorVars(scale), primaryColorError: error };
 	}, [primaryColor, theme]);
+	const primaryColorStyle = primaryColorVars as React.CSSProperties;
+
+	useEffect(() => {
+		if (primaryColorError) {
+			console.warn("Failed to generate color scale from primaryColor:", primaryColorError);
+		}
+	}, [primaryColorError]);
 
 	useEffect(() => {
 		if (typeof document === "undefined") {
@@ -243,6 +240,7 @@ export const ThemeProvider = ({
 			stripDocumentThemeClasses(root);
 		};
 	}, [theme, design, themeClass, applyGlobal]);
+
 
 	const setTheme = useCallback(
 		(newTheme: Theme) => {
@@ -271,16 +269,17 @@ export const ThemeProvider = ({
 			design,
 			setDesign,
 			themeClass,
+			primaryColorStyle,
 			cssLoading,
 		};
-	}, [theme, design, themeClass, setTheme, setDesign, cssLoading]);
+	}, [theme, design, themeClass, primaryColorStyle, setTheme, setDesign, cssLoading]);
 
 	return (
 		<ThemeContext.Provider value={value}>
 			<div
-				ref={containerRef}
 				className={clsx(themeClass, className)}
-				style={style}
+				// The computed primary vars win over `style`, as they did when an effect set them.
+				style={{ ...style, ...primaryColorStyle }}
 			>
 				{design === "crayon" && <CrayonThemeFilters />}
 				{children}

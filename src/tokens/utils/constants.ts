@@ -1,8 +1,8 @@
 /**
- * Primary 색상을 위한 CSS 변수 이름 상수 (런타임 설정용)
+ * CSS custom property names for the primary color, set at runtime.
  *
- * 참고: createVar()는 .css.ts 파일에서만 사용 가능하므로,
- * theme.css.ts에서 createVar()로 생성한 변수와 동일한 이름을 사용합니다.
+ * Note: createVar() only works in .css.ts files, so these are plain string names that
+ * the themes reference with var().
  */
 export const PRIMARY_COLOR_CSS_VAR_NAMES = {
 	surface: "--pie-primary-surface",
@@ -12,3 +12,10 @@ export const PRIMARY_COLOR_CSS_VAR_NAMES = {
 	border: "--pie-primary-border",
 	weak: "--pie-primary-weak",
 } as const;
+
+export type PrimaryColorState = keyof typeof PRIMARY_COLOR_CSS_VAR_NAMES;
+
+/** The primary color states that have a CSS custom property, in a stable order. */
+export const PRIMARY_COLOR_STATES = Object.keys(
+	PRIMARY_COLOR_CSS_VAR_NAMES
+) as PrimaryColorState[];
