@@ -2,20 +2,12 @@ import { createTheme } from "@vanilla-extract/css";
 import { semanticTokens, basicThemeSemanticTextStyles } from "../semantic";
 import * as foundation from "../foundation";
 import { getWeakColor } from "../utils/getWeakColor";
-import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
-
-const primaryColorVars = {
-	surface: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surface})`,
-	surfaceHover: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover})`,
-	surfaceActive: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive})`,
-	text: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.text})`,
-	border: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.border})`,
-	weak: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.weak})`,
-} as const;
+import { primaryColorVarRefs } from "../utils/primaryColorVarRefs";
+import { lightColors, darkColors } from "../colors";
 
 export const basicLightTheme = createTheme(semanticTokens, {
 	color: {
-		primary: primaryColorVars,
+		primary: primaryColorVarRefs(lightColors.palette.primary),
 		secondary: {
 			surface: foundation.slate[500],
 			surfaceHover: foundation.slate[600],
@@ -138,7 +130,7 @@ export const basicLightTheme = createTheme(semanticTokens, {
 
 export const basicDarkTheme = createTheme(semanticTokens, {
 	color: {
-		primary: primaryColorVars,
+		primary: primaryColorVarRefs(darkColors.palette.primary),
 		secondary: {
 			surface: foundation.slate[400],
 			surfaceHover: foundation.slate[500],

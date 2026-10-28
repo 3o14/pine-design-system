@@ -3,7 +3,8 @@ import { semanticTokens } from "../semantic";
 import * as foundation from "../foundation";
 import { getWeakColor } from "../utils/getWeakColor";
 import { toPastel } from "../utils/adaptColor";
-import { PRIMARY_COLOR_CSS_VAR_NAMES } from "../utils/constants";
+import { primaryColorVarRefs } from "../utils/primaryColorVarRefs";
+import { lightColors, darkColors } from "../colors";
 
 // The relative path is used for the same reason as DungGeunMo in game.css.ts.
 // The file is named OnGeulipSeunghun.woff2 (ASCII), but the font-family name stays
@@ -15,22 +16,13 @@ globalFontFace("온글잎-승훈체", {
 	fontDisplay: "swap",
 });
 
-const primaryColorVars = {
-	surface: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surface})`,
-	surfaceHover: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover})`,
-	surfaceActive: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive})`,
-	text: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.text})`,
-	border: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.border})`,
-	weak: `var(${PRIMARY_COLOR_CSS_VAR_NAMES.weak})`,
-} as const;
-
 const pastelPink = toPastel(foundation.pink);
 const pastelGreen = toPastel(foundation.green);
 const pastelYellow = toPastel(foundation.yellow);
 
 /** Color tokens for the crayon light theme. Exported so contrast tests can check the values directly */
 export const crayonLightColors = {
-	primary: primaryColorVars,
+	primary: primaryColorVarRefs(lightColors.palette.primary),
 	secondary: {
 		surface: pastelPink[500],
 		surfaceHover: pastelPink[600],
@@ -174,7 +166,7 @@ export const crayonLightTheme = createTheme(semanticTokens, {
 
 /** Color tokens for the crayon dark theme. Exported so contrast tests can check the values directly */
 export const crayonDarkColors = {
-	primary: primaryColorVars,
+	primary: primaryColorVarRefs(darkColors.palette.primary),
 	secondary: {
 		surface: pastelPink[400],
 		surfaceHover: pastelPink[500],
