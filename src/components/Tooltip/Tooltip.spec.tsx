@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { Tooltip, TooltipProvider } from "./Tooltip";
 import { ThemeProvider } from "@/providers";
 import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
+import { gameLightTheme } from "@/tokens/themes";
 
 describe("Tooltip", () => {
 	describe("Theming", () => {
@@ -16,9 +17,28 @@ describe("Tooltip", () => {
 				</ThemeProvider>,
 			);
 
+			const themedRoot = screen
+				.getByRole("tooltip")
+				.closest<HTMLElement>(`[style*="${PRIMARY_COLOR_CSS_VAR_NAMES.surface}"]`);
+			expect(themedRoot?.style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface)).toBe(
+				generateColorScale("#e11d48", false).surface,
+			);
+		});
+
+		it("puts the theme class on an ancestor of the popup when applyGlobal is false", () => {
+			render(
+				<ThemeProvider design="game" theme="light" applyGlobal={false} syncWithSystem={false}>
+					<Tooltip content="Game tooltip" open>
+						<button>Trigger</button>
+					</Tooltip>
+				</ThemeProvider>,
+			);
+
+			// The game popup styles use `.${gameLightTheme} &`, which needs an ancestor,
+			// so the popup itself carrying the class is not enough.
 			expect(
-				screen.getByRole("tooltip").style.getPropertyValue(PRIMARY_COLOR_CSS_VAR_NAMES.surface),
-			).toBe(generateColorScale("#e11d48", false).surface);
+				screen.getByRole("tooltip").parentElement?.closest(`.${gameLightTheme}`),
+			).not.toBeNull();
 		});
 	});
 

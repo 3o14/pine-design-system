@@ -2,8 +2,7 @@ import React from "react";
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import clsx from "clsx";
 import * as styles from "./Tooltip.css";
-import { lightTheme } from "@/tokens";
-import { useTheme } from "@/providers";
+import { usePortalThemeProps } from "@/providers/usePortalThemeProps";
 import type { Side, Align } from "@/utils/position";
 
 export type TooltipSide = Side;
@@ -61,8 +60,7 @@ export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 	disabled = false,
 	className,
 }, ref) => {
-	const themeContext = useTheme();
-	const themeClass = themeContext?.themeClass ?? lightTheme;
+	const portalThemeProps = usePortalThemeProps();
 
 	return (
 		<BaseTooltip.Root
@@ -72,13 +70,11 @@ export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 			disabled={disabled}
 		>
 			<BaseTooltip.Trigger render={children} ref={ref} />
-			<BaseTooltip.Portal>
+			<BaseTooltip.Portal {...portalThemeProps}>
 				<BaseTooltip.Positioner side={side} align={align} sideOffset={TOOLTIP_SIDE_OFFSET} className={styles.positioner}>
 					<BaseTooltip.Popup
 						role="tooltip"
-						className={clsx(themeClass, styles.popup, className)}
-						// Portaled to <body>, outside the provider, so the primary color vars are set here too.
-						style={themeContext?.primaryColorStyle}
+						className={clsx(styles.popup, className)}
 					>
 						{content}
 						{showArrow && <BaseTooltip.Arrow className={styles.arrow} />}
