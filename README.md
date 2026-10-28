@@ -106,7 +106,7 @@ function DesignToggle() {
 }
 ```
 
-The game and crayon stylesheets (`style-game.css`, `style-crayon.css`) are loaded by `ThemeProvider` the first time you switch to them. While one loads, `cssLoading` from the theme context is `true`.
+The game and crayon stylesheets (`style-game.css`, `style-crayon.css`) are loaded by `ThemeProvider` the first time you switch to them. While one loads, `cssLoading` from the theme context is `true`. They load through your bundler (Vite, webpack, Next.js), which also emits their fonts, so there are no font files to copy or serve yourself. To skip the lazy load, import one up front, e.g. `import "pine-design-system/style-game.css"`.
 
 ### ThemeProvider props
 
@@ -140,7 +140,7 @@ Most components share the same vocabulary of props:
 
 - `intent` — `primary | secondary | success | warning | danger | neutral`
 - `size` — `small | medium | large` (plus `xlarge` on `Button`)
-- `rounded` — `small | medium | large`
+- `rounded` — `small | medium | large` (`large` is a full pill; in `game` the steps notch the pixel frame's corners)
 - `className` — merged with the component's own classes
 
 See the [documentation](https://pine-design-system.vercel.app/) for every prop and live examples.
