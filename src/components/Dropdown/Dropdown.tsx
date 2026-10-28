@@ -3,6 +3,7 @@ import clsx from "clsx";
 import * as styles from "./Dropdown.css";
 import { lightTheme, type ColorIntent } from "@/tokens";
 import { useTheme } from "@/providers";
+import { usePortalThemeProps } from "@/providers/usePortalThemeProps";
 import type { Side, Align } from "@/utils/position";
 
 export type DropdownSize = "small" | "medium" | "large";
@@ -88,6 +89,7 @@ export const Dropdown = ({
 }: DropdownProps) => {
 	const themeContext = useTheme();
 	const themeClass = themeContext?.themeClass ?? lightTheme;
+	const portalThemeProps = usePortalThemeProps();
 	return (
 		<BaseSelect.Root
 			value={value}
@@ -142,14 +144,8 @@ export const Dropdown = ({
 					</BaseSelect.Icon>
 				</BaseSelect.Trigger>
 
-				<BaseSelect.Portal>
-					{/* The popup is portaled to <body>, outside the trigger's themed wrapper, so it
-					    needs the theme class and primary color vars itself. They go on the Positioner
-					    (an ancestor of the Popup) so the `.${themeClass} &` selectors in
-					    Dropdown.css.ts still match. */}
+				<BaseSelect.Portal {...portalThemeProps}>
 					<BaseSelect.Positioner
-						className={themeClass}
-						style={themeContext?.primaryColorStyle}
 						side={side}
 						align={align}
 						sideOffset={sideOffset}
