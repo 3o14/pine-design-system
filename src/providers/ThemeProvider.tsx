@@ -12,10 +12,7 @@ import {
 	type Design,
 	type ThemeContextValue,
 } from "./ThemeContext";
-import {
-	applyPrimaryColorFromHex,
-	applyPrimaryColorVars,
-} from "@/tokens/utils";
+import { generateColorScale, getPrimaryColorVars } from "@/tokens/utils";
 import { lightColors, darkColors } from "@/tokens/colors";
 import {
 	basicLightTheme,
@@ -142,7 +139,6 @@ export const ThemeProvider = ({
 
 	const [manualTheme, setManualTheme] = useState<Theme | undefined>(undefined);
 	const [internalDesign, setInternalDesign] = useState<Design>(defaultDesign);
-	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [cssLoading, setCssLoading] = useState(false);
 
@@ -194,33 +190,26 @@ export const ThemeProvider = ({
 		return theme === "dark" ? basicDarkTheme : basicLightTheme;
 	}, [design, theme]);
 
-	useEffect(() => {
-		if (!containerRef.current) {
-			return;
+	// The themes read the primary scale from `--pie-primary-*` custom properties, which only
+	// exist where they are set. They go on the container and, through context, on every
+	// portaled popup, since those render in <body> outside the container.
+	const primaryColorStyle = useMemo(() => {
+		const isDark = theme === "dark";
+		const defaultColors = isDark
+			? darkColors.palette.primary
+			: lightColors.palette.primary;
+
+		if (!primaryColor) {
+			return getPrimaryColorVars(defaultColors) as React.CSSProperties;
 		}
 
-		const container = containerRef.current;
-		const isDark = theme === "dark";
-
-		if (primaryColor) {
-			try {
-				applyPrimaryColorFromHex(primaryColor, isDark, container);
-			} catch (error) {
-				console.warn(
-					"Failed to generate color scale from primaryColor:",
-					error
-				);
-				const defaultColors = isDark
-					? darkColors.palette.primary
-					: lightColors.palette.primary;
-				applyPrimaryColorVars(defaultColors, container);
-			}
-		} else {
-			const defaultColors = isDark
-				? darkColors.palette.primary
-				: lightColors.palette.primary;
-
-			applyPrimaryColorVars(defaultColors, container);
+		try {
+			return getPrimaryColorVars(
+				generateColorScale(primaryColor, isDark)
+			) as React.CSSProperties;
+		} catch (error) {
+			console.warn("Failed to generate color scale from primaryColor:", error);
+			return getPrimaryColorVars(defaultColors) as React.CSSProperties;
 		}
 	}, [primaryColor, theme]);
 
@@ -271,16 +260,16 @@ export const ThemeProvider = ({
 			design,
 			setDesign,
 			themeClass,
+			primaryColorStyle,
 			cssLoading,
 		};
-	}, [theme, design, themeClass, setTheme, setDesign, cssLoading]);
+	}, [theme, design, themeClass, primaryColorStyle, setTheme, setDesign, cssLoading]);
 
 	return (
 		<ThemeContext.Provider value={value}>
 			<div
-				ref={containerRef}
 				className={clsx(themeClass, className)}
-				style={style}
+				style={{ ...primaryColorStyle, ...style }}
 			>
 				{design === "crayon" && <CrayonThemeFilters />}
 				{children}

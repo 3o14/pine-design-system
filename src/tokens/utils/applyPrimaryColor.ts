@@ -3,45 +3,44 @@ import { PRIMARY_COLOR_CSS_VAR_NAMES } from "./constants";
 import { generateColorScale } from "./generateColorScale";
 
 /**
- * document root에 primary 색상 CSS 변수를 설정합니다
+ * Maps a primary color scale to the primary CSS custom properties the themes read
+ * (`--pie-primary-*`), as an object usable as a React `style` value.
  *
- * @param colorScale - 설정할 색상 스케일
- * @param root - 설정할 DOM 요소 (기본값: document.documentElement)
+ * @param colorScale - The color scale to map
  */
+export function getPrimaryColorVars(colorScale: ColorScale): Record<string, string> {
+	return {
+		[PRIMARY_COLOR_CSS_VAR_NAMES.surface]: colorScale.surface,
+		[PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover]: colorScale.surfaceHover,
+		[PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive]: colorScale.surfaceActive,
+		[PRIMARY_COLOR_CSS_VAR_NAMES.text]: colorScale.text,
+		[PRIMARY_COLOR_CSS_VAR_NAMES.border]: colorScale.border,
+		[PRIMARY_COLOR_CSS_VAR_NAMES.weak]: colorScale.weak,
+	};
+}
+
 /**
- * document root에 primary 색상 CSS 변수를 설정합니다
+ * Sets the primary color CSS custom properties on an element.
  *
- * @param colorScale - 설정할 색상 스케일
- * @param root - 설정할 DOM 요소 (기본값: document.documentElement)
+ * @param colorScale - The color scale to apply
+ * @param root - The element to set them on (default: document.documentElement)
  */
 export function applyPrimaryColorVars(
 	colorScale: ColorScale,
 	root: HTMLElement = document.documentElement
 ): void {
-	root.style.setProperty(
-		PRIMARY_COLOR_CSS_VAR_NAMES.surface,
-		colorScale.surface
-	);
-	root.style.setProperty(
-		PRIMARY_COLOR_CSS_VAR_NAMES.surfaceHover,
-		colorScale.surfaceHover
-	);
-	root.style.setProperty(
-		PRIMARY_COLOR_CSS_VAR_NAMES.surfaceActive,
-		colorScale.surfaceActive
-	);
-	root.style.setProperty(PRIMARY_COLOR_CSS_VAR_NAMES.text, colorScale.text);
-	root.style.setProperty(PRIMARY_COLOR_CSS_VAR_NAMES.border, colorScale.border);
-	root.style.setProperty(PRIMARY_COLOR_CSS_VAR_NAMES.weak, colorScale.weak);
+	for (const [name, value] of Object.entries(getPrimaryColorVars(colorScale))) {
+		root.style.setProperty(name, value);
+	}
 }
 
 /**
- * hex 색상으로부터 primary 색상 CSS 변수를 생성하고 적용합니다
+ * Generates a primary color scale from a hex color and applies it as CSS custom properties.
  *
- * @param primaryHex - primary 색상 (hex 형식)
- * @param isDark - 다크 모드 여부
- * @param root - 설정할 DOM 요소 (기본값: document.documentElement)
- * @throws {Error} 유효하지 않은 hex 색상 형식인 경우
+ * @param primaryHex - The primary color (hex)
+ * @param isDark - Whether dark mode is active
+ * @param root - The element to set them on (default: document.documentElement)
+ * @throws {Error} If the hex color is invalid
  */
 export function applyPrimaryColorFromHex(
 	primaryHex: string,
