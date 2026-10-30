@@ -16,6 +16,10 @@ const rootDir = join(__dirname, "..");
 const readmePath = join(rootDir, "README.md");
 let readme = readFileSync(readmePath, "utf-8");
 
+// README links to the docs carry utm_source=readme so docs analytics can tell npm/GitHub
+// README visits apart. In the Storybook copy, attribute them to Storybook instead.
+readme = readme.replaceAll("utm_source=readme", "utm_source=storybook");
+
 // Convert markdown code blocks to Storybook Source components
 // Pattern: ```language\ncode\n```
 const codeBlockPattern = /```(\w+)\n([\s\S]*?)```/g;
