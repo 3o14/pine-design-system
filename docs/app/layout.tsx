@@ -4,6 +4,7 @@ import "./globals.css";
 import "pine-design-system/style.css";
 import "pine-design-system/style-game.css";
 import "pine-design-system/style-crayon.css";
+import { Analytics } from "@vercel/analytics/next";
 import { DocsShell } from "../components/layout";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, baseOpenGraph } from "../lib/site";
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		<html lang="en" suppressHydrationWarning>
 			<body>
 				<DocsShell>{children}</DocsShell>
+				<Analytics />
 			</body>
 		</html>
 	);
