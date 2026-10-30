@@ -11,7 +11,7 @@
   <img src="https://raw.githubusercontent.com/3o14/pine-design-system/main/.github/assets/design-switch.gif" alt="The same components switching between the basic, game, and crayon designs in light and dark mode" width="720" />
 
   <p>
-    <a href="https://pine-design-system.vercel.app/">Documentation</a> •
+    <a href="https://pine-design-system.vercel.app/?utm_source=readme">Documentation</a> •
     <a href="https://3o14.github.io/pine-design-system/">Storybook</a> •
     <a href="https://github.com/3o14/pine-design-system">GitHub</a>
   </p>
@@ -124,17 +124,17 @@ The game and crayon stylesheets (`style-game.css`, `style-crayon.css`) are loade
 
 | Component                       | Description                                                   |
 | ------------------------------- | ------------------------------------------------------------- |
-| [**Badge**](https://pine-design-system.vercel.app/components/badge)                       | Status labels and counts                                      |
-| [**Button**](https://pine-design-system.vercel.app/components/button)                      | Actions in `solid`, `outline`, `ghost`, and `weak` variants   |
-| [**Checkbox**](https://pine-design-system.vercel.app/components/checkbox)                    | Selectable input with label                                   |
-| [**Dialog**](https://pine-design-system.vercel.app/components/dialog)                      | Modal dialog with title, description, and action buttons      |
-| [**Dropdown**](https://pine-design-system.vercel.app/components/dropdown)                    | Select input with anchored popup (`side`, `align`, `sideOffset`) |
-| [**ProgressBar**](https://pine-design-system.vercel.app/components/progress-bar)                 | Determinate and indeterminate progress with accessible value text |
-| [**Switch**](https://pine-design-system.vercel.app/components/switch)                      | On/off toggle                                                 |
-| [**Tab**](https://pine-design-system.vercel.app/components/tab)                         | Tabbed navigation with accessible panels                      |
-| [**Text**](https://pine-design-system.vercel.app/components/text)                        | Typography primitive with size, weight, and intent            |
-| [**TextField**](https://pine-design-system.vercel.app/components/text-field)                   | Text input and textarea with validation states                |
-| [**Tooltip**](https://pine-design-system.vercel.app/components/tooltip) / **TooltipProvider** | Hover and focus popups, with shared open delay for groups   |
+| [**Badge**](https://pine-design-system.vercel.app/components/badge?utm_source=readme)                       | Status labels and counts                                      |
+| [**Button**](https://pine-design-system.vercel.app/components/button?utm_source=readme)                      | Actions in `solid`, `outline`, `ghost`, and `weak` variants   |
+| [**Checkbox**](https://pine-design-system.vercel.app/components/checkbox?utm_source=readme)                    | Selectable input with label                                   |
+| [**Dialog**](https://pine-design-system.vercel.app/components/dialog?utm_source=readme)                      | Modal dialog with title, description, and action buttons      |
+| [**Dropdown**](https://pine-design-system.vercel.app/components/dropdown?utm_source=readme)                    | Select input with anchored popup (`side`, `align`, `sideOffset`) |
+| [**ProgressBar**](https://pine-design-system.vercel.app/components/progress-bar?utm_source=readme)                 | Determinate and indeterminate progress with accessible value text |
+| [**Switch**](https://pine-design-system.vercel.app/components/switch?utm_source=readme)                      | On/off toggle                                                 |
+| [**Tab**](https://pine-design-system.vercel.app/components/tab?utm_source=readme)                         | Tabbed navigation with accessible panels                      |
+| [**Text**](https://pine-design-system.vercel.app/components/text?utm_source=readme)                        | Typography primitive with size, weight, and intent            |
+| [**TextField**](https://pine-design-system.vercel.app/components/text-field?utm_source=readme)                   | Text input and textarea with validation states                |
+| [**Tooltip**](https://pine-design-system.vercel.app/components/tooltip?utm_source=readme) / **TooltipProvider** | Hover and focus popups, with shared open delay for groups   |
 
 Most components share the same vocabulary of props:
 
@@ -143,7 +143,7 @@ Most components share the same vocabulary of props:
 - `rounded` — `small | medium | large` (`large` is a full pill; in `game` the steps notch the pixel frame's corners)
 - `className` — merged with the component's own classes
 
-See the [documentation](https://pine-design-system.vercel.app/) for every prop and live examples.
+See the [documentation](https://pine-design-system.vercel.app/?utm_source=readme) for every prop and live examples.
 
 ## Next.js & Server Components
 
