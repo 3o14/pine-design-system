@@ -104,7 +104,6 @@ export function LandingPage() {
       design="basic"
       theme={themeMode}
       syncWithSystem={false}
-      applyGlobal={false}
       style={{ display: "contents" }}
     >
     <div
@@ -429,7 +428,6 @@ export function LandingPage() {
             design={showcaseDesign}
             theme={themeMode}
             syncWithSystem={false}
-            applyGlobal={false}
             style={{ background: "transparent" }}
           >
             <div

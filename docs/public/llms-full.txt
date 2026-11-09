@@ -81,13 +81,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 | `theme` | `"light" \| "dark"` | — | Color mode (controlled). Use with `onThemeChange`. |
 | `syncWithSystem` | `boolean` | `true` | Follows the OS color scheme when `theme` is uncontrolled. Set `false` to use `defaultTheme` instead. |
 | `primaryColor` | `string` | — | Hex color (e.g. `"#6366f1"`) to override the primary palette at runtime. |
-| `applyGlobal` | `boolean` | `true` | Whether to apply the theme class to `document.documentElement`. Set `false` when rendering multiple `ThemeProvider`s at once (e.g. side-by-side theme showcases). |
+| `applyGlobal` | `boolean` | — | **Deprecated**, removed in the next major version. Not needed: the outermost `ThemeProvider` applies the theme class to `document.documentElement` and nested ones leave it alone. |
 
 ```tsx
 <ThemeProvider design="game" defaultTheme="dark">
   {/* Game style + dark mode */}
 </ThemeProvider>
 ```
+
+Render one `ThemeProvider` at the root and nest any others inside it. Only the outermost provider sets the theme class on `<html>`; a nested provider themes its own subtree (and its popups) without touching `<html>`. When several top-level providers are mounted, the first one owns `<html>` until it unmounts.
 
 Components never take a theme prop themselves — they read the active theme from context via an internal `useTheme()` hook.
 

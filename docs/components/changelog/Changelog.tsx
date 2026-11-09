@@ -126,7 +126,7 @@ export function Changelog() {
   }
 
   return (
-    <ThemeProvider design="basic" theme={theme} syncWithSystem={false} applyGlobal={false} style={{ display: "contents" }}>
+    <ThemeProvider design="basic" theme={theme} syncWithSystem={false} style={{ display: "contents" }}>
       <div className="not-prose relative flex flex-col gap-12 pl-7">
         {/* Continuous timeline rail */}
         <span
