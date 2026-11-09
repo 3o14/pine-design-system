@@ -475,7 +475,6 @@ describe("Text", () => {
 							theme="dark"
 							design={design}
 							syncWithSystem={false}
-							applyGlobal={false}
 						>
 							<Text intent="neutral">Caption text</Text>
 						</ThemeProvider>
