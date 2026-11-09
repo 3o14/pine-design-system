@@ -26,15 +26,19 @@ describe("Dialog", () => {
 			);
 		});
 
-		it("puts the theme class on an ancestor of the popup when applyGlobal is false", () => {
+		it("puts the nested provider's theme class on an ancestor of the popup", () => {
+			// The outer provider owns <html>, so a match on <html> can't make this pass.
 			render(
-				<ThemeProvider design="crayon" theme="light" applyGlobal={false} syncWithSystem={false}>
-					<Dialog open={true} onOpenChange={() => {}}>
-						<p>Dialog content</p>
-					</Dialog>
+				<ThemeProvider design="basic" theme="light" syncWithSystem={false}>
+					<ThemeProvider design="crayon" theme="light" syncWithSystem={false}>
+						<Dialog open={true} onOpenChange={() => {}}>
+							<p>Dialog content</p>
+						</Dialog>
+					</ThemeProvider>
 				</ThemeProvider>
 			);
 
+			expect(document.documentElement).not.toHaveClass(crayonLightTheme);
 			// The crayon container styles use `.${crayonLightTheme} &`, which needs an ancestor,
 			// so the popup itself carrying the class is not enough.
 			expect(

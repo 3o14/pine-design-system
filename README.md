@@ -118,7 +118,8 @@ The game and crayon stylesheets (`style-game.css`, `style-crayon.css`) are loade
 | `theme`          | `"light" \| "dark"`               | —         | Color mode (controlled), use with `onThemeChange`                     |
 | `syncWithSystem` | `boolean`                         | `true`    | Follow the OS color scheme until the theme is set manually            |
 | `primaryColor`   | `string`                          | —         | Hex color that generates a custom primary palette (e.g. `"#6366f1"`)  |
-| `applyGlobal`    | `boolean`                         | `true`    | Apply the theme class to `<html>`; set `false` for multiple providers |
+
+Render one `ThemeProvider` at the root. To show another design or mode in part of the page, nest a `ThemeProvider` inside it: the outermost provider puts the theme class on `<html>`, and nested ones only theme their own subtree. The `applyGlobal` prop is deprecated and will be removed in the next major version.
 
 ## Components
 

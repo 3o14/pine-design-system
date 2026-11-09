@@ -25,15 +25,19 @@ describe("Tooltip", () => {
 			);
 		});
 
-		it("puts the theme class on an ancestor of the popup when applyGlobal is false", () => {
+		it("puts the nested provider's theme class on an ancestor of the popup", () => {
+			// The outer provider owns <html>, so a match on <html> can't make this pass.
 			render(
-				<ThemeProvider design="game" theme="light" applyGlobal={false} syncWithSystem={false}>
-					<Tooltip content="Game tooltip" open>
-						<button>Trigger</button>
-					</Tooltip>
+				<ThemeProvider design="basic" theme="light" syncWithSystem={false}>
+					<ThemeProvider design="game" theme="light" syncWithSystem={false}>
+						<Tooltip content="Game tooltip" open>
+							<button>Trigger</button>
+						</Tooltip>
+					</ThemeProvider>
 				</ThemeProvider>,
 			);
 
+			expect(document.documentElement).not.toHaveClass(gameLightTheme);
 			// The game popup styles use `.${gameLightTheme} &`, which needs an ancestor,
 			// so the popup itself carrying the class is not enough.
 			expect(

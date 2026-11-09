@@ -349,29 +349,12 @@ describe("Dropdown", () => {
 	});
 
 	describe("Theming", () => {
-		it("applies the provider's theme class to the portaled popup when applyGlobal is false", async () => {
-			const user = userEvent.setup();
-
-			render(
-				<ThemeProvider design="game" theme="dark" applyGlobal={false} syncWithSystem={false}>
-					<Dropdown options={mockOptions} />
-				</ThemeProvider>,
-			);
-			await user.click(screen.getByRole("combobox"));
-
-			const listbox = await screen.findByRole("listbox");
-			// Precondition: with the class on <html>, closest() below would match <html> and
-			// pass without the fix.
-			expect(document.documentElement).not.toHaveClass(gameDarkTheme);
-			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
-		});
-
 		it("uses the nearest provider's theme, not the global one, inside a nested ThemeProvider", async () => {
 			const user = userEvent.setup();
 
 			render(
 				<ThemeProvider design="basic" theme="light" syncWithSystem={false}>
-					<ThemeProvider design="game" theme="dark" applyGlobal={false} syncWithSystem={false}>
+					<ThemeProvider design="game" theme="dark" syncWithSystem={false}>
 						<Dropdown options={mockOptions} />
 					</ThemeProvider>
 				</ThemeProvider>,
@@ -379,6 +362,9 @@ describe("Dropdown", () => {
 			await user.click(screen.getByRole("combobox"));
 
 			const listbox = await screen.findByRole("listbox");
+			// Precondition: the outer provider owns <html>. With the inner class on <html>,
+			// closest() below would match <html> and pass without the portal fix.
+			expect(document.documentElement).not.toHaveClass(gameDarkTheme);
 			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
 		});
 

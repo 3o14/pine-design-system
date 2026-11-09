@@ -1,4 +1,5 @@
 import React, {
+	useContext,
 	useEffect,
 	useState,
 	useMemo,
@@ -25,7 +26,7 @@ import {
 import { CrayonThemeFilters } from "./CrayonThemeFilters";
 import clsx from "clsx";
 
-/** Theme class names that may be set on `document.documentElement` when `applyGlobal` is true */
+/** Theme class names a ThemeProvider may set on `document.documentElement` */
 const DOCUMENT_THEME_CLASS_NAMES = [
 	basicLightTheme,
 	basicDarkTheme,
@@ -37,6 +38,40 @@ const DOCUMENT_THEME_CLASS_NAMES = [
 
 function stripDocumentThemeClasses(root: HTMLElement) {
 	root.classList.remove(...DOCUMENT_THEME_CLASS_NAMES);
+}
+
+/**
+ * `<html>` can only carry one theme, so the providers that want to set it register here and
+ * only the first one (the owner) writes to it. When the owner unmounts, the next one takes
+ * over, so a provider unmounting never clears the theme of another provider that is still
+ * mounted. Providers nested in another provider never register: `<html>` belongs to the
+ * outermost one.
+ */
+interface DocumentThemeClaim {
+	themeClass: string;
+}
+
+const documentThemeClaims: DocumentThemeClaim[] = [];
+
+function syncDocumentThemeClass() {
+	const root = document.documentElement;
+	stripDocumentThemeClasses(root);
+	const owner = documentThemeClaims[0];
+	if (owner) {
+		root.classList.add(owner.themeClass);
+	}
+}
+
+let hasWarnedApplyGlobalDeprecated = false;
+
+function warnApplyGlobalDeprecated() {
+	if (hasWarnedApplyGlobalDeprecated) return;
+	hasWarnedApplyGlobalDeprecated = true;
+	console.warn(
+		"[pine-ui-kit] The `applyGlobal` prop of ThemeProvider is deprecated and will be removed in the next major version. " +
+			"A ThemeProvider nested in another ThemeProvider no longer touches <html>, so the prop is not needed: " +
+			"render a single ThemeProvider at the root and nest the others inside it."
+	);
 }
 
 const loadedThemes = new Set<string>();
@@ -81,8 +116,14 @@ export interface ThemeProviderProps {
 	style?: React.CSSProperties;
 	/**
 	 * Whether to apply the theme class to `document.documentElement`.
-	 * Set to `false` when rendering multiple ThemeProviders (e.g. theme showcases).
-	 * @default true
+	 *
+	 * By default, the outermost ThemeProvider applies it and nested ThemeProviders leave
+	 * `<html>` alone. When several top-level providers are mounted, the first one owns
+	 * `<html>` until it unmounts.
+	 *
+	 * @deprecated Nested providers no longer touch `<html>`, so this is not needed. Render one
+	 * ThemeProvider at the root and nest the others inside it. Will be removed in the next
+	 * major version.
 	 */
 	applyGlobal?: boolean;
 }
@@ -130,8 +171,17 @@ export const ThemeProvider = ({
 	primaryColor,
 	className,
 	style,
-	applyGlobal = true,
+	applyGlobal,
 }: ThemeProviderProps) => {
+	const parentContext = useContext(ThemeContext);
+	const shouldApplyGlobal = applyGlobal ?? parentContext === undefined;
+
+	useEffect(() => {
+		if (applyGlobal !== undefined) {
+			warnApplyGlobalDeprecated();
+		}
+	}, [applyGlobal]);
+
 	// Subscribed unconditionally (Rules of Hooks); `subscribe`/`getSnapshot` only ever touch
 	// `window` when React actually calls them on the client — never during an SSR render.
 	const systemTheme = useSyncExternalStore(
@@ -221,25 +271,39 @@ export const ThemeProvider = ({
 		}
 	}, [primaryColorError]);
 
+	// Registration and theme updates are separate effects so a theme change updates the claim in
+	// place: re-registering would move this provider to the end of the queue and hand <html> to
+	// a sibling.
+	const documentThemeClaimRef = useRef<DocumentThemeClaim | null>(null);
+	const themeClassRef = useRef(themeClass);
+	themeClassRef.current = themeClass;
+
 	useEffect(() => {
-		if (typeof document === "undefined") {
+		if (typeof document === "undefined" || !shouldApplyGlobal) {
 			return;
 		}
 
-		const root = document.documentElement;
-
-		if (!applyGlobal) {
-			stripDocumentThemeClasses(root);
-			return;
-		}
-
-		stripDocumentThemeClasses(root);
-		root.classList.add(themeClass);
+		const claim: DocumentThemeClaim = { themeClass: themeClassRef.current };
+		documentThemeClaimRef.current = claim;
+		documentThemeClaims.push(claim);
+		syncDocumentThemeClass();
 
 		return () => {
-			stripDocumentThemeClasses(root);
+			documentThemeClaimRef.current = null;
+			documentThemeClaims.splice(documentThemeClaims.indexOf(claim), 1);
+			syncDocumentThemeClass();
 		};
-	}, [theme, design, themeClass, applyGlobal]);
+	}, [shouldApplyGlobal]);
+
+	useEffect(() => {
+		const claim = documentThemeClaimRef.current;
+		if (!claim || claim.themeClass === themeClass) {
+			return;
+		}
+
+		claim.themeClass = themeClass;
+		syncDocumentThemeClass();
+	}, [themeClass]);
 
 
 	const setTheme = useCallback(
