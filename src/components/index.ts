@@ -4,6 +4,7 @@ export * from "./Checkbox";
 export * from "./Dialog";
 export * from "./Dropdown";
 export * from "./ProgressBar";
+export * from "./Spinner";
 export * from "./Switch";
 export * from "./Tab";
 export * from "./Text";
