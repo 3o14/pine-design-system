@@ -295,6 +295,27 @@ import { ProgressBar } from "pine-design-system";
 
 ---
 
+### Spinner
+
+Loading indicator for waits whose progress can't be measured. Renders `role="status"` with a visually hidden `label`, so screen readers announce it politely when it appears. Use ProgressBar instead when progress can be measured.
+
+```tsx
+import { Spinner } from "pine-design-system";
+
+<Spinner />
+<Spinner size="small" label="Loading comments" />
+```
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `size` | `"small" \| "medium" \| "large"` | `"medium"` | 16px / 24px / 32px. Match the surrounding text or control. |
+| `intent` | `"primary" \| "secondary" \| "success" \| "warning" \| "danger" \| "neutral"` | `"primary"` | Color of the spinning arc. |
+| `label` | `string` | `"Loading"` | Screen-reader text, not shown on screen. Describe what is loading when the context isn't obvious. |
+
+**Do**: show a Spinner for short waits, or inside a button or region that is loading. **Don't**: render a Spinner and a ProgressBar for the same task, or keep a Spinner on screen indefinitely — switch to a result or error state.
+
+---
+
 ### Switch
 
 Toggle for turning a setting or feature on/off immediately (no separate save step). Built on Base UI Switch.

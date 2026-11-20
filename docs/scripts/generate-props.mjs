@@ -36,6 +36,7 @@ const COMPONENTS = [
   ["dialog", "Dialog/Dialog.tsx", "DialogProps"],
   ["dropdown", "Dropdown/Dropdown.tsx", "DropdownProps"],
   ["progress-bar", "ProgressBar/ProgressBar.tsx", "ProgressBarProps"],
+  ["spinner", "Spinner/Spinner.tsx", "SpinnerProps"],
   ["switch", "Switch/Switch.tsx", "SwitchProps"],
   ["tab", "Tab/Tab.tsx", "TabProps"],
   ["text", "Text/Text.tsx", "TextProps"],

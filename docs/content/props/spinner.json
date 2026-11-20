@@ -1,0 +1,23 @@
+[
+  {
+    "name": "size",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Size of the spinner — small (16px), medium (24px), large (32px). Match it to the surrounding text or control. Default: 'medium'.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Color intent of the spinning arc (primary, secondary, success, warning, danger, neutral). Default: 'primary'.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "label",
+    "type": "string",
+    "description": "Text announced to screen readers. It is not shown on screen. Describe what is loading (e.g. \"Loading comments\") when the context is not obvious. Default: 'Loading'.",
+    "default": "\"Loading\"",
+    "required": false
+  }
+]

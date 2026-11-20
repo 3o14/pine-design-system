@@ -1,0 +1,87 @@
+---
+title: Spinner
+description: "Accessible React Spinner component for loading states. Announces a screen-reader label with role=\"status\" and adapts to every theme."
+---
+
+# Spinner
+
+Shows that something is loading when progress can't be measured, such as waiting on a network response or rendering a region. It renders `role="status"` with a visually hidden `label`, so screen readers announce it politely when it appears. When you can measure progress, use [ProgressBar](/components/progress-bar) instead.
+
+## Preview
+
+<ComponentPreview code={`<Spinner />`}>
+  <SpinnerDemo />
+</ComponentPreview>
+
+## Examples
+
+### Size
+
+Match the spinner to the text or control next to it.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "16px. Inline with body text or inside a button."],
+    ["`medium`", "✓", "24px. Most versatile size."],
+    ["`large`", "", "32px. Loading a whole card, panel, or page."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Spinner size="small" />
+<Spinner size="medium" />
+<Spinner size="large" />`}>
+  <SpinnerSizeDemo />
+</ComponentPreview>
+
+### Intent
+
+Controls the color of the spinning arc. The track stays neutral.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "General-purpose loading."],
+    ["`secondary`", "", "Secondary or supplementary loading."],
+    ["`success`", "", "Loading tied to a positive action."],
+    ["`warning`", "", "Loading that requires caution."],
+    ["`danger`", "", "Loading tied to a destructive action."],
+    ["`neutral`", "", "Low-emphasis loading."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Spinner intent="primary" />
+<Spinner intent="success" />
+<Spinner intent="warning" />
+<Spinner intent="danger" />
+<Spinner intent="neutral" />`}>
+  <SpinnerIntentDemo />
+</ComponentPreview>
+
+### Label
+
+`label` is read by screen readers and is not shown on screen. It defaults to `"Loading"`; describe what is loading when the context isn't obvious. If you also show visible text, hide that text from assistive technology so it isn't announced twice.
+
+<ComponentPreview code={`<Spinner size="small" label="Loading comments" />
+<span aria-hidden="true">Loading comments…</span>`}>
+  <SpinnerLabelDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Spinner vs ProgressBar
+
+- **Spinner**: progress can't be measured and the wait is short.
+- **ProgressBar**: progress can be measured (upload bytes, completed steps), or the wait is long enough that users need to know how much is left.
+
+Don't keep a Spinner on screen indefinitely — switch to a result or error state as soon as you can.
+
+### Motion
+
+In the game theme the spinner steps through eight positions instead of rotating smoothly. When the user has turned on `prefers-reduced-motion`, it slows down instead of stopping, so the loading signal isn't lost.
+
+## Props
+
+<PropsDoc component="spinner" />

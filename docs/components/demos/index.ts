@@ -29,6 +29,12 @@ export {
   ProgressBarFormatDemo,
 } from "./ProgressBar";
 export {
+  SpinnerDemo,
+  SpinnerSizeDemo,
+  SpinnerIntentDemo,
+  SpinnerLabelDemo,
+} from "./Spinner";
+export {
   SwitchDemo,
   SwitchIntentDemo,
   SwitchSizeDemo,

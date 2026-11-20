@@ -5,6 +5,7 @@ export default {
   dialog: "Dialog",
   dropdown: "Dropdown",
   "progress-bar": "ProgressBar",
+  spinner: "Spinner",
   switch: "Switch",
   tab: "Tab",
   text: "Text",
