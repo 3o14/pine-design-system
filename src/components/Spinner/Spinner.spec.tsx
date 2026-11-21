@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import React, { createRef } from "react";
 import { Spinner } from "./Spinner";
 
@@ -11,19 +11,24 @@ describe("Spinner", () => {
 		});
 
 		it("applies custom className", () => {
-			const { container } = render(<Spinner className="custom-class" />);
-			expect(container.querySelector(".custom-class")).toBeInTheDocument();
+			render(<Spinner className="custom-class" />);
+			expect(screen.getByRole("status")).toHaveClass("custom-class");
 		});
 
 		it("hides the visual ring from assistive technology", () => {
-			const { container } = render(<Spinner />);
-			expect(container.querySelector("[aria-hidden='true']")).toBeInTheDocument();
+			render(<Spinner />);
+			expect(screen.getByRole("status").firstElementChild).toHaveAttribute(
+				"aria-hidden",
+				"true",
+			);
 		});
 	});
 
 	describe("Variants", () => {
+		// The ring is the first child of the status region.
 		const ringClass = (ui: React.ReactElement) =>
-			render(ui).container.querySelector("[aria-hidden='true']")!.className;
+			within(render(ui).container).getByRole("status").firstElementChild!
+				.className;
 
 		it("applies a different ring class for each size", () => {
 			const classes = (["small", "medium", "large"] as const).map((size) =>
