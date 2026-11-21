@@ -125,6 +125,13 @@ export const ring = recipe({
 					[intentColor]: "currentColor",
 					[trackColor]: "color-mix(in srgb, currentColor 30%, transparent)",
 				},
+				"@supports": {
+					// Without color-mix the track would fall back to currentColor and hide the
+					// arc, so drop the track and let the arc alone show the motion.
+					"not (color: color-mix(in srgb, red, red))": {
+						vars: { [trackColor]: "transparent" },
+					},
+				},
 			},
 		},
 	},
