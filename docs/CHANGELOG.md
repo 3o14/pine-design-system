@@ -1,5 +1,12 @@
 # pine-design-system-docs
 
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies [b6a3374]
+  - pine-design-system@1.5.0
+
 ## 1.0.6
 
 ### Patch Changes
