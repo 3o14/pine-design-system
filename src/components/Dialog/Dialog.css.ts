@@ -117,6 +117,10 @@ export const container = style({
 	left: "50%",
 	transform: "translate(-50%, -50%)",
 	backgroundColor: themeContract.color.surface.background,
+	// The popup is portaled to <body>, so set the theme's text color and font here instead
+	// of inheriting the page's, which can belong to another provider (e.g. a custom footer).
+	color: themeContract.color.surface.text,
+	fontFamily: themeContract.typography.fontFamily.sans,
 	boxShadow: themeContract.shadow.xlarge,
 	display: "flex",
 	flexDirection: "column",
