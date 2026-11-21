@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../Button";
+import { Text } from "../Text";
 import { Spinner } from "./Spinner";
 
 const meta = {
@@ -90,6 +91,10 @@ export const Intents: Story = {
 			<Spinner intent="warning" decorative />
 			<Spinner intent="danger" decorative />
 			<Spinner intent="neutral" decorative />
+			{/* current follows the parent's text color, so give it a colored parent */}
+			<Text as="span" intent="primary" style={{ display: "inline-flex" }}>
+				<Spinner intent="current" decorative />
+			</Text>
 		</div>
 	),
 };
