@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "../Button";
 import { Spinner } from "./Spinner";
 
 const meta = {
@@ -98,5 +99,15 @@ export const WithText: Story = {
 			<Spinner size="small" label="Loading comments" />
 			<span aria-hidden="true">Loading comments…</span>
 		</div>
+	),
+};
+
+// Decorative inside a button: the button text carries the loading state
+export const InButton: Story = {
+	render: () => (
+		<Button aria-disabled="true" size="small">
+			<Spinner size="small" decorative />
+			Saving…
+		</Button>
 	),
 };
