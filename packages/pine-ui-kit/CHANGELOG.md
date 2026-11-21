@@ -1,5 +1,12 @@
 # pine-ui-kit
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [b6a3374]
+  - pine-design-system@1.5.0
+
 ## 1.0.9
 
 ### Patch Changes
