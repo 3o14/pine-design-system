@@ -63,7 +63,7 @@ Controls the color of the spinning arc. The track stays neutral.
 
 ### Label
 
-`label` is read by screen readers and is not shown on screen. It defaults to `"Loading"`; describe what is loading when the context isn't obvious. If you also show visible text, hide that text from assistive technology so it isn't announced twice.
+`label` is read by screen readers and is not shown on screen. It defaults to `"Loading"`, and a blank value falls back to it; describe what is loading when the context isn't obvious. If you also show visible text, hide that text from assistive technology so it isn't announced twice.
 
 <ComponentPreview code={`<Spinner size="small" label="Loading comments" />
 <span aria-hidden="true">Loading comments…</span>`}>
@@ -97,7 +97,7 @@ Don't keep a Spinner on screen indefinitely — switch to a result or error stat
 
 ### Motion
 
-In the game theme the square ring doesn't rotate: its highlighted edge steps around the square in eight positions, so it keeps a pixel-art feel and never spills out of its box. When the user has turned on `prefers-reduced-motion`, the spinner stops moving in every theme and fades slowly in and out instead, so the loading signal stays without rotation.
+In the game theme the square ring doesn't rotate: its highlighted edge steps around the square in eight positions, so it keeps a pixel-art feel and never spills out of its box. When the user has turned on `prefers-reduced-motion`, the spinner stops moving in every theme and fades slowly in and out instead, so the loading signal stays without rotation. In forced colors mode (such as Windows High Contrast) the arc and track use two distinct system colors, so the arc stays visible.
 
 ## Props
 

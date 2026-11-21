@@ -16,8 +16,8 @@
   {
     "name": "label",
     "type": "string",
-    "description": "Text announced to screen readers. It is not shown on screen. Describe what is loading (e.g. \"Loading comments\") when the context is not obvious. Default: 'Loading'.",
-    "default": "\"Loading\"",
+    "description": "Text announced to screen readers. It is not shown on screen. Describe what is loading (e.g. \"Loading comments\") when the context is not obvious. A blank label falls back to the default. Default: 'Loading'.",
+    "default": "DEFAULT_LABEL",
     "required": false
   },
   {
