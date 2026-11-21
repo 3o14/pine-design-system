@@ -48,6 +48,7 @@ Controls the color of the spinning arc. The track stays neutral.
     ["`warning`", "", "Loading that requires caution."],
     ["`danger`", "", "Loading tied to a destructive action."],
     ["`neutral`", "", "Low-emphasis loading."],
+    ["`current`", "", "Follows the parent's text color with a faded track. Use inside buttons and other filled surfaces."],
   ]}
   align={["left", "center", "left"]}
 />
@@ -74,13 +75,13 @@ Controls the color of the spinning arc. The track stays neutral.
 
 Set `decorative` when the spinner is only visual: it renders no `role` and no label, and is hidden from assistive technology. Use it in two cases:
 
-- **Inside a button or other control.** ARIA treats a control's content as presentational, so a status region inside a `<button>` is never announced, and its label would leak into the button's name (e.g. "Loading Save"). Announce the loading state through the button's own text instead, such as changing "Save" to "Saving…".
+- **Inside a button or other control.** ARIA treats a control's content as presentational, so a status region inside a `<button>` is never announced, and its label would leak into the button's name (e.g. "Loading Save"). Announce the loading state through the button's own text instead, such as changing "Save" to "Saving…". Set `intent="current"` so the arc follows the button's text color; an intent color can match a filled button and disappear.
 - **When several spinners are shown together.** Each regular Spinner is its own live region, so a row of them would announce "Loading" again and again. Keep one regular Spinner for the region that is loading and make the rest decorative.
 
 While the action is running, use `aria-disabled="true"` and ignore clicks rather than `disabled`: a focused button that becomes `disabled` drops keyboard focus to the page.
 
 <ComponentPreview code={`<button type="button" aria-disabled="true">
-  <Spinner size="small" decorative />
+  <Spinner size="small" intent="current" decorative />
   Saving…
 </button>`}>
   <SpinnerDecorativeDemo />

@@ -8,8 +8,8 @@
   },
   {
     "name": "intent",
-    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
-    "description": "Color intent of the spinning arc (primary, secondary, success, warning, danger, neutral). Default: 'primary'.",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\" | \"current\"",
+    "description": "Color intent of the spinning arc (primary, secondary, success, warning, danger, neutral), or 'current' to use the parent's text color, with a faded track. Use 'current' inside buttons and other filled surfaces so the arc contrasts with them. Default: 'primary'.",
     "default": "\"primary\"",
     "required": false
   },

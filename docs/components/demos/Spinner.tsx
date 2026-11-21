@@ -47,7 +47,7 @@ export function SpinnerDecorativeDemo() {
       aria-disabled="true"
       style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
     >
-      <Spinner size="small" decorative />
+      <Spinner size="small" intent="current" decorative />
       Saving…
     </button>
   );
