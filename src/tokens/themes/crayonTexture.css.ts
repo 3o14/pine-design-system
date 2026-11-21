@@ -58,7 +58,7 @@ export const crayonGrainBackgroundImage = `radial-gradient(
 
 /**
  * Creates crayon theme base selectors for the element itself
- * Applied to: `.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`
+ * Applied to the element itself under `themeSelector(crayonThemes, ...)`
  */
 export const createCrayonBaseStyle = () =>
 	({
@@ -71,7 +71,7 @@ export const createCrayonBaseStyle = () =>
 
 /**
  * Creates crayon theme ::before selector style (base only, zIndex)
- * Applied to: `.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
+ * Applied to `::before` under `themeSelector(crayonThemes, ...)`
  */
 export const createCrayonBeforeBaseStyle = () =>
 	({
@@ -80,7 +80,7 @@ export const createCrayonBeforeBaseStyle = () =>
 
 /**
  * Creates crayon theme ::after selector style (texture overlay)
- * Applied to: `.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`
+ * Applied to `::after` under `themeSelector(crayonThemes, ...)`
  */
 export const createCrayonAfterStyle = () =>
 	({

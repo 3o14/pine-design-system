@@ -62,7 +62,7 @@ export const Component = ({ variant = "solid", ... }: ComponentProps) => {
 - Use `style()` for single styles
 - Import `themeContract`, `ColorIntent` from `@/tokens`
 - Variants: `variant`, `intent`, `size`, `rounded` — use `themeContract.color[intent]` for colors
-- Theme-specific overrides: `.${gameLightTheme} &`, `.${crayonLightTheme} &` selectors
+- Theme-specific overrides: `themeSelector(gameThemes, ...)` from `@/tokens/themes/themeSelector`, scoped to the element that carries the theme class (never a bare `.${gameLightTheme} &`, which leaks through nested ThemeProviders)
 - Reference existing component (e.g. Badge.css.ts) for game/crayon theme patterns
 
 ## Step 3: Create index.ts
