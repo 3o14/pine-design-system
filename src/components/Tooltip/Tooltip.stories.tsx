@@ -11,7 +11,9 @@ const meta = {
 	},
 	tags: ["autodocs"],
 	args: {
-		content: "툴팁 내용입니다",
+		content: "Tooltip content",
+		// Stories that render their own trigger ignore this; the rest need a child to hover.
+		children: <Button variant="outline" intent="neutral">Hover me</Button>,
 		side: "top",
 		align: "center",
 		showArrow: true,
@@ -20,12 +22,12 @@ const meta = {
 	argTypes: {
 		content: {
 			control: "text",
-			description: "툴팁에 표시할 내용",
+			description: "Content shown in the tooltip",
 		},
 		side: {
 			control: "select",
 			options: ["top", "bottom", "left", "right"],
-			description: "툴팁 표시 방향",
+			description: "Side of the trigger the tooltip appears on",
 			table: {
 				type: { summary: "TooltipSide" },
 				defaultValue: { summary: "top" },
@@ -34,7 +36,7 @@ const meta = {
 		align: {
 			control: "select",
 			options: ["start", "center", "end"],
-			description: "툴팁 정렬",
+			description: "Alignment along the trigger",
 			table: {
 				type: { summary: "TooltipAlign" },
 				defaultValue: { summary: "center" },
@@ -42,7 +44,7 @@ const meta = {
 		},
 		showArrow: {
 			control: "boolean",
-			description: "화살표 표시 여부",
+			description: "Shows the arrow",
 			table: {
 				type: { summary: "boolean" },
 				defaultValue: { summary: "true" },
@@ -50,7 +52,7 @@ const meta = {
 		},
 		disabled: {
 			control: "boolean",
-			description: "툴팁 비활성화",
+			description: "Disables the tooltip",
 			table: {
 				type: { summary: "boolean" },
 				defaultValue: { summary: "false" },
@@ -58,7 +60,7 @@ const meta = {
 		},
 		open: {
 			control: "boolean",
-			description: "controlled 오픈 상태",
+			description: "Controlled open state",
 		},
 	},
 } satisfies Meta<typeof Tooltip>;
@@ -68,23 +70,23 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		children: <Button variant="outline" intent="neutral">버튼 위에 호버하세요</Button>,
+		children: <Button variant="outline" intent="neutral">Hover over this button</Button>,
 	},
 };
 
 export const Sides: Story = {
 	render: (args) => (
 		<div style={{ display: "flex", gap: "1rem", alignItems: "center", padding: "3rem" }}>
-			<Tooltip {...args} content="위쪽" side="top">
+			<Tooltip {...args} content="Top" side="top">
 				<Button variant="outline" intent="neutral">Top</Button>
 			</Tooltip>
-			<Tooltip {...args} content="아래쪽" side="bottom">
+			<Tooltip {...args} content="Bottom" side="bottom">
 				<Button variant="outline" intent="neutral">Bottom</Button>
 			</Tooltip>
-			<Tooltip {...args} content="왼쪽" side="left">
+			<Tooltip {...args} content="Left" side="left">
 				<Button variant="outline" intent="neutral">Left</Button>
 			</Tooltip>
-			<Tooltip {...args} content="오른쪽" side="right">
+			<Tooltip {...args} content="Right" side="right">
 				<Button variant="outline" intent="neutral">Right</Button>
 			</Tooltip>
 		</div>
@@ -93,17 +95,17 @@ export const Sides: Story = {
 
 export const WithoutArrow: Story = {
 	args: {
-		content: "화살표 없는 툴팁",
+		content: "Tooltip without an arrow",
 		showArrow: false,
-		children: <Button variant="outline" intent="neutral">화살표 없음</Button>,
+		children: <Button variant="outline" intent="neutral">No arrow</Button>,
 	},
 };
 
 export const Disabled: Story = {
 	args: {
-		content: "이 툴팁은 비활성화됩니다",
+		content: "This tooltip is disabled",
 		disabled: true,
-		children: <Button variant="outline" intent="neutral" disabled>비활성화된 버튼</Button>,
+		children: <Button variant="outline" intent="neutral" disabled>Disabled button</Button>,
 	},
 };
 
@@ -111,19 +113,19 @@ export const RichContent: Story = {
 	args: {
 		content: (
 			<div>
-				<strong style={{ display: "block", marginBottom: "4px" }}>단축키</strong>
+				<strong style={{ display: "block", marginBottom: "4px" }}>Shortcut</strong>
 				<span>⌘ + S</span>
 			</div>
 		),
-		children: <Button variant="solid" intent="primary">저장</Button>,
+		children: <Button variant="solid" intent="primary">Save</Button>,
 	},
 };
 
 export const LongContent: Story = {
 	args: {
 		content:
-			"최대 너비(240px)를 넘는 긴 텍스트는 자동으로 줄바꿈 처리됩니다. 툴팁은 항상 읽기 편한 너비를 유지합니다.",
-		children: <Button variant="outline" intent="neutral">긴 내용</Button>,
+			"Text longer than the maximum width (240px) wraps automatically, so the tooltip always keeps a readable width.",
+		children: <Button variant="outline" intent="neutral">Long content</Button>,
 	},
 };
 
@@ -140,18 +142,18 @@ const ControlledDemo = (args: React.ComponentProps<typeof Tooltip>) => {
 		>
 			<Tooltip
 				{...args}
-				content="controlled 툴팁입니다"
+				content="Controlled tooltip"
 				open={open}
 				onOpenChange={setOpen}
 			>
-				<Button variant="outline" intent="neutral">호버 또는 아래 버튼으로 제어</Button>
+				<Button variant="outline" intent="neutral">Hover, or use the button below</Button>
 			</Tooltip>
 			<Button
 				variant="solid"
 				intent={open ? "danger" : "primary"}
 				onClick={() => setOpen((v) => !v)}
 			>
-				{open ? "툴팁 닫기" : "툴팁 열기"}
+				{open ? "Close tooltip" : "Open tooltip"}
 			</Button>
 		</div>
 	);
@@ -163,15 +165,15 @@ export const Controlled: Story = {
 
 export const AlwaysOpen: Story = {
 	args: {
-		content: "항상 열려 있는 툴팁",
+		content: "Always-open tooltip",
 		open: true,
-		children: <Button variant="outline" intent="neutral">고정 툴팁</Button>,
+		children: <Button variant="outline" intent="neutral">Pinned tooltip</Button>,
 	},
 };
 
 export const WithIconTrigger: Story = {
 	args: {
-		content: "더 많은 정보",
+		content: "More information",
 		side: "right",
 		children: (
 			<button
@@ -188,7 +190,7 @@ export const WithIconTrigger: Story = {
 					fontSize: "12px",
 					fontWeight: "bold",
 				}}
-				aria-label="더보기"
+				aria-label="More information"
 			>
 				?
 			</button>
