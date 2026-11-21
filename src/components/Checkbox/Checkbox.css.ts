@@ -1,19 +1,16 @@
 import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent, type SelectorMap } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	crayonBumpyShellBefore,
 	crayonTextureBackgroundImage,
 	crayonGrainBackgroundImage,
 } from "@/tokens/themes/crayonTexture.css";
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
 
 const checkmark = keyframes({
 	"0%": {
@@ -45,14 +42,11 @@ const createThemeSelectors = (intent: ColorIntent): SelectorMap => {
 	const selectors: SelectorMap = {};
 
 	// Crayon theme: unchecked - weak background + bumpy border
-	selectors[
-		`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-	] = createCrayonBeforeStyle(color.weak, color.border);
+	selectors[themeSelector(crayonThemes, "> &::before", container)] =
+		createCrayonBeforeStyle(color.weak, color.border);
 
 	// Crayon theme: checked - surface fill + bumpy border
-	selectors[
-		`.${crayonLightThemeClass} &[data-checked]::before, .${crayonDarkThemeClass} &[data-checked]::before`
-	] = {
+	selectors[themeSelector(crayonThemes, "> &[data-checked]::before", container)] = {
 		background: color.surface,
 		boxShadow: `inset 0 0 0 2px ${color.border}`,
 	};
@@ -78,6 +72,7 @@ export const checkboxRoot = style({
 	all: "unset",
 });
 
+// The theme class sits on the container label: label > button > indicator > svg.
 const checkboxBase = style({
 	position: "relative",
 	display: "inline-flex",
@@ -97,32 +92,32 @@ const checkboxBase = style({
 		"&:disabled": {
 			cursor: "not-allowed",
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, "> &", container)]: {
 			boxShadow: themeContract.shadow.pixelBox,
 			margin: themeContract.shadow.pixelBoxMargin,
 			borderRadius: 0,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, "> &", container)]: {
 			background: "transparent",
 			borderColor: "transparent",
 			overflow: "visible",
 			isolation: "isolate",
 		},
-		[`.${crayonLightThemeClass} &[data-checked], .${crayonDarkThemeClass} &[data-checked]`]:
+		[themeSelector(crayonThemes, "> &[data-checked]", container)]:
 			{
 				borderColor: "transparent",
 				backgroundColor: "transparent",
 			},
-		[`.${crayonLightThemeClass} &:hover:not(:disabled), .${crayonDarkThemeClass} &:hover:not(:disabled)`]:
+		[themeSelector(crayonThemes, "> &:hover:not(:disabled)", container)]:
 			{
 				borderColor: "transparent",
 			},
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]:
+		[themeSelector(crayonThemes, "> &::before", container)]:
 			{
 				zIndex: 0,
 				transition: "background 0.2s ease-in-out",
 			},
-		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]: {
+		[themeSelector(crayonThemes, "> &::after", container)]: {
 			content: '""',
 			position: "absolute",
 			inset: 0,
@@ -293,7 +288,11 @@ export const checkmarkIcon = style({
 	color: "white",
 	animation: `${checkmark} 0.2s ease-in-out`,
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(
+			crayonThemes,
+			`> :where(.${checkboxRoot}) > :where(.${indicatorContainer}) > &`,
+			container,
+		)]: {
 			filter: "none",
 			position: "relative",
 			zIndex: 1,
