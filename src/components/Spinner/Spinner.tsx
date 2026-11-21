@@ -17,6 +17,22 @@ const ANNOUNCE_DELAY_MS = 100;
 
 const DEFAULT_LABEL = "Loading";
 
+/**
+ * Visually hidden label that starts empty and fills in after ANNOUNCE_DELAY_MS. It mounts
+ * and unmounts with the status region, so every new region starts empty without any
+ * manual reset.
+ */
+const DelayedLabel = ({ label }: { label: string }) => {
+	const [isReady, setIsReady] = React.useState(false);
+
+	React.useEffect(() => {
+		const timer = setTimeout(() => setIsReady(true), ANNOUNCE_DELAY_MS);
+		return () => clearTimeout(timer);
+	}, []);
+
+	return <span className={styles.visuallyHidden}>{isReady ? label : null}</span>;
+};
+
 export interface SpinnerProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	/**
@@ -76,17 +92,6 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 	) => {
 		const themeContext = useTheme();
 		const themeClass = themeContext?.themeClass ?? lightTheme;
-		const [isAnnounceReady, setIsAnnounceReady] = React.useState(false);
-
-		React.useEffect(() => {
-			if (decorative) return;
-			const timer = setTimeout(() => setIsAnnounceReady(true), ANNOUNCE_DELAY_MS);
-			return () => {
-				clearTimeout(timer);
-				// Reset so the region mounts empty again if it comes back after being decorative.
-				setIsAnnounceReady(false);
-			};
-		}, [decorative]);
 
 		// An empty label would leave a live region that announces nothing. The type check
 		// also covers untyped callers that pass null or a non-string.
@@ -127,9 +132,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 				className={clsx(themeClass, styles.root, className)}
 			>
 				{ringElement}
-				<span className={styles.visuallyHidden}>
-					{isAnnounceReady ? announcedLabel : null}
-				</span>
+				<DelayedLabel label={announcedLabel} />
 			</span>
 		);
 	},
