@@ -29,7 +29,7 @@ import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
 
 - **Game**: `createGameBoxShadow(borderColor)` — box-shadow for border
 - **Crayon**: `createCrayonBeforeStyle`, `createCrayonBeforeBaseStyle` etc.
-- Selectors: `.${gameLightThemeClass} &`, `.${crayonLightThemeClass} &`
+- Selectors: `themeSelector(gameThemes, ...)` from `@/tokens/themes/themeSelector`, scoped to the element that carries the theme class (never a bare `.${gameLightTheme} &`, which leaks through nested ThemeProviders)
 
 ## Reference
 
