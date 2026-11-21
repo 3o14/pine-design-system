@@ -5,7 +5,6 @@ import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
-const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
 
 /** Intent color of the arc, set per variant. */
 const intentColor = createVar();
@@ -58,6 +57,15 @@ export const root = style({
 	// Contains the absolutely positioned visually hidden label.
 	position: "relative",
 });
+
+/**
+ * Matches a ring whose own Spinner root carries a game theme class. The root always gets
+ * the active theme class from useTheme(), so scoping to it keeps a nested basic or crayon
+ * ThemeProvider from inheriting the game styles through an ancestor's theme class.
+ */
+const gameThemeSelector = [gameLightThemeClass, gameDarkThemeClass]
+	.map((themeClass) => `.${root}.${themeClass} > &`)
+	.join(", ");
 
 const ringBase = style({
 	vars: {
