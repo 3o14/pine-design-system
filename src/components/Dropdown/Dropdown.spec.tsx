@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dropdown, type DropdownOption } from "./Dropdown";
+import * as styles from "./Dropdown.css";
 import { ThemeProvider } from "@/providers";
 import { lightTheme } from "@/tokens";
 import { gameDarkTheme } from "@/tokens/themes";
@@ -365,7 +366,14 @@ describe("Dropdown", () => {
 			// Precondition: the outer provider owns <html>. With the inner class on <html>,
 			// closest() below would match <html> and pass without the portal fix.
 			expect(document.documentElement).not.toHaveClass(gameDarkTheme);
-			expect(listbox.closest(`.${gameDarkTheme}`)).not.toBeNull();
+			// Theme overrides are scoped to the portal (portal > positioner > menu > listbox),
+			// so that element must carry both the theme class and the portal marker.
+			expect(listbox.parentElement?.parentElement?.parentElement).toHaveClass(
+				gameDarkTheme,
+				styles.portal,
+			);
+			// The trigger's overrides are scoped to its container (container > trigger).
+			expect(screen.getByRole("combobox").parentElement).toHaveClass(gameDarkTheme);
 		});
 
 		it("sets the provider's primary color vars on the portaled popup", async () => {

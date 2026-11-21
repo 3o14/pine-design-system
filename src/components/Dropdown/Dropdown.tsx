@@ -141,7 +141,10 @@ export const Dropdown = ({
 					</BaseSelect.Icon>
 				</BaseSelect.Trigger>
 
-				<BaseSelect.Portal {...portalThemeProps}>
+				<BaseSelect.Portal
+					{...portalThemeProps}
+					className={clsx(portalThemeProps.className, styles.portal)}
+				>
 					<BaseSelect.Positioner
 						side={side}
 						align={align}

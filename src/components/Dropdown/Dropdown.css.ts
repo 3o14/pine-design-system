@@ -1,8 +1,11 @@
 import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent, type SelectorMap } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	crayonBumpyShellBefore,
 	crayonTextureBackgroundImage,
@@ -14,12 +17,15 @@ import {
 	pixelRoundedVars,
 } from "@/tokens/themes/gamePixel.css";
 
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
+/**
+ * Theme classes sit on two elements: the container around the trigger
+ * (container > trigger > value / icon), and the popup's portal
+ * (portal > positioner > menu > listbox > item). Overrides are scoped to the nearer one.
+ */
+export const portal = style({});
 
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
+/** Path from the portal to the menu: the positioner sits in between. */
+const menuPath = "> * > ";
 
 /**
  * Creates crayon theme ::before pseudo-element style
@@ -37,10 +43,14 @@ const createCrayonBeforeStyle = (
 /**
  * Creates crayon theme selectors with optional transition
  */
-const createCrayonSelectors = (addTransition = false): SelectorMap => {
+const createCrayonSelectors = (
+	path: string,
+	scope: string,
+	addTransition = false,
+): SelectorMap => {
 	const selectors: SelectorMap = {};
 
-	selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+	selectors[themeSelector(crayonThemes, `${path}&`, scope)] = {
 		background: "transparent",
 		borderColor: "transparent",
 		overflow: "visible",
@@ -56,13 +66,9 @@ const createCrayonSelectors = (addTransition = false): SelectorMap => {
 		...(addTransition && { transition: "background 0.2s ease-in-out" }),
 	};
 
-	selectors[
-		`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-	] = beforeStyle;
+	selectors[themeSelector(crayonThemes, `${path}&::before`, scope)] = beforeStyle;
 
-	selectors[
-		`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`
-	] = {
+	selectors[themeSelector(crayonThemes, `${path}&::after`, scope)] = {
 		content: '""',
 		position: "absolute",
 		inset: 0,
@@ -78,8 +84,8 @@ const createCrayonSelectors = (addTransition = false): SelectorMap => {
 	return selectors;
 };
 
-const createCrayonTriggerSelectors = () => createCrayonSelectors(true);
-const createCrayonMenuSelectors = () => createCrayonSelectors(false);
+const createCrayonTriggerSelectors = () => createCrayonSelectors("> ", container, true);
+const createCrayonMenuSelectors = () => createCrayonSelectors(menuPath, portal);
 
 /**
  * Creates trigger compound variant selectors for a given intent.
@@ -100,7 +106,7 @@ const createTriggerIntentSelectors = (intent: ColorIntent): SelectorMap => {
 	};
 
 	// Game theme: pixel-box shadow with intent color
-	selectors[gameThemeSelector] = {
+	selectors[themeSelector(gameThemes, "> &", container)] = {
 		border: "1px solid transparent",
 		boxShadow: createPixelFrame(color.border),
 		margin: themeContract.shadow.pixelBoxMargin,
@@ -108,11 +114,11 @@ const createTriggerIntentSelectors = (intent: ColorIntent): SelectorMap => {
 	};
 
 	// Crayon theme: bumpy border with intent color
-	selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+	selectors[themeSelector(crayonThemes, "> &", container)] = {
 		border: "none",
 	};
 
-	selectors[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`] = {
+	selectors[themeSelector(crayonThemes, "> &::before", container)] = {
 		boxShadow: `inset 0 0 0 3px ${color.border}`,
 	};
 
@@ -132,15 +138,15 @@ const createMenuIntentStyle = (intent: ColorIntent) => {
 		borderWidth: "1.5px",
 		selectors: {
 			// Game theme: pixel-box shadow with intent color
-			[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+			[themeSelector(gameThemes, `${menuPath}&`, portal)]: {
 				border: "1px solid transparent",
 				boxShadow: pixelBoxShadow,
 			},
 			// Crayon theme: bumpy border with intent color
-			[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+			[themeSelector(crayonThemes, `${menuPath}&`, portal)]: {
 				border: "none",
 			},
-			[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]:
+			[themeSelector(crayonThemes, `${menuPath}&::before`, portal)]:
 				{
 					boxShadow: `inset 0 0 0 3px ${color.border}`,
 				},
@@ -198,17 +204,19 @@ const triggerBase = style({
 		cursor: "not-allowed",
 	},
 	selectors: {
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, "> &", container)]: {
 			border: "1px solid transparent",
 			boxShadow: themeContract.shadow.pixelBox,
 			borderRadius: 0,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, "> &", container)]: {
 			border: "none",
 		},
 		...createCrayonTriggerSelectors(),
 	},
 });
+
+const triggerGameSelector = themeSelector(gameThemes, "> &", container);
 
 export const trigger = recipe({
 	base: triggerBase,
@@ -221,7 +229,7 @@ export const trigger = recipe({
 				lineHeight: themeContract.typography.lineHeight.small,
 				minHeight: "32px",
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, "> &", container)]: {
 						padding: `${themeContract.spacing.xxxs} ${themeContract.spacing.xs}`,
 					},
 				},
@@ -232,7 +240,7 @@ export const trigger = recipe({
 				lineHeight: themeContract.typography.lineHeight.medium,
 				minHeight: "40px",
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, "> &", container)]: {
 						padding: `${themeContract.spacing.xs} ${themeContract.spacing.sm}`,
 					},
 				},
@@ -243,7 +251,7 @@ export const trigger = recipe({
 				lineHeight: themeContract.typography.lineHeight.large,
 				minHeight: "48px",
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, "> &", container)]: {
 						padding: `${themeContract.spacing.sm} ${themeContract.spacing.md}`,
 					},
 				},
@@ -254,15 +262,15 @@ export const trigger = recipe({
 		rounded: {
 			small: {
 				borderRadius: themeContract.component.input.radius.small,
-				selectors: { [gameThemeSelector]: pixelRoundedVars.small },
+				selectors: { [triggerGameSelector]: pixelRoundedVars.small },
 			},
 			medium: {
 				borderRadius: themeContract.component.input.radius.medium,
-				selectors: { [gameThemeSelector]: pixelRoundedVars.medium },
+				selectors: { [triggerGameSelector]: pixelRoundedVars.medium },
 			},
 			large: {
 				borderRadius: themeContract.component.input.radius.large,
-				selectors: { [gameThemeSelector]: pixelRoundedVars.large },
+				selectors: { [triggerGameSelector]: pixelRoundedVars.large },
 			},
 		},
 
@@ -316,7 +324,7 @@ export const triggerFullWidth = style({
 
 export const triggerValue = style({
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `> :where(.${triggerBase}) > &`, container)]: {
 			position: "relative",
 			zIndex: 1,
 		},
@@ -332,7 +340,7 @@ export const triggerIcon = style({
 		"[data-popup-open] &": {
 			transform: "rotate(180deg)",
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `> :where(.${triggerBase}) > &`, container)]: {
 			position: "relative",
 			zIndex: 1,
 		},
@@ -357,16 +365,19 @@ const menuBase = style({
 		"&[data-state='closing']": {
 			animation: `${slideUp} 0.15s ease-in`,
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, `${menuPath}&`, portal)]: {
 			border: "1px solid transparent",
 			borderRadius: 0,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `${menuPath}&`, portal)]: {
 			border: "none",
 		},
 		...createCrayonMenuSelectors(),
 	},
 });
+
+/** Path from the portal to an item: positioner > menu > listbox > item. */
+const itemPath = `${menuPath}:where(.${menuBase}) > :where([role="listbox"]) > `;
 
 export const menu = recipe({
 	base: menuBase,
@@ -417,7 +428,7 @@ const menuItemBase = style({
 		cursor: "not-allowed",
 	},
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `${itemPath}&`, portal)]: {
 			position: "relative",
 			zIndex: 1,
 		},
@@ -589,7 +600,7 @@ export const divider = style({
 	backgroundColor: themeContract.color.surface.divider,
 	margin: `${themeContract.spacing.xxs} 0`,
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `${itemPath}&`, portal)]: {
 			position: "relative",
 			zIndex: 1,
 		},
@@ -605,7 +616,7 @@ export const groupLabel = style({
 	textTransform: "uppercase",
 	letterSpacing: "0.05em",
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `${itemPath}&`, portal)]: {
 			position: "relative",
 			zIndex: 1,
 		},
