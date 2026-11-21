@@ -1,6 +1,6 @@
 # Pine Design System
 
-> Token-driven React component library built with Vanilla Extract (zero-runtime CSS). Ships 11 accessible components on top of `@base-ui/react` headless primitives, three swappable design variants (basic, game, crayon), and light/dark mode for each. Package name on npm: `pine-design-system`.
+> Token-driven React component library built with Vanilla Extract (zero-runtime CSS). Ships 12 accessible components, with the interactive ones built on `@base-ui/react` headless primitives, three swappable design variants (basic, game, crayon), and light/dark mode for each. Package name on npm: `pine-design-system`.
 
 Core mental model for generating code against this library:
 - All visual styling comes from design tokens, never raw hex/px values. See the "Foundation & Tokens" section below.
