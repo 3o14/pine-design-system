@@ -14,6 +14,8 @@ export type SpinnerIntent = ColorIntent;
  */
 const ANNOUNCE_DELAY_MS = 100;
 
+const DEFAULT_LABEL = "Loading";
+
 export interface SpinnerProps
 	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	/**
@@ -25,7 +27,8 @@ export interface SpinnerProps
 	intent?: SpinnerIntent;
 	/**
 	 * Text announced to screen readers. It is not shown on screen. Describe what is loading
-	 * (e.g. "Loading comments") when the context is not obvious. Default: 'Loading'.
+	 * (e.g. "Loading comments") when the context is not obvious. A blank label falls
+	 * back to the default. Default: 'Loading'.
 	 */
 	label?: string;
 	/**
@@ -59,7 +62,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 		{
 			size = "medium",
 			intent = "primary",
-			label = "Loading",
+			label = DEFAULT_LABEL,
 			decorative = false,
 			className,
 			...rest
@@ -73,8 +76,15 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 		React.useEffect(() => {
 			if (decorative) return;
 			const timer = setTimeout(() => setIsAnnounceReady(true), ANNOUNCE_DELAY_MS);
-			return () => clearTimeout(timer);
+			return () => {
+				clearTimeout(timer);
+				// Reset so the region mounts empty again if it comes back after being decorative.
+				setIsAnnounceReady(false);
+			};
 		}, [decorative]);
+
+		// An empty label would leave a live region that announces nothing.
+		const announcedLabel = label.trim() ? label : DEFAULT_LABEL;
 
 		const ringElement = (
 			<span aria-hidden="true" className={styles.ring({ size, intent })} />
@@ -83,10 +93,11 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 		if (decorative) {
 			return (
 				<span
+					{...rest}
 					ref={ref}
+					role={undefined}
 					aria-hidden="true"
 					className={clsx(themeClass, styles.root, className)}
-					{...rest}
 				>
 					{ringElement}
 				</span>
@@ -95,14 +106,16 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 
 		return (
 			<span
-				ref={ref}
-				role="status"
-				className={clsx(themeClass, styles.root, className)}
 				{...rest}
+				ref={ref}
+				// Set after the spread so consumer props can't remove the live region.
+				role="status"
+				aria-hidden={undefined}
+				className={clsx(themeClass, styles.root, className)}
 			>
 				{ringElement}
 				<span className={styles.visuallyHidden}>
-					{isAnnounceReady ? label : null}
+					{isAnnounceReady ? announcedLabel : null}
 				</span>
 			</span>
 		);

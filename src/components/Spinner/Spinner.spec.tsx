@@ -65,6 +65,36 @@ describe("Spinner", () => {
 			);
 		});
 
+		it("falls back to 'Loading' when the label is blank", async () => {
+			render(<Spinner label="   " />);
+			await waitFor(() =>
+				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
+			);
+		});
+
+		it("keeps the live region when consumers pass role or aria-hidden", async () => {
+			render(<Spinner role="presentation" aria-hidden />);
+			const region = screen.getByRole("status");
+			expect(region).not.toHaveAttribute("aria-hidden");
+			await waitFor(() => expect(region).toHaveTextContent("Loading"));
+		});
+
+		it("mounts the region empty again when it returns from decorative", async () => {
+			const { rerender } = render(<Spinner />);
+			await waitFor(() =>
+				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
+			);
+
+			rerender(<Spinner decorative />);
+			expect(screen.queryByRole("status")).not.toBeInTheDocument();
+
+			rerender(<Spinner />);
+			expect(screen.getByRole("status").textContent).toBe("");
+			await waitFor(() =>
+				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
+			);
+		});
+
 		it("updates the label inside the same status region", async () => {
 			const { rerender } = render(<Spinner label="Loading comments" />);
 			const region = screen.getByRole("status");
@@ -83,6 +113,14 @@ describe("Spinner", () => {
 
 		it("hides the whole spinner from assistive technology", () => {
 			render(<Spinner decorative data-testid="spinner" />);
+			expect(screen.getByTestId("spinner")).toHaveAttribute("aria-hidden", "true");
+		});
+
+		it("stays hidden even when consumers pass role or aria-hidden={false}", () => {
+			render(
+				<Spinner decorative role="status" aria-hidden={false} data-testid="spinner" />,
+			);
+			expect(screen.queryByRole("status")).not.toBeInTheDocument();
 			expect(screen.getByTestId("spinner")).toHaveAttribute("aria-hidden", "true");
 		});
 
