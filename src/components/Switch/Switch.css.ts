@@ -1,20 +1,17 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	crayonBumpyShellBefore,
 	createCrayonBaseStyle,
 	createCrayonBeforeBaseStyle,
 	createCrayonAfterStyle,
 } from "@/tokens/themes/crayonTexture.css";
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
 
 /**
  * Creates crayon theme ::before pseudo-element style
@@ -48,6 +45,9 @@ export const switchRoot = style({
 	display: "inline-block",
 });
 
+// The theme class sits on the container label: label > button[role='switch'] > track > thumb.
+const trackPath = `> :where(.${switchRoot}) > &`;
+
 const trackBase = style({
 	position: "relative",
 	display: "inline-flex",
@@ -63,20 +63,20 @@ const trackBase = style({
 		"button:disabled &": {
 			cursor: "not-allowed",
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, trackPath, container)]: {
 			boxShadow: themeContract.shadow.pixelBox,
 			margin: themeContract.shadow.pixelBoxMargin,
 			borderRadius: 0,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, trackPath, container)]: {
 			...createCrayonBaseStyle(),
 			boxShadow: "none",
 			margin: themeContract.shadow.pixelBoxMargin,
 		},
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]: {
+		[themeSelector(crayonThemes, `${trackPath}::before`, container)]: {
 			...createCrayonBeforeBaseStyle(),
 		},
-		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]: {
+		[themeSelector(crayonThemes, `${trackPath}::after`, container)]: {
 			...createCrayonAfterStyle(),
 		},
 	},
@@ -118,12 +118,20 @@ export const track = recipe({
 					"[role='switch'][data-checked] &": {
 						backgroundColor: themeContract.color.primary.surface,
 					},
-					[`.${crayonLightThemeClass} [role='switch'][data-unchecked] &::before, .${crayonDarkThemeClass} [role='switch'][data-unchecked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-unchecked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.primary.weak,
 							themeContract.color.primary.border
 						),
-					[`.${crayonLightThemeClass} [role='switch'][data-checked] &::before, .${crayonDarkThemeClass} [role='switch'][data-checked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-checked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.primary.surface,
 							themeContract.color.primary.border
@@ -138,12 +146,20 @@ export const track = recipe({
 					"[role='switch'][data-checked] &": {
 						backgroundColor: themeContract.color.secondary.surface,
 					},
-					[`.${crayonLightThemeClass} [role='switch'][data-unchecked] &::before, .${crayonDarkThemeClass} [role='switch'][data-unchecked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-unchecked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.secondary.weak,
 							themeContract.color.secondary.border
 						),
-					[`.${crayonLightThemeClass} [role='switch'][data-checked] &::before, .${crayonDarkThemeClass} [role='switch'][data-checked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-checked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.secondary.surface,
 							themeContract.color.secondary.border
@@ -158,17 +174,25 @@ export const track = recipe({
 					"[role='switch'][data-checked] &": {
 						backgroundColor: themeContract.color.success.surface,
 					},
-					[`.${crayonLightThemeClass} [role='switch'][data-unchecked] &::before, .${crayonDarkThemeClass} [role='switch'][data-unchecked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-unchecked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.success.weak,
 							themeContract.color.success.border
 						),
-					[`.${crayonLightThemeClass} [role='switch'][data-checked] &::before, .${crayonDarkThemeClass} [role='switch'][data-checked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-checked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.success.surface,
 							themeContract.color.success.border
 						),
-			},
+				},
 			},
 			warning: {
 				selectors: {
@@ -178,17 +202,25 @@ export const track = recipe({
 					"[role='switch'][data-checked] &": {
 						backgroundColor: themeContract.color.warning.surface,
 					},
-					[`.${crayonLightThemeClass} [role='switch'][data-unchecked] &::before, .${crayonDarkThemeClass} [role='switch'][data-unchecked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-unchecked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.warning.weak,
 							themeContract.color.warning.border
 						),
-					[`.${crayonLightThemeClass} [role='switch'][data-checked] &::before, .${crayonDarkThemeClass} [role='switch'][data-checked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-checked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.warning.surface,
 							themeContract.color.warning.border
 						),
-			},
+				},
 			},
 			danger: {
 				selectors: {
@@ -198,17 +230,25 @@ export const track = recipe({
 					"[role='switch'][data-checked] &": {
 						backgroundColor: themeContract.color.danger.surface,
 					},
-					[`.${crayonLightThemeClass} [role='switch'][data-unchecked] &::before, .${crayonDarkThemeClass} [role='switch'][data-unchecked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-unchecked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.danger.weak,
 							themeContract.color.danger.border
 						),
-					[`.${crayonLightThemeClass} [role='switch'][data-checked] &::before, .${crayonDarkThemeClass} [role='switch'][data-checked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-checked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.danger.surface,
 							themeContract.color.danger.border
 						),
-			},
+				},
 			},
 			neutral: {
 				selectors: {
@@ -218,17 +258,25 @@ export const track = recipe({
 					"[role='switch'][data-checked] &": {
 						backgroundColor: themeContract.color.neutral.surface,
 					},
-					[`.${crayonLightThemeClass} [role='switch'][data-unchecked] &::before, .${crayonDarkThemeClass} [role='switch'][data-unchecked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-unchecked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.neutral.weak,
 							themeContract.color.neutral.border
 						),
-					[`.${crayonLightThemeClass} [role='switch'][data-checked] &::before, .${crayonDarkThemeClass} [role='switch'][data-checked] &::before`]:
+					[themeSelector(
+						crayonThemes,
+						"> [role='switch'][data-checked] > &::before",
+						container,
+					)]:
 						createCrayonBeforeStyle(
 							themeContract.color.neutral.surface,
 							themeContract.color.neutral.border
 						),
-			},
+				},
 			},
 		},
 	},
@@ -239,31 +287,33 @@ export const track = recipe({
 	},
 });
 
+const thumbPath = `> :where(.${switchRoot}) > :where(.${trackBase}) > &`;
+
 const thumbBase = style({
 	backgroundColor: "white",
 	borderRadius: themeContract.radius.xlarge,
 	transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
 	boxShadow: themeContract.shadow.small,
 	selectors: {
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, thumbPath, container)]: {
 			boxShadow: themeContract.shadow.pixelBox,
 			margin: themeContract.shadow.pixelBoxMargin,
 			borderRadius: 0,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, thumbPath, container)]: {
 			...createCrayonBaseStyle(),
 			backgroundColor: "white",
 			boxShadow: "none",
 			margin: themeContract.shadow.pixelBoxMargin,
 		},
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]: {
+		[themeSelector(crayonThemes, `${thumbPath}::before`, container)]: {
 			...createCrayonBeforeStyle(
 				"white",
 				themeContract.color.surface.outline
 			),
 			...createCrayonBeforeBaseStyle(),
 		},
-		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]: {
+		[themeSelector(crayonThemes, `${thumbPath}::after`, container)]: {
 			...createCrayonAfterStyle(),
 		},
 	},
