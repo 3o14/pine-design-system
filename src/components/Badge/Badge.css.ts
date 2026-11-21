@@ -1,8 +1,11 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent, type SelectorMap } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	createCrayonBaseStyle,
 	createCrayonBeforeBaseStyle,
@@ -16,13 +19,8 @@ import {
 } from "@/tokens/themes/gamePixel.css";
 import type { BadgeVariant } from "./Badge";
 
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
-
-const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
+// The badge root carries the theme class itself, so overrides compound onto `&`.
+const gameThemeSelector = themeSelector(gameThemes);
 
 /**
  * Creates game theme pixel frame style
@@ -59,18 +57,16 @@ const createThemeSelectors = (intent: ColorIntent, variant: BadgeVariant): Selec
 		const bg = bgMap[variant];
 		const hasBorder = variant !== "subtle";
 
-		selectors[
-			`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-		] = createCrayonBeforeStyle(bg, color.border, hasBorder);
+		selectors[themeSelector(crayonThemes, "&::before")] =
+			createCrayonBeforeStyle(bg, color.border, hasBorder);
 	}
 
 	if (variant === "outline") {
-		selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+		selectors[themeSelector(crayonThemes)] = {
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-		] = createCrayonBeforeStyle("transparent", color.border);
+		selectors[themeSelector(crayonThemes, "&::before")] =
+			createCrayonBeforeStyle("transparent", color.border);
 	}
 
 	return selectors;
@@ -90,11 +86,11 @@ const badgeBase = style({
 	margin: themeContract.shadow.pixelBoxMargin,
 	position: "relative",
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]:
+		[themeSelector(crayonThemes)]:
 			createCrayonBaseStyle(),
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]:
+		[themeSelector(crayonThemes, "&::before")]:
 			createCrayonBeforeBaseStyle(),
-		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
+		[themeSelector(crayonThemes, "&::after")]:
 			createCrayonAfterStyle(),
 	},
 });
@@ -401,7 +397,7 @@ export const badge = recipe({
 			variants: { variant: "outline" },
 			style: {
 				selectors: {
-					[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
+					[themeSelector(crayonThemes, "&::after")]:
 						{
 							display: "none",
 						},
@@ -412,7 +408,7 @@ export const badge = recipe({
 			variants: { variant: "subtle" },
 			style: {
 				selectors: {
-					[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
+					[themeSelector(crayonThemes, "&::after")]:
 						{
 							display: "none",
 						},
