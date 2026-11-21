@@ -1,10 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
+import { gameThemes, themeSelector } from "@/tokens/themes/themeSelector";
 
 export const root = style({
 	display: "flex",
@@ -16,6 +13,11 @@ export const tabListWrapper = style({
 	position: "relative",
 });
 
+// The theme class sits on the root: root > tabListWrapper > tablist > tab / indicator, and
+// root > panel. Child combinators keep a Tab nested in a panel from matching the outer root.
+const tabListPath = `> :where(.${tabListWrapper}) > `;
+const tabPath = `${tabListPath}:where([role="tablist"]) > `;
+
 export const tabList = recipe({
 	base: {
 		display: "flex",
@@ -23,7 +25,7 @@ export const tabList = recipe({
 		borderBottom: `1px solid ${themeContract.color.surface.divider}`,
 		position: "relative",
 		selectors: {
-			[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+			[themeSelector(gameThemes, `${tabListPath}&`, root)]: {
 				borderBottom: "1px solid transparent",
 				boxShadow: `0 4px 0 0 ${themeContract.color.surface.divider}`,
 				margin: themeContract.shadow.pixelBoxMargin,
@@ -41,7 +43,7 @@ export const tabList = recipe({
 				borderBottom: "none",
 				borderRight: `1px solid ${themeContract.color.surface.divider}`,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${tabListPath}&`, root)]: {
 						borderRight: "1px solid transparent",
 						borderBottom: "none",
 						boxShadow: `4px 0 0 0 ${themeContract.color.surface.divider}`,
@@ -79,7 +81,7 @@ export const tab = recipe({
 				outline: `2px solid ${themeContract.color.primary.surface}`,
 				outlineOffset: "2px",
 			},
-			[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+			[themeSelector(gameThemes, `${tabPath}&`, root)]: {
 				borderRadius: 0,
 				boxShadow: themeContract.shadow.pixelBox,
 				margin: themeContract.shadow.pixelBoxMargin,
@@ -253,7 +255,7 @@ export const indicator = recipe({
 				bottom: "-1px",
 				height: "2px",
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${tabPath}&`, root)]: {
 						bottom: "-4px",
 					},
 				},
@@ -262,7 +264,7 @@ export const indicator = recipe({
 				right: "-1px",
 				width: "2px",
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${tabPath}&`, root)]: {
 						right: "-4px",
 					},
 				},
@@ -282,11 +284,9 @@ export const panel = style({
 	lineHeight: themeContract.typography.lineHeight.medium,
 	color: themeContract.color.surface.text,
 	selectors: {
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, "> &", root)]: {
 			borderRadius: 0,
 		},
 	},
 });
-
-
 
