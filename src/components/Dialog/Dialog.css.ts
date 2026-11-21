@@ -1,18 +1,21 @@
 import { style, styleVariants, keyframes } from "@vanilla-extract/css";
 import { themeContract, zIndex } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	crayonBumpyShellBefore,
 	crayonTextureBackgroundImage,
 	crayonGrainBackgroundImage,
 } from "@/tokens/themes/crayonTexture.css";
 
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
+/**
+ * Marks the dialog's portal element, which carries the theme class. Theme overrides are
+ * scoped to it: portal > container > header / body / footer.
+ */
+export const portal = style({});
 
 /**
  * Creates crayon theme ::before pseudo-element style
@@ -33,22 +36,18 @@ const createCrayonBeforeStyle = (
 const createCrayonContainerSelectors = () => {
 	const selectors: Record<string, unknown> = {};
 
-	selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+	selectors[themeSelector(crayonThemes, "> &", portal)] = {
 		background: "transparent",
 		overflow: "visible",
 		isolation: "isolate",
 	};
 
-	selectors[
-		`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-	] = createCrayonBeforeStyle(
+	selectors[themeSelector(crayonThemes, "> &::before", portal)] = createCrayonBeforeStyle(
 		themeContract.color.surface.background,
 		themeContract.color.surface.outline,
 	);
 
-	selectors[
-		`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`
-	] = {
+	selectors[themeSelector(crayonThemes, "> &::after", portal)] = {
 		content: '""',
 		position: "absolute",
 		inset: 0,
@@ -129,7 +128,7 @@ export const container = style({
 		"&[data-ending-style]": {
 			animation: `${scaleOut} 0.2s ease-in forwards`,
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, "> &", portal)]: {
 			boxShadow: themeContract.shadow.pixelBox,
 			margin: themeContract.shadow.pixelBoxMargin,
 			borderRadius: "0 !important",
@@ -177,12 +176,12 @@ export const header = style({
 	borderBottom: `1px solid ${themeContract.color.surface.divider}`,
 	gap: themeContract.spacing.md,
 	selectors: {
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, `> :where(.${container}) > &`, portal)]: {
 			borderBottom: "1px solid transparent",
 			boxShadow: `0 4px 0 0 ${themeContract.color.surface.divider}`,
 			padding: themeContract.spacing.md,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `> :where(.${container}) > &`, portal)]: {
 			position: "relative",
 			zIndex: 1,
 		},
@@ -231,10 +230,10 @@ export const body = style({
 	lineHeight: themeContract.typography.lineHeight.medium,
 	color: themeContract.color.surface.text,
 	selectors: {
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, `> :where(.${container}) > &`, portal)]: {
 			padding: themeContract.spacing.md,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `> :where(.${container}) > &`, portal)]: {
 			position: "relative",
 			zIndex: 1,
 		},
@@ -249,12 +248,12 @@ export const footer = style({
 	padding: themeContract.spacing.lg,
 	borderTop: `1px solid ${themeContract.color.surface.divider}`,
 	selectors: {
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, `> :where(.${container}) > &`, portal)]: {
 			borderTop: "1px solid transparent",
 			boxShadow: `0 -4px 0 0 ${themeContract.color.surface.divider}`,
 			padding: themeContract.spacing.md,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `> :where(.${container}) > &`, portal)]: {
 			position: "relative",
 			zIndex: 1,
 		},
