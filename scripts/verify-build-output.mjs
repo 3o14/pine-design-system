@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import postcss from "postcss";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = resolve(__dirname, "../dist");
@@ -42,6 +43,78 @@ for (const design of ["game", "crayon"]) {
 	check(mainCjs.includes(`import("${specifier}")`), `main CJS entry lazy-loads ${specifier} via a static import()`);
 }
 check(!mainEs.includes("import.meta.url"), "main ES entry does not build theme CSS URLs from import.meta.url");
+
+// Theme overrides must be scoped to the element that carries the theme class (see
+// src/tokens/themes/themeSelector.ts). A compound made of a theme class alone, such as
+// `.gameTheme .button`, matches any ancestor: the outermost provider's class on <html> then
+// leaks into every nested ThemeProvider.
+const tokensModule = await import(pathToFileURL(resolve(distDir, "pine-design-system-tokens.es.js")).href);
+const themeClasses = [
+	"basicLightTheme",
+	"basicDarkTheme",
+	"gameLightTheme",
+	"gameDarkTheme",
+	"crayonLightTheme",
+	"crayonDarkTheme",
+].map((name) => tokensModule[name]);
+
+/** Top-level compounds of a selector: split on combinators outside parentheses. */
+function compounds(selector) {
+	const parts = [];
+	let depth = 0;
+	let current = "";
+	for (const char of selector) {
+		if (char === "(") depth++;
+		if (char === ")") depth--;
+		if (depth === 0 && /[\s>+~]/.test(char)) {
+			if (current) parts.push(current);
+			current = "";
+		} else {
+			current += char;
+		}
+	}
+	if (current) parts.push(current);
+	return parts;
+}
+
+const unscoped = [];
+for (const file of ["style.css", "style-game.css", "style-crayon.css"]) {
+	postcss.parse(readFileSync(resolve(distDir, file), "utf-8")).walkRules((rule) => {
+		for (const selector of rule.selectors) {
+			const parts = compounds(selector);
+			// A lone theme class is the theme definition itself.
+			if (parts.length < 2) continue;
+			if (parts.some((part) => themeClasses.some((theme) => part === `.${theme}`))) {
+				unscoped.push(`${file}: ${selector}`);
+			}
+		}
+	});
+}
+check(
+	unscoped.length === 0,
+	"theme overrides are scoped to their component (no bare `.${theme} &` ancestor selectors)",
+);
+for (const selector of unscoped.slice(0, 10)) console.error(`    ${selector}`);
+
+// scripts/split-css.ts moves a whole rule into style-game.css or style-crayon.css when its
+// selector mentions that design's classes. A rule that mixes designs (e.g. basic dark and
+// game dark in one selector list) would take the basic override out of style.css with it.
+const designClasses = {
+	basic: themeClasses.slice(0, 2),
+	game: themeClasses.slice(2, 4),
+	crayon: themeClasses.slice(4, 6),
+};
+const mixed = [];
+for (const file of ["style.css", "style-game.css", "style-crayon.css"]) {
+	postcss.parse(readFileSync(resolve(distDir, file), "utf-8")).walkRules((rule) => {
+		const designs = Object.entries(designClasses)
+			.filter(([, classes]) => classes.some((theme) => rule.selector.includes(theme)))
+			.map(([design]) => design);
+		if (designs.length > 1) mixed.push(`${file}: ${rule.selector}`);
+	});
+}
+check(mixed.length === 0, "no CSS rule mixes theme classes from different designs");
+for (const selector of mixed.slice(0, 10)) console.error(`    ${selector}`);
 
 if (failed) {
 	console.error("\nBuild output verification failed — see ✗ lines above.");
