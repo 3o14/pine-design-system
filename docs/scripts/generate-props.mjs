@@ -36,6 +36,7 @@ const COMPONENTS = [
   ["dialog", "Dialog/Dialog.tsx", "DialogProps"],
   ["dropdown", "Dropdown/Dropdown.tsx", "DropdownProps"],
   ["progress-bar", "ProgressBar/ProgressBar.tsx", "ProgressBarProps"],
+  ["spinner", "Spinner/Spinner.tsx", "SpinnerProps"],
   ["switch", "Switch/Switch.tsx", "SwitchProps"],
   ["tab", "Tab/Tab.tsx", "TabProps"],
   ["text", "Text/Text.tsx", "TextProps"],
@@ -139,9 +140,68 @@ function destructuredParams(componentFn) {
     const name = element.getPropertyNameNode()?.getText() ?? element.getName();
     names.add(name);
     const initializer = element.getInitializer();
-    if (initializer) defaults[name] = initializer.getText();
+    if (initializer) defaults[name] = defaultText(initializer);
   }
   return { names, defaults };
+}
+
+/**
+ * Text shown as a prop's default. A default that names a module-level `const` with a
+ * literal value (e.g. `label = DEFAULT_LABEL`) is resolved to that literal, so the docs
+ * show `"Loading"` instead of the identifier.
+ */
+function defaultText(initializer) {
+  if (Node.isIdentifier(initializer)) {
+    const value = moduleConstLiteral(initializer);
+    if (value) return value.getText();
+  }
+  return initializer.getText();
+}
+
+/**
+ * The literal an identifier refers to, when it names a module-level `const` (also through
+ * an import) initialized with a literal. Wrappers such as `as const`, `satisfies` and
+ * parentheses are unwrapped. Anything else returns undefined.
+ */
+function moduleConstLiteral(identifier) {
+  let symbol = identifier.getSymbol();
+  if (symbol?.isAlias()) symbol = symbol.getAliasedSymbol();
+  const declaration = symbol?.getDeclarations()[0];
+  if (!declaration || !Node.isVariableDeclaration(declaration)) return undefined;
+
+  const statement = declaration.getVariableStatement();
+  const isModuleConst =
+    statement?.getDeclarationKind() === "const" &&
+    Node.isSourceFile(statement.getParent());
+  if (!isModuleConst) return undefined;
+
+  let value = declaration.getInitializer();
+  while (
+    value &&
+    (Node.isAsExpression(value) ||
+      Node.isSatisfiesExpression(value) ||
+      Node.isParenthesizedExpression(value))
+  ) {
+    value = value.getExpression();
+  }
+  return isLiteral(value) ? value : undefined;
+}
+
+function isLiteral(node) {
+  if (!node) return false;
+  if (
+    Node.isStringLiteral(node) ||
+    Node.isNoSubstitutionTemplateLiteral(node) ||
+    Node.isNumericLiteral(node) ||
+    Node.isTrueLiteral(node) ||
+    Node.isFalseLiteral(node)
+  ) {
+    return true;
+  }
+  // Negative numbers such as -1 are a prefix unary expression around a numeric literal.
+  return (
+    Node.isPrefixUnaryExpression(node) && Node.isNumericLiteral(node.getOperand())
+  );
 }
 
 /** Map of param name -> description, from the component's `@param name - desc` JSDoc tags. */

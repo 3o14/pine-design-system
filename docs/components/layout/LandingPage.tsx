@@ -13,6 +13,7 @@ import {
   TextField,
   Dropdown,
   ProgressBar,
+  Spinner,
   Tab,
   Text,
   Tooltip,
@@ -494,6 +495,14 @@ export function LandingPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
                   <ProgressBar value={72} label="Uploading" showValue />
                   <ProgressBar value={null} label="Loading…" />
+                </div>
+              </ShowcaseCard>
+
+              <ShowcaseCard title="Spinner" themeColors={themeColors} themeMode={themeMode}>
+                <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+                  <Spinner size="small" decorative />
+                  <Spinner size="medium" intent="success" decorative />
+                  <Spinner size="large" intent="danger" decorative />
                 </div>
               </ShowcaseCard>
 

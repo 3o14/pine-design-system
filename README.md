@@ -131,6 +131,7 @@ Render one `ThemeProvider` at the root. To show another design or mode in part o
 | [**Dialog**](https://pine-design-system.vercel.app/components/dialog?utm_source=readme)                      | Modal dialog with title, description, and action buttons      |
 | [**Dropdown**](https://pine-design-system.vercel.app/components/dropdown?utm_source=readme)                    | Select input with anchored popup (`side`, `align`, `sideOffset`) |
 | [**ProgressBar**](https://pine-design-system.vercel.app/components/progress-bar?utm_source=readme)                 | Determinate and indeterminate progress with accessible value text |
+| [**Spinner**](https://pine-design-system.vercel.app/components/spinner?utm_source=readme)                     | Loading indicator for waits whose progress can't be measured   |
 | [**Switch**](https://pine-design-system.vercel.app/components/switch?utm_source=readme)                      | On/off toggle                                                 |
 | [**Tab**](https://pine-design-system.vercel.app/components/tab?utm_source=readme)                         | Tabbed navigation with accessible panels                      |
 | [**Text**](https://pine-design-system.vercel.app/components/text?utm_source=readme)                        | Typography primitive with size, weight, and intent            |

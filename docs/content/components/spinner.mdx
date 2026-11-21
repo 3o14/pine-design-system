@@ -1,0 +1,105 @@
+---
+title: Spinner
+description: "Accessible React Spinner component for loading states. Announces a screen-reader label with role=\"status\" and adapts to every theme."
+---
+
+# Spinner
+
+Shows that something is loading when progress can't be measured, such as waiting on a network response or rendering a region. It renders `role="status"` with a visually hidden `label`, so screen readers announce it politely when it appears. When you can measure progress, use [ProgressBar](/components/progress-bar) instead.
+
+## Preview
+
+<ComponentPreview code={`<Spinner />`}>
+  <SpinnerDemo />
+</ComponentPreview>
+
+## Examples
+
+### Size
+
+Match the spinner to the text or control next to it.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`small`", "", "16px. Inline with body text, or inside a button with `decorative`."],
+    ["`medium`", "✓", "24px. Most versatile size."],
+    ["`large`", "", "32px. Loading a whole card, panel, or page."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Spinner size="small" decorative />
+<Spinner size="medium" decorative />
+<Spinner size="large" decorative />`}>
+  <SpinnerSizeDemo />
+</ComponentPreview>
+
+### Intent
+
+Controls the color of the spinning arc. The track stays neutral, except with `current`, which follows the parent's text color for both; see [Decorative](#decorative) for it inside a button.
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`primary`", "✓", "General-purpose loading."],
+    ["`secondary`", "", "Secondary or supplementary loading."],
+    ["`success`", "", "Loading tied to a positive action."],
+    ["`warning`", "", "Loading that requires caution."],
+    ["`danger`", "", "Loading tied to a destructive action."],
+    ["`neutral`", "", "Low-emphasis loading."],
+    ["`current`", "", "Follows the parent's text color with a faded track. Use inside buttons and other filled surfaces."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Spinner intent="primary" decorative />
+<Spinner intent="secondary" decorative />
+<Spinner intent="success" decorative />
+<Spinner intent="warning" decorative />
+<Spinner intent="danger" decorative />
+<Spinner intent="neutral" decorative />`}>
+  <SpinnerIntentDemo />
+</ComponentPreview>
+
+### Label
+
+`label` is read by screen readers and is not shown on screen. It defaults to `"Loading"`, and a blank value falls back to it; describe what is loading when the context isn't obvious. If you also show visible text, hide that text from assistive technology so it isn't announced twice.
+
+<ComponentPreview code={`<Spinner size="small" label="Loading comments" />
+<span aria-hidden="true">Loading comments…</span>`}>
+  <SpinnerLabelDemo />
+</ComponentPreview>
+
+### Decorative
+
+Set `decorative` when the spinner is only visual: it renders no `role` and no label, and is hidden from assistive technology. Use it in two cases:
+
+- **Inside a button or other control.** ARIA treats a control's content as presentational, so a status region inside a `<button>` is never announced, and its label would leak into the button's name (e.g. "Loading Save"). Announce the loading state through the button's own text instead, such as changing "Save" to "Saving…". Set `intent="current"` so the arc follows the button's text color; an intent color can match a filled button and disappear.
+- **When several spinners are shown together.** Each regular Spinner is its own live region, so a row of them would announce "Loading" again and again. Keep one regular Spinner for the region that is loading and make the rest decorative.
+
+While the action is running, use `aria-disabled="true"` and ignore clicks rather than `disabled`: a focused button that becomes `disabled` drops keyboard focus to the page.
+
+<ComponentPreview code={`<button type="button" aria-disabled="true">
+  <Spinner size="small" intent="current" decorative />
+  Saving…
+</button>`}>
+  <SpinnerDecorativeDemo />
+</ComponentPreview>
+
+## Guidelines
+
+### Spinner vs ProgressBar
+
+- **Spinner**: progress can't be measured and the wait is short.
+- **ProgressBar**: progress can be measured (upload bytes, completed steps), or the wait is long enough that users need to know how much is left.
+
+Don't keep a Spinner on screen indefinitely — switch to a result or error state as soon as you can.
+
+### Motion
+
+In the game theme the square ring doesn't rotate: its highlighted edge steps around the square in eight positions, so it keeps a pixel-art feel and never spills out of its box. When the user has turned on `prefers-reduced-motion`, the spinner stops moving in every theme and fades slowly in and out instead, so the loading signal stays without rotation. In forced colors mode (such as Windows High Contrast) the arc and track use two distinct system colors, so the arc stays visible.
+
+## Props
+
+<PropsDoc component="spinner" />
