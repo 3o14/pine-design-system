@@ -21,8 +21,7 @@ alwaysApply: false
 ```ts
 import { style, recipe } from "@vanilla-extract/css";
 import { themeContract, type ColorIntent } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import { crayonThemes, gameThemes, themeSelector } from "@/tokens/themes/themeSelector";
 ```
 
 ## Theme-specific Overrides
