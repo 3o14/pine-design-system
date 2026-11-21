@@ -152,23 +152,56 @@ function destructuredParams(componentFn) {
  */
 function defaultText(initializer) {
   if (Node.isIdentifier(initializer)) {
-    const declaration = initializer.getSymbol()?.getDeclarations()[0];
-    const value =
-      declaration && Node.isVariableDeclaration(declaration)
-        ? declaration.getInitializer()
-        : undefined;
-    if (
-      value &&
-      (Node.isStringLiteral(value) ||
-        Node.isNoSubstitutionTemplateLiteral(value) ||
-        Node.isNumericLiteral(value) ||
-        Node.isTrueLiteral(value) ||
-        Node.isFalseLiteral(value))
-    ) {
-      return value.getText();
-    }
+    const value = moduleConstLiteral(initializer);
+    if (value) return value.getText();
   }
   return initializer.getText();
+}
+
+/**
+ * The literal an identifier refers to, when it names a module-level `const` (also through
+ * an import) initialized with a literal. Wrappers such as `as const`, `satisfies` and
+ * parentheses are unwrapped. Anything else returns undefined.
+ */
+function moduleConstLiteral(identifier) {
+  let symbol = identifier.getSymbol();
+  if (symbol?.isAlias()) symbol = symbol.getAliasedSymbol();
+  const declaration = symbol?.getDeclarations()[0];
+  if (!declaration || !Node.isVariableDeclaration(declaration)) return undefined;
+
+  const statement = declaration.getVariableStatement();
+  const isModuleConst =
+    statement?.getDeclarationKind() === "const" &&
+    Node.isSourceFile(statement.getParent());
+  if (!isModuleConst) return undefined;
+
+  let value = declaration.getInitializer();
+  while (
+    value &&
+    (Node.isAsExpression(value) ||
+      Node.isSatisfiesExpression(value) ||
+      Node.isParenthesizedExpression(value))
+  ) {
+    value = value.getExpression();
+  }
+  return isLiteral(value) ? value : undefined;
+}
+
+function isLiteral(node) {
+  if (!node) return false;
+  if (
+    Node.isStringLiteral(node) ||
+    Node.isNoSubstitutionTemplateLiteral(node) ||
+    Node.isNumericLiteral(node) ||
+    Node.isTrueLiteral(node) ||
+    Node.isFalseLiteral(node)
+  ) {
+    return true;
+  }
+  // Negative numbers such as -1 are a prefix unary expression around a numeric literal.
+  return (
+    Node.isPrefixUnaryExpression(node) && Node.isNumericLiteral(node.getOperand())
+  );
 }
 
 /** Map of param name -> description, from the component's `@param name - desc` JSDoc tags. */
