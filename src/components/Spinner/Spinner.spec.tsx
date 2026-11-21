@@ -72,12 +72,18 @@ describe("Spinner", () => {
 			);
 		});
 
-		it("falls back to 'Loading' when an untyped caller passes a null label", async () => {
-			render(<Spinner label={null as unknown as string} />);
-			await waitFor(() =>
-				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
-			);
-		});
+		it.each([
+			["null", null],
+			["a number", 3],
+		])(
+			"falls back to 'Loading' when an untyped caller passes %s",
+			async (_, value) => {
+				render(<Spinner label={value as unknown as string} />);
+				await waitFor(() =>
+					expect(screen.getByRole("status")).toHaveTextContent("Loading"),
+				);
+			},
+		);
 
 		it("keeps the region polite when consumers try to silence it", () => {
 			render(<Spinner aria-live="off" aria-atomic={false} />);
