@@ -1,23 +1,18 @@
 import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent } from "@/tokens";
-import { basicDarkTheme } from "@/tokens/themes/basic.css";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	basicThemes,
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	createCrayonBaseStyle,
 	createCrayonBeforeBaseStyle,
 	createCrayonBeforeStyle,
 	createCrayonAfterStyle,
 } from "@/tokens/themes/crayonTexture.css";
-
-const basicDarkThemeClass = String(basicDarkTheme);
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
 
 export const root = style({
 	display: "flex",
@@ -49,31 +44,32 @@ export const value = style({
 	fontVariantNumeric: "tabular-nums",
 });
 
+const darkTrack = { backgroundColor: themeContract.color.neutral.surfaceActive };
+
 const trackBase = style({
 	position: "relative",
 	width: "100%",
 	overflow: "hidden",
 	backgroundColor: themeContract.color.neutral.weak,
 	selectors: {
-		// neutral.weak는 텍스트-위-weak 대비(Button/Badge)에 맞춰 다크 테마에서
-		// 검은색에 가깝게 섞이도록 튜닝되어 있어, 텍스트가 없는 이 트랙에서는
-		// 오히려 어두운 페이지 배경과 거의 구분되지 않는다. 트랙 위엔 텍스트가
-		// 없으므로 weak(텍스트 대비용) 토큰 대신, 이미 페이지와 구분되는
-		// 일반 neutral 단계를 써야 한다.
-		[`.${basicDarkThemeClass} &, .${gameDarkThemeClass} &`]: {
-			backgroundColor: themeContract.color.neutral.surfaceActive,
-		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		// In dark themes neutral.weak is tuned to sit close to black for text-on-weak contrast
+		// (Button/Badge), so on this text-free track it nearly disappears into a dark page.
+		// Use a regular neutral step, which already stands out from the page.
+		// One rule per design: the build splits game rules into style-game.css, so a shared
+		// rule would drop the basic dark override from style.css.
+		[themeSelector([basicThemes[1]], "> &", root)]: darkTrack,
+		[themeSelector([gameThemes[1]], "> &", root)]: darkTrack,
+		[themeSelector(gameThemes, "> &", root)]: {
 			borderRadius: 0,
 			boxShadow: themeContract.shadow.pixelBox,
 			margin: themeContract.shadow.pixelBoxMargin,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, "> &", root)]: {
 			...createCrayonBaseStyle(),
 			overflow: "hidden",
 			backgroundColor: "transparent",
 		},
-		[`.${crayonLightThemeClass} &::before`]: {
+		[themeSelector([crayonThemes[0]], "> &::before", root)]: {
 			...createCrayonBeforeBaseStyle(),
 			...createCrayonBeforeStyle(
 				themeContract.color.neutral.weak,
@@ -81,7 +77,7 @@ const trackBase = style({
 				false
 			),
 		},
-		[`.${crayonDarkThemeClass} &::before`]: {
+		[themeSelector([crayonThemes[1]], "> &::before", root)]: {
 			...createCrayonBeforeBaseStyle(),
 			...createCrayonBeforeStyle(
 				themeContract.color.neutral.surface,
@@ -89,7 +85,7 @@ const trackBase = style({
 				false
 			),
 		},
-		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]: {
+		[themeSelector(crayonThemes, "> &::after", root)]: {
 			...createCrayonAfterStyle(),
 		},
 	},
@@ -116,6 +112,9 @@ const indeterminateSlide = keyframes({
 	"100%": { left: "100%" },
 });
 
+/** Path from the root, which carries the theme class, to the indicator inside the track. */
+const indicatorPath = `> :where(.${trackBase}) > &`;
+
 const indicatorBase = style({
 	position: "absolute",
 	insetBlock: 0,
@@ -128,14 +127,14 @@ const indicatorBase = style({
 			width: "40%",
 			animation: `${indeterminateSlide} 1.2s ease-in-out infinite`,
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, indicatorPath, root)]: {
 			borderRadius: 0,
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, indicatorPath, root)]: {
 			...createCrayonBaseStyle(),
 			backgroundColor: "transparent",
 		},
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]: {
+		[themeSelector(crayonThemes, `${indicatorPath}::before`, root)]: {
 			...createCrayonBeforeBaseStyle(),
 		},
 	},
@@ -158,7 +157,7 @@ const indicatorBase = style({
 const crayonFill = (intent: ColorIntent) => {
 	const color = themeContract.color[intent];
 	return {
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]:
+		[themeSelector(crayonThemes, `${indicatorPath}::before`, root)]:
 			createCrayonBeforeStyle(color.surface, color.border, false),
 	};
 };
