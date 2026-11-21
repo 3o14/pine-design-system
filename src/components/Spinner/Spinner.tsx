@@ -101,6 +101,9 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 			return (
 				<span
 					{...rest}
+					// Distinct keys make leaving decorative mode insert a fresh status region
+					// instead of adding role="status" to the existing element.
+					key="decorative"
 					ref={ref}
 					role={undefined}
 					aria-hidden="true"
@@ -114,6 +117,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 		return (
 			<span
 				{...rest}
+				key="status"
 				ref={ref}
 				// Set after the spread so consumer props can't remove or silence the live region.
 				role="status"

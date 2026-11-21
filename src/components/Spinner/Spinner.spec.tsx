@@ -112,11 +112,14 @@ describe("Spinner", () => {
 			await waitFor(() =>
 				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
 			);
+			const firstRegion = screen.getByRole("status");
 
 			rerender(<Spinner decorative />);
 			expect(screen.queryByRole("status")).not.toBeInTheDocument();
 
 			rerender(<Spinner />);
+			// A new element, not the old one with role="status" added back.
+			expect(screen.getByRole("status")).not.toBe(firstRegion);
 			expect(screen.getByRole("status").textContent).toBe("");
 			await waitFor(() =>
 				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
@@ -133,6 +136,8 @@ describe("Spinner", () => {
 		});
 	});
 
+	// A decorative spinner has no role or accessible name by design, so these tests use a
+	// test id: no semantic query can reach an element hidden from assistive technology.
 	describe("Decorative", () => {
 		it("renders no status region", () => {
 			render(<Spinner decorative />);
