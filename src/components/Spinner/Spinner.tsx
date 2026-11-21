@@ -83,8 +83,9 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 			};
 		}, [decorative]);
 
-		// An empty label would leave a live region that announces nothing.
-		const announcedLabel = label.trim() ? label : DEFAULT_LABEL;
+		// An empty label would leave a live region that announces nothing. Optional chaining
+		// also covers untyped callers that pass null.
+		const announcedLabel = label?.trim() ? label : DEFAULT_LABEL;
 
 		const ringElement = (
 			<span aria-hidden="true" className={styles.ring({ size, intent })} />
@@ -108,8 +109,10 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 			<span
 				{...rest}
 				ref={ref}
-				// Set after the spread so consumer props can't remove the live region.
+				// Set after the spread so consumer props can't remove or silence the live region.
 				role="status"
+				aria-live="polite"
+				aria-atomic="true"
 				aria-hidden={undefined}
 				className={clsx(themeClass, styles.root, className)}
 			>
