@@ -97,7 +97,7 @@ Don't keep a Spinner on screen indefinitely — switch to a result or error stat
 
 ### Motion
 
-In the game theme the spinner steps through eight positions instead of rotating smoothly. When the user has turned on `prefers-reduced-motion`, it slows down instead of stopping, so the loading signal isn't lost.
+In the game theme the square ring doesn't rotate: its highlighted edge steps around the square in eight positions, so it keeps a pixel-art feel and never spills out of its box. When the user has turned on `prefers-reduced-motion`, the spinner stops moving in every theme and fades slowly in and out instead, so the loading signal stays without rotation.
 
 ## Props
 
