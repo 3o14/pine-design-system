@@ -17,7 +17,7 @@ const meta = {
 		size: {
 			control: "select",
 			options: ["small", "medium", "large"],
-			description: "스피너 크기 (16px / 24px / 32px)",
+			description: "Spinner size (16px / 24px / 32px)",
 			table: {
 				type: { summary: "SpinnerSize" },
 				defaultValue: { summary: "medium" },
@@ -33,7 +33,7 @@ const meta = {
 				"danger",
 				"neutral",
 			],
-			description: "회전하는 호의 색상",
+			description: "Color of the spinning arc",
 			table: {
 				type: { summary: "SpinnerIntent" },
 				defaultValue: { summary: "primary" },
@@ -41,7 +41,7 @@ const meta = {
 		},
 		label: {
 			control: "text",
-			description: "스크린 리더가 읽는 텍스트 (화면에는 보이지 않음)",
+			description: "Text read by screen readers (not shown on screen)",
 			table: {
 				type: { summary: "string" },
 				defaultValue: { summary: "Loading" },

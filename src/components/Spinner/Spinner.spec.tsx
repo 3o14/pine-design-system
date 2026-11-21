@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { createRef } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import React, { createRef } from "react";
 import { Spinner } from "./Spinner";
 
 describe("Spinner", () => {
@@ -21,15 +21,52 @@ describe("Spinner", () => {
 		});
 	});
 
-	describe("Accessibility", () => {
-		it("announces 'Loading' by default", () => {
-			render(<Spinner />);
-			expect(screen.getByRole("status")).toHaveTextContent("Loading");
+	describe("Variants", () => {
+		const ringClass = (ui: React.ReactElement) =>
+			render(ui).container.querySelector("[aria-hidden='true']")!.className;
+
+		it("applies a different ring class for each size", () => {
+			const classes = (["small", "medium", "large"] as const).map((size) =>
+				ringClass(<Spinner size={size} />),
+			);
+			expect(new Set(classes).size).toBe(3);
 		});
 
-		it("announces a custom label", () => {
+		it("applies a different ring class for each intent", () => {
+			const classes = (
+				["primary", "secondary", "success", "warning", "danger", "neutral"] as const
+			).map((intent) => ringClass(<Spinner intent={intent} />));
+			expect(new Set(classes).size).toBe(6);
+		});
+	});
+
+	describe("Accessibility", () => {
+		it("mounts the status region empty so the label is announced as a change", () => {
+			render(<Spinner />);
+			expect(screen.getByRole("status").textContent).toBe("");
+		});
+
+		it("announces 'Loading' by default", async () => {
+			render(<Spinner />);
+			await waitFor(() =>
+				expect(screen.getByRole("status")).toHaveTextContent("Loading"),
+			);
+		});
+
+		it("announces a custom label", async () => {
 			render(<Spinner label="Loading comments" />);
-			expect(screen.getByRole("status")).toHaveTextContent("Loading comments");
+			await waitFor(() =>
+				expect(screen.getByRole("status")).toHaveTextContent("Loading comments"),
+			);
+		});
+
+		it("updates the label inside the same status region", async () => {
+			const { rerender } = render(<Spinner label="Loading comments" />);
+			const region = screen.getByRole("status");
+			await waitFor(() => expect(region).toHaveTextContent("Loading comments"));
+			rerender(<Spinner label="Loading replies" />);
+			expect(screen.getByRole("status")).toBe(region);
+			expect(region).toHaveTextContent("Loading replies");
 		});
 	});
 

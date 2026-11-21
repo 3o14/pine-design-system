@@ -7,7 +7,15 @@ import { useTheme } from "@/providers";
 export type SpinnerSize = "small" | "medium" | "large";
 export type SpinnerIntent = ColorIntent;
 
-export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
+/**
+ * Delay before the label is written into the status region. Screen readers only announce
+ * changes inside a live region they have already registered, so the region mounts empty
+ * and the label is filled in once it is in the accessibility tree.
+ */
+const ANNOUNCE_DELAY_MS = 100;
+
+export interface SpinnerProps
+	extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
 	/**
 	 * Size of the spinner — small (16px), medium (24px), large (32px). Match it to the
 	 * surrounding text or control. Default: 'medium'.
@@ -26,7 +34,9 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
  * Spinner indicates that something is loading when progress cannot be measured.
  *
  * Renders `role="status"`, so assistive technology announces `label` politely when the
- * spinner appears. Use ProgressBar instead when progress can be measured.
+ * spinner appears. The status region mounts empty and the label is filled in shortly
+ * after, so the announcement fires even when the Spinner is conditionally rendered.
+ * Use ProgressBar instead when progress can be measured.
  *
  * @param SpinnerProps
  * @param size - Spinner size (small, medium, large)
@@ -46,6 +56,12 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 	) => {
 		const themeContext = useTheme();
 		const themeClass = themeContext?.themeClass ?? lightTheme;
+		const [isAnnounceReady, setIsAnnounceReady] = React.useState(false);
+
+		React.useEffect(() => {
+			const timer = setTimeout(() => setIsAnnounceReady(true), ANNOUNCE_DELAY_MS);
+			return () => clearTimeout(timer);
+		}, []);
 
 		return (
 			<span
@@ -55,7 +71,9 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 				{...rest}
 			>
 				<span aria-hidden="true" className={styles.ring({ size, intent })} />
-				<span className={styles.visuallyHidden}>{label}</span>
+				<span className={styles.visuallyHidden}>
+					{isAnnounceReady ? label : null}
+				</span>
 			</span>
 		);
 	},
