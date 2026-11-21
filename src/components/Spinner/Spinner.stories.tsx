@@ -12,6 +12,7 @@ const meta = {
 		size: "medium",
 		intent: "primary",
 		label: "Loading",
+		decorative: false,
 	},
 	argTypes: {
 		size: {
@@ -47,6 +48,15 @@ const meta = {
 				defaultValue: { summary: "Loading" },
 			},
 		},
+		decorative: {
+			control: "boolean",
+			description:
+				"Visual only: no role or label, hidden from assistive technology. Use inside buttons or when several spinners are shown together.",
+			table: {
+				type: { summary: "boolean" },
+				defaultValue: { summary: "false" },
+			},
+		},
 	},
 } satisfies Meta<typeof Spinner>;
 
@@ -60,9 +70,9 @@ export const Default: Story = {};
 export const Sizes: Story = {
 	render: () => (
 		<div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-			<Spinner size="small" />
-			<Spinner size="medium" />
-			<Spinner size="large" />
+			<Spinner size="small" decorative />
+			<Spinner size="medium" decorative />
+			<Spinner size="large" decorative />
 		</div>
 	),
 };
@@ -71,12 +81,12 @@ export const Sizes: Story = {
 export const Intents: Story = {
 	render: () => (
 		<div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-			<Spinner intent="primary" />
-			<Spinner intent="secondary" />
-			<Spinner intent="success" />
-			<Spinner intent="warning" />
-			<Spinner intent="danger" />
-			<Spinner intent="neutral" />
+			<Spinner intent="primary" decorative />
+			<Spinner intent="secondary" decorative />
+			<Spinner intent="success" decorative />
+			<Spinner intent="warning" decorative />
+			<Spinner intent="danger" decorative />
+			<Spinner intent="neutral" decorative />
 		</div>
 	),
 };

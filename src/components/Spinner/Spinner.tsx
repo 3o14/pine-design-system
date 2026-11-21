@@ -28,6 +28,12 @@ export interface SpinnerProps
 	 * (e.g. "Loading comments") when the context is not obvious. Default: 'Loading'.
 	 */
 	label?: string;
+	/**
+	 * Renders a purely visual spinner with no `role` and no label, hidden from assistive
+	 * technology. Use it inside a button or other control, or when several spinners are
+	 * shown together, and announce the loading state elsewhere. Default: false.
+	 */
+	decorative?: boolean;
 }
 
 /**
@@ -38,10 +44,15 @@ export interface SpinnerProps
  * after, so the announcement fires even when the Spinner is conditionally rendered.
  * Use ProgressBar instead when progress can be measured.
  *
+ * Set `decorative` inside a button or other control: ARIA treats a control's content as
+ * presentational, so a status region there is never announced and its label leaks into
+ * the control's accessible name.
+ *
  * @param SpinnerProps
  * @param size - Spinner size (small, medium, large)
  * @param intent - Color intent of the spinning arc
  * @param label - Screen reader text (default "Loading")
+ * @param decorative - Visual only, hidden from assistive technology (default false)
  */
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 	(
@@ -49,6 +60,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 			size = "medium",
 			intent = "primary",
 			label = "Loading",
+			decorative = false,
 			className,
 			...rest
 		},
@@ -59,9 +71,27 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 		const [isAnnounceReady, setIsAnnounceReady] = React.useState(false);
 
 		React.useEffect(() => {
+			if (decorative) return;
 			const timer = setTimeout(() => setIsAnnounceReady(true), ANNOUNCE_DELAY_MS);
 			return () => clearTimeout(timer);
-		}, []);
+		}, [decorative]);
+
+		const ringElement = (
+			<span aria-hidden="true" className={styles.ring({ size, intent })} />
+		);
+
+		if (decorative) {
+			return (
+				<span
+					ref={ref}
+					aria-hidden="true"
+					className={clsx(themeClass, styles.root, className)}
+					{...rest}
+				>
+					{ringElement}
+				</span>
+			);
+		}
 
 		return (
 			<span
@@ -70,7 +100,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
 				className={clsx(themeClass, styles.root, className)}
 				{...rest}
 			>
-				<span aria-hidden="true" className={styles.ring({ size, intent })} />
+				{ringElement}
 				<span className={styles.visuallyHidden}>
 					{isAnnounceReady ? label : null}
 				</span>

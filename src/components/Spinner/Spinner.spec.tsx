@@ -70,6 +70,30 @@ describe("Spinner", () => {
 		});
 	});
 
+	describe("Decorative", () => {
+		it("renders no status region", () => {
+			render(<Spinner decorative />);
+			expect(screen.queryByRole("status")).not.toBeInTheDocument();
+		});
+
+		it("hides the whole spinner from assistive technology", () => {
+			render(<Spinner decorative data-testid="spinner" />);
+			expect(screen.getByTestId("spinner")).toHaveAttribute("aria-hidden", "true");
+		});
+
+		it("keeps a button's accessible name clean", async () => {
+			render(
+				<button type="button">
+					<Spinner decorative size="small" />
+					Save
+				</button>,
+			);
+			// Wait past the announce delay to make sure no label is written later.
+			await new Promise((resolve) => setTimeout(resolve, 150));
+			expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
+		});
+	});
+
 	describe("API", () => {
 		it("forwards ref to the root element", () => {
 			const ref = createRef<HTMLSpanElement>();
