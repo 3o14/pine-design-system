@@ -140,9 +140,35 @@ function destructuredParams(componentFn) {
     const name = element.getPropertyNameNode()?.getText() ?? element.getName();
     names.add(name);
     const initializer = element.getInitializer();
-    if (initializer) defaults[name] = initializer.getText();
+    if (initializer) defaults[name] = defaultText(initializer);
   }
   return { names, defaults };
+}
+
+/**
+ * Text shown as a prop's default. A default that names a module-level `const` with a
+ * literal value (e.g. `label = DEFAULT_LABEL`) is resolved to that literal, so the docs
+ * show `"Loading"` instead of the identifier.
+ */
+function defaultText(initializer) {
+  if (Node.isIdentifier(initializer)) {
+    const declaration = initializer.getSymbol()?.getDeclarations()[0];
+    const value =
+      declaration && Node.isVariableDeclaration(declaration)
+        ? declaration.getInitializer()
+        : undefined;
+    if (
+      value &&
+      (Node.isStringLiteral(value) ||
+        Node.isNoSubstitutionTemplateLiteral(value) ||
+        Node.isNumericLiteral(value) ||
+        Node.isTrueLiteral(value) ||
+        Node.isFalseLiteral(value))
+    ) {
+      return value.getText();
+    }
+  }
+  return initializer.getText();
 }
 
 /** Map of param name -> description, from the component's `@param name - desc` JSDoc tags. */
