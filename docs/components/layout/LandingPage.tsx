@@ -500,9 +500,9 @@ export function LandingPage() {
 
               <ShowcaseCard title="Spinner" themeColors={themeColors} themeMode={themeMode}>
                 <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-                  <Spinner size="small" />
-                  <Spinner size="medium" intent="success" />
-                  <Spinner size="large" intent="danger" />
+                  <Spinner size="small" decorative />
+                  <Spinner size="medium" intent="success" decorative />
+                  <Spinner size="large" intent="danger" decorative />
                 </div>
               </ShowcaseCard>
 

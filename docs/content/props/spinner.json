@@ -19,5 +19,12 @@
     "description": "Text announced to screen readers. It is not shown on screen. Describe what is loading (e.g. \"Loading comments\") when the context is not obvious. Default: 'Loading'.",
     "default": "\"Loading\"",
     "required": false
+  },
+  {
+    "name": "decorative",
+    "type": "boolean",
+    "description": "Renders a purely visual spinner with no `role` and no label, hidden from assistive technology. Use it inside a button or other control, or when several spinners are shown together, and announce the loading state elsewhere. Default: false.",
+    "default": "false",
+    "required": false
   }
 ]

@@ -22,16 +22,16 @@ Match the spinner to the text or control next to it.
 <DocTable
   headers={["Value", "Default", "Description"]}
   rows={[
-    ["`small`", "", "16px. Inline with body text or inside a button."],
+    ["`small`", "", "16px. Inline with body text, or inside a button with `decorative`."],
     ["`medium`", "✓", "24px. Most versatile size."],
     ["`large`", "", "32px. Loading a whole card, panel, or page."],
   ]}
   align={["left", "center", "left"]}
 />
 
-<ComponentPreview code={`<Spinner size="small" />
-<Spinner size="medium" />
-<Spinner size="large" />`}>
+<ComponentPreview code={`<Spinner size="small" decorative />
+<Spinner size="medium" decorative />
+<Spinner size="large" decorative />`}>
   <SpinnerSizeDemo />
 </ComponentPreview>
 
@@ -52,12 +52,12 @@ Controls the color of the spinning arc. The track stays neutral.
   align={["left", "center", "left"]}
 />
 
-<ComponentPreview code={`<Spinner intent="primary" />
-<Spinner intent="secondary" />
-<Spinner intent="success" />
-<Spinner intent="warning" />
-<Spinner intent="danger" />
-<Spinner intent="neutral" />`}>
+<ComponentPreview code={`<Spinner intent="primary" decorative />
+<Spinner intent="secondary" decorative />
+<Spinner intent="success" decorative />
+<Spinner intent="warning" decorative />
+<Spinner intent="danger" decorative />
+<Spinner intent="neutral" decorative />`}>
   <SpinnerIntentDemo />
 </ComponentPreview>
 
@@ -68,6 +68,22 @@ Controls the color of the spinning arc. The track stays neutral.
 <ComponentPreview code={`<Spinner size="small" label="Loading comments" />
 <span aria-hidden="true">Loading comments…</span>`}>
   <SpinnerLabelDemo />
+</ComponentPreview>
+
+### Decorative
+
+Set `decorative` when the spinner is only visual: it renders no `role` and no label, and is hidden from assistive technology. Use it in two cases:
+
+- **Inside a button or other control.** ARIA treats a control's content as presentational, so a status region inside a `<button>` is never announced, and its label would leak into the button's name (e.g. "Loading Save"). Announce the loading state through the button's own text instead, such as changing "Save" to "Saving…".
+- **When several spinners are shown together.** Each regular Spinner is its own live region, so a row of them would announce "Loading" again and again. Keep one regular Spinner for the region that is loading and make the rest decorative.
+
+While the action is running, use `aria-disabled="true"` and ignore clicks rather than `disabled`: a focused button that becomes `disabled` drops keyboard focus to the page.
+
+<ComponentPreview code={`<button type="button" aria-disabled="true">
+  <Spinner size="small" decorative />
+  Saving…
+</button>`}>
+  <SpinnerDecorativeDemo />
 </ComponentPreview>
 
 ## Guidelines

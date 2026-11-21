@@ -33,6 +33,7 @@ export {
   SpinnerSizeDemo,
   SpinnerIntentDemo,
   SpinnerLabelDemo,
+  SpinnerDecorativeDemo,
 } from "./Spinner";
 export {
   SwitchDemo,

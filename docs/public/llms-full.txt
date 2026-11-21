@@ -304,6 +304,7 @@ import { Spinner } from "pine-design-system";
 
 <Spinner />
 <Spinner size="small" label="Loading comments" />
+<button type="button" aria-disabled="true"><Spinner size="small" decorative /> Saving…</button>
 ```
 
 | Prop | Type | Default | Description |
@@ -311,8 +312,9 @@ import { Spinner } from "pine-design-system";
 | `size` | `"small" \| "medium" \| "large"` | `"medium"` | 16px / 24px / 32px. Match the surrounding text or control. |
 | `intent` | `"primary" \| "secondary" \| "success" \| "warning" \| "danger" \| "neutral"` | `"primary"` | Color of the spinning arc. |
 | `label` | `string` | `"Loading"` | Screen-reader text, not shown on screen. Describe what is loading when the context isn't obvious. |
+| `decorative` | `boolean` | `false` | Visual only: no `role` or label, hidden from assistive technology. Use inside buttons or other controls, and when several spinners are shown together. |
 
-**Do**: show a Spinner for short waits, or inside a button or region that is loading. **Don't**: render a Spinner and a ProgressBar for the same task, or keep a Spinner on screen indefinitely — switch to a result or error state.
+**Do**: show a Spinner for short waits or over a region that is loading; inside a button, set `decorative` and change the button text (e.g. "Saving…") so the state is announced. **Don't**: render a Spinner and a ProgressBar for the same task, keep a Spinner on screen indefinitely — switch to a result or error state — or put a non-decorative Spinner inside a button.
 
 ---
 
