@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Tooltip, TooltipProvider } from "./Tooltip";
+import * as styles from "./Tooltip.css";
 import { ThemeProvider } from "@/providers";
 import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
 import { gameLightTheme } from "@/tokens/themes";
@@ -25,7 +26,7 @@ describe("Tooltip", () => {
 			);
 		});
 
-		it("puts the nested provider's theme class on an ancestor of the popup", () => {
+		it("puts the nested provider's theme class on the portal its styles are scoped to", () => {
 			// The outer provider owns <html>, so a match on <html> can't make this pass.
 			render(
 				<ThemeProvider design="basic" theme="light" syncWithSystem={false}>
@@ -38,11 +39,12 @@ describe("Tooltip", () => {
 			);
 
 			expect(document.documentElement).not.toHaveClass(gameLightTheme);
-			// The game popup styles use `.${gameLightTheme} &`, which needs an ancestor,
-			// so the popup itself carrying the class is not enough.
-			expect(
-				screen.getByRole("tooltip").parentElement?.closest(`.${gameLightTheme}`),
-			).not.toBeNull();
+			// Theme overrides are scoped to the portal (portal > positioner > tooltip), so that
+			// element must carry both the nearest provider's theme class and the portal marker.
+			expect(screen.getByRole("tooltip").parentElement?.parentElement).toHaveClass(
+				gameLightTheme,
+				styles.portal,
+			);
 		});
 	});
 
