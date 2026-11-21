@@ -7,7 +7,9 @@ const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
 const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
 
-/** Color of the moving arc, set per intent. */
+/** Intent color of the arc, set per variant. */
+const intentColor = createVar();
+/** Color actually painted on the moving arc: the intent color, or a system color in forced colors. */
 const arcColor = createVar();
 /** Color of the track (the rest of the ring). */
 const trackColor = createVar();
@@ -62,6 +64,7 @@ const ringBase = style({
 		// The track uses neutral.border; neutral.weak/surface disappear into light and dark
 		// backgrounds on a thin ring, while the border token stands out in every theme.
 		[trackColor]: themeContract.color.neutral.border,
+		[arcColor]: intentColor,
 	},
 	display: "block",
 	boxSizing: "border-box",
@@ -77,6 +80,15 @@ const ringBase = style({
 		},
 	},
 	"@media": {
+		// Forced colors paint every border side the same system color, which hides the arc
+		// and makes the spinner look static. Use two distinct system colors instead.
+		"(forced-colors: active)": {
+			vars: {
+				[trackColor]: "GrayText",
+				[arcColor]: "CanvasText",
+			},
+			forcedColorAdjust: "none",
+		},
 		"(prefers-reduced-motion: reduce)": {
 			animation: reducedMotionAnimation,
 			selectors: {
@@ -99,13 +111,13 @@ export const ring = recipe({
 			large: { width: "32px", height: "32px", borderWidth: "4px" },
 		},
 		intent: {
-			primary: { vars: { [arcColor]: themeContract.color.primary.surface } },
-			secondary: { vars: { [arcColor]: themeContract.color.secondary.surface } },
-			success: { vars: { [arcColor]: themeContract.color.success.surface } },
-			warning: { vars: { [arcColor]: themeContract.color.warning.surface } },
-			danger: { vars: { [arcColor]: themeContract.color.danger.surface } },
+			primary: { vars: { [intentColor]: themeContract.color.primary.surface } },
+			secondary: { vars: { [intentColor]: themeContract.color.secondary.surface } },
+			success: { vars: { [intentColor]: themeContract.color.success.surface } },
+			warning: { vars: { [intentColor]: themeContract.color.warning.surface } },
+			danger: { vars: { [intentColor]: themeContract.color.danger.surface } },
 			// neutral.surface is nearly the track color and hides the arc, so use textMuted.
-			neutral: { vars: { [arcColor]: themeContract.color.surface.textMuted } },
+			neutral: { vars: { [intentColor]: themeContract.color.surface.textMuted } },
 		},
 	},
 
