@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import React, { createRef } from "react";
 import { Spinner } from "./Spinner";
+import { ThemeProvider } from "@/providers";
+import { basicLightTheme, gameLightTheme } from "@/tokens/themes";
 
 describe("Spinner", () => {
 	describe("Rendering", () => {
@@ -167,6 +169,32 @@ describe("Spinner", () => {
 			// Wait past the announce delay to make sure no label is written later.
 			await new Promise((resolve) => setTimeout(resolve, 150));
 			expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
+		});
+	});
+
+	describe("Theming", () => {
+		// The game styles match the theme class on the Spinner's own root, so the root must
+		// carry the nearest provider's class, not an outer one.
+		it("takes the theme class from the nearest ThemeProvider", () => {
+			render(
+				<ThemeProvider design="game" syncWithSystem={false}>
+					<ThemeProvider design="basic" syncWithSystem={false}>
+						<Spinner />
+					</ThemeProvider>
+				</ThemeProvider>,
+			);
+			const region = screen.getByRole("status");
+			expect(region).toHaveClass(basicLightTheme);
+			expect(region).not.toHaveClass(gameLightTheme);
+		});
+
+		it("carries the game theme class inside a game ThemeProvider", () => {
+			render(
+				<ThemeProvider design="game" syncWithSystem={false}>
+					<Spinner />
+				</ThemeProvider>,
+			);
+			expect(screen.getByRole("status")).toHaveClass(gameLightTheme);
 		});
 	});
 
