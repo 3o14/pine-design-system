@@ -1,10 +1,7 @@
 import { style, keyframes, createVar } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
+import { gameThemes, themeSelector } from "@/tokens/themes/themeSelector";
 
 /** Intent color of the arc, set per variant. */
 const intentColor = createVar();
@@ -58,14 +55,8 @@ export const root = style({
 	position: "relative",
 });
 
-/**
- * Matches a ring whose own Spinner root carries a game theme class. The root always gets
- * the active theme class from useTheme(), so scoping to it keeps a nested basic or crayon
- * ThemeProvider from inheriting the game styles through an ancestor's theme class.
- */
-const gameThemeSelector = [gameLightThemeClass, gameDarkThemeClass]
-	.map((themeClass) => `.${root}.${themeClass} > &`)
-	.join(", ");
+/** Matches a ring whose own Spinner root carries a game theme class (root > ring). */
+const gameThemeSelector = themeSelector(gameThemes, "> &", root);
 
 const ringBase = style({
 	vars: {
