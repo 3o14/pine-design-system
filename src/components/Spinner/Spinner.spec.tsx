@@ -39,9 +39,17 @@ describe("Spinner", () => {
 
 		it("applies a different ring class for each intent", () => {
 			const classes = (
-				["primary", "secondary", "success", "warning", "danger", "neutral"] as const
+				[
+					"primary",
+					"secondary",
+					"success",
+					"warning",
+					"danger",
+					"neutral",
+					"current",
+				] as const
 			).map((intent) => ringClass(<Spinner intent={intent} />));
-			expect(new Set(classes).size).toBe(6);
+			expect(new Set(classes).size).toBe(7);
 		});
 	});
 

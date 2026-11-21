@@ -34,8 +34,10 @@ const meta = {
 				"warning",
 				"danger",
 				"neutral",
+				"current",
 			],
-			description: "Color of the spinning arc",
+			description:
+				"Color of the spinning arc. 'current' follows the parent's text color, for use inside buttons.",
 			table: {
 				type: { summary: "SpinnerIntent" },
 				defaultValue: { summary: "primary" },
@@ -106,7 +108,7 @@ export const WithText: Story = {
 export const InButton: Story = {
 	render: () => (
 		<Button aria-disabled="true" size="small">
-			<Spinner size="small" decorative />
+			<Spinner size="small" intent="current" decorative />
 			Saving…
 		</Button>
 	),

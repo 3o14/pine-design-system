@@ -5,7 +5,8 @@ import { lightTheme, type ColorIntent } from "@/tokens";
 import { useTheme } from "@/providers";
 
 export type SpinnerSize = "small" | "medium" | "large";
-export type SpinnerIntent = ColorIntent;
+/** A color intent, or "current" to follow the parent's text color (e.g. inside a button). */
+export type SpinnerIntent = ColorIntent | "current";
 
 /**
  * Delay before the label is written into the status region. Screen readers only announce
@@ -23,7 +24,11 @@ export interface SpinnerProps
 	 * surrounding text or control. Default: 'medium'.
 	 */
 	size?: SpinnerSize;
-	/** Color intent of the spinning arc (primary, secondary, success, warning, danger, neutral). Default: 'primary'. */
+	/**
+	 * Color intent of the spinning arc (primary, secondary, success, warning, danger, neutral),
+	 * or 'current' to use the parent's text color, with a faded track. Use 'current' inside
+	 * buttons and other filled surfaces so the arc contrasts with them. Default: 'primary'.
+	 */
 	intent?: SpinnerIntent;
 	/**
 	 * Text announced to screen readers. It is not shown on screen. Describe what is loading

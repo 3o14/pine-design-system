@@ -118,6 +118,14 @@ export const ring = recipe({
 			danger: { vars: { [intentColor]: themeContract.color.danger.surface } },
 			// neutral.surface is nearly the track color and hides the arc, so use textMuted.
 			neutral: { vars: { [intentColor]: themeContract.color.surface.textMuted } },
+			// Follows the parent's text color so the arc contrasts with any filled surface,
+			// such as a solid button; the track is the same color faded.
+			current: {
+				vars: {
+					[intentColor]: "currentColor",
+					[trackColor]: "color-mix(in srgb, currentColor 30%, transparent)",
+				},
+			},
 		},
 	},
 
