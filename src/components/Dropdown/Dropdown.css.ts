@@ -594,31 +594,3 @@ export const menuItem = recipe({
 		intent: "primary",
 	},
 });
-
-export const divider = style({
-	height: "1px",
-	backgroundColor: themeContract.color.surface.divider,
-	margin: `${themeContract.spacing.xxs} 0`,
-	selectors: {
-		[themeSelector(crayonThemes, `${itemPath}&`, portal)]: {
-			position: "relative",
-			zIndex: 1,
-		},
-	},
-});
-
-export const groupLabel = style({
-	padding: `${themeContract.spacing.xs} ${themeContract.spacing.sm}`,
-	fontSize: themeContract.typography.fontSize.xsmall,
-	fontFamily: themeContract.typography.fontFamily.sans,
-	fontWeight: themeContract.typography.fontWeight.semibold,
-	color: themeContract.color.surface.textMuted,
-	textTransform: "uppercase",
-	letterSpacing: "0.05em",
-	selectors: {
-		[themeSelector(crayonThemes, `${itemPath}&`, portal)]: {
-			position: "relative",
-			zIndex: 1,
-		},
-	},
-});
