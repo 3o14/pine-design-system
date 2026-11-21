@@ -1,15 +1,51 @@
-import { style, keyframes } from "@vanilla-extract/css";
+import { style, keyframes, createVar } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract } from "@/tokens";
 import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
 
 const gameLightThemeClass = String(gameLightTheme);
 const gameDarkThemeClass = String(gameDarkTheme);
+const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
+
+/** Color of the moving arc, set per intent. */
+const arcColor = createVar();
+/** Color of the track (the rest of the ring). */
+const trackColor = createVar();
 
 const spin = keyframes({
 	from: { transform: "rotate(0deg)" },
 	to: { transform: "rotate(360deg)" },
 });
+
+/**
+ * Game theme: the square never rotates, so it can't spill out of its box as a diamond.
+ * Instead the highlighted edge walks around the square in eight steps.
+ */
+const sides = (top: boolean, right: boolean, bottom: boolean, left: boolean) => ({
+	borderTopColor: top ? arcColor : trackColor,
+	borderRightColor: right ? arcColor : trackColor,
+	borderBottomColor: bottom ? arcColor : trackColor,
+	borderLeftColor: left ? arcColor : trackColor,
+});
+
+const chase = keyframes({
+	"0%, 100%": sides(true, false, false, false),
+	"12.5%": sides(true, true, false, false),
+	"25%": sides(false, true, false, false),
+	"37.5%": sides(false, true, true, false),
+	"50%": sides(false, false, true, false),
+	"62.5%": sides(false, false, true, true),
+	"75%": sides(false, false, false, true),
+	"87.5%": sides(true, false, false, true),
+});
+
+/** Reduced motion: no rotation or travel, only a slow fade that still signals activity. */
+const pulse = keyframes({
+	"0%, 100%": { opacity: 1 },
+	"50%": { opacity: 0.4 },
+});
+
+const reducedMotionAnimation = `${pulse} 2s ease-in-out infinite`;
 
 export const root = style({
 	display: "inline-flex",
@@ -22,26 +58,33 @@ export const root = style({
 });
 
 const ringBase = style({
+	vars: {
+		// The track uses neutral.border; neutral.weak/surface disappear into light and dark
+		// backgrounds on a thin ring, while the border token stands out in every theme.
+		[trackColor]: themeContract.color.neutral.border,
+	},
 	display: "block",
 	boxSizing: "border-box",
 	borderStyle: "solid",
 	borderRadius: "50%",
-	// The track (the whole ring) uses neutral.border; the spinning arc uses the intent color.
-	// neutral.weak/surface disappear into light and dark backgrounds on a thin ring,
-	// so use the border token, which stands out from the background in every theme.
-	borderColor: themeContract.color.neutral.border,
+	borderColor: trackColor,
+	borderTopColor: arcColor,
 	animation: `${spin} 0.8s linear infinite`,
 	selectors: {
-		// Game theme: a square ring rotating in 8 steps for a pixel-art feel.
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[gameThemeSelector]: {
 			borderRadius: 0,
-			animationTimingFunction: "steps(8)",
+			animation: `${chase} 0.8s step-end infinite`,
 		},
 	},
 	"@media": {
-		// Stopping the rotation would remove the loading signal, so only slow it down.
 		"(prefers-reduced-motion: reduce)": {
-			animationDuration: "2.4s",
+			animation: reducedMotionAnimation,
+			selectors: {
+				// Repeat the game selector so it outranks the game chase animation above.
+				[gameThemeSelector]: {
+					animation: reducedMotionAnimation,
+				},
+			},
 		},
 	},
 });
@@ -56,13 +99,13 @@ export const ring = recipe({
 			large: { width: "32px", height: "32px", borderWidth: "4px" },
 		},
 		intent: {
-			primary: { borderTopColor: themeContract.color.primary.surface },
-			secondary: { borderTopColor: themeContract.color.secondary.surface },
-			success: { borderTopColor: themeContract.color.success.surface },
-			warning: { borderTopColor: themeContract.color.warning.surface },
-			danger: { borderTopColor: themeContract.color.danger.surface },
+			primary: { vars: { [arcColor]: themeContract.color.primary.surface } },
+			secondary: { vars: { [arcColor]: themeContract.color.secondary.surface } },
+			success: { vars: { [arcColor]: themeContract.color.success.surface } },
+			warning: { vars: { [arcColor]: themeContract.color.warning.surface } },
+			danger: { vars: { [arcColor]: themeContract.color.danger.surface } },
 			// neutral.surface is nearly the track color and hides the arc, so use textMuted.
-			neutral: { borderTopColor: themeContract.color.surface.textMuted },
+			neutral: { vars: { [arcColor]: themeContract.color.surface.textMuted } },
 		},
 	},
 
