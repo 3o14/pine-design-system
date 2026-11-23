@@ -56,7 +56,7 @@ const meta = {
 		rounded: {
 			control: "select",
 			options: ["small", "medium", "large"],
-			description: "Button 둥근 모서리 크기",
+			description: "Corner radius of the button",
 			table: {
 				type: { summary: "ButtonRounded" },
 			},
@@ -264,8 +264,9 @@ export const Playground: Story = {
 // Custom Primary Color
 export const CustomPrimaryColor: Story = {
 	render: (args, context) => {
-		const mode = (context.globals?.mode || "light") as "light" | "dark";
-		const theme = (context.globals?.themeName || "basic") as
+		// Follow the toolbar's theme and design globals (see .storybook/preview.tsx).
+		const theme = (context.globals?.theme || "light") as "light" | "dark";
+		const design = (context.globals?.design || "basic") as
 			| "basic"
 			| "game"
 			| "crayon";
@@ -276,7 +277,7 @@ export const CustomPrimaryColor: Story = {
 					<h3 style={{ margin: 0, marginBottom: "1rem" }}>
 						Gray Primary (#D3D1CC)
 					</h3>
-					<ThemeProvider primaryColor="#D3D1CC" theme={theme} mode={mode}>
+					<ThemeProvider primaryColor="#D3D1CC" theme={theme} design={design}>
 						<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
 							<Button {...args} variant="solid">
 								Solid
@@ -301,7 +302,7 @@ export const CustomPrimaryColor: Story = {
 					<h3 style={{ margin: 0, marginBottom: "1rem" }}>
 						Green Primary (#10b981)
 					</h3>
-					<ThemeProvider primaryColor="#10b981" theme={theme} mode={mode}>
+					<ThemeProvider primaryColor="#10b981" theme={theme} design={design}>
 						<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
 							<Button {...args} variant="solid">
 								Solid
@@ -326,7 +327,7 @@ export const CustomPrimaryColor: Story = {
 					<h3 style={{ margin: 0, marginBottom: "1rem" }}>
 						Red Primary (#ef4444)
 					</h3>
-					<ThemeProvider primaryColor="#ef4444" theme={theme} mode={mode}>
+					<ThemeProvider primaryColor="#ef4444" theme={theme} design={design}>
 						<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
 							<Button {...args} variant="solid">
 								Solid
@@ -351,7 +352,7 @@ export const CustomPrimaryColor: Story = {
 					<h3 style={{ margin: 0, marginBottom: "1rem" }}>
 						Purple Primary (#8b5cf6)
 					</h3>
-					<ThemeProvider primaryColor="#8b5cf6" theme={theme} mode={mode}>
+					<ThemeProvider primaryColor="#8b5cf6" theme={theme} design={design}>
 						<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
 							<Button {...args} variant="solid">
 								Solid
@@ -376,7 +377,7 @@ export const CustomPrimaryColor: Story = {
 					<h3 style={{ margin: 0, marginBottom: "1rem" }}>
 						Orange Primary (#f97316)
 					</h3>
-					<ThemeProvider primaryColor="#f97316" theme={theme} mode={mode}>
+					<ThemeProvider primaryColor="#f97316" theme={theme} design={design}>
 						<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
 							<Button {...args} variant="solid">
 								Solid
@@ -406,7 +407,7 @@ export const CustomPrimaryColor: Story = {
 		docs: {
 			description: {
 				story:
-					"primaryColor prop을 사용하여 커스텀 primary 색상을 설정할 수 있습니다. 각 variant(solid, outline, ghost, weak)와 disabled 상태의 색상이 자동으로 계산됩니다.",
+					"Set a custom primary color with the primaryColor prop. The colors for each variant (solid, outline, ghost, weak) and the disabled state are derived automatically.",
 			},
 		},
 	},
