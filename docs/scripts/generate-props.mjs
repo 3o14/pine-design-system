@@ -30,6 +30,7 @@ const OUTPUT_DIR = join(__dirname, "../content/props");
 
 /** [output basename, source file (relative to src/components), exported type name]. */
 const COMPONENTS = [
+  ["alert", "Alert/Alert.tsx", "AlertProps"],
   ["badge", "Badge/Badge.tsx", "BadgeProps"],
   ["button", "Button/Button.tsx", "ButtonProps"],
   ["checkbox", "Checkbox/Checkbox.tsx", "CheckboxProps"],

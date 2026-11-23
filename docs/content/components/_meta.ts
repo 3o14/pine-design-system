@@ -1,4 +1,5 @@
 export default {
+  alert: "Alert",
   button: "Button",
   badge: "Badge",
   checkbox: "Checkbox",

@@ -1,0 +1,60 @@
+[
+  {
+    "name": "intent",
+    "type": "\"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\" | \"neutral\"",
+    "description": "Semantic color intent. 'primary' for general information, 'success' for a completed action, 'warning' for something that needs attention, 'danger' for an error or a failed action. 'secondary' and 'neutral' are for low-emphasis notes. Default: 'primary'.",
+    "default": "\"primary\"",
+    "required": false
+  },
+  {
+    "name": "variant",
+    "type": "\"weak\" | \"outline\" | \"solid\"",
+    "description": "Visual emphasis. 'weak' (tinted background and border) suits most alerts. 'outline' (border only) is quieter, for alerts that sit among other content. 'solid' (filled background) is the strongest; keep it for the one message on the screen that must not be missed. Default: 'weak'.",
+    "default": "\"weak\"",
+    "required": false
+  },
+  {
+    "name": "rounded",
+    "type": "\"small\" | \"medium\" | \"large\"",
+    "description": "Corner radius (small, medium, large). In the game theme the pixel frame's corners are stepped instead. Default: 'medium'.",
+    "default": "\"medium\"",
+    "required": false
+  },
+  {
+    "name": "title",
+    "type": "ReactNode",
+    "description": "Short summary shown in bold above the description, such as \"Couldn't save changes\".",
+    "required": false
+  },
+  {
+    "name": "children",
+    "type": "ReactNode",
+    "description": "Description: what happened and what the user can do about it.",
+    "required": false
+  },
+  {
+    "name": "icon",
+    "type": "ReactNode",
+    "description": "Icon shown before the text. Defaults to an icon that matches `intent`. Pass your own element to replace it, or `false` to show no icon. Custom icons should be decorative (`aria-hidden`), since the text carries the message.",
+    "required": false
+  },
+  {
+    "name": "action",
+    "type": "ReactNode",
+    "description": "Actions shown below the text, such as a \"Retry\" button or a link.",
+    "required": false
+  },
+  {
+    "name": "onClose",
+    "type": "() => void",
+    "description": "Shows a dismiss button and is called when it is pressed. The Alert doesn't hide itself: remove it in this callback, and move focus to a sensible element (for example the control that the alert was about), since the focused button disappears with it.",
+    "required": false
+  },
+  {
+    "name": "closeLabel",
+    "type": "string",
+    "description": "Accessible name of the dismiss button. Default: 'Dismiss'.",
+    "default": "\"Dismiss\"",
+    "required": false
+  }
+]

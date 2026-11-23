@@ -13,6 +13,11 @@ import {
 } from "./components/foundation";
 import {
   IntroDemo,
+  AlertDemo,
+  AlertIntentDemo,
+  AlertVariantDemo,
+  AlertActionDemo,
+  AlertDismissDemo,
   ButtonDemo,
   ButtonVariantDemo,
   ButtonSizeDemo,
@@ -82,6 +87,11 @@ export function useMDXComponents(components?: Record<string, unknown>) {
     ShadowScale,
     SpacingScale,
     IntroDemo,
+    AlertDemo,
+    AlertIntentDemo,
+    AlertVariantDemo,
+    AlertActionDemo,
+    AlertDismissDemo,
     ButtonDemo,
     ButtonVariantDemo,
     ButtonSizeDemo,

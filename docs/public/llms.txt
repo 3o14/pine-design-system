@@ -26,6 +26,7 @@ This file ships two ways: live at `https://pine-design-system.vercel.app/llms.tx
 - [Design Tokens JSON](https://pine-design-system.vercel.app/tokens/design-tokens.json): All of the above as a single machine-readable file in W3C Design Tokens (DTCG) format — `$value`/`$type` pairs, foundation tokens plus resolved semantic tokens for all 3 themes × 2 modes
 
 ## Components
+- [Alert](https://pine-design-system.vercel.app/components/alert): Inline message for errors, warnings, and notices that doesn't block the page
 - [Badge](https://pine-design-system.vercel.app/components/badge): Inline status/label/tag indicator
 - [Button](https://pine-design-system.vercel.app/components/button): Primary interactive action trigger
 - [Checkbox](https://pine-design-system.vercel.app/components/checkbox): Multi-select / agreement control
