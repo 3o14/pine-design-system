@@ -1,4 +1,5 @@
 import { PropsTable, type PropDefinition } from "./PropsTable";
+import alertProps from "../../content/props/alert.json";
 import buttonProps from "../../content/props/button.json";
 import badgeProps from "../../content/props/badge.json";
 import checkboxProps from "../../content/props/checkbox.json";
@@ -14,6 +15,7 @@ import tooltipProps from "../../content/props/tooltip.json";
 import tooltipProviderProps from "../../content/props/tooltip-provider.json";
 
 const PROPS_MAP: Record<string, PropDefinition[]> = {
+  alert: alertProps,
   button: buttonProps,
   badge: badgeProps,
   checkbox: checkboxProps,

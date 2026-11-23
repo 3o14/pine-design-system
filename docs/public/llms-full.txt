@@ -109,6 +109,36 @@ Import path for all components and tokens: `"pine-design-system"`.
 
 ---
 
+### Alert
+
+Inline message for errors, warnings, and notices. It sits in the flow of the page and doesn't block it; use Dialog instead when the user must respond before continuing. `danger` and `warning` render `role="alert"` (announced immediately); the other intents render `role="status"` (announced politely). Pass `role` to override it, e.g. `role="none"` for a static note present from page load. A `role="status"` region added together with its text is often not announced; keep the Alert mounted and change its content, or pass `role="alert"`, when a polite message must be heard.
+
+```tsx
+import { Alert, Button } from "pine-design-system";
+
+<Alert title="New version available">Reload the page to get the latest features.</Alert>
+<Alert intent="danger" title="Upload failed" action={<Button size="small" intent="danger">Choose another file</Button>}>
+  report-2026.pdf is larger than 10 MB.
+</Alert>
+{open && <Alert intent="danger" title="Couldn't save changes" onClose={() => setOpen(false)}>Check your connection and try again.</Alert>}
+```
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `intent` | `"primary" \| "secondary" \| "success" \| "warning" \| "danger" \| "neutral"` | `"primary"` | Color, default icon, and role (`alert` for danger/warning, `status` otherwise). |
+| `variant` | `"weak" \| "outline" \| "solid"` | `"weak"` | Tinted, border only, or filled. Keep `solid` for the one message that must not be missed. |
+| `rounded` | `"small" \| "medium" \| "large"` | `"medium"` | Corner radius; stepped pixel corners in the game theme. |
+| `title` | `ReactNode` | — | Bold summary line. |
+| `children` | `ReactNode` | — | Description: what happened and what to do next. |
+| `icon` | `ReactNode` | intent icon | Custom decorative icon, or `false` for none. |
+| `action` | `ReactNode` | — | Buttons or links shown below the text. |
+| `onClose` | `() => void` | — | Shows a dismiss button. The Alert doesn't hide itself: remove it here and move focus to a sensible element. |
+| `closeLabel` | `string` | `"Dismiss"` | Accessible name of the dismiss button. A blank value falls back to the default. |
+
+**Do**: say what happened and how to fix it, put the fix in `action` when there is one, and remove the alert and restore focus in `onClose`. **Don't**: use an Alert for a decision the user must make (use Dialog), stack several `solid` alerts on one screen, or write vague messages such as "Something went wrong".
+
+---
+
 ### Badge
 
 Inline component for status, labels, categories. Use next to text to convey supplementary information or list-item state.

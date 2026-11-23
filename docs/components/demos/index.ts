@@ -1,4 +1,11 @@
 export {
+  AlertDemo,
+  AlertIntentDemo,
+  AlertVariantDemo,
+  AlertActionDemo,
+  AlertDismissDemo,
+} from "./Alert";
+export {
   ButtonDemo,
   ButtonVariantDemo,
   ButtonSizeDemo,

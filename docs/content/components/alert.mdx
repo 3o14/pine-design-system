@@ -1,0 +1,138 @@
+---
+title: Alert
+description: "Accessible React Alert component for inline messages. Announces errors and warnings with role=\"alert\", supports actions and dismissal, and adapts to every theme."
+---
+
+# Alert
+
+Shows a message inside the page, such as a failed save, a form error summary, or an upcoming maintenance notice. It sits in the flow of the content and doesn't block anything, so users can read it and keep working. When the user must respond before they can continue, use [Dialog](/components/dialog) instead.
+
+## Preview
+
+<ComponentPreview code={`<Alert title="New version available">
+  Reload the page to get the latest features.
+</Alert>`}>
+  <AlertDemo />
+</ComponentPreview>
+
+## Examples
+
+### Intent
+
+Sets the color and the default icon. Each intent has its own icon shape, so the meaning doesn't rely on color alone.
+
+<DocTable
+  headers={["Value", "Default", "Icon", "Description"]}
+  rows={[
+    ["`primary`", "✓", "Info", "General information, such as a new feature or a tip."],
+    ["`secondary`", "", "Info", "Supplementary notes."],
+    ["`success`", "", "Check", "A completed action, such as saved changes."],
+    ["`warning`", "", "Triangle", "Something that needs attention before it becomes a problem."],
+    ["`danger`", "", "Cross", "An error or a failed action."],
+    ["`neutral`", "", "Info", "Low-emphasis notes, such as a read-only state."],
+  ]}
+  align={["left", "center", "left", "left"]}
+/>
+
+<ComponentPreview code={`<Alert intent="primary" title="New version available">…</Alert>
+<Alert intent="success" title="Changes saved">…</Alert>
+<Alert intent="warning" title="Storage almost full">…</Alert>
+<Alert intent="danger" title="Couldn't save changes">…</Alert>
+<Alert intent="neutral" title="Read-only mode">…</Alert>`}>
+  <AlertIntentDemo />
+</ComponentPreview>
+
+### Variant
+
+<DocTable
+  headers={["Value", "Default", "Description"]}
+  rows={[
+    ["`weak`", "✓", "Tinted background and border. Suits most alerts."],
+    ["`outline`", "", "Border only. Quieter, for alerts that sit among other content."],
+    ["`solid`", "", "Filled background. The strongest; keep it for the one message on the screen that must not be missed."],
+  ]}
+  align={["left", "center", "left"]}
+/>
+
+<ComponentPreview code={`<Alert variant="weak" intent="danger" title="Weak">…</Alert>
+<Alert variant="outline" intent="danger" title="Outline">…</Alert>
+<Alert variant="solid" intent="danger" title="Solid">…</Alert>`}>
+  <AlertVariantDemo />
+</ComponentPreview>
+
+In `weak` and `outline` the text uses the theme's regular text color, so it stays readable for every intent. The icon blends the intent color with the text color, so it stands out on the tinted background in every theme. In the game theme the alert keeps a 4px margin on every side, because its pixel frame is drawn outside the box.
+
+### Action
+
+Pass buttons or links to `action` to let users fix the problem right from the alert.
+
+<ComponentPreview code={`<Alert
+  intent="danger"
+  title="Upload failed"
+  action={
+    <>
+      <Button size="small" intent="danger">Choose another file</Button>
+      <Button size="small" variant="ghost" intent="neutral">Learn about limits</Button>
+    </>
+  }
+>
+  report-2026.pdf is larger than 10 MB.
+</Alert>`}>
+  <AlertActionDemo />
+</ComponentPreview>
+
+### Dismiss
+
+Passing `onClose` shows a dismiss button. The Alert doesn't hide itself: remove it in `onClose`. The focused button disappears with it, so move focus to a sensible element, such as the control the alert was about. Name the button with `closeLabel` when "Dismiss" alone is ambiguous, for example when several alerts are on the page.
+
+<ComponentPreview code={`const [open, setOpen] = useState(true);
+
+{open && (
+  <Alert intent="success" title="Changes saved" onClose={() => setOpen(false)}>
+    Your profile is up to date.
+  </Alert>
+)}`}>
+  <AlertDismissDemo />
+</ComponentPreview>
+
+### Icon
+
+`icon` replaces the default icon with your own element. Pass `false` to show no icon. Keep custom icons decorative (`aria-hidden="true"`), since the text carries the message.
+
+## Accessibility
+
+The role follows `intent`, so screen readers announce the alert when it appears:
+
+<DocTable
+  headers={["Intent", "Role", "Announcement"]}
+  rows={[
+    ["`danger`, `warning`", "`alert`", "Immediately, interrupting what the screen reader is reading."],
+    ["`primary`, `secondary`, `success`, `neutral`", "`status`", "Politely, after the current sentence."],
+  ]}
+  align={["left", "left", "left"]}
+/>
+
+Pass `role` to override it. Use `role="none"` for a static note that is part of the page from the start, so it isn't announced as a change.
+
+Screen readers announce `role="alert"` as soon as it is added to the page, but often skip a `role="status"` region that is added together with its text. For a polite message that must be heard, such as "Changes saved", keep the Alert mounted and change its content, or pass `role="alert"`.
+
+In forced colors mode (such as Windows High Contrast) the border, the icon, and its glyph switch to system colors, so the alert stays distinct.
+
+## Guidelines
+
+### Alert vs Dialog
+
+- **Alert**: the user only needs to know. It sits in the page, and the rest of the page keeps working.
+- **Dialog**: the user must answer before continuing, such as confirming a delete.
+
+Report a failed save with an Alert. Ask "Delete this project?" with a Dialog.
+
+### Writing
+
+- Put the summary in `title` and what to do next in the description.
+- Say what happened and how to fix it. Avoid vague messages such as "Something went wrong".
+- Show one Alert per problem, and don't stack several `solid` alerts on the same screen.
+
+## Props
+
+<PropsDoc component="alert" />
