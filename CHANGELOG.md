@@ -1,5 +1,22 @@
 # pine-design-system
 
+## 1.5.0
+
+### Minor Changes
+
+- b6a3374: Add a `Spinner` component for loading states whose progress can't be measured.
+  - `size` (`small` 16px, `medium` 24px, `large` 32px) and `intent` (the color of the spinning arc; `current` follows the parent's text color for use inside buttons).
+  - Renders `role="status"` with a visually hidden `label` (default `"Loading"`) so screen readers announce it.
+  - `decorative` renders a purely visual spinner (no role, hidden from assistive technology) for use inside buttons or alongside other spinners.
+  - In the game theme the highlighted edge steps around a square ring in eight positions. Under `prefers-reduced-motion` the spinner stops moving and fades slowly instead. In forced colors mode the arc uses a distinct system color so it stays visible.
+
+### Patch Changes
+
+- 6780f8b: Components under a nested `ThemeProvider` no longer pick up the outer provider's theme styles. Game and crayon overrides matched the theme class on any ancestor, and the outermost provider puts its class on `<html>`, so a nested basic provider still rendered game pixel frames, a crayon provider inside a game one got both themes at once, and popups followed `<html>` instead of their own provider. Overrides now apply only to the theme of the component's own root, or of its popup's portal.
+  - Affected: `Badge`, `Button`, `Checkbox`, `Dialog`, `Dropdown`, `ProgressBar`, `Switch`, `Tab`, `TextField`, `Tooltip`.
+  - `ProgressBar`: the basic dark theme's track color was shipped in `style-game.css`, so it only applied when the game stylesheet was loaded. It is now in `style.css`.
+  - `Dialog`: the popup sets the theme's text color and font, so its header and a custom `footer` no longer inherit the page's, which can belong to another provider.
+
 ## 1.4.0
 
 ### Minor Changes
