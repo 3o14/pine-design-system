@@ -1,12 +1,16 @@
 import { style } from "@vanilla-extract/css";
 import { themeContract, zIndex } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
+/**
+ * Marks the tooltip's portal element, which carries the theme class. Theme overrides are
+ * scoped to it: portal > positioner > popup > arrow.
+ */
+export const portal = style({});
 
 export const positioner = style({
 	zIndex: zIndex.tooltip,
@@ -33,12 +37,12 @@ export const popup = style({
 			opacity: 0,
 			transform: "scale(0.95)",
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(gameThemes, `> :where(.${positioner}) > &`, portal)]: {
 			boxShadow: themeContract.shadow.pixelBox,
 			margin: themeContract.shadow.pixelBoxMargin,
 			borderRadius: "0 !important",
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `> :where(.${positioner}) > &`, portal)]: {
 			fontFamily: themeContract.typography.fontFamily.crayon,
 		},
 	},
@@ -65,7 +69,11 @@ export const arrow = style({
 		"&[data-side='right']": {
 			left: "-5px",
 		},
-		[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+		[themeSelector(
+			gameThemes,
+			`> :where(.${positioner}) > :where(.${popup}) > &`,
+			portal,
+		)]: {
 			display: "none",
 		},
 	},

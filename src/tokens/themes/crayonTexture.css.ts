@@ -1,12 +1,12 @@
 /**
- * 크레용 테마 전역 질감 스타일 블록
- * - bumpy shell (::before)와 texture/grain 오버레이를 위한 공통 스타일
- * - 각 컴포넌트에서 import하여 crayon 셀렉터에 사용
+ * Shared texture styles for the crayon theme
+ * - Common styles for the bumpy shell (::before) and the texture/grain overlays
+ * - Components import them into their crayon selectors
  */
 
 /**
- * bumpy shell용 ::before 스타일 (배경 + 테두리 + bumpy 필터)
- * - 각 컴포넌트에서 background와 boxShadow를 variant별 토큰으로 override
+ * ::before style for the bumpy shell (background + border + bumpy filter)
+ * - Components override background and boxShadow with per-variant tokens
  */
 export const crayonBumpyShellBefore = {
 	content: '""',
@@ -18,7 +18,7 @@ export const crayonBumpyShellBefore = {
 } as const;
 
 /**
- * texture 오버레이용 backgroundImage (종이 섬유 + 왁스 반사)
+ * backgroundImage for the texture overlay (paper fibers + wax sheen)
  */
 export const crayonTextureBackgroundImage = `
 	repeating-linear-gradient(
@@ -48,7 +48,7 @@ export const crayonTextureBackgroundImage = `
 `;
 
 /**
- * grain 오버레이용 backgroundImage (입자감)
+ * backgroundImage for the grain overlay
  */
 export const crayonGrainBackgroundImage = `radial-gradient(
 	circle at center,
@@ -58,7 +58,7 @@ export const crayonGrainBackgroundImage = `radial-gradient(
 
 /**
  * Creates crayon theme base selectors for the element itself
- * Applied to: `.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`
+ * Applied to the element itself under `themeSelector(crayonThemes, ...)`
  */
 export const createCrayonBaseStyle = () =>
 	({
@@ -71,7 +71,7 @@ export const createCrayonBaseStyle = () =>
 
 /**
  * Creates crayon theme ::before selector style (base only, zIndex)
- * Applied to: `.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
+ * Applied to `::before` under `themeSelector(crayonThemes, ...)`
  */
 export const createCrayonBeforeBaseStyle = () =>
 	({
@@ -80,7 +80,7 @@ export const createCrayonBeforeBaseStyle = () =>
 
 /**
  * Creates crayon theme ::after selector style (texture overlay)
- * Applied to: `.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`
+ * Applied to `::after` under `themeSelector(crayonThemes, ...)`
  */
 export const createCrayonAfterStyle = () =>
 	({

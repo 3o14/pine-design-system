@@ -97,7 +97,10 @@ export const Dialog = ({
 			disablePointerDismissal={!closeOnOverlayClick}
 			modal={closeOnEscape}
 		>
-			<BaseDialog.Portal {...portalThemeProps}>
+			<BaseDialog.Portal
+				{...portalThemeProps}
+				className={clsx(portalThemeProps.className, styles.portal)}
+			>
 				<BaseDialog.Backdrop className={styles.overlay} />
 				<BaseDialog.Popup
 					className={clsx(

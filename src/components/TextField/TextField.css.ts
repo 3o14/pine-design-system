@@ -1,8 +1,11 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type SelectorMap } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	crayonBumpyShellBefore,
 	crayonTextureBackgroundImage,
@@ -13,13 +16,6 @@ import {
 	createPixelFrame,
 	pixelRoundedVars,
 } from "@/tokens/themes/gamePixel.css";
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
-
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
 
 /**
  * Creates crayon theme ::before pseudo-element style
@@ -40,14 +36,14 @@ const createCrayonBeforeStyle = (
 const createCrayonInputWrapperSelectors = (borderColor: string): SelectorMap => {
 	const selectors: SelectorMap = {};
 
-	selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+	selectors[themeSelector(crayonThemes, "> &", container)] = {
 		background: "transparent",
 		borderColor: "transparent",
 		overflow: "visible",
 		isolation: "isolate",
 	};
 
-	selectors[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`] = {
+	selectors[themeSelector(crayonThemes, "> &::before", container)] = {
 		...createCrayonBeforeStyle(
 			themeContract.color.surface.background,
 			borderColor,
@@ -56,7 +52,7 @@ const createCrayonInputWrapperSelectors = (borderColor: string): SelectorMap => 
 		transition: "background 0.2s ease-in-out",
 	};
 
-	selectors[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`] = {
+	selectors[themeSelector(crayonThemes, "> &::after", container)] = {
 		content: '""',
 		position: "absolute",
 		inset: 0,
@@ -85,14 +81,14 @@ const createTopRadius = (radius: string) => `${radius} ${radius} 0 0 / ${radius}
 const createGameThemeInputSelectors = (borderColor: string): SelectorMap => {
 	const selectors: SelectorMap = {};
 
-	selectors[gameThemeSelector] = {
+	selectors[themeSelector(gameThemes, `${inputPath}&`, container)] = {
 		border: "1px solid transparent",
 		boxShadow: createPixelFrame(borderColor),
 		margin: themeContract.shadow.pixelBoxMargin,
 		...createPixelCornerFill(borderColor),
 	};
 
-	selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+	selectors[themeSelector(crayonThemes, `${inputPath}&`, container)] = {
 		border: "none",
 	};
 
@@ -194,6 +190,10 @@ const inputWrapperBase = style({
 	display: "block",
 	width: "100%",
 });
+
+// The theme class sits on the Field root: root > inputWrapper > input.
+const inputPath = `> :where(.${inputWrapperBase}) > `;
+const inputGameSelector = themeSelector(gameThemes, `${inputPath}&`, container);
 
 export const inputWrapper = recipe({
 	base: inputWrapperBase,
@@ -297,7 +297,7 @@ export const inputBase = style({
 		cursor: "not-allowed",
 	},
 	selectors: {
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+		[themeSelector(crayonThemes, `${inputPath}&`, container)]: {
 			zIndex: 1,
 		},
 	},
@@ -313,7 +313,7 @@ export const input = recipe({
 				fontSize: themeContract.typography.fontSize.small,
 				lineHeight: themeContract.typography.lineHeight.small,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${inputPath}&`, container)]: {
 						padding: `${themeContract.spacing.xxxs} ${themeContract.spacing.xs}`,
 					},
 				},
@@ -323,7 +323,7 @@ export const input = recipe({
 				fontSize: themeContract.typography.fontSize.medium,
 				lineHeight: themeContract.typography.lineHeight.medium,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${inputPath}&`, container)]: {
 						padding: `${themeContract.spacing.xs} ${themeContract.spacing.sm}`,
 					},
 				},
@@ -333,7 +333,7 @@ export const input = recipe({
 				fontSize: themeContract.typography.fontSize.large,
 				lineHeight: themeContract.typography.lineHeight.large,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${inputPath}&`, container)]: {
 						padding: `${themeContract.spacing.sm} ${themeContract.spacing.md}`,
 					},
 				},
@@ -343,7 +343,7 @@ export const input = recipe({
 				fontSize: themeContract.typography.fontSize.xlarge,
 				lineHeight: themeContract.typography.lineHeight.xlarge,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes, `${inputPath}&`, container)]: {
 						padding: `${themeContract.spacing.md} ${themeContract.spacing.lg}`,
 					},
 				},
@@ -352,9 +352,9 @@ export const input = recipe({
 
 		// The game theme steps the outline's pixel frame instead of rounding it
 		rounded: {
-			small: { selectors: { [gameThemeSelector]: pixelRoundedVars.small } },
-			medium: { selectors: { [gameThemeSelector]: pixelRoundedVars.medium } },
-			large: { selectors: { [gameThemeSelector]: pixelRoundedVars.large } },
+			small: { selectors: { [inputGameSelector]: pixelRoundedVars.small } },
+			medium: { selectors: { [inputGameSelector]: pixelRoundedVars.medium } },
+			large: { selectors: { [inputGameSelector]: pixelRoundedVars.large } },
 		},
 
 		variant: {

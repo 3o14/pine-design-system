@@ -38,7 +38,7 @@ pine-ui-kit/
 - **Contract**: `src/tokens/semantic/tokens.css.ts` — `createThemeContract()`
 - **Intent**: `primary | secondary | success | warning | danger | neutral`
 - **Variant**: `solid | outline | subtle | weak` (per component)
-- **Per theme**: `.${gameLightTheme} &`, `.${crayonLightTheme} &` selectors
+- **Per theme**: `themeSelector(gameThemes, ...)` from `@/tokens/themes/themeSelector`, scoped to the element that carries the theme class (never a bare `.${gameLightTheme} &`, which leaks through nested ThemeProviders)
 
 ## 5. Code Style
 

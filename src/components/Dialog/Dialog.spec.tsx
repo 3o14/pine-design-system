@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dialog } from "./Dialog";
+import * as styles from "./Dialog.css";
 import { ThemeProvider } from "@/providers";
 import { generateColorScale, PRIMARY_COLOR_CSS_VAR_NAMES } from "@/tokens/utils";
 import { crayonLightTheme } from "@/tokens/themes";
@@ -26,7 +27,7 @@ describe("Dialog", () => {
 			);
 		});
 
-		it("puts the nested provider's theme class on an ancestor of the popup", () => {
+		it("puts the nested provider's theme class on the portal its styles are scoped to", () => {
 			// The outer provider owns <html>, so a match on <html> can't make this pass.
 			render(
 				<ThemeProvider design="basic" theme="light" syncWithSystem={false}>
@@ -39,11 +40,12 @@ describe("Dialog", () => {
 			);
 
 			expect(document.documentElement).not.toHaveClass(crayonLightTheme);
-			// The crayon container styles use `.${crayonLightTheme} &`, which needs an ancestor,
-			// so the popup itself carrying the class is not enough.
-			expect(
-				screen.getByRole("dialog").parentElement?.closest(`.${crayonLightTheme}`)
-			).not.toBeNull();
+			// Theme overrides are scoped to the portal (portal > dialog), so the dialog's parent
+			// must carry both the nearest provider's theme class and the portal marker.
+			expect(screen.getByRole("dialog").parentElement).toHaveClass(
+				crayonLightTheme,
+				styles.portal,
+			);
 		});
 	});
 

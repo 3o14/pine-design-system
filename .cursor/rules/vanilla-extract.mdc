@@ -21,15 +21,14 @@ alwaysApply: false
 ```ts
 import { style, recipe } from "@vanilla-extract/css";
 import { themeContract, type ColorIntent } from "@/tokens";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
+import { crayonThemes, gameThemes, themeSelector } from "@/tokens/themes/themeSelector";
 ```
 
 ## Theme-specific Overrides
 
 - **Game**: `createGameBoxShadow(borderColor)` — box-shadow for border
 - **Crayon**: `createCrayonBeforeStyle`, `createCrayonBeforeBaseStyle` etc.
-- Selectors: `.${gameLightThemeClass} &`, `.${crayonLightThemeClass} &`
+- Selectors: `themeSelector(gameThemes, ...)` from `@/tokens/themes/themeSelector`, scoped to the element that carries the theme class (never a bare `.${gameLightTheme} &`, which leaks through nested ThemeProviders)
 
 ## Reference
 

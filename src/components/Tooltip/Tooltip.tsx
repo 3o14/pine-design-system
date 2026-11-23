@@ -70,7 +70,10 @@ export const Tooltip = React.forwardRef<HTMLElement, TooltipProps>(({
 			disabled={disabled}
 		>
 			<BaseTooltip.Trigger render={children} ref={ref} />
-			<BaseTooltip.Portal {...portalThemeProps}>
+			<BaseTooltip.Portal
+				{...portalThemeProps}
+				className={clsx(portalThemeProps.className, styles.portal)}
+			>
 				<BaseTooltip.Positioner side={side} align={align} sideOffset={TOOLTIP_SIDE_OFFSET} className={styles.positioner}>
 					<BaseTooltip.Popup
 						role="tooltip"

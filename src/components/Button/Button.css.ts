@@ -1,8 +1,11 @@
 import { style, type StyleRule } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeContract, type ColorIntent, type SelectorMap } from "@/tokens";
-import { crayonLightTheme, crayonDarkTheme } from "@/tokens/themes/crayon.css";
-import { gameLightTheme, gameDarkTheme } from "@/tokens/themes/game.css";
+import {
+	crayonThemes,
+	gameThemes,
+	themeSelector,
+} from "@/tokens/themes/themeSelector";
 import {
 	createCrayonBaseStyle,
 	createCrayonBeforeBaseStyle,
@@ -18,12 +21,8 @@ import {
 } from "@/tokens/themes/gamePixel.css";
 import type { ButtonVariant } from "./Button";
 
-const crayonLightThemeClass = String(crayonLightTheme);
-const crayonDarkThemeClass = String(crayonDarkTheme);
-
-const gameLightThemeClass = String(gameLightTheme);
-const gameDarkThemeClass = String(gameDarkTheme);
-const gameThemeSelector = `.${gameLightThemeClass} &, .${gameDarkThemeClass} &`;
+// The button root carries the theme class itself, so overrides compound onto `&`.
+const gameThemeSelector = themeSelector(gameThemes);
 
 /** How far a game button moves when pressed. Same as the back-plate offset in createPixelFrameRaised, so the face lands on the plate */
 const GAME_PRESS_OFFSET = PIXEL;
@@ -55,94 +54,67 @@ const createCrayonThemeSelectors = (
 
 	if (variant === "solid" || variant === "weak") {
 		const bg = variant === "solid" ? color.surface : color.weak;
-		selectors[
-			`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-		] = createCrayonBeforeStyle(bg, color.border);
-		selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+		selectors[themeSelector(crayonThemes, "&::before")] =
+			createCrayonBeforeStyle(bg, color.border);
+		selectors[themeSelector(crayonThemes)] = {
 			boxShadow: "none",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:hover:not(:disabled), .${crayonDarkThemeClass} &:hover:not(:disabled)`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:hover:not(:disabled)")] = {
 			backgroundColor: "transparent",
 			boxShadow: "none",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:hover:not(:disabled)::before, .${crayonDarkThemeClass} &:hover:not(:disabled)::before`
-		] = variant === "solid"
+		selectors[themeSelector(crayonThemes, "&:hover:not(:disabled)::before")] = variant === "solid"
 			? { background: color.surfaceHover }
 			: { background: "transparent" };
-		selectors[
-			`.${crayonLightThemeClass} &:active:not(:disabled), .${crayonDarkThemeClass} &:active:not(:disabled)`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:active:not(:disabled)")] = {
 			backgroundColor: "transparent",
 			boxShadow: "none",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:active:not(:disabled)::before, .${crayonDarkThemeClass} &:active:not(:disabled)::before`
-		] = variant === "solid"
+		selectors[themeSelector(crayonThemes, "&:active:not(:disabled)::before")] = variant === "solid"
 			? { background: color.surfaceActive }
 			: { background: "transparent" };
 	}
 
 	if (variant === "outline") {
-		selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+		selectors[themeSelector(crayonThemes)] = {
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-		] = createCrayonBeforeStyle("transparent", color.border);
-		selectors[
-			`.${crayonLightThemeClass} &:hover:not(:disabled), .${crayonDarkThemeClass} &:hover:not(:disabled)`
-		] = {
+		selectors[themeSelector(crayonThemes, "&::before")] =
+			createCrayonBeforeStyle("transparent", color.border);
+		selectors[themeSelector(crayonThemes, "&:hover:not(:disabled)")] = {
 			backgroundColor: "transparent",
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:hover:not(:disabled)::before, .${crayonDarkThemeClass} &:hover:not(:disabled)::before`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:hover:not(:disabled)::before")] = {
 			background: color.weak,
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:active:not(:disabled), .${crayonDarkThemeClass} &:active:not(:disabled)`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:active:not(:disabled)")] = {
 			backgroundColor: "transparent",
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:active:not(:disabled)::before, .${crayonDarkThemeClass} &:active:not(:disabled)::before`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:active:not(:disabled)::before")] = {
 			background: color.weak,
 		};
 	}
 
 	if (variant === "ghost") {
-		selectors[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`] = {
+		selectors[themeSelector(crayonThemes)] = {
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`
-		] = createCrayonBeforeStyle("transparent", color.surface, true, 0.4);
-		selectors[
-			`.${crayonLightThemeClass} &:hover:not(:disabled), .${crayonDarkThemeClass} &:hover:not(:disabled)`
-		] = {
+		selectors[themeSelector(crayonThemes, "&::before")] =
+			createCrayonBeforeStyle("transparent", color.surface, true, 0.4);
+		selectors[themeSelector(crayonThemes, "&:hover:not(:disabled)")] = {
 			backgroundColor: "transparent",
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:hover:not(:disabled)::before, .${crayonDarkThemeClass} &:hover:not(:disabled)::before`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:hover:not(:disabled)::before")] = {
 			background: color.weak,
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:active:not(:disabled), .${crayonDarkThemeClass} &:active:not(:disabled)`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:active:not(:disabled)")] = {
 			backgroundColor: "transparent",
 			borderColor: "transparent",
 		};
-		selectors[
-			`.${crayonLightThemeClass} &:active:not(:disabled)::before, .${crayonDarkThemeClass} &:active:not(:disabled)::before`
-		] = {
+		selectors[themeSelector(crayonThemes, "&:active:not(:disabled)::before")] = {
 			background: color.weak,
 		};
 	}
@@ -162,7 +134,7 @@ const createGameThemeSelectors = (
 	if (!pressable) return selectors;
 
 	// Rest: the back plate sits 4px behind the face, so the button reads as two layers
-	selectors[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`] = {
+	selectors[themeSelector(gameThemes)] = {
 		...(variant === "solid" ? {} : { borderColor: "transparent" }),
 		boxShadow: pressable.raised,
 		margin: themeContract.shadow.pixelBoxMargin,
@@ -171,25 +143,19 @@ const createGameThemeSelectors = (
 	};
 	// Hover: keep the rest look so the shared hover shadow (shadow.medium) doesn't cover the pixel border.
 	// createGameHoverMedia applies the actual press only on hover-capable devices (avoids sticky hover on touch)
-	selectors[
-		`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`
-	] = {
+	selectors[themeSelector(gameThemes, "&:hover:not(:disabled)")] = {
 		...(variant === "solid" ? {} : { borderColor: "transparent" }),
 		boxShadow: pressable.raised,
 	};
 	// Active: on every device the face drops onto the back plate (transform, so layout doesn't shift)
-	selectors[
-		`.${gameLightThemeClass} &:active:not(:disabled), .${gameDarkThemeClass} &:active:not(:disabled)`
-	] = pressable.pressed;
+	selectors[themeSelector(gameThemes, "&:active:not(:disabled)")] = pressable.pressed;
 	// ::after corrects the hit area. At rest it matches the button including its border, so it doesn't steal clicks from neighbours
-	selectors[`.${gameLightThemeClass} &::after, .${gameDarkThemeClass} &::after`] = {
+	selectors[themeSelector(gameThemes, "&::after")] = {
 		content: '""',
 		position: "absolute",
 		inset: `calc(-1 * ${BUTTON_BORDER_WIDTH})`,
 	};
-	selectors[
-		`.${gameLightThemeClass} &:active:not(:disabled)::after, .${gameDarkThemeClass} &:active:not(:disabled)::after`
-	] = gamePressedHitArea;
+	selectors[themeSelector(gameThemes, "&:active:not(:disabled)::after")] = gamePressedHitArea;
 
 	return selectors;
 };
@@ -227,9 +193,9 @@ const createGameHoverMedia = (
 	return {
 		"(hover: hover)": {
 			selectors: {
-				[`.${gameLightThemeClass} &:hover:not(:disabled), .${gameDarkThemeClass} &:hover:not(:disabled)`]:
+				[themeSelector(gameThemes, "&:hover:not(:disabled)")]:
 					pressable.pressed,
-				[`.${gameLightThemeClass} &:hover:not(:disabled)::after, .${gameDarkThemeClass} &:hover:not(:disabled)::after`]:
+				[themeSelector(gameThemes, "&:hover:not(:disabled)::after")]:
 					gamePressedHitArea,
 			},
 		},
@@ -267,14 +233,14 @@ const buttonBase = style({
 			opacity: 0.5,
 			cursor: "not-allowed",
 		},
-		[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]:
+		[themeSelector(crayonThemes)]:
 			createCrayonBaseStyle(),
-		[`.${crayonLightThemeClass} &::before, .${crayonDarkThemeClass} &::before`]:
+		[themeSelector(crayonThemes, "&::before")]:
 			{
 				...createCrayonBeforeBaseStyle(),
 				transition: "background 0.2s ease-in-out",
 			},
-		[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
+		[themeSelector(crayonThemes, "&::after")]:
 			createCrayonAfterStyle(),
 	},
 	"@media": {
@@ -282,7 +248,7 @@ const buttonBase = style({
 		// This isn't emitted after compoundVariants, so :not(:disabled) raises its specificity
 		"(prefers-reduced-motion: reduce)": {
 			selectors: {
-				[`.${gameLightThemeClass} &:not(:disabled), .${gameDarkThemeClass} &:not(:disabled)`]:
+				[themeSelector(gameThemes, "&:not(:disabled)")]:
 					{
 						transition: "none",
 					},
@@ -301,7 +267,7 @@ export const button = recipe({
 				fontSize: themeContract.typography.fontSize.small,
 				lineHeight: themeContract.typography.lineHeight.small,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes)]: {
 						padding: `${themeContract.spacing.xxxs} ${themeContract.spacing.xs}`,
 					},
 				},
@@ -311,7 +277,7 @@ export const button = recipe({
 				fontSize: themeContract.typography.fontSize.medium,
 				lineHeight: themeContract.typography.lineHeight.medium,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes)]: {
 						padding: `${themeContract.spacing.xs} ${themeContract.spacing.sm}`,
 					},
 				},
@@ -321,7 +287,7 @@ export const button = recipe({
 				fontSize: themeContract.typography.fontSize.large,
 				lineHeight: themeContract.typography.lineHeight.large,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes)]: {
 						padding: `${themeContract.spacing.sm} ${themeContract.spacing.md}`,
 					},
 				},
@@ -331,7 +297,7 @@ export const button = recipe({
 				fontSize: themeContract.typography.fontSize.xlarge,
 				lineHeight: themeContract.typography.lineHeight.xlarge,
 				selectors: {
-					[`.${gameLightThemeClass} &, .${gameDarkThemeClass} &`]: {
+					[themeSelector(gameThemes)]: {
 						padding: `${themeContract.spacing.md} ${themeContract.spacing.lg}`,
 					},
 				},
@@ -853,10 +819,10 @@ export const button = recipe({
 			variants: { variant: "outline" },
 			style: {
 				selectors: {
-					[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+					[themeSelector(crayonThemes)]: {
 						borderColor: "transparent",
 					},
-					[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
+					[themeSelector(crayonThemes, "&::after")]:
 						{
 							display: "none",
 						},
@@ -867,10 +833,10 @@ export const button = recipe({
 			variants: { variant: "ghost" },
 			style: {
 				selectors: {
-					[`.${crayonLightThemeClass} &, .${crayonDarkThemeClass} &`]: {
+					[themeSelector(crayonThemes)]: {
 						borderColor: "transparent",
 					},
-					[`.${crayonLightThemeClass} &::after, .${crayonDarkThemeClass} &::after`]:
+					[themeSelector(crayonThemes, "&::after")]:
 						{
 							display: "none",
 						},
